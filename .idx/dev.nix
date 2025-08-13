@@ -24,7 +24,7 @@
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
         # Example: install JS dependencies from NPM
-        setup-laravel = "cp .env.example .env && composer update && php artisan key:generate && touch database/database.sqlite && php artisan migrate:fresh --seed";
+        setup-laravel = "cp .env.example .env && composer update && touch database/database.sqlite && php artisan migrate:fresh --seed && php artisan key:generate && php artisan dependency:versions";
         # Open editors for the following files by default, if they exist:
         default.openFiles = [ "resources/views/welcome.blade.php" ];
       };

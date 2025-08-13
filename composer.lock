@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "353816c5cc1fb58fa7a337429855b135",
+    "content-hash": "0d387a33034701434a0ec90aa1f0605a",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -660,6 +660,72 @@
                 }
             ],
             "time": "2024-07-16T11:13:48+00:00"
+        },
+        {
+            "name": "cmsmaxinc/filament-system-versions",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cmsmaxinc/filament-system-versions.git",
+                "reference": "24370afd2f188c0e2967cae84fac2e3413fa4531"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cmsmaxinc/filament-system-versions/zipball/24370afd2f188c0e2967cae84fac2e3413fa4531",
+                "reference": "24370afd2f188c0e2967cae84fac2e3413fa4531",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^4.0.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^7.9",
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^2.1",
+                "pestphp/pest-plugin-arch": "^2.0",
+                "pestphp/pest-plugin-laravel": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "FilamentSystemVersions": "Cmsmaxinc\\FilamentSystemVersions\\Facades\\FilamentSystemVersions"
+                    },
+                    "providers": [
+                        "Cmsmaxinc\\FilamentSystemVersions\\FilamentSystemVersionsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cmsmaxinc\\FilamentSystemVersions\\": "src/",
+                    "Cmsmaxinc\\FilamentSystemVersions\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CMS Max"
+                }
+            ],
+            "description": "A comprehensive Filament plugin that provides real-time visibility into all package versions within your Filament PHP application. This essential developer tool creates a centralized dashboard where you can instantly view, monitor, and track the current versions of all installed packages in your project and what the latest version is.",
+            "homepage": "https://github.com/cmsmaxinc/filament-system-versions",
+            "keywords": [
+                "cmsmaxinc",
+                "filament-system-versions",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/cmsmaxinc/filament-system-versions/issues",
+                "source": "https://github.com/cmsmaxinc/filament-system-versions"
+            },
+            "time": "2025-06-24T06:43:30+00:00"
         },
         {
             "name": "danharrin/date-format-converter",
@@ -2289,6 +2355,134 @@
                 }
             ],
             "time": "2025-02-03T10:55:03+00:00"
+        },
+        {
+            "name": "jeffersongoncalves/filament-cep-field",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeffersongoncalves/filament-cep-field.git",
+                "reference": "7e1751ad91a3fdd565b08e380c6fec6d5b537dc7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeffersongoncalves/filament-cep-field/zipball/7e1751ad91a3fdd565b08e380c6fec6d5b537dc7",
+                "reference": "7e1751ad91a3fdd565b08e380c6fec6d5b537dc7",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^4.0",
+                "jeffersongoncalves/laravel-cep": "^1.0",
+                "php": "^8.2|^8.3",
+                "spatie/laravel-package-tools": "^1.14.0"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.0",
+                "laravel/pint": "^1.21",
+                "orchestra/testbench": "^9.0|^10.0",
+                "pestphp/pest": "^3.7.4",
+                "pestphp/pest-plugin-laravel": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "JeffersonGoncalves\\Filament\\CepField\\CepFieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JeffersonGoncalves\\Filament\\CepField\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jefferson Gonçalves",
+                    "email": "gerson.simao.92@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "The Filament CEP Field is a custom input component designed specifically for Brazilian postal codes (CEP - Código de Endereçamento Postal). This component extends Filament's form capabilities by providing a specialized input field that handles CEP formatting, validation, and automatic address lookup.",
+            "homepage": "https://github.com/jeffersongoncalves/filament-cep-field",
+            "keywords": [
+                "filament",
+                "filament-cep-field",
+                "jeffersongoncalves",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/jeffersongoncalves/filament-cep-field/issues",
+                "source": "https://github.com/jeffersongoncalves/filament-cep-field/tree/2.1.0"
+            },
+            "time": "2025-07-17T20:04:47+00:00"
+        },
+        {
+            "name": "jeffersongoncalves/laravel-cep",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeffersongoncalves/laravel-cep.git",
+                "reference": "88ed63e792007804a94997a044353ed1f015b7eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeffersongoncalves/laravel-cep/zipball/88ed63e792007804a94997a044353ed1f015b7eb",
+                "reference": "88ed63e792007804a94997a044353ed1f015b7eb",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^11.0|^12.0",
+                "php": "^8.2|^8.3",
+                "spatie/laravel-package-tools": "^1.14.0"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.0",
+                "laravel/pint": "^1.24",
+                "orchestra/testbench": "^9.0|^10.0",
+                "pestphp/pest": "^3.7.4",
+                "pestphp/pest-plugin-laravel": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "JeffersonGoncalves\\Cep\\CepServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JeffersonGoncalves\\Cep\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jefferson Gonçalves",
+                    "email": "gerson.simao.92@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple and efficient PHP package for querying Brazilian postal codes (CEP). This package provides an easy way to retrieve address information from Brazilian ZIP codes through multiple providers.",
+            "homepage": "https://github.com/jeffersongoncalves/laravel-cep",
+            "keywords": [
+                "jeffersongoncalves",
+                "laravel",
+                "laravel-cep"
+            ],
+            "support": {
+                "issues": "https://github.com/jeffersongoncalves/laravel-cep/issues",
+                "source": "https://github.com/jeffersongoncalves/laravel-cep/tree/1.1.1"
+            },
+            "time": "2025-07-26T20:08:06+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
@@ -5542,23 +5736,23 @@
         },
         {
             "name": "resend/resend-laravel",
-            "version": "v0.20.0",
+            "version": "v0.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/resend/resend-laravel.git",
-                "reference": "f32c2f484df2bc65fba8ea9ab9b210cd42d9f3ed"
+                "reference": "72deb3fe044a5a0e68e220d86908eeaaa8ecf5db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/resend/resend-laravel/zipball/f32c2f484df2bc65fba8ea9ab9b210cd42d9f3ed",
-                "reference": "f32c2f484df2bc65fba8ea9ab9b210cd42d9f3ed",
+                "url": "https://api.github.com/repos/resend/resend-laravel/zipball/72deb3fe044a5a0e68e220d86908eeaaa8ecf5db",
+                "reference": "72deb3fe044a5a0e68e220d86908eeaaa8ecf5db",
                 "shasum": ""
             },
             "require": {
                 "illuminate/http": "^10.0|^11.0|^12.0",
                 "illuminate/support": "^10.0|^11.0|^12.0",
                 "php": "^8.1",
-                "resend/resend-php": "^0.18.0",
+                "resend/resend-php": "^0.19.0",
                 "symfony/mailer": "^6.2|^7.0"
             },
             "require-dev": {
@@ -5605,22 +5799,22 @@
             ],
             "support": {
                 "issues": "https://github.com/resend/resend-laravel/issues",
-                "source": "https://github.com/resend/resend-laravel/tree/v0.20.0"
+                "source": "https://github.com/resend/resend-laravel/tree/v0.21.0"
             },
-            "time": "2025-08-04T19:26:47+00:00"
+            "time": "2025-08-13T04:57:39+00:00"
         },
         {
             "name": "resend/resend-php",
-            "version": "v0.18.1",
+            "version": "v0.19.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/resend/resend-php.git",
-                "reference": "f20a9a50a7f705294af1662995c93bfd806fed3e"
+                "reference": "b2fc34593c7b8ff7b202f3fcc20f33ce55dde424"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/resend/resend-php/zipball/f20a9a50a7f705294af1662995c93bfd806fed3e",
-                "reference": "f20a9a50a7f705294af1662995c93bfd806fed3e",
+                "url": "https://api.github.com/repos/resend/resend-php/zipball/b2fc34593c7b8ff7b202f3fcc20f33ce55dde424",
+                "reference": "b2fc34593c7b8ff7b202f3fcc20f33ce55dde424",
                 "shasum": ""
             },
             "require": {
@@ -5662,9 +5856,9 @@
             ],
             "support": {
                 "issues": "https://github.com/resend/resend-php/issues",
-                "source": "https://github.com/resend/resend-php/tree/v0.18.1"
+                "source": "https://github.com/resend/resend-php/tree/v0.19.1"
             },
-            "time": "2025-07-04T00:12:53+00:00"
+            "time": "2025-08-06T04:57:27+00:00"
         },
         {
             "name": "ryangjchandler/blade-capture-directive",

@@ -4,3 +4,4 @@
 
 @source '../../../../app/Filament/';
 @source '../../../../resources/views/';
+@source '../../../../vendor/cmsmaxinc/filament-system-versions/resources/**/*.blade.php';

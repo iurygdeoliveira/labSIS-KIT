@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Configurators\FilamentComponentsConfigurator;
+use Cmsmaxinc\FilamentSystemVersions\Filament\Widgets\DependencyWidget;
 use Filafly\Themes\Brisk\BriskTheme;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -59,6 +60,8 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
+                DependencyWidget::class,
+
             ])
             ->middleware([
                 EncryptCookies::class,
