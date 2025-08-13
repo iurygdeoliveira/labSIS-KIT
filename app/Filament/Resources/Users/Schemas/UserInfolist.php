@@ -24,18 +24,18 @@ class UserInfolist
                                 TextEntry::make('email')
                                     ->label('E-mail'),
                             ]),
-                        Tab::make('Controle de Datas')
+                        Tab::make('Datas')
                             ->icon(Heroicon::Calendar)
                             ->schema([
                                 TextEntry::make('email_verified_at')
                                     ->label('E-mail Verificado em')
-                                    ->dateTime(),
+                                    ->dateTime('d-m-Y H:i'),
                                 TextEntry::make('created_at')
                                     ->label('Criado em')
-                                    ->dateTime(),
+                                    ->dateTime('d-m-Y H:i'),
                                 TextEntry::make('updated_at')
                                     ->label('Atualizado em')
-                                    ->dateTime(),
+                                    ->dateTime('d-m-Y H:i'),
                             ]),
                     ])->persistTabInQueryString(),
             ]);

@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
         User::query()->create([
             'name' => 'Admin',
             'email' => 'admin@labsis.dev.br',
+            'email_verified_at' => now(),
             'password' => Hash::make('mudar123'),
         ]);
     }
