@@ -12,6 +12,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -41,7 +42,7 @@ class AdminPanelProvider extends PanelProvider
             ->emailVerification()
             ->colors([
                 'primary' => '#014029',
-                'secondary' => '#6b7a91',
+                'secondary' => Color::Gray,
                 'danger' => '#D93223',
                 'warning' => '#F28907',
                 'success' => '#2eb347',
