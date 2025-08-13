@@ -20,8 +20,8 @@ class UserForm
                 TextInput::make('password')
                     ->password()
                     ->revealable()
-                    ->dehydrated()
-                    ->required()
+                    ->dehydrated(fn (?string $state): bool => filled($state))
+                    ->required(fn (string $operation): bool => $operation === 'create')
                     ->confirmed(),
                 TextInput::make('password_confirmation')
                     ->password()
