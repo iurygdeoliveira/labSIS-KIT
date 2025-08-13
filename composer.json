@@ -17,7 +17,6 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/flux": "^2.2",
         "nesbot/carbon": "^3.10",
-        "owen-it/laravel-auditing": "^14.0",
         "resend/resend-laravel": "^0.20.0"
     },
     "require-dev": {
