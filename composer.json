@@ -6,18 +6,34 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
+        "blade-ui-kit/blade-heroicons": "^2.6",
+        "filament/filament": "^4.0",
         "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "laravel/horizon": "^5.33",
+        "laravel/nightwatch": "^1.7",
+        "laravel/pulse": "^1.4",
+        "laravel/sanctum": "^4.0",
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "livewire/flux": "^2.2",
+        "nesbot/carbon": "^3.10",
+        "owen-it/laravel-auditing": "^14.0",
+        "resend/resend-laravel": "^0.20.0"
     },
     "require-dev": {
+        "laravel/tinker": "^2.10.1",
+        "barryvdh/laravel-debugbar": "^3.15",
+        "egyjs/dbml-to-laravel": "^1.0",
+        "larastan/larastan": "^3.0",
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "phpunit/phpunit": "^11.5.3"
+        "leonardolima/laravel-security-check": "^1.3",
+        "lucascudo/laravel-pt-br-localization": "^3.0",
+        "pestphp/pest": "^3.7"
     },
     "autoload": {
         "psr-4": {
@@ -35,7 +51,9 @@
         "post-autoload-dump": [
             "@php artisan config:clear",
             "@php artisan clear-compiled",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade",
+            "@php artisan vendor:publish --force --tag=livewire:assets --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

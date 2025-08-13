@@ -5,9 +5,12 @@
   channel = "stable-24.05"; # or "unstable"
   # Use https://search.nixos.org/packages to find packages
   packages = [
-    pkgs.php82
-    pkgs.php82Packages.composer
-    pkgs.nodejs_20
+    pkgs.php83
+    pkgs.php83Packages.composer
+    pkgs.nodejs_22
+    pkgs.busybox
+    pkgs.sudo
+    pkgs.openssh
   ];
   # Sets environment variables in the workspace
   env = {};
@@ -20,9 +23,9 @@
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
         # Example: install JS dependencies from NPM
-        # npm-install = "npm install";
+        setup-laravel = "composer install && cp .env.example .env && php artisan key:generate && touch database/database.sqlite && php artisan migrate:fresh --seed";
         # Open editors for the following files by default, if they exist:
-        default.openFiles = [ "README.md" "resources/views/welcome.blade.php" ];
+        default.openFiles = [ "resources/views/welcome.blade.php" ];
       };
       # To run something each time the workspace is (re)started, use the `onStart` hook
     };
