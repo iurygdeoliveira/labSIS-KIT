@@ -1,0 +1,6 @@
+@import '../../../../vendor/filament/filament/resources/css/base.css';
+@import '../../../../vendor/filafly/brisk/resources/css/theme.css';
+
+
+@source '../../../../app/Filament/';
+@source '../../../../resources/views/';

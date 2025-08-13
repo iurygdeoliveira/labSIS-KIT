@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.3",
         "blade-ui-kit/blade-heroicons": "^2.6",
+        "filafly/brisk": "^1.0",
         "filament/filament": "^4.0",
         "laravel/framework": "^12.0",
         "laravel/horizon": "^5.33",

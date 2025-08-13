@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Http\Responses\LogoutResponse;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
-use App\Http\Responses\LogoutResponse;
 use Filament\Auth\Http\Responses\Contracts\LogoutResponse as LogoutResponseContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;

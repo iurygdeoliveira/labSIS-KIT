@@ -11,6 +11,7 @@
     pkgs.busybox
     pkgs.sudo
     pkgs.openssh
+    pkgs.nano
   ];
   # Sets environment variables in the workspace
   env = {};
