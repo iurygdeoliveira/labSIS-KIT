@@ -5,7 +5,6 @@
     @include('partials.head.head')
 
     @vite(['resources/css/app.css'])
-    @fluxAppearance
     @livewireStyles
 
     @stack('styles')

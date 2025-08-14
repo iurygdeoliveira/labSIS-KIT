@@ -1,4 +1,4 @@
-<header id="header" x-data="{ navigationOpen: false, darkMode: $persist(false).as('dark-mode') }" x-init="$watch('darkMode', value => document.documentElement.classList.toggle('dark', value))"
+<header id="header" x-data="{ navigationOpen: false }"
     class="fixed top-0 left-0 z-50 w-full transition-colors duration-700 bg-white border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700">
 
     <div class="flex items-center justify-between h-16 px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -28,11 +28,7 @@
                 </a>
             @endforeach
 
-            {{-- Toggle Tema (Desktop) --}}
-            <div class="flex items-center space-x-2">
-                <flux:button x-data x-on:click="darkMode = !darkMode" icon="moon" variant="subtle"
-                    aria-label="Toggle dark mode" />
-            </div>
+            
         </nav>
 
         {{-- Botão Mobile Toggle --}}
@@ -67,24 +63,6 @@
                     {{ $link['label'] }}
                 </a>
             @endforeach
-
-            <div class="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
-                <button @click="darkMode = !darkMode"
-                    class="text-gray-600 transition-colors duration-700 dark:text-gray-300 hover:text-teal-500">
-                    <template x-if="!darkMode">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.07 5.66l-.7-.7M6.34 6.34l-.7-.7m12.02 0l-.7.7M6.34 17.66l-.7.7M12 5a7 7 0 110 14a7 7 0 010-14z" />
-                        </svg>
-                    </template>
-                    <template x-if="darkMode">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M17.293 13.293A8 8 0 116.707 2.707 7 7 0 1017.293 13.293z" />
-                        </svg>
-                    </template>
-                </button>
-            </div>
         </nav>
     </div>
 </header>
