@@ -16,7 +16,7 @@
                 <div x-data="{ id: {{ $index }} }"
                     class="border border-teal-200 dark:border-teal-700 rounded-lg overflow-hidden">
                     <button @click="openItem === id ? openItem = null : openItem = id"
-                        class="w-full text-left px-6 py-4 bg-teal-50 dark:bg-[#18191a] hover:bg-teal-100 dark:hover:bg-gray-700 transition flex items-center justify-between">
+                        class="w-full text-left px-6 py-4 bg-teal-50 dark:bg-[#18191a] hover:bg-teal-100 dark:hover:bg-[#252227] transition flex items-center justify-between">
                         <span class="font-semibold text-lg">{{ $faq['question'] }}</span>
                         <svg x-show="openItem !== id" class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor"
                             stroke-width="2" viewBox="0 0 24 24">

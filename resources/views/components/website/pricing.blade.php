@@ -39,15 +39,15 @@
 
     <!-- Toggle -->
     <div class="flex justify-center mb-12">
-        <div class="inline-flex p-1 bg-gray-200 rounded-full dark:bg-gray-700">
+        <div class="inline-flex p-1 bg-gray-200 rounded-full dark:bg-[#18191a]">
             <button @click="switchCycle('MONTHLY')"
-                :class="currentCycle === 'MONTHLY' ? 'bg-white dark:bg-gray-800' : ''"
-                class="px-6 py-2 text-sm font-semibold text-gray-800 transition rounded-full dark:text-white hover:bg-teal-50 dark:hover:bg-teal-900">
+                :class="currentCycle === 'MONTHLY' ? 'bg-white dark:bg-[#252227]' : ''"
+                class="px-6 py-2 text-sm font-semibold text-gray-800 transition rounded-full dark:text-white hover:bg-teal-50 dark:hover:bg-[#252227]">
                 Mensal
             </button>
             <button @click="switchCycle('YEARLY')"
-                :class="currentCycle === 'YEARLY' ? 'bg-white dark:bg-gray-800' : ''"
-                class="px-6 py-2 text-sm font-semibold text-gray-800 transition rounded-full dark:text-white hover:bg-teal-50 dark:hover:bg-teal-900">
+                :class="currentCycle === 'YEARLY' ? 'bg-white dark:bg-[#252227]' : ''"
+                class="px-6 py-2 text-sm font-semibold text-gray-800 transition rounded-full dark:text-white hover:bg-teal-50 dark:hover:bg-[#252227]">
                 Anual
             </button>
         </div>
