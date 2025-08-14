@@ -2,8 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Auth\Login as CustomLogin;
 use App\Filament\Configurators\FilamentComponentsConfigurator;
-use App\Http\Middleware\EnsureUserIsNotSuspended;
 use Cmsmaxinc\FilamentSystemVersions\Filament\Widgets\DependencyWidget;
 use Filafly\Themes\Brisk\BriskTheme;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
@@ -37,7 +37,7 @@ class AdminPanelProvider extends PanelProvider
             ->bootUsing(function (): void {
                 FilamentComponentsConfigurator::configure();
             })
-            ->login()
+            ->login(CustomLogin::class)
             ->registration()
             ->profile()
             ->multiFactorAuthentication(
@@ -82,7 +82,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                EnsureUserIsNotSuspended::class,
+
             ])
             ->plugin(BriskTheme::make()->withoutSuggestedFont());
     }
