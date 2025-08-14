@@ -3,8 +3,10 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Configurators\FilamentComponentsConfigurator;
+use App\Http\Middleware\EnsureUserIsNotSuspended;
 use Cmsmaxinc\FilamentSystemVersions\Filament\Widgets\DependencyWidget;
 use Filafly\Themes\Brisk\BriskTheme;
+use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -38,6 +40,10 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->registration()
             ->profile()
+            ->multiFactorAuthentication(
+                AppAuthentication::make()
+                    ->recoverable()
+            )
             ->passwordReset()
             ->emailVerification()
             ->colors([
@@ -62,7 +68,6 @@ class AdminPanelProvider extends PanelProvider
                 AccountWidget::class,
                 FilamentInfoWidget::class,
                 DependencyWidget::class,
-
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -77,6 +82,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                EnsureUserIsNotSuspended::class,
             ])
             ->plugin(BriskTheme::make()->withoutSuggestedFont());
     }

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
-use App\Trait\NotificationsTrait;
+use App\Trait\Filament\NotificationsTrait;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d387a33034701434a0ec90aa1f0605a",
+    "content-hash": "35b6c31055b29d4e607e222aa76a0fe6",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -128,16 +128,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.352.7",
+            "version": "3.353.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "26d8988376984e4684c497e71722a97b79aeef4e"
+                "reference": "73a28b9be8b465af1dd02b6a1b23fca4b145c36b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/26d8988376984e4684c497e71722a97b79aeef4e",
-                "reference": "26d8988376984e4684c497e71722a97b79aeef4e",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/73a28b9be8b465af1dd02b6a1b23fca4b145c36b",
+                "reference": "73a28b9be8b465af1dd02b6a1b23fca4b145c36b",
                 "shasum": ""
             },
             "require": {
@@ -219,9 +219,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.352.7"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.353.0"
             },
-            "time": "2025-08-12T18:29:26+00:00"
+            "time": "2025-08-13T18:05:58+00:00"
         },
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -9845,6 +9845,135 @@
             "time": "2025-07-11T06:52:52+00:00"
         },
         {
+            "name": "laravel/boost",
+            "version": "v1.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/boost.git",
+                "reference": "ad025a2f2325ccdc5f52e926dab4e0c1d2c6def9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/boost/zipball/ad025a2f2325ccdc5f52e926dab4e0c1d2c6def9",
+                "reference": "ad025a2f2325ccdc5f52e926dab4e0c1d2c6def9",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.9",
+                "illuminate/console": "^10.0|^11.0|^12.0",
+                "illuminate/contracts": "^10.0|^11.0|^12.0",
+                "illuminate/routing": "^10.0|^11.0|^12.0",
+                "illuminate/support": "^10.0|^11.0|^12.0",
+                "laravel/mcp": "^0.1.0",
+                "laravel/prompts": "^0.1.9|^0.3",
+                "laravel/roster": "^0.2",
+                "php": "^8.1|^8.2"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.14|^1.23",
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^8.22.0|^9.0|^10.0",
+                "pestphp/pest": "^2.0|^3.0",
+                "phpstan/phpstan": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Boost\\BoostServiceProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Boost\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Laravel Boost accelerates AI-assisted development to generate high-quality, Laravel-specific code.",
+            "homepage": "https://github.com/laravel/boost",
+            "keywords": [
+                "ai",
+                "dev",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/boost/issues",
+                "source": "https://github.com/laravel/boost"
+            },
+            "time": "2025-08-13T19:51:44+00:00"
+        },
+        {
+            "name": "laravel/mcp",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/mcp.git",
+                "reference": "417890c0d8032af9a46a86d16651bbe13946cddf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/mcp/zipball/417890c0d8032af9a46a86d16651bbe13946cddf",
+                "reference": "417890c0d8032af9a46a86d16651bbe13946cddf",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^10.0|^11.0|^12.0",
+                "illuminate/contracts": "^10.0|^11.0|^12.0",
+                "illuminate/http": "^10.0|^11.0|^12.0",
+                "illuminate/routing": "^10.0|^11.0|^12.0",
+                "illuminate/support": "^10.0|^11.0|^12.0",
+                "illuminate/validation": "^10.0|^11.0|^12.0",
+                "php": "^8.1|^8.2"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.14",
+                "orchestra/testbench": "^8.22.0|^9.0|^10.0",
+                "phpstan/phpstan": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Mcp": "Laravel\\Mcp\\Server\\Facades\\Mcp"
+                    },
+                    "providers": [
+                        "Laravel\\Mcp\\Server\\McpServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Mcp\\": "src/",
+                    "Workbench\\App\\": "workbench/app/",
+                    "Laravel\\Mcp\\Tests\\": "tests/",
+                    "Laravel\\Mcp\\Server\\": "src/Server/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The easiest way to add MCP servers to your Laravel app.",
+            "homepage": "https://github.com/laravel/mcp",
+            "keywords": [
+                "dev",
+                "laravel",
+                "mcp"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/mcp/issues",
+                "source": "https://github.com/laravel/mcp"
+            },
+            "time": "2025-08-12T07:09:39+00:00"
+        },
+        {
             "name": "laravel/pail",
             "version": "v1.2.3",
             "source": {
@@ -9991,6 +10120,67 @@
                 "source": "https://github.com/laravel/pint"
             },
             "time": "2025-07-10T18:09:32+00:00"
+        },
+        {
+            "name": "laravel/roster",
+            "version": "v0.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/roster.git",
+                "reference": "caeed7609b02c00c3f1efec52812d8d87c5d4096"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/roster/zipball/caeed7609b02c00c3f1efec52812d8d87c5d4096",
+                "reference": "caeed7609b02c00c3f1efec52812d8d87c5d4096",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^10.0|^11.0|^12.0",
+                "illuminate/contracts": "^10.0|^11.0|^12.0",
+                "illuminate/routing": "^10.0|^11.0|^12.0",
+                "illuminate/support": "^10.0|^11.0|^12.0",
+                "php": "^8.1|^8.2",
+                "symfony/yaml": "^6.4|^7.2"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.14",
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^8.22.0|^9.0|^10.0",
+                "pestphp/pest": "^2.0|^3.0",
+                "phpstan/phpstan": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Roster\\RosterServiceProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Roster\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Detect packages & approaches in use within a Laravel project",
+            "homepage": "https://github.com/laravel/roster",
+            "keywords": [
+                "dev",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/roster/issues",
+                "source": "https://github.com/laravel/roster"
+            },
+            "time": "2025-08-13T15:00:25+00:00"
         },
         {
             "name": "laravel/sail",
@@ -13984,12 +14174,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }

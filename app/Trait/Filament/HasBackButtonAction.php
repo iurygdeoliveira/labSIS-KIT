@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Trait\Filament\Actions;
+namespace App\Trait\Filament;
 
 use Filament\Actions\Action;
 use Filament\Support\Icons\Heroicon;
