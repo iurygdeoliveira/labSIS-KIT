@@ -123,6 +123,25 @@ O Kit oferece uma base sólida com os seguintes recursos já implementados:
   - **Tabela de Preços:** Componente interativo com seleção de ciclo de pagamento (mensal/anual).
   - **FAQ:** Acordeão de perguntas e respostas.
 - **Navegação Integrada:** Header e footer padronizados com links de navegação e acesso direto à plataforma (`/admin`).
+
+## 🛠️ Ferramentas de Desenvolvimento
+
+Este projeto utiliza um conjunto de ferramentas para garantir a qualidade, padronização e agilidade no desenvolvimento. Abaixo estão os pacotes incluídos no ambiente de desenvolvimento (`require-dev`):
+
+-   **[barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar):** Adiciona uma barra de depuração com informações úteis sobre a aplicação.
+-   **[egyjs/dbml-to-laravel](https://github.com/egyjs/dbml-to-laravel):** Ferramenta para gerar migrações do Laravel a partir de um esquema DBML.
+-   **[fakerphp/faker](https://github.com/fakerphp/faker):** Gera dados falsos para popular o banco de dados em testes e seeders.
+-   **[larastan/larastan](https://github.com/larastan/larastan):** Realiza análise estática de código para encontrar bugs sem executar o código.
+-   **[laravel/boost](https://packagist.org/packages/laravel/boost):** Otimiza o desempenho de Agentes de IA para o desenvolvimento do sistema em ambiente de desenvolvimento.
+-   **[laravel/pail](https://github.com/laravel/pail):** Ferramenta para monitorar e filtrar os logs da aplicação em tempo real no terminal.
+-   **[laravel/pint](https://github.com/laravel/pint):** Formata o código PHP para seguir um padrão de estilo consistente (PSR-12).
+-   **[laravel/sail](https://github.com/laravel/sail):** Ambiente de desenvolvimento local completo baseado em Docker.
+-   **[laravel/tinker](https://github.com/laravel/tinker):** Console interativo (REPL) para executar código no contexto da aplicação.
+-   **[leonardolima/laravel-security-check](https://github.com/leonardolima/laravel-security-check):** Verifica dependências do Composer em busca de vulnerabilidades de segurança.
+-   **[lucascudo/laravel-pt-br-localization](https://github.com/lucascudo/laravel-pt-br-localization):** Fornece traduções e configurações para a localização em português do Brasil.
+-   **[mockery/mockery](https://github.com/mockery/mockery):** Framework para criar objetos de teste "mock" (simulados) para testes unitários.
+-   **[nunomaduro/collision](https://github.com/nunomaduro/collision):** Apresenta erros e exceções de forma mais clara e informativa no terminal.
+-   **[pestphp/pest](https://github.com/pestphp/pest):** Framework de testes elegante e focado no desenvolvedor para PHP.
  
 ## 📄 Licença
 
