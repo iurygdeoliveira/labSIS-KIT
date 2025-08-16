@@ -1,4 +1,4 @@
-# LabSIS - Laboratório de Sistemas Inovadores
+# LabSIS SaaS KIT V4
 
 <div align="center">
   <img src="public/images/LabSIS.png" alt="LabSIS Logo" width="700" />
@@ -25,6 +25,7 @@ O objetivo deste projeto é fornecer uma base sólida e rica em recursos para ac
 Toda a documentação sobre como utilizar os recursos, padrões e arquitetura deste kit está disponível na pasta [`/docs`](/docs). Recomendamos a leitura para todos os desenvolvedores que irão atuar neste projeto.
 
 - [**Utilizando Enumerações (Enums) com Filament**](/docs/enums.md)
+- [**Customização da Aparência do Painel**](/docs/customizando-layout.md)
 
 ## Como realizar a instalação
 
