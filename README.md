@@ -1,61 +1,138 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# LabSIS - Laboratório de Sistemas Inovadores
 
+<div align="center">
+  <img src="public/images/LabSIS.png" alt="LabSIS Logo" width="700" />
+  <br>
+  <em>Transformando desafios reais em soluções inteligentes</em>
+</div>
+
+<br>
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+    <a href="https://filamentphp.com"><img alt="Filament v3" src="https://img.shields.io/badge/Filament-v4-eab308?style=for-the-badge"></a>
+    <a href="https://laravel.com"><img alt="Laravel v12+" src="https://img.shields.io/badge/Laravel-v12+-FF2D20?style=for-the-badge&logo=laravel"></a>
+    <a href="https://livewire.laravel.com"><img alt="Livewire v3" src="https://img.shields.io/badge/Livewire-v3-FB70A9?style=for-the-badge"></a>
+    <a href="https://php.net"><img alt="PHP 8.3+" src="https://img.shields.io/badge/PHP-8.3+-777BB4?style=for-the-badge&logo=php"></a>
 </p>
 
-## About Laravel
+## Sobre o labSIS SaaS KIT
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Este repositório é um Kit de Iniciação (Starter Kit) para o desenvolvimento de aplicações SaaS (Software as a Service) utilizando a stack TALL (Tailwind, Alpine.js, Laravel, Livewire) e Filament.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+O objetivo deste projeto é fornecer uma base sólida e rica em recursos para acelerar o desenvolvimento de novas aplicações, seguindo as melhores práticas e convenções do ecossistema Laravel.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Documentação do Kit
 
-## Learning Laravel
+Toda a documentação sobre como utilizar os recursos, padrões e arquitetura deste kit está disponível na pasta [`/docs`](/docs). Recomendamos a leitura para todos os desenvolvedores que irão atuar neste projeto.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- [**Utilizando Enumerações (Enums) com Filament**](/docs/enums.md)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Como realizar a instalação
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Siga os passos abaixo para configurar o ambiente de desenvolvimento localmente.
 
-## Laravel Sponsors
+**1. Clonar o Repositório**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Primeiro, clone este repositório para a sua máquina local utilizando Git:
 
-### Premium Partners
+```bash
+git clone git@github.com:iurygdeoliveira/labSIS-SaaS-KIT-V4.git
+cd labSIS-SaaS-KIT-V4
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+**2. Instalar Dependências (PHP e JS)**
 
-## Contributing
+Execute os comandos abaixo para instalar as dependências do Composer (backend) e do NPM (frontend).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer install
+npm install
+```
 
-## Code of Conduct
+**3. Configurar o Ambiente**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Copie o arquivo de exemplo `.env.example` para criar seu próprio arquivo de configuração `.env`. Em seguida, gere a chave da aplicação, que é essencial para a segurança da sua instância Laravel.
 
-## Security Vulnerabilities
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**4. Configurar o Banco de Dados**
 
-## License
+Este projeto está configurado para utilizar sqlite. Execute as migrations para criar as tabelas no banco de dados. Para popular o banco com dados de exemplo, execute as seeders.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan migrate --seed
+```
+
+**5. Compilar os Assets**
+
+Compile os arquivos de frontend (CSS e JavaScript) utilizando o Vite.
+
+```bash
+npm run build
+```
+
+**6. Iniciar o Servidor de Desenvolvimento**
+
+Finalmente, inicie o servidor de desenvolvimento local do Laravel.
+
+```bash
+php artisan serve
+```
+
+Sua aplicação estará disponível em `http://127.0.0.1:8000`. Para o painel administrativo, acesse `http://127.0.0.1:8000/admin`.
+
+## Agradecimentos
+
+Gostaríamos de expressar nossa sincera gratidão a todas as pessoas e equipes cujo trabalho tornou este projeto possível. Suas contribuições para a comunidade de código aberto são uma fonte constante de inspiração e um pilar fundamental para o nosso desenvolvimento.
+
+Em especial, agradecemos a:
+
+-   **Equipe Laravel**: Pela criação e manutenção de um framework robusto, elegante e inovador, disponível em [laravel/laravel](https://github.com/laravel/laravel).
+-   **Equipe Filament**: Pelo incrível trabalho no [Filament](https://github.com/filamentphp/filament), que nos permite construir painéis administrativos complexos com uma velocidade e simplicidade impressionantes.
+-   **Leandro Costa** ([@leandrocfe](https://github.com/leandrocfe)): Por suas valiosas contribuições e por compartilhar conhecimento de alta qualidade sobre Filament em seu canal [Filament Brasil no YouTube](https://www.youtube.com/@filamentbr), que foi fundamental para a implementação de diversas features neste projeto.
+-   **Wallace Martins** ([@wallacemartinss](https://github.com/wallacemartinss)): Pela disponibilização do [website_template](https://github.com/wallacemartinss/website_template), que forneceu uma base excelente e moderna para a construção do portal público deste projeto.
+-   **Jeferson Gonçalves** ([@jeffersongoncalves](https://github.com/jeffersongoncalves)): Pelo desenvolvimento do pacote [filament-cep-field](https://github.com/jeffersongoncalves/filament-cep-field), que agregou grande valor ao projeto ao fornecer um campo de formulário que busca e preenche automaticamente dados de endereço a partir de um CEP, otimizando a experiência do usuário.
+
+O trabalho de vocês contribui significativamente para o avanço e a qualidade deste projeto.
+
+## 🚀 Recursos Atuais
+
+O Kit oferece uma base sólida com os seguintes recursos já implementados:
+
+**Painel Administrativo (Filament)**
+- **Segurança:**
+  - **Autenticação de Dois Fatores (2FA):** Sistema de 2FA integrado ao perfil do usuário, compatível com aplicativos de autenticação (Google Authenticator, Authy, etc.).
+  - **Códigos de Recuperação:** Geração de códigos de recuperação para acesso seguro em caso de perda do dispositivo de autenticação.
+- **Gerenciamento de Usuários:**
+  - CRUD completo para usuários (Criação, Leitura, Atualização e Exclusão).
+  - Sistema de **autorização/suspensão** de usuários com registro de motivo.
+  - Visualização de detalhes do usuário em abas, incluindo informações pessoais, datas de criação/verificação e status da conta.
+  - Página de listagem com busca e badges visuais para o status do usuário (Autorizado/Suspenso).
+  - Notificações de feedback para todas as ações administrativas (criação, edição, exclusão).
+
+**Website / Landing Page**
+- **Página Inicial Completa:** Uma landing page moderna e responsiva construída com componentes Blade e TailwindCSS.
+- **Seções Pré-definidas:**
+  - **Hero:** Seção principal de boas-vindas.
+  - **Benefícios:** Lista de vantagens da plataforma.
+  - **Como Funciona:** Guia visual do processo.
+  - **Depoimentos:** Seção de prova social com scroll automático.
+  - **Tabela de Preços:** Componente interativo com seleção de ciclo de pagamento (mensal/anual).
+  - **FAQ:** Acordeão de perguntas e respostas.
+- **Navegação Integrada:** Header e footer padronizados com links de navegação e acesso direto à plataforma (`/admin`).
+ 
+## 📄 Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+## 👥 Autor
+
+- **Iury Oliveira** - [@iurygdeoliveira](https://github.com/iurygdeoliveira)
+
+---
+
+<div align="center">
+  <strong>LabSIS - Transformando desafios reais em soluções inteligentes</strong>
+</div
