@@ -45,6 +45,7 @@ class UserForm
                     ->hidden(fn (string $operation): bool => $operation === 'create'),
                 TextInput::make('suspension_reason')
                     ->label('Motivo da suspensão')
+                    ->disabled(fn (?User $record): bool => $record?->getKey() === Auth::id())
                     ->hidden(fn (string $operation): bool => $operation === 'create'),
             ]);
     }

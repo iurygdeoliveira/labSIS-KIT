@@ -20,13 +20,19 @@ class EditUser extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        return [
+        $actions = [
             $this->getBackButtonAction(),
             ViewAction::make(),
-            DeleteAction::make()
-                ->successNotification(Notification::make())
-                ->after(fn () => $this->notifySuccess('Usuário excluído com sucesso.')),
         ];
+
+        // Só mostra o botão de deletar se não for o usuário logado
+        if ($this->record->getKey() !== Auth::id()) {
+            $actions[] = DeleteAction::make()
+                ->successNotification(Notification::make())
+                ->after(fn () => $this->notifySuccess('Usuário excluído com sucesso.'));
+        }
+
+        return $actions;
     }
 
     protected function getSavedNotification(): ?Notification

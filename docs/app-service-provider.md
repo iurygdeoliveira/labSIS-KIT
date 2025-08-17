@@ -1,5 +1,13 @@
 # Entendendo o AppServiceProvider
 
+## 📋 Índice
+
+- [Introdução: O Papel de um Service Provider](#introdução-o-papel-de-um-service-provider)
+- [O Método `register()`](#o-método-register)
+- [O Método `boot()`](#o-método-boot)
+- [Análise das Configurações no `boot()`](#análise-das-configurações-no-boot)
+- [Conclusão](#conclusão)
+
 ## Introdução: O Papel de um Service Provider
 
 No ecossistema Laravel, os **Service Providers** (Provedores de Serviço) são o pilar central do bootstrapping da aplicação. Em termos simples, eles são classes responsáveis por "ensinar" ao Laravel como inicializar e configurar os diversos componentes que formam a sua aplicação, como serviços, classes, configurações e outras funcionalidades.

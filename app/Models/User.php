@@ -10,13 +10,15 @@ use App\Trait\UuidTrait;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Override;
 
-class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasAvatar
 {
     use AppAuthenticationRecoveryCodes;
     use AppAuthenticationSecret;
@@ -29,6 +31,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         'name',
         'email',
         'password',
+        'avatar_url',
         'email_verified_at',
         'is_suspended',
         'suspended_at',
@@ -55,6 +58,18 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             'app_authentication_secret' => 'encrypted',
             'app_authentication_recovery_codes' => 'encrypted:array',
         ];
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
+
+        if (! $this->$avatarColumn) {
+            return null;
+        }
+
+        // Como agora estamos usando o disco 'public', usamos Storage::url diretamente
+        return Storage::url($this->$avatarColumn);
     }
 
     public function isSuspended(): bool

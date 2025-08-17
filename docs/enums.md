@@ -1,5 +1,14 @@
 # Utilizando Enumerações (Enums) no Laravel com Integração ao Filament
 
+## 📋 Índice
+
+- [Introdução](#introdução)
+- [O que são Enumerações?](#o-que-são-enumerações)
+- [Integração de Enums com o Filament](#integração-de-enums-com-o-filament)
+- [Análise do Exemplo: `Status.php`](#análise-do-exemplo-statusphp)
+- [Utilizando o Enum em um Recurso (Resource) do Filament](#utilizando-o-enum-em-um-recurso-resource-do-filament)
+- [Conclusão](#conclusão)
+
 ## Introdução
 
 No desenvolvimento de software, é comum a necessidade de representar um conjunto finito de valores possíveis para um determinado atributo. Exemplos clássicos incluem status de um pedido (`pendente`, `pago`, `enviado`), tipos de usuário (`administrador`, `editor`, `leitor`) ou categorias de um produto. Historicamente, desenvolvedores recorriam a constantes de classe, strings ou inteiros para representar esses estados, abordagens que podem introduzir ambiguidades e erros em tempo de execução.

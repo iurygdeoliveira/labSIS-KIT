@@ -2,8 +2,8 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Auth\Login as CustomLogin;
 use App\Filament\Configurators\FilamentComponentsConfigurator;
+use App\Filament\Pages\Auth\Login;
 use Cmsmaxinc\FilamentSystemVersions\Filament\Widgets\DependencyWidget;
 use Filafly\Themes\Brisk\BriskTheme;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
@@ -23,6 +23,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -37,9 +38,8 @@ class AdminPanelProvider extends PanelProvider
             ->bootUsing(function (): void {
                 FilamentComponentsConfigurator::configure();
             })
-            ->login(CustomLogin::class)
+            ->login(Login::class)
             ->registration()
-            ->profile()
             ->multiFactorAuthentication(
                 AppAuthentication::make()
                     ->recoverable()
@@ -84,6 +84,20 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
 
             ])
-            ->plugin(BriskTheme::make()->withoutSuggestedFont());
+            ->plugin(BriskTheme::make()->withoutSuggestedFont())
+            ->plugin(
+                FilamentEditProfilePlugin::make()
+                    ->setNavigationLabel('Editar Perfil')
+                    ->setNavigationGroup('Configurações')
+                    ->setIcon('heroicon-s-adjustments-horizontal')
+                    ->shouldShowAvatarForm(
+                        value: true,
+                        directory: 'avatars',
+                        rules: 'mimes:png,jpg,jpeg|max:1024'
+                    )
+                    ->shouldShowEmailForm()
+                    ->shouldShowDeleteAccountForm(false)
+                    ->shouldShowMultiFactorAuthentication()
+            );
     }
 }

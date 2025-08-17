@@ -26,6 +26,9 @@ Toda a documentação sobre como utilizar os recursos, padrões e arquitetura de
 
 - [**Utilizando Enumerações (Enums) com Filament**](/docs/enums.md)
 - [**Customização da Aparência do Painel**](/docs/customizando-layout.md)
+- [**Autenticação de Dois Fatores (2FA) no Filament**](/docs/autenticacao-2fa.md)
+- [**Entendendo o AppServiceProvider**](/docs/app-service-provider.md)
+- [**Edição de Perfil no Filament**](/docs/edicao-perfil.md)
 
 ## Como realizar a instalação
 
@@ -92,6 +95,7 @@ Em especial, agradecemos a:
 
 -   **Equipe Laravel**: Pela criação e manutenção de um framework robusto, elegante e inovador, disponível em [laravel/laravel](https://github.com/laravel/laravel).
 -   **Equipe Filament**: Pelo incrível trabalho no [Filament](https://github.com/filamentphp/filament), que nos permite construir painéis administrativos complexos com uma velocidade e simplicidade impressionantes.
+-   **Comunidade Beer and Code** ([beerandcode.com.br](https://beerandcode.com.br/)): Pela excelente metodologia de ensino em Laravel, que tem colaborador com a formação de desenvolvedores PHP, fornecendo conhecimento prático e focado em soluções reais.
 -   **Leandro Costa** ([@leandrocfe](https://github.com/leandrocfe)): Por suas valiosas contribuições e por compartilhar conhecimento de alta qualidade sobre Filament em seu canal [Filament Brasil no YouTube](https://www.youtube.com/@filamentbr), que foi fundamental para a implementação de diversas features neste projeto.
 -   **Wallace Martins** ([@wallacemartinss](https://github.com/wallacemartinss)): Pela disponibilização do [website_template](https://github.com/wallacemartinss/website_template), que forneceu uma base excelente e moderna para a construção do portal público deste projeto.
 -   **Jeferson Gonçalves** ([@jeffersongoncalves](https://github.com/jeffersongoncalves)): Pelo desenvolvimento do pacote [filament-cep-field](https://github.com/jeffersongoncalves/filament-cep-field), que agregou grande valor ao projeto ao fornecer um campo de formulário que busca e preenche automaticamente dados de endereço a partir de um CEP, otimizando a experiência do usuário.
@@ -112,6 +116,13 @@ O Kit oferece uma base sólida com os seguintes recursos já implementados:
   - Visualização de detalhes do usuário em abas, incluindo informações pessoais, datas de criação/verificação e status da conta.
   - Página de listagem com busca e badges visuais para o status do usuário (Autorizado/Suspenso).
   - Notificações de feedback para todas as ações administrativas (criação, edição, exclusão).
+- **Edição de Perfil:**
+  - **Sistema de Avatar:** Upload e gerenciamento de foto de perfil com suporte a PNG, JPG e JPEG (máximo 1MB).
+  - **Configurações Personalizáveis:** Interface intuitiva para edição de informações pessoais, email e senha.
+  - **Integração com 2FA:** Configuração e gerenciamento de autenticação de dois fatores diretamente no perfil.
+  - **Códigos de Recuperação:** Geração e visualização de códigos de backup para acesso seguro.
+  - **Suporte Multi-idioma:** Seleção de idioma preferido (Português, Inglês, Espanhol) com persistência de preferência.
+  - **Menu Organizado:** Funcionalidade agrupada no menu "Configurações" para fácil acesso e organização.
 
 **Website / Landing Page**
 - **Página Inicial Completa:** Uma landing page moderna e responsiva construída com componentes Blade e TailwindCSS.
