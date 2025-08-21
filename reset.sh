@@ -12,8 +12,8 @@ php artisan filament:optimize-clear
 rm -rf public/build
 
 #Instalando dependências do sistema
-php composer update --optimize-autoloader
-npm ci
+composer update --optimize-autoloader
+npm update
 
 # Build para desenvolvimento
 echo "🔨 Executando build para desenvolvimento..."
