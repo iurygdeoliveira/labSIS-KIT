@@ -3,6 +3,7 @@
 <div align="center">
   <img src="public/images/LabSIS.png" alt="LabSIS Logo" width="700" />
   <br>
+  <a href="https://www.labsis.dev.br">www.labsis.dev.br</a><br>
   <em>Transformando desafios reais em soluções inteligentes</em>
 </div>
 
@@ -30,6 +31,7 @@ Toda a documentação sobre como utilizar os recursos, padrões e arquitetura de
 - [**Entendendo o AppServiceProvider**](/docs/app-service-provider.md)
 - [**Edição de Perfil no Filament**](/docs/edicao-perfil.md)
 - [**Sistema de Suspensão de Usuários no Filament**](/docs/suspensao-usuarios.md)
+- [**Sistema de Notificações**](/docs/notifications-trait.md)
 
 ## Como realizar a instalação
 

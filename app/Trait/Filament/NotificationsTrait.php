@@ -55,14 +55,6 @@ trait NotificationsTrait
                     ->color('warning');
 
                 break;
-
-            default:
-                $notification->info()
-                    ->icon('heroicon-s-information-circle')
-                    ->iconColor('info')
-                    ->color('info');
-
-                break;
         }
 
         if ($persistent) {
