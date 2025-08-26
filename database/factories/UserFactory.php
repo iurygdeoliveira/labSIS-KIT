@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\RoleType;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -40,5 +42,24 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function admin(): static
+    {
+        return $this
+            ->state(fn () => [
+                'name' => 'Admin',
+                'email' => 'admin@labsis.dev.br',
+            ])
+            ->afterCreating(function (User $user): void {
+                $user->assignRole(RoleType::ADMIN->value);
+            });
+    }
+
+    public function user(): static
+    {
+        return $this->afterCreating(function (User $user): void {
+            $user->assignRole(RoleType::USER->value);
+        });
     }
 }

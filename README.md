@@ -30,8 +30,9 @@ Toda a documentação sobre como utilizar os recursos, padrões e arquitetura de
 - [**Autenticação de Dois Fatores (2FA) no Filament**](/docs/autenticacao-2fa.md)
 - [**Entendendo o AppServiceProvider**](/docs/app-service-provider.md)
 - [**Edição de Perfil no Filament**](/docs/edicao-perfil.md)
-- [**Sistema de Suspensão de Usuários no Filament**](/docs/suspensao-usuarios.md)
-- [**Sistema de Notificações**](/docs/notifications-trait.md)
+- [**Suspensão de Usuários**](/docs/suspensao-usuarios.md)
+- [**Notificações**](/docs/notifications-trait.md)
+- [**Roles/Permissions**](/docs/roles-e-permissoes.md)
 
 ## Como realizar a instalação
 

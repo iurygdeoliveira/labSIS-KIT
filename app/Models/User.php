@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\RoleType;
 use App\Trait\Filament\AppAuthenticationRecoveryCodes;
 use App\Trait\Filament\AppAuthenticationSecret;
 use App\Trait\UuidTrait;
@@ -17,12 +18,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Override;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasAvatar
 {
     use AppAuthenticationRecoveryCodes;
     use AppAuthenticationSecret;
     use HasFactory;
+    use HasRoles;
     use Notifiable;
     use UuidTrait;
 
@@ -93,6 +96,10 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             return false;
         }
 
-        return true;
+        if ($panel->getId() === 'admin') {
+            return $this->hasRole(RoleType::ADMIN->value);
+        }
+
+        return false;
     }
 }

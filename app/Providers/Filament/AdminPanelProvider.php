@@ -7,6 +7,7 @@ use App\Filament\Pages\Auth\Login;
 use Cmsmaxinc\FilamentSystemVersions\Filament\Widgets\DependencyWidget;
 use Filafly\Themes\Brisk\BriskTheme;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
+use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -15,6 +16,7 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Width;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -53,11 +55,12 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => '#F28907',
                 'success' => '#2eb347',
                 'info' => '#1F8C4E',
-                'light' => '#f7f8fc',
-                'disabled' => '#a2a2ac',
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
+            ->darkMode(false)
+            ->defaultThemeMode(ThemeMode::Light)
             ->sidebarWidth('15rem')
+            ->maxContentWidth(Width::Full)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
