@@ -33,6 +33,7 @@ Toda a documentação sobre como utilizar os recursos, padrões e arquitetura de
 - [**Suspensão de Usuários**](/docs/suspensao-usuarios.md)
 - [**Notificações**](/docs/notifications-trait.md)
 - [**Roles/Permissions**](/docs/roles-e-permissoes.md)
+ - [**Login Unificado**](/docs/login-unificado.md)
 
 ## Como realizar a instalação
 
