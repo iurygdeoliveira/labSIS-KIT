@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Http\Responses\LoginResponse;
 use App\Http\Responses\LogoutResponse;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
+use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
 use Filament\Auth\Http\Responses\Contracts\LogoutResponse as LogoutResponseContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     #[Override]
     public function register(): void
     {
+        $this->app->bind(FilamentLoginResponse::class, LoginResponse::class);
         $this->app->bind(LogoutResponseContract::class, LogoutResponse::class);
     }
 

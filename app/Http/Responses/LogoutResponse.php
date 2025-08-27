@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Responses;
 
-use Filament\Auth\Http\Responses\LogoutResponse as Responsable;
+use Filament\Auth\Http\Responses\Contracts\LogoutResponse as FilamentLogoutResponse;
 use Illuminate\Http\RedirectResponse;
-use Livewire\Features\SupportRedirects\Redirector;
 
-class LogoutResponse extends Responsable
+class LogoutResponse implements FilamentLogoutResponse
 {
-    public function toResponse($request): RedirectResponse|Redirector
+    public function toResponse($request): RedirectResponse
     {
-        return redirect()->to('/');
+        // Redireciona para a rota raiz (página home)
+        return redirect()->route('home');
     }
 }
