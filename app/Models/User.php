@@ -88,16 +88,24 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function canAccessPanel(Panel $panel): bool
     {
-        if (! $this->hasVerifiedEmail()) {
-            return false;
+        if ($panel->getId() === 'auth') {
+            return true;
         }
 
         if ($this->isSuspended()) {
             return false;
         }
 
+        if (! $this->hasVerifiedEmail()) {
+            return false;
+        }
+
         if ($panel->getId() === 'admin') {
             return $this->hasRole(RoleType::ADMIN->value);
+        }
+
+        if ($panel->getId() === 'user') {
+            return $this->hasRole(RoleType::USER->value);
         }
 
         return false;

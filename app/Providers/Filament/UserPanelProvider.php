@@ -11,9 +11,12 @@ class UserPanelProvider extends BasePanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        $panel = parent::panel($panel)
-            ->id('user')
-            ->path('user')
+        // Configurações compartilhadas (Base define id/path via getPanelId/getPanelPath)
+        $panel = parent::panel($panel);
+        $panel = $this->applySharedPlugins($panel);
+
+        // Particularidades do painel user
+        $panel = $panel
             ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\\Filament\\User\\Resources')
             ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\\Filament\\User\\Pages')
             ->pages([
@@ -26,5 +29,15 @@ class UserPanelProvider extends BasePanelProvider
             ]);
 
         return $panel;
+    }
+
+    protected function getPanelId(): string
+    {
+        return 'user';
+    }
+
+    protected function getPanelPath(): string
+    {
+        return 'user';
     }
 }

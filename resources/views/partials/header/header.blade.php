@@ -17,7 +17,7 @@
                     ['label' => 'Sobre', 'url' => url('/#services')],
                     ['label' => 'Serviços', 'url' => url('/#services')],
                     ['label' => 'Contato', 'url' => url('/#services')],
-                    ['label' => 'Acessar a Plataforma', 'url' => filament()->getLoginUrl()],
+                    ['label' => 'Acessar a Plataforma', 'url' => url('/login')],
                 ];
             @endphp
 

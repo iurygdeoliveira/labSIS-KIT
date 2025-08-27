@@ -13,10 +13,13 @@ class AdminPanelProvider extends BasePanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        $panel = parent::panel($panel)
+        // Configurações compartilhadas (Base define id/path via getPanelId/getPanelPath)
+        $panel = parent::panel($panel);
+        $panel = $this->applySharedPlugins($panel);
+
+        // Particularidades do painel admin
+        $panel = $panel
             ->default()
-            ->id('admin')
-            ->path('admin')
             ->bootUsing(function (): void {
                 FilamentComponentsConfigurator::configure();
             })
@@ -33,5 +36,15 @@ class AdminPanelProvider extends BasePanelProvider
             ]);
 
         return $panel;
+    }
+
+    protected function getPanelId(): string
+    {
+        return 'admin';
+    }
+
+    protected function getPanelPath(): string
+    {
+        return 'admin';
     }
 }

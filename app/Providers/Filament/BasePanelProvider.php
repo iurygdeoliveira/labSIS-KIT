@@ -25,11 +25,13 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
-class BasePanelProvider extends PanelProvider
+abstract class BasePanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->id($this->getPanelId())
+            ->path($this->getPanelPath())
             ->spa()
             ->databaseTransactions()
             ->darkMode(false)
@@ -64,7 +66,12 @@ class BasePanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
+            ]);
+    }
+
+    protected function applySharedPlugins(Panel $panel): Panel
+    {
+        return $panel
             ->plugin(BriskTheme::make()->withoutSuggestedFont())
             ->plugin(
                 FilamentEditProfilePlugin::make()
@@ -81,4 +88,8 @@ class BasePanelProvider extends PanelProvider
                     ->shouldShowMultiFactorAuthentication()
             );
     }
+
+    abstract protected function getPanelId(): string;
+
+    abstract protected function getPanelPath(): string;
 }

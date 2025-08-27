@@ -119,19 +119,14 @@ O Kit oferece uma base sólida com os seguintes recursos já implementados:
   - **Códigos de Recuperação:** Geração de códigos de recuperação para acesso seguro em caso de perda do dispositivo de autenticação.
 - **Gerenciamento de Usuários:**
   - CRUD completo para usuários (Criação, Leitura, Atualização e Exclusão).
-  - **Sistema de Suspensão de Usuários:** Controle completo de acesso com toggle de suspensão, registro de motivo e timestamp automático.
-  - **Prevenção de Auto-Suspensão:** Usuários não podem suspender suas próprias contas, garantindo acesso contínuo.
-  - **Interface Visual Intuitiva:** Badges coloridos (verde para autorizado, vermelho para suspenso) na listagem de usuários.
+  - **Sistema de Suspensão de Usuários:** Controle completo de acesso com toggle de suspensão, registro de motivo e timestamp automático. Usuários suspensos são automaticamente bloqueados do acesso aos paineis.
   - **Organização em Abas:** Visualização detalhada organizada em abas (Informações Pessoais, Datas, Suspensão).
-  - **Sincronização Automática:** Campos `is_suspended` e `suspended_at` sincronizados automaticamente.
-  - **Controle de Acesso:** Usuários suspensos são automaticamente bloqueados do painel administrativo.
-  - **Notificações de Feedback:** Sistema completo de notificações para todas as ações administrativas.
+  
 - **Edição de Perfil:**
-  - **Sistema de Avatar:** Upload e gerenciamento de foto de perfil com suporte a PNG, JPG e JPEG (máximo 1MB).
+  - **Avatar:** Upload e gerenciamento de foto de perfil com suporte a PNG, JPG e JPEG (máximo 1MB).
   - **Configurações Personalizáveis:** Interface intuitiva para edição de informações pessoais, email e senha.
   - **Integração com 2FA:** Configuração e gerenciamento de autenticação de dois fatores diretamente no perfil.
   - **Códigos de Recuperação:** Geração e visualização de códigos de backup para acesso seguro.
-  - **Suporte Multi-idioma:** Seleção de idioma preferido (Português, Inglês, Espanhol) com persistência de preferência.
   - **Menu Organizado:** Funcionalidade agrupada no menu "Configurações" para fácil acesso e organização.
 
 **Website / Landing Page**
