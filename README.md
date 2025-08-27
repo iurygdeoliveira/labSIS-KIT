@@ -25,15 +25,15 @@ O objetivo deste projeto é fornecer uma base sólida e rica em recursos para ac
 
 Toda a documentação sobre como utilizar os recursos, padrões e arquitetura deste kit está disponível na pasta [`/docs`](/docs). Recomendamos a leitura para todos os desenvolvedores que irão atuar neste projeto.
 
-- [**Utilizando Enumerações (Enums) com Filament**](/docs/enums.md)
-- [**Customização da Aparência do Painel**](/docs/customizando-layout.md)
 - [**Autenticação de Dois Fatores (2FA) no Filament**](/docs/autenticacao-2fa.md)
-- [**Entendendo o AppServiceProvider**](/docs/app-service-provider.md)
+- [**Customização da Aparência do Painel**](/docs/customizando-layout.md)
 - [**Edição de Perfil no Filament**](/docs/edicao-perfil.md)
-- [**Suspensão de Usuários**](/docs/suspensao-usuarios.md)
+- [**Entendendo o AppServiceProvider**](/docs/app-service-provider.md)
+- [**Login Unificado**](/docs/login-unificado.md)
 - [**Notificações**](/docs/notifications-trait.md)
 - [**Roles/Permissions**](/docs/roles-e-permissoes.md)
- - [**Login Unificado**](/docs/login-unificado.md)
+- [**Suspensão de Usuários**](/docs/suspensao-usuarios.md)
+- [**Utilizando Enumerações (Enums) com Filament**](/docs/enums.md)
 
 ## Como realizar a instalação
 

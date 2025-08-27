@@ -2,24 +2,24 @@
 
 ## 📋 Índice
 
-- Introdução
-- Arquitetura Geral
-- Providers do Filament
-  - BasePanelProvider
-  - AuthPanelProvider
-  - AdminPanelProvider
-  - UserPanelProvider
-- Middlewares
-  - RedirectGuestsToCentralLoginMiddleware
-  - RedirectToProperPanelMiddleware
-- Página de Login Customizada
-- Redirecionamento pós-login
-- Autorização de Acesso aos Painéis (canAccessPanel)
-- Registro dos Providers
-- Fluxo de Funcionamento
-- Testando
-- Problemas Comuns
-- Conclusão
+- [Introdução](#introdução)
+- [Arquitetura Geral](#arquitetura-geral)
+- [Providers do Filament](#providers-do-filament)
+  - [BasePanelProvider](#basepanelprovider)
+  - [AuthPanelProvider](#authpanelprovider)
+  - [AdminPanelProvider](#adminpanelprovider)
+  - [UserPanelProvider](#userpanelprovider)
+- [Middlewares](#middlewares)
+  - [RedirectGuestsToCentralLoginMiddleware](#redirectgueststocentralloginmiddleware)
+  - [RedirectToProperPanelMiddleware](#redirecttoproperpanelmiddleware)
+- [Página de Login Customizada](#página-de-login-customizada)
+- [Redirecionamento pós-login](#redirecionamento-pós-login)
+- [Autorização de Acesso aos Painéis (canAccessPanel)](#autorização-de-acesso-aos-painéis-canaccesspanel)
+- [Registro dos Providers](#registro-dos-providers)
+- [Fluxo de Funcionamento](#fluxo-de-funcionamento)
+- [Testando](#testando)
+- [Problemas Comuns](#problemas-comuns)
+- [Conclusão](#conclusão)
 
 ## Introdução
 
@@ -72,7 +72,7 @@ return $panel
 ### AuthPanelProvider  
 Arquivo: `app/Providers/Filament/AuthPanelProvider.php`
 
-- Painel público para autenticação (login unificado), registro, reset e verificações de e-mail.
+- Painel público para autenticação de usuário (login unificado), registro, reset e verificações de e-mail.
 - Usa explicitamente a página de login customizada para tratar contas suspensas.
 
 Trecho:
@@ -92,7 +92,7 @@ return $panel
 ### AdminPanelProvider  
 Arquivo: `app/Providers/Filament/AdminPanelProvider.php`
 
-- Painel administrativo.
+- Painel do usuário administrador.
 - Herda as configs do `BasePanelProvider` e descobre resources/pages/widgets do admin.
 
 Trecho:
@@ -116,7 +116,7 @@ $panel = parent::panel($panel)
 ### UserPanelProvider  
 Arquivo: `app/Providers/Filament/UserPanelProvider.php`
 
-- Painel de usuários finais.
+- Painel do usuário comum.
 - Herda as configs do `BasePanelProvider` e descobre resources/pages/widgets do namespace `User`.
 
 Trecho:
@@ -258,23 +258,7 @@ return [
 4. Convidado tentando `/admin` ou `/user`: redirecionado para `/login` pelo `RedirectGuestsToCentralLoginMiddleware`.
 5. Usuário autenticado tentando `/login`: redirecionado ao painel correto pelo `RedirectToProperPanelMiddleware`.
 
-## Testando
-
-- Admin:
-  - E-mail: `admin@labsis.dev.br`
-  - Senha: `mudar123`
-- Acesse `/login` e valide o redirecionamento.
-- Opcional: marque `is_suspended` no usuário para validar o bloqueio com notificação.
-
-## Problemas Comuns
-
-- “Essas credenciais não correspondem aos nossos registros.” com credenciais corretas:
-  - Verifique `canAccessPanel()`: é obrigatório retornar `true` para o painel `auth`.
-- Loop ao acessar `/login` autenticado:
-  - `RedirectToProperPanelMiddleware` deve encaminhar para `/admin` ou `/user`.
-- Avatar não exibido:
-  - Verifique `Storage::url()` e se o disco `public` está com link simbólico (`php artisan storage:link`).
 
 ## Conclusão
 
-O “Login Unificado” centraliza a autenticação, reduz complexidade nos demais painéis e melhora a segurança. A separação de responsabilidades entre Providers, Middlewares e o `canAccessPanel()` torna o sistema coeso, previsível e fácil de manter.
+O “Login Unificado” centraliza a autenticação, reduz complexidade nos demais painéis e melhora a experiência do usuário, pois não é necessário acessar diferentes URLs para acessar os painéis de admin e user. A separação de responsabilidades entre Providers, Middlewares e o `canAccessPanel()` torna o sistema coeso, previsível e fácil de manter.
