@@ -15,7 +15,6 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -33,6 +32,7 @@ abstract class BasePanelProvider extends PanelProvider
             ->id($this->getPanelId())
             ->path($this->getPanelPath())
             ->spa()
+            ->globalSearch(false)
             ->databaseTransactions()
             ->darkMode(false)
             ->defaultThemeMode(ThemeMode::Light)
@@ -41,12 +41,11 @@ abstract class BasePanelProvider extends PanelProvider
                     ->recoverable()
             )
             ->colors([
-                'primary' => '#014029',
-                'secondary' => Color::Gray,
-                'danger' => '#D93223',
-                'warning' => '#F28907',
-                'success' => '#2eb347',
-                'info' => '#1F8C4E',
+                'primary' => config('filament-colors.primary'),
+                'secondary' => config('filament-colors.secondary'),
+                'danger' => config('filament-colors.danger'),
+                'warning' => config('filament-colors.warning'),
+                'success' => config('filament-colors.success'),
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->sidebarWidth('15rem')

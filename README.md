@@ -34,6 +34,16 @@ Toda a documentação sobre como utilizar os recursos, padrões e arquitetura de
 - [**Roles/Permissions**](/docs/roles-e-permissoes.md)
 - [**Suspensão de Usuários**](/docs/suspensao-usuarios.md)
 - [**Utilizando Enumerações (Enums) com Filament**](/docs/enums.md)
+- [**Cores no Filament**](/docs/cores-filament.md)
+
+## Pré-requisitos
+
+Antes de começar, certifique-se de ter instalado em sua máquina:
+
+- **Docker Desktop** - [Download](https://www.docker.com/products/docker-desktop/)
+- **Git** - [Download](https://git-scm.com/)
+- **Composer** - [Download](https://getcomposer.org/)
+- **Node.js** (versão 18 ou superior) - [Download](https://nodejs.org/)
 
 ## Como realizar a instalação
 
@@ -63,15 +73,15 @@ Copie o arquivo de exemplo `.env.example` para criar seu próprio arquivo de con
 
 ```bash
 cp .env.example .env
-php artisan key:generate
 ```
 
 **4. Configurar o Banco de Dados**
 
-Este projeto está configurado para utilizar sqlite. Execute as migrations para criar as tabelas no banco de dados. Para popular o banco com dados de exemplo, execute as seeders.
+Este projeto está configurado para utilizar PostgreSQL com Laravel Sail. Execute as migrations para criar as tabelas no banco de dados. Para popular o banco com dados de exemplo, execute as seeders.
 
 ```bash
-php artisan migrate --seed
+./vendor/bin/sail up -d
+./vendor/bin/sail artisan migrate --seed
 ```
 
 **5. Compilar os Assets**
@@ -79,18 +89,10 @@ php artisan migrate --seed
 Compile os arquivos de frontend (CSS e JavaScript) utilizando o Vite.
 
 ```bash
-npm run build
+./vendor/bin/sail npm run build
 ```
 
-**6. Iniciar o Servidor de Desenvolvimento**
-
-Finalmente, inicie o servidor de desenvolvimento local do Laravel.
-
-```bash
-php artisan serve
-```
-
-Sua aplicação estará disponível em `http://127.0.0.1:8000`. Para o painel administrativo, acesse `http://127.0.0.1:8000/admin`.
+A aplicação estará disponível em `http://localhost`. 
 
 ## Agradecimentos
 
@@ -171,4 +173,4 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 
 <div align="center">
   <strong>LabSIS - Transformando desafios reais em soluções inteligentes</strong>
-</div
+</div>

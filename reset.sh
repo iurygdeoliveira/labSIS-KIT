@@ -7,8 +7,8 @@ echo "🚀 Iniciando reset de desenvolvimento..."
 
 # Limpar cache do Laravel
 echo "🧹 Limpando cache e assets do sistema..."
-php artisan optimize:clear
-php artisan filament:optimize-clear
+./vendor/bin/sail artisan optimize:clear
+./vendor/bin/sail artisan filament:optimize-clear
 rm -rf public/build
 
 #Instalando dependências do sistema

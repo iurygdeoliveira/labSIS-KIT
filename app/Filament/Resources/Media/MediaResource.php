@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Override;
 
 class MediaResource extends Resource
 {
@@ -22,7 +23,17 @@ class MediaResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $navigationLabel = 'Mídias';
+
+    protected static ?string $title = 'Mídias';
+
     protected static ?string $recordTitleAttribute = 'name';
+
+    #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Media');
+    }
 
     public static function form(Schema $schema): Schema
     {

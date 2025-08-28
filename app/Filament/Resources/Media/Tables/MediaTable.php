@@ -15,13 +15,24 @@ class MediaTable
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
-                TextColumn::make('file_name'),
-                TextColumn::make('mime_type'),
-                TextColumn::make('disk'),
-                TextColumn::make('size')
-                    ->numeric()
+                TextColumn::make('name')
+                    ->label('Nome do Arquivo')
+                    ->searchable()
                     ->sortable(),
+                TextColumn::make('file_type')
+                    ->label('Tipo')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Imagem' => 'primary',
+                        'Vídeo' => 'warning',
+                        'Documento' => 'success',
+                        'Áudio' => 'danger'
+                    }),
+                TextColumn::make('human_size')
+                    ->label('Tamanho'),
+                TextColumn::make('created_at')
+                    ->label('Criado em')
+                    ->dateTime('d/m/Y H:i'),
             ])
             ->filters([
                 //
@@ -34,6 +45,7 @@ class MediaTable
                 BulkActionGroup::make([
                     // DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 }

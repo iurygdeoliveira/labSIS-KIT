@@ -20,11 +20,11 @@ class UsersTable
     {
         return $table
             ->columns([
-                ImageColumn::make('avatar_url')
-                    ->label('Avatar')
-                    ->circular()
-                    ->defaultImageUrl(fn (User $record): string => $record->getFilamentAvatarUrl())
-                    ->extraImgAttributes(['alt' => 'Avatar do usuário']),
+                // ImageColumn::make('avatar_url')
+                //     ->label('Avatar')
+                //     ->circular()
+                //     ->defaultImageUrl(fn (User $record): string => $record->getFilamentAvatarUrl())
+                //     ->extraImgAttributes(['alt' => 'Avatar do usuário']),
                 TextColumn::make('name'),
                 TextColumn::make('email')
                     ->label('Email address'),
@@ -32,7 +32,7 @@ class UsersTable
                     ->label('Status')
                     ->formatStateUsing(fn (User $record): string => $record->is_suspended ? __('Suspenso') : __('Autorizado'))
                     ->badge()
-                    ->color(fn (User $record): string => $record->is_suspended ? 'danger' : 'success')
+                    ->color(fn (User $record): string => $record->is_suspended ? 'danger' : 'primary')
                     ->icon(fn (User $record): string => $record->is_suspended ? 'heroicon-c-no-symbol' : 'heroicon-c-check')
                     ->alignCenter(),
             ])

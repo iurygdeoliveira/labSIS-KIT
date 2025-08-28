@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Configurators\FilamentComponentsConfigurator;
-use Cmsmaxinc\FilamentSystemVersions\Filament\Widgets\DependencyWidget;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\Widgets\AccountWidget;
@@ -32,7 +31,6 @@ class AdminPanelProvider extends BasePanelProvider
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
-                DependencyWidget::class,
             ]);
 
         return $panel;
