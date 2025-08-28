@@ -40,13 +40,6 @@ abstract class BasePanelProvider extends PanelProvider
                 AppAuthentication::make()
                     ->recoverable()
             )
-            ->colors([
-                'primary' => config('filament-colors.primary'),
-                'secondary' => config('filament-colors.secondary'),
-                'danger' => config('filament-colors.danger'),
-                'warning' => config('filament-colors.warning'),
-                'success' => config('filament-colors.success'),
-            ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->sidebarWidth('15rem')
             ->maxContentWidth(Width::Full)

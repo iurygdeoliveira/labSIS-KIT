@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
 use Filament\Auth\Http\Responses\Contracts\LogoutResponse as LogoutResponseContract;
+use Filament\Support\Colors\Color;
+use Filament\Support\Facades\FilamentColor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         $this->configCommands();
         $this->configUrls();
         $this->configDate();
+        $this->configFilamentColors();
     }
 
     private function configModels(): void
@@ -67,5 +70,16 @@ class AppServiceProvider extends ServiceProvider
     {
         Date::use(CarbonImmutable::class);
         Carbon::setLocale('pt_BR');
+    }
+
+    private function configFilamentColors(): void
+    {
+        FilamentColor::register([
+            'danger' => Color::hex('#D93223'),
+            'warning' => Color::hex('#F28907'),
+            'success' => Color::hex('#52a0fa'),
+            'primary' => Color::hex('#014029'),
+            'secondary' => Color::Gray,
+        ]);
     }
 }

@@ -8,7 +8,6 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -20,16 +19,14 @@ class UsersTable
     {
         return $table
             ->columns([
-                // ImageColumn::make('avatar_url')
-                //     ->label('Avatar')
-                //     ->circular()
-                //     ->defaultImageUrl(fn (User $record): string => $record->getFilamentAvatarUrl())
-                //     ->extraImgAttributes(['alt' => 'Avatar do usuário']),
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                    ->searchable(isIndividual: true, isGlobal: false)
+                    ->sortable(),
                 TextColumn::make('email')
                     ->label('Email address'),
                 TextColumn::make('is_suspended')
                     ->label('Status')
+                    ->sortable()
                     ->formatStateUsing(fn (User $record): string => $record->is_suspended ? __('Suspenso') : __('Autorizado'))
                     ->badge()
                     ->color(fn (User $record): string => $record->is_suspended ? 'danger' : 'primary')

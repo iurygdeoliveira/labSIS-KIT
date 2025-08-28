@@ -17,10 +17,11 @@ class MediaTable
             ->columns([
                 TextColumn::make('name')
                     ->label('Nome do Arquivo')
-                    ->searchable()
+                    ->searchable(isIndividual: true, isGlobal: false)
                     ->sortable(),
                 TextColumn::make('file_type')
                     ->label('Tipo')
+                    ->sortable()
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'Imagem' => 'primary',
@@ -29,10 +30,12 @@ class MediaTable
                         'Áudio' => 'danger'
                     }),
                 TextColumn::make('human_size')
-                    ->label('Tamanho'),
+                    ->label('Tamanho')
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Criado em')
-                    ->dateTime('d/m/Y H:i'),
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable(),
             ])
             ->filters([
                 //
