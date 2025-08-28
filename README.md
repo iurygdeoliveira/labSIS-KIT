@@ -124,6 +124,13 @@ O Kit oferece uma base sólida com os seguintes recursos já implementados:
   - **Sistema de Suspensão de Usuários:** Controle completo de acesso com toggle de suspensão, registro de motivo e timestamp automático. Usuários suspensos são automaticamente bloqueados do acesso aos paineis.
   - **Organização em Abas:** Visualização detalhada organizada em abas (Informações Pessoais, Datas, Suspensão).
   
+- **Gestão de Mídias:**
+  - **CRUD completo para mídias:** Sistema de gerenciamento para diferentes tipos de arquivos (áudio, vídeo, documento e imagem).
+  - **Preview de Conteúdo:** Visualização direta de mídias com suporte a múltiplos formatos e fallbacks para conteúdo não carregável.
+  - **Organização por Tipo:** Categorização automática baseada no MIME type com badges coloridos para identificação visual.
+  - **Tamanho Humanizado:** Exibição do tamanho de arquivo em formato legível (KB, MB, GB).
+  - **⚠️ Em Desenvolvimento:** Esta funcionalidade está sendo aprimorada e pode apresentar mudanças durante o desenvolvimento.
+  
 - **Edição de Perfil:**
   - **Avatar:** Upload e gerenciamento de foto de perfil com suporte a PNG, JPG e JPEG (máximo 1MB).
   - **Configurações Personalizáveis:** Interface intuitiva para edição de informações pessoais, email e senha.
