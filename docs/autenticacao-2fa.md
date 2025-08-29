@@ -196,15 +196,7 @@ Os códigos de recuperação são uma alternativa de acesso caso você perca seu
 4. **Dispositivo dedicado**: Considere usar um dispositivo específico para 2FA
 5. **Atualizações**: Mantenha seu aplicativo de autenticação atualizado
 
-### Cenários de Uso:
-
-- **Desenvolvimento**: Ideal para ambientes de produção
-- **Testes**: Pode ser desabilitado em ambiente de desenvolvimento
-- **Usuários finais**: Recomendado para todos os usuários administrativos
-
-## Troubleshooting
-
-### Problemas Comuns:
+## Problemas Comuns:
 
 1. **Código não aceito**:
    - Verifique se o relógio do dispositivo está sincronizado

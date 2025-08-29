@@ -47,9 +47,9 @@ Toggle::make('is_active')
     ->onColor('success');
 ```
 
-Dicas:
-- Prefira nomes de cores (`primary`, `success`, `warning`, `danger`, `info`, `gray`). Isso colabora para manter a consistência de cores no sistema.
+## Conclusão
 
----
+Prefira nomes de cores (`primary`, `success`, `warning`, `danger`, `info`, `gray`). Isso colabora para manter a consistência de cores no sistema.
+
 
 Para saber mais, consulte a documentação oficial do Filament: [Colors](https://filamentphp.com/docs/4.x/styling/colors).

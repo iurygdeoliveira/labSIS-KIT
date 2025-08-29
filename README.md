@@ -12,7 +12,7 @@
     <a href="https://filamentphp.com"><img alt="Filament v3" src="https://img.shields.io/badge/Filament-v4-eab308?style=for-the-badge"></a>
     <a href="https://laravel.com"><img alt="Laravel v12+" src="https://img.shields.io/badge/Laravel-v12+-FF2D20?style=for-the-badge&logo=laravel"></a>
     <a href="https://livewire.laravel.com"><img alt="Livewire v3" src="https://img.shields.io/badge/Livewire-v3-FB70A9?style=for-the-badge"></a>
-    <a href="https://php.net"><img alt="PHP 8.4+" src="https://img.shields.io/badge/PHP-8.3+-777BB4?style=for-the-badge&logo=php"></a>
+    <a href="https://php.net"><img alt="PHP 8.4+" src="https://img.shields.io/badge/PHP-8.4+-777BB4?style=for-the-badge&logo=php"></a>
 </p>
 
 ## Sobre o labSIS SaaS KIT
@@ -26,15 +26,16 @@ O objetivo deste projeto é fornecer uma base sólida e rica em recursos para ac
 Toda a documentação sobre como utilizar os recursos, padrões e arquitetura deste kit está disponível na pasta [`/docs`](/docs). Recomendamos a leitura para todos os desenvolvedores que irão atuar neste projeto.
 
 - [**Autenticação de Dois Fatores (2FA) no Filament**](/docs/autenticacao-2fa.md)
+- [**Cores no Filament**](/docs/cores-filament.md)
 - [**Customização da Aparência do Painel**](/docs/customizando-layout.md)
 - [**Edição de Perfil no Filament**](/docs/edicao-perfil.md)
 - [**Entendendo o AppServiceProvider**](/docs/app-service-provider.md)
+- [**Otimização com #[Computed])**](/docs/livewire-computed.md)
 - [**Login Unificado**](/docs/login-unificado.md)
 - [**Notificações**](/docs/notifications-trait.md)
 - [**Roles/Permissions**](/docs/roles-e-permissoes.md)
 - [**Suspensão de Usuários**](/docs/suspensao-usuarios.md)
 - [**Utilizando Enumerações (Enums) com Filament**](/docs/enums.md)
-- [**Cores no Filament**](/docs/cores-filament.md)
 
 ## Pré-requisitos
 

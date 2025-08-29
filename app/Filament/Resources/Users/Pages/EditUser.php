@@ -10,6 +10,7 @@ use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 
 class EditUser extends EditRecord
 {
@@ -17,6 +18,12 @@ class EditUser extends EditRecord
     use NotificationsTrait;
 
     protected static string $resource = UserResource::class;
+
+    #[Computed]
+    public function canDelete(): bool
+    {
+        return $this->record?->getKey() !== Auth::id();
+    }
 
     protected function getHeaderActions(): array
     {
@@ -26,7 +33,7 @@ class EditUser extends EditRecord
         ];
 
         // Só mostra o botão de deletar se não for o usuário logado
-        if ($this->record->getKey() !== Auth::id()) {
+        if ($this->canDelete) {
             $actions[] = DeleteAction::make()
                 ->successNotification(Notification::make())
                 ->after(fn () => $this->notifySuccess('Usuário excluído com sucesso.'));

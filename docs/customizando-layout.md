@@ -16,7 +16,7 @@ O Filament foi projetado para ser altamente extensível e personalizável, permi
 Este documento aborda as **três principais formas** de alterar o layout e o estilo do painel:
 
 1. **Plugin Brisk Theme** - Tema pré-configurado com design moderno e amigável
-2. **Configurações via `AdminPanelProvider`** - Para configurações globais de cores, fontes e layout
+2. **Configurações via `AppServiceProvider`** - Para configurações globais de cores
 3. **CSS customizado** - Para ajustes finos e específicos de componentes
 
 ## 1. Plugin Brisk Theme
@@ -58,28 +58,31 @@ Se desejar usar sua própria fonte em vez da Kumbh Sans (que está desabilitada)
 ->plugin(BriskTheme::make()->withoutSuggestedFont())
 ```
 
-## 2. Customização via `AdminPanelProvider.php`
+## 2. Customização via `AppServiceProvider.php`
 
-O arquivo `app/Providers/Filament/AdminPanelProvider.php` é o centro de controle para a configuração do seu painel administrativo. Nele, é possível alterar cores, fontes, favicons, e diversos outros aspectos de forma programática.
-
+O arquivo `app/Providers/AppServiceProvider.php` é o centro de controle para a configuração de cores. 
 ### Exemplo 1: Alterando a Paleta de Cores
 
 O método `colors()` permite definir a paleta de cores que será utilizada em todo o painel. A chave `primary` tem um papel de destaque, sendo usada em botões, links, e indicadores de foco.
 
 **Localização:**
 ```php
-// app/Providers/Filament/AdminPanelProvider.php
+// app/Providers/AppServiceProvider.php
 
-public function panel(Panel $panel): Panel
+public function boot(): void
 {
-    return $panel
-        // ... outras configurações
-        ->colors([
-            'primary' => '#014029', // Cor primária atual
-            'danger' => '#D93223',
-            // ... outras cores
-        ])
-        // ...
+    // ... outras configurações
+    $this->configFilamentColors();
+}
+
+// ... outras configurações
+
+private function configFilamentColors(): void
+{
+    Filament::colors([
+        'primary' => '#014029',
+        'danger' => '#D93223',
+    ]);
 }
 ```
 
@@ -88,7 +91,7 @@ Vamos supor que desejamos alterar a cor primária para um tom de azul.
 
 ```php
 // Alteração sugerida
-->colors([
+Filament::colors([
     'primary' => '#2563eb', // Novo tom de azul
     'danger' => '#D93223',
     // ...
