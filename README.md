@@ -12,7 +12,7 @@
     <a href="https://filamentphp.com"><img alt="Filament v3" src="https://img.shields.io/badge/Filament-v4-eab308?style=for-the-badge"></a>
     <a href="https://laravel.com"><img alt="Laravel v12+" src="https://img.shields.io/badge/Laravel-v12+-FF2D20?style=for-the-badge&logo=laravel"></a>
     <a href="https://livewire.laravel.com"><img alt="Livewire v3" src="https://img.shields.io/badge/Livewire-v3-FB70A9?style=for-the-badge"></a>
-    <a href="https://php.net"><img alt="PHP 8.3+" src="https://img.shields.io/badge/PHP-8.3+-777BB4?style=for-the-badge&logo=php"></a>
+    <a href="https://php.net"><img alt="PHP 8.4+" src="https://img.shields.io/badge/PHP-8.3+-777BB4?style=for-the-badge&logo=php"></a>
 </p>
 
 ## Sobre o labSIS SaaS KIT
