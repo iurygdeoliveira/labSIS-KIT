@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Configurators\FilamentComponentsConfigurator;
+use App\Filament\Resources\Media\Widgets\MediaStats;
+use App\Filament\Resources\Users\Widgets\UsersStats;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\Widgets\AccountWidget;
@@ -29,8 +31,10 @@ class AdminPanelProvider extends BasePanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                // AccountWidget::class,
+                // FilamentInfoWidget::class,
+                UsersStats::class,
+                MediaStats::class,
             ]);
 
         return $panel;

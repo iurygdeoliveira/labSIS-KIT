@@ -41,27 +41,27 @@ class MediaPreviewSection
             ->components([
                 ImagePreviewEntry::make('image')
                     ->hiddenLabel()
-                    ->hidden(fn (Media $r) => ! $r->is_image)
+                    ->hidden(fn (?Media $record): bool => $record === null || ! $record->is_image)
                     ->columnSpanFull(),
 
                 AudioPreviewEntry::make('audio_url')
                     ->hiddenLabel()
-                    ->state(fn (Media $r) => $r->is_audio && $r->disk === 'public' ? asset('storage/'.$r->file_name) : null)
-                    ->hidden(fn (Media $r) => ! $r->is_audio)
+                    ->state(fn (?Media $record): ?string => $record?->is_audio && $record?->disk === 'public' ? asset('storage/'.$record->file_name) : null)
+                    ->hidden(fn (?Media $record): bool => $record === null || ! $record->is_audio)
                     ->columnSpanFull(),
 
                 VideoPreviewEntry::make('youtube_embed')
                     ->hiddenLabel()
-                    ->state(fn (Media $r) => filled($r->custom_properties['youtube_id'] ?? null)
-                        ? 'https://www.youtube.com/embed/'.$r->custom_properties['youtube_id']
+                    ->state(fn (?Media $record): ?string => filled($record?->custom_properties['youtube_id'] ?? null)
+                        ? 'https://www.youtube.com/embed/'.$record->custom_properties['youtube_id']
                         : null)
-                    ->hidden(fn (Media $r) => ! $r->is_video)
+                    ->hidden(fn (?Media $record): bool => $record === null || ! $record->is_video)
                     ->columnSpanFull(),
 
                 DocumentPreviewEntry::make('doc_url')
                     ->hiddenLabel()
-                    ->state(fn (Media $r) => $r->is_document && $r->disk === 'public' ? asset('storage/'.$r->file_name) : null)
-                    ->hidden(fn (Media $r) => ! $r->is_document)
+                    ->state(fn (?Media $record): ?string => $record?->is_document && $record?->disk === 'public' ? asset('storage/'.$record->file_name) : null)
+                    ->hidden(fn (?Media $record): bool => $record === null || ! $record->is_document)
                     ->columnSpanFull(),
             ])
             ->columns(1);

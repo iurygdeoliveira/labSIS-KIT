@@ -36,6 +36,7 @@ Toda a documentação sobre como utilizar os recursos, padrões e arquitetura de
 - [**Roles/Permissions**](/docs/roles-e-permissoes.md)
 - [**Suspensão de Usuários**](/docs/suspensao-usuarios.md)
 - [**Utilizando Enumerações (Enums) com Filament**](/docs/enums.md)
+- [**Widgets no Filament**](/docs/widgets-filament.md)
 
 ## Pré-requisitos
 
@@ -137,7 +138,7 @@ O Kit oferece uma base sólida com os seguintes recursos já implementados:
 
 - **Login Unificado:**
   - **Login com Email e Senha:** Acesso ao painel administrativo com autenticação padrão.
-  
+- **Exibição de Widgets:** Widgets personalizados para exibição de métricas e informações relevantes.
 
 - **Website / Landing Page**
   - **Página Inicial Completa:** Uma landing page moderna e responsiva construída com componentes Blade e TailwindCSS.
