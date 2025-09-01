@@ -15,5 +15,6 @@
     --primary-950: oklch(0.271 0.105 142.094);
 }
 
+@source '../../../../vendor/devonab/filament-easy-footer/resources/views/**/*';
 @source '../../../../app/Filament/';
 @source '../../../../resources/views/';

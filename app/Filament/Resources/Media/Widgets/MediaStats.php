@@ -33,17 +33,51 @@ class MediaStats extends BaseWidget
     {
         $s = $this->summary;
 
+        // Calcular total de arquivos
+        $totalFiles = $s['images'] + $s['videos'] + $s['audios'] + $s['documents'];
+
+        // Calcular percentuais
+        $imagesPercentage = $totalFiles > 0
+            ? round(($s['images'] / $totalFiles) * 100, 1)
+            : 0;
+
+        $videosPercentage = $totalFiles > 0
+            ? round(($s['videos'] / $totalFiles) * 100, 1)
+            : 0;
+
+        $audiosPercentage = $totalFiles > 0
+            ? round(($s['audios'] / $totalFiles) * 100, 1)
+            : 0;
+
+        $documentsPercentage = $totalFiles > 0
+            ? round(($s['documents'] / $totalFiles) * 100, 1)
+            : 0;
+
         return [
-            Stat::make('Imagens', (string) $s['images'])
-                ->icon('heroicon-c-photo'),
-            Stat::make('Vídeos', (string) $s['videos'])
-                ->icon('heroicon-c-video-camera'),
-            Stat::make('Documentos', (string) $s['documents'])
-                ->icon('heroicon-c-document'),
-            Stat::make('Áudios', (string) $s['audios'])
-                ->icon('heroicon-c-musical-note'),
-            Stat::make('Tamanho total', (string) $s['size'])
-                ->icon('heroicon-c-server-stack'),
+            Stat::make('Imagens', number_format($s['images']))
+                ->description("{$imagesPercentage}% do total")
+                ->icon('heroicon-c-photo')
+                ->color('primary'),
+
+            Stat::make('Vídeos', number_format($s['videos']))
+                ->description("{$videosPercentage}% do total")
+                ->icon('heroicon-c-video-camera')
+                ->color('warning'),
+
+            Stat::make('Documentos', number_format($s['documents']))
+                ->description("{$documentsPercentage}% do total")
+                ->icon('heroicon-c-document')
+                ->color('success'),
+
+            Stat::make('Áudios', number_format($s['audios']))
+                ->description("{$audiosPercentage}% do total")
+                ->icon('heroicon-c-musical-note')
+                ->color('danger'),
+
+            Stat::make('Tamanho total', $s['size'])
+                ->description('Espaço utilizado')
+                ->icon('heroicon-c-server-stack')
+                ->color('secondary'),
         ];
     }
 

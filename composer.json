@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.4",
         "blade-ui-kit/blade-heroicons": "^2.6",
+        "devonab/filament-easy-footer": "^2.1.0",
         "filafly/brisk": "^1.0",
         "filament/filament": "^4.0",
         "filament/spatie-laravel-media-library-plugin": "^4.0",

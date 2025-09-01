@@ -6,6 +6,7 @@ namespace App\Providers\Filament;
 
 use App\Http\Middleware\RedirectGuestsToCentralLoginMiddleware;
 use App\Http\Middleware\RedirectToProperPanelMiddleware;
+use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use Filafly\Themes\Brisk\BriskTheme;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Enums\ThemeMode;
@@ -78,6 +79,16 @@ abstract class BasePanelProvider extends PanelProvider
                     ->shouldShowEmailForm()
                     ->shouldShowDeleteAccountForm(false)
                     ->shouldShowMultiFactorAuthentication()
+            )
+            ->plugin(
+                EasyFooterPlugin::make()
+                    ->footerEnabled()
+                    ->withFooterPosition('footer')
+                    ->withGithub(showLogo: true, showUrl: true)
+                    ->withLinks([
+                        ['title' => 'Precisa de Software ?', 'url' => 'https://www.labsis.dev.br'],
+                        ['title' => 'LabSIS', 'url' => 'https://www.labsis.dev.br'],
+                    ]),
             );
     }
 

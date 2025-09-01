@@ -9,6 +9,8 @@ use Livewire\Attributes\Computed;
 
 class UsersStats extends BaseWidget
 {
+    protected static ?string $color = 'primary';
+
     #[Computed]
     protected function summary(): array
     {
@@ -27,15 +29,30 @@ class UsersStats extends BaseWidget
     {
         $summary = $this->summary;
 
+        // Calcular percentuais
+        $verifiedPercentage = $summary['total'] > 0
+            ? round(($summary['verified'] / $summary['total']) * 100, 1)
+            : 0;
+
+        $suspendedPercentage = $summary['total'] > 0
+            ? round(($summary['suspended'] / $summary['total']) * 100, 1)
+            : 0;
+
         return [
-            Stat::make('Usuários', (string) $summary['total'])
-                ->icon('heroicon-c-user-group'),
-            Stat::make('Suspensos', (string) $summary['suspended'])
-                ->color('danger')
-                ->icon('heroicon-c-no-symbol'),
-            Stat::make('Verificados', (string) $summary['verified'])
-                ->color('success')
-                ->icon('heroicon-c-check-badge'),
+            Stat::make('Total de Usuários', number_format($summary['verified']))
+                ->description('Usuários Cadastrados no sistema')
+                ->icon('heroicon-c-user-group')
+                ->color('secondary'),
+
+            Stat::make('Usuários Verificados', number_format($summary['verified']))
+                ->description("{$verifiedPercentage}% do total")
+                ->icon('heroicon-c-check-badge')
+                ->color('primary'),
+
+            Stat::make('Usuários Suspensos', number_format($summary['suspended']))
+                ->description("{$suspendedPercentage}% do total")
+                ->icon('heroicon-c-no-symbol')
+                ->color('danger'),
         ];
     }
 }
