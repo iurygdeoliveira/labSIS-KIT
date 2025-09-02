@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Media extends Model
+class Media extends Model implements HasMedia
 {
-    use HasFactory, UuidTrait;
+    use HasFactory, InteractsWithMedia, UuidTrait;
 
     protected $fillable = [
         'uuid',
@@ -140,5 +142,23 @@ class Media extends Model
     public function getIsPdfAttribute(): bool
     {
         return $this->mime_type === 'application/pdf';
+    }
+
+    /**
+     * Registra as coleções de mídia
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('media')
+            ->acceptsMimeTypes([
+                'image/*',
+                'audio/*',
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-excel',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'text/plain',
+            ]);
     }
 }
