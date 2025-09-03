@@ -30,7 +30,7 @@ Toda a documentação sobre como utilizar os recursos, padrões e arquitetura de
 - [**Customização da Aparência do Painel**](/docs/customizando-layout.md)
 - [**Edição de Perfil no Filament**](/docs/edicao-perfil.md)
 - [**Entendendo o AppServiceProvider**](/docs/app-service-provider.md)
-- [**Otimização com #[Computed])**](/docs/livewire-computed.md)
+- [**Otimização com #[Computed]**](/docs/livewire-computed.md)
 - [**Login Unificado**](/docs/login-unificado.md)
 - [**Notificações**](/docs/notifications-trait.md)
 - [**Roles/Permissions**](/docs/roles-e-permissoes.md)

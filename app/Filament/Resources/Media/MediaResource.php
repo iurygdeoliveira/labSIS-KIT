@@ -9,7 +9,7 @@ use App\Filament\Resources\Media\Pages\ViewMedia;
 use App\Filament\Resources\Media\Schemas\MediaForm;
 use App\Filament\Resources\Media\Schemas\MediaInfolist;
 use App\Filament\Resources\Media\Tables\MediaTable;
-use App\Models\Media;
+use App\Models\MediaItem;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -19,7 +19,7 @@ use Override;
 
 class MediaResource extends Resource
 {
-    protected static ?string $model = Media::class;
+    protected static ?string $model = MediaItem::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

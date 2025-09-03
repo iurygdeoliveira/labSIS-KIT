@@ -20,4 +20,29 @@ class EditMedia extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    // Após salvar, sincroniza mime_type e size no MediaItem
+    protected function afterSave(): void
+    {
+        $record = $this->getRecord();
+
+        $attachment = $record->getFirstMedia('media');
+
+        if ($attachment) {
+            $record->update([
+                'mime_type' => $attachment->mime_type,
+                'size' => $attachment->size,
+            ]);
+        } elseif (! empty($record->video_url)) {
+            $record->update([
+                'mime_type' => 'video/url',
+                'size' => null,
+            ]);
+        } else {
+            $record->update([
+                'mime_type' => null,
+                'size' => null,
+            ]);
+        }
+    }
 }

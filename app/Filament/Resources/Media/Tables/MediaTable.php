@@ -15,8 +15,9 @@ class MediaTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('attachment_name')
                     ->label('Nome do Arquivo')
+                    ->state(fn ($record) => $record->getFirstMedia('media')?->name ?? ($record->video_url ? 'Vídeo (URL)' : '—'))
                     ->searchable(isIndividual: true, isGlobal: false)
                     ->sortable(),
                 TextColumn::make('file_type')

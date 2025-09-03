@@ -8,9 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // Tabela do Spatie Media Library (anexos)
         Schema::create('media', function (Blueprint $table) {
             $table->id();
-
             $table->morphs('model');
             $table->uuid()->nullable()->unique();
             $table->string('collection_name');
@@ -25,8 +25,20 @@ return new class extends Migration
             $table->json('generated_conversions');
             $table->json('responsive_images');
             $table->unsignedInteger('order_column')->nullable()->index();
-
             $table->nullableTimestamps();
         });
+
+        // Tabela de domínio pai (App\\Models\\MediaItem)
+        Schema::create('media_items', function (Blueprint $table) {
+            $table->id();
+            $table->string('video_url')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('media');
+        Schema::dropIfExists('media_items');
     }
 };

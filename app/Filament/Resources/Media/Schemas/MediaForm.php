@@ -21,6 +21,7 @@ class MediaForm
     {
         return <<<'JS'
             const hasFile = Array.isArray($state) ? $state.length > 0 : Boolean($state);
+            
             // Atualiza front-end do campo de video
             try {
                 const videoEl = document.getElementById('videoUrl');
@@ -28,7 +29,24 @@ class MediaForm
                     videoEl.toggleAttribute('disabled', hasFile);
                 }
             } catch (e) {}
+            
             if (hasFile) {
+                // Gera slug do nome do arquivo
+                const file = Array.isArray($state) ? $state[0] : $state;
+                if (file && file.name) {
+                    const fileName = file.name;
+                    const nameWithoutExtension = fileName.replace(/\.[^/.]+$/, "");
+                    const slug = nameWithoutExtension
+                        .toLowerCase()
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .replace(/[^a-z0-9\s-]/g, '')
+                        .replace(/\s+/g, '-')
+                        .replace(/-+/g, '-')
+                        .replace(/^-|-$/g, '');
+                    $set('name', slug);
+                }
+                
                 $set('video_url', null);
                 window.dispatchEvent(new CustomEvent('video-toggled', { detail: { hasUrl: false, url: null } }));
             }
@@ -60,13 +78,14 @@ class MediaForm
                 }
             } catch (e) {}
             if (hasUrl) { $set('media', null); }
+            // metadados serão lidos do anexo do Spatie no servidor
             window.dispatchEvent(new CustomEvent('video-toggled', { detail: { hasUrl, url: $state } }));
         JS;
     }
 
     /*
      * Manipula a atualização de estado do upload no servidor.
-     * Objetivo: preencher 'name' com o nome do arquivo e limpar 'video_url';
+     * Objetivo: preencher 'name' com slug do nome do arquivo e limpar 'video_url';
      * quando o arquivo for removido, limpar 'name'.
      */
     private static function handleMediaStateUpdated(mixed $state, Set $set): void
@@ -77,7 +96,13 @@ class MediaForm
 
             if ($file && method_exists($file, 'getClientOriginalName')) {
                 $fileName = $file->getClientOriginalName();
-                $set('name', pathinfo($fileName, PATHINFO_FILENAME));
+                $nameWithoutExtension = pathinfo($fileName, PATHINFO_FILENAME);
+
+                // Converte para slug
+                $slug = \Illuminate\Support\Str::slug($nameWithoutExtension);
+                $set('name', $slug);
+
+                // metadados serão lidos do anexo do Spatie no servidor
             }
 
             // Limpa o campo de vídeo quando um arquivo é selecionado
@@ -88,6 +113,7 @@ class MediaForm
 
         // Quando o arquivo é removido, limpa o nome também
         $set('name', null);
+        // metadados serão lidos do anexo do Spatie no servidor
     }
 
     /*
@@ -107,9 +133,18 @@ class MediaForm
                             ->multiple(false)
                             ->reorderable(false)
                             ->appendFiles(false)
+                            ->disk('s3')
+                            ->dehydrated(false)
+                            ->downloadable(true)
                             ->acceptedFileTypes([
                                 'image/*',
                                 'audio/*',
+                                'audio/mpeg',
+                                'audio/mp3',
+                                'audio/wav',
+                                'audio/ogg',
+                                'audio/m4a',
+                                'audio/aac',
                                 'application/pdf',
                                 'application/msword',
                                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -132,13 +167,6 @@ class MediaForm
                                 self::handleMediaStateUpdated($state, $set);
                             })
                             ->partiallyRenderComponentsAfterStateUpdated(['video_url'])
-                            ->columnSpanFull(),
-
-                        TextInput::make('name')
-                            ->label('Nome do Arquivo')
-                            ->required()
-                            ->maxLength(255)
-                            ->hidden(fn ($get) => empty($get('media')) && empty($get('video_url')))
                             ->columnSpanFull(),
                     ])
                     ->collapsible(),
@@ -164,6 +192,7 @@ class MediaForm
 
                         ViewField::make('video_preview')
                             ->view('filament.forms.components.video-preview')
+                            ->dehydrated(false)
                             ->columnSpanFull(),
                     ])
                     ->collapsible(),

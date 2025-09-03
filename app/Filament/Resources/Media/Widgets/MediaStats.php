@@ -2,22 +2,22 @@
 
 namespace App\Filament\Resources\Media\Widgets;
 
-use App\Models\Media;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Livewire\Attributes\Computed;
+use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
 class MediaStats extends BaseWidget
 {
     #[Computed]
     protected function summary(): array
     {
-        $images = Media::query()->where('mime_type', 'like', 'image/%')->count();
-        $videos = Media::query()->where('mime_type', 'like', 'video/%')->count();
-        $audios = Media::query()->where('mime_type', 'like', 'audio/%')->count();
-        $documents = Media::query()->where('mime_type', 'like', 'application/%')->count();
+        $images = SpatieMedia::query()->where('mime_type', 'like', 'image/%')->count();
+        $videos = SpatieMedia::query()->where('mime_type', 'like', 'video/%')->count();
+        $audios = SpatieMedia::query()->where('mime_type', 'like', 'audio/%')->count();
+        $documents = SpatieMedia::query()->where('mime_type', 'like', 'application/%')->count();
 
-        $totalSizeBytes = (int) Media::query()->sum('size');
+        $totalSizeBytes = (int) SpatieMedia::query()->sum('size');
         $totalSizeHuman = $this->humanSize($totalSizeBytes);
 
         return [

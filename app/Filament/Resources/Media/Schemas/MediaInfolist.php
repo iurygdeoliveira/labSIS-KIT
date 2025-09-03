@@ -23,7 +23,8 @@ class MediaInfolist
                                 'Imagem' => 'primary',
                                 'Vídeo' => 'warning',
                                 'Documento' => 'success',
-                                'Áudio' => 'danger'
+                                'Áudio' => 'danger',
+                                default => 'secondary',
                             }),
                         TextEntry::make('human_size')
                             ->label('Tamanho'),
