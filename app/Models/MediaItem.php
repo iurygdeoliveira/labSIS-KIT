@@ -16,7 +16,7 @@ class MediaItem extends Model implements HasMedia
     protected $table = 'media_items';
 
     protected $fillable = [
-        'video_url',
+        'video',
     ];
 
     protected $appends = [
@@ -52,7 +52,7 @@ class MediaItem extends Model implements HasMedia
 
     public function getFileTypeAttribute(): string
     {
-        if (! empty($this->video_url)) {
+        if ($this->video) {
             return 'Vídeo';
         }
 
@@ -83,7 +83,7 @@ class MediaItem extends Model implements HasMedia
             return (string) $attachment->name;
         }
 
-        if (! empty($this->video_url)) {
+        if ($this->video) {
             return 'Vídeo (URL)';
         }
 
@@ -99,11 +99,14 @@ class MediaItem extends Model implements HasMedia
         }
 
         try {
-            return method_exists($media, 'getTemporaryUrl')
-                ? $media->getTemporaryUrl(now()->addMinutes(10))
-                : $media->getUrl();
-        } catch (\Throwable) {
             return $media->getUrl();
+        } catch (\Throwable) {
+            return null;
         }
+    }
+
+    public function video()
+    {
+        return $this->hasOne(Video::class);
     }
 }

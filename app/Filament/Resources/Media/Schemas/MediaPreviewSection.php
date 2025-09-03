@@ -25,7 +25,7 @@ class MediaPreviewSection
                 return 'Imagem';
             }
 
-            if (! empty($record->video_url) || str_starts_with($mimeType, 'video/')) {
+            if (($record->video ?? false) || str_starts_with($mimeType, 'video/')) {
                 return 'Vídeo';
             }
 
@@ -63,9 +63,9 @@ class MediaPreviewSection
                             return null;
                         }
                         try {
-                            return method_exists($m, 'getTemporaryUrl') ? $m->getTemporaryUrl(now()->addMinutes(10)) : $m->getUrl();
-                        } catch (\Throwable $e) {
                             return $m->getUrl();
+                        } catch (\Throwable) {
+                            return null;
                         }
                     })
                     ->hidden(function (?MediaItem $record): bool {
@@ -81,14 +81,14 @@ class MediaPreviewSection
                 VideoPreviewEntry::make('youtube_embed')
                     ->hiddenLabel()
                     ->state(function (?MediaItem $record): ?string {
-                        return $record?->video_url ?: null;
+                        return $record?->video?->url ?: null;
                     })
                     ->hidden(function (?MediaItem $record): bool {
                         if ($record === null) {
                             return true;
                         }
 
-                        return empty($record->video_url);
+                        return ! ($record->video ?? false);
                     })
                     ->columnSpanFull(),
 
@@ -103,9 +103,9 @@ class MediaPreviewSection
                             return null;
                         }
                         try {
-                            return method_exists($m, 'getTemporaryUrl') ? $m->getTemporaryUrl(now()->addMinutes(10)) : $m->getUrl();
-                        } catch (\Throwable $e) {
                             return $m->getUrl();
+                        } catch (\Throwable) {
+                            return null;
                         }
                     })
                     ->hidden(function (?MediaItem $record): bool {

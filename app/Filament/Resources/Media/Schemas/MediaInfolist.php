@@ -34,7 +34,7 @@ class MediaInfolist
                     ])
                     ->columns(2),
 
-                MediaPreviewSection::make(),
+                // MediaPreviewSection::make(),
             ]);
     }
 }

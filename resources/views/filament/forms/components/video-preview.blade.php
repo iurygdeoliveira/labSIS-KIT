@@ -1,12 +1,12 @@
 <!--
     Componente de preview de vídeo do Filament.
-    - Inicializa o estado `url` com o valor atual de `video_url` vindo do servidor ($get).
+    - Inicializa o estado `url` com o valor atual de `video.url` vindo do servidor ($get).
     - Calcula a URL de incorporação (`embedUrl`) no front-end para YouTube e Vimeo.
     - Atualiza `url` ao ouvir o evento global `video-toggled`, evitando roundtrips ao servidor.
 -->
 <div
     x-data="{
-        url: @js($get('video_url')),
+        url: @js($get('video.url')),
         get isYoutube() { return this.url && (this.url.includes('youtube.com/watch') || this.url.includes('youtu.be/')); },
         get isVimeo() { return this.url && this.url.includes('vimeo.com/'); },
         get embedUrl() {

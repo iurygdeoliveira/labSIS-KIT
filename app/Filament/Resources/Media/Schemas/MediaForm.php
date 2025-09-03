@@ -47,7 +47,7 @@ class MediaForm
                     $set('name', slug);
                 }
                 
-                $set('video_url', null);
+                $set('video.url', null);
                 window.dispatchEvent(new CustomEvent('video-toggled', { detail: { hasUrl: false, url: null } }));
             }
             window.dispatchEvent(new CustomEvent('media-toggled', { detail: { hasMedia: hasFile } }));
@@ -62,7 +62,8 @@ class MediaForm
     private static function jsOnVideoUrlUpdated(): string
     {
         return <<<'JS'
-            const hasUrl = Boolean($state);
+            const sanitized = String($state ?? '').trim().replace(/^@+/, '');
+            const hasUrl = Boolean(sanitized);
             // Desabilita/enabilita uploader imediatamente no front-end
             try {
                 const mediaEl = document.getElementById('mediaUpload');
@@ -77,9 +78,10 @@ class MediaForm
                     mediaEl.classList.toggle('opacity-50', hasUrl);
                 }
             } catch (e) {}
+            if (sanitized !== $state) { $set('video.url', sanitized); }
             if (hasUrl) { $set('media', null); }
             // metadados serão lidos do anexo do Spatie no servidor
-            window.dispatchEvent(new CustomEvent('video-toggled', { detail: { hasUrl, url: $state } }));
+            window.dispatchEvent(new CustomEvent('video-toggled', { detail: { hasUrl, url: sanitized } }));
         JS;
     }
 
@@ -105,8 +107,8 @@ class MediaForm
                 // metadados serão lidos do anexo do Spatie no servidor
             }
 
-            // Limpa o campo de vídeo quando um arquivo é selecionado
-            $set('video_url', null);
+            // Quando um arquivo é selecionado, limpamos a URL de vídeo
+            $set('video.url', null);
 
             return;
         }
@@ -134,6 +136,7 @@ class MediaForm
                             ->reorderable(false)
                             ->appendFiles(false)
                             ->disk('s3')
+                            ->visibility('public')
                             ->dehydrated(false)
                             ->downloadable(true)
                             ->acceptedFileTypes([
@@ -156,8 +159,8 @@ class MediaForm
                             ->maxSize(5120) // 5MB
                             ->collection('media')
                             ->preserveFilenames()
-                            ->required()
-                            ->disabled(fn ($get) => ! empty($get('video_url')))
+                            ->required(fn (Get $get): bool => empty($get('video.url')))
+                            ->disabled(fn ($get) => ! empty($get('video.url')))
                             ->responsiveImages()
                             ->customProperties([
                                 'uploaded_at' => now(),
@@ -166,7 +169,7 @@ class MediaForm
                             ->afterStateUpdated(function (mixed $state, Set $set): void {
                                 self::handleMediaStateUpdated($state, $set);
                             })
-                            ->partiallyRenderComponentsAfterStateUpdated(['video_url'])
+                            ->partiallyRenderComponentsAfterStateUpdated(['video.url'])
                             ->columnSpanFull(),
                     ])
                     ->collapsible(),
@@ -174,11 +177,22 @@ class MediaForm
                 Section::make('URL de Vídeo')
                     ->description('Informe a URL do vídeo (YouTube, Vimeo, etc.)')
                     ->components([
-                        TextInput::make('video_url')
+                        TextInput::make('video.url')
                             ->hiddenLabel()
                             ->id('videoUrl')
                             ->url()
                             ->placeholder('https://www.youtube.com/watch?v=...')
+                            ->afterStateUpdated(function (?string $state, Set $set): void {
+                                if ($state === null) {
+                                    return;
+                                }
+
+                                $clean = ltrim(trim($state), '@');
+
+                                if ($clean !== $state) {
+                                    $set('video.url', $clean);
+                                }
+                            })
                             ->disabled(fn ($get) => ! empty($get('media')))
                             ->hint(fn (Get $get): ?string => ! empty($get('media')) ? 'Um arquivo foi selecionado. Remova-o para informar uma URL de vídeo.' : null)
                             ->hintColor('danger')
