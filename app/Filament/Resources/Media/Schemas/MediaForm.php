@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Media\Schemas;
 
+use App\Enums\MediaAcceptedMime;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
@@ -139,22 +140,9 @@ class MediaForm
                             ->visibility('public')
                             ->dehydrated(false)
                             ->downloadable(true)
-                            ->acceptedFileTypes([
-                                'image/*',
-                                'audio/*',
-                                'audio/mpeg',
-                                'audio/mp3',
-                                'audio/wav',
-                                'audio/ogg',
-                                'audio/m4a',
-                                'audio/aac',
-                                'application/pdf',
-                                'application/msword',
-                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                                'application/vnd.ms-excel',
-                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                                'text/plain',
-                            ])
+                            ->openable(true)
+                            ->previewable(true)
+                            ->acceptedFileTypes(MediaAcceptedMime::defaults())
                             ->maxFiles(1)
                             ->maxSize(5120) // 5MB
                             ->collection('media')
