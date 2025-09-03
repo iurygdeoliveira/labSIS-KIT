@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Media\Pages;
 
 use App\Filament\Resources\Media\MediaResource;
 use App\Trait\Filament\NotificationsTrait;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Override;
 
@@ -19,6 +20,11 @@ class CreateMedia extends CreateRecord
         unset($data['media'], $data['video_preview']);
 
         return $data;
+    }
+
+    protected function getCreatedNotification(): ?Notification
+    {
+        return null;
     }
 
     protected function afterCreate(): void

@@ -10,7 +10,7 @@ trait NotificationsTrait
 {
     public function notifySuccess(string $title, ?string $body = null, int $seconds = 8, bool $persistent = false): void
     {
-        $this->buildNotification('success', $title, $body, $seconds, $persistent)->send();
+        $this->buildNotification('primary', $title, $body, $seconds, $persistent)->send();
     }
 
     public function notifyDanger(string $title, ?string $body = null, int $seconds = 8, bool $persistent = false): void
@@ -32,11 +32,11 @@ trait NotificationsTrait
         }
 
         switch ($type) {
-            case 'success':
+            case 'primary':
                 $notification->success()
                     ->icon('heroicon-s-check-circle')
-                    ->iconColor('success')
-                    ->color('success');
+                    ->iconColor('primary')
+                    ->color('primary');
 
                 break;
 

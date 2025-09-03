@@ -59,10 +59,9 @@ O código da trait está localizado em `app/Trait/Filament/NotificationsTrait.ph
 
 | Tipo | Ícone | Cor de Fundo | Cor do Ícone |
 |------|-------|---------------|--------------|
-| **Success** | `heroicon-s-check-circle` | `success` | `success` |
+| **Success** | `heroicon-s-check-circle` | `primary` | `primary` |
 | **Danger** | `heroicon-c-no-symbol` | `danger` | `danger` |
 | **Warning** | `heroicon-s-exclamation-triangle` | `warning` | `warning` |
-| **Default** | `heroicon-s-information-circle` | `info` | `info` |
 
 ## Uso no Projeto
 
