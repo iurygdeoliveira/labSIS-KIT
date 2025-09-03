@@ -4,12 +4,14 @@ namespace App\Filament\Resources\Media\Pages;
 
 use App\Filament\Resources\Media\MediaResource;
 use App\Trait\Filament\HasBackButtonAction;
+use App\Trait\Filament\NotificationsTrait;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditMedia extends EditRecord
 {
     use HasBackButtonAction;
+    use NotificationsTrait;
 
     protected static string $resource = MediaResource::class;
 
@@ -17,32 +19,27 @@ class EditMedia extends EditRecord
     {
         return [
             $this->getBackButtonAction(),
-            DeleteAction::make(),
+            $this->getSaveFormAction()->formId('form'),
+            DeleteAction::make()
+                ->successNotificationTitle(null)
+                ->after(function (): void {
+                    $this->notifySuccess('Mídia excluída com sucesso.');
+                }),
         ];
     }
 
-    // Após salvar, sincroniza mime_type e size no MediaItem
-    protected function afterSave(): void
+    protected function getFormActions(): array
     {
-        $record = $this->getRecord();
+        return [];
+    }
 
-        $attachment = $record->getFirstMedia('media');
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        unset($data['media'], $data['video_preview'], $data['name']);
 
-        if ($attachment) {
-            $record->update([
-                'mime_type' => $attachment->mime_type,
-                'size' => $attachment->size,
-            ]);
-        } elseif (! empty($record->video_url)) {
-            $record->update([
-                'mime_type' => 'video/url',
-                'size' => null,
-            ]);
-        } else {
-            $record->update([
-                'mime_type' => null,
-                'size' => null,
-            ]);
-        }
+        $videoUrl = data_get($data, 'video.url');
+        $data['video'] = ! empty($videoUrl);
+
+        return $data;
     }
 }

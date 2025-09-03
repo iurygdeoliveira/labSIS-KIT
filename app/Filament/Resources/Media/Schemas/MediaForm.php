@@ -128,7 +128,7 @@ class MediaForm
         return $schema
             ->components([
                 Section::make('Upload de Arquivos')
-                    ->description('Faça upload de imagens, áudios e documentos')
+                    ->description('Faça upload de imagens, áudios e documentos (até 5MB)')
                     ->components([
                         SpatieMediaLibraryFileUpload::make('media')
                             ->hiddenLabel()
@@ -146,7 +146,7 @@ class MediaForm
                             ->maxFiles(1)
                             ->maxSize(5120) // 5MB
                             ->collection('media')
-                            ->preserveFilenames()
+                            ->storeFileNamesIn('name')
                             ->required(fn (Get $get): bool => empty($get('video.url')))
                             ->disabled(fn ($get) => ! empty($get('video.url')))
                             ->responsiveImages()
@@ -159,8 +159,7 @@ class MediaForm
                             })
                             ->partiallyRenderComponentsAfterStateUpdated(['video.url'])
                             ->columnSpanFull(),
-                    ])
-                    ->collapsible(),
+                    ]),
 
                 Section::make('URL de Vídeo')
                     ->description('Informe a URL do vídeo (YouTube, Vimeo, etc.)')
@@ -196,8 +195,7 @@ class MediaForm
                             ->view('filament.forms.components.video-preview')
                             ->dehydrated(false)
                             ->columnSpanFull(),
-                    ])
-                    ->collapsible(),
+                    ]),
             ]);
     }
 }

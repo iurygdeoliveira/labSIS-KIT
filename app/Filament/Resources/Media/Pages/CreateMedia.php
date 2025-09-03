@@ -40,7 +40,7 @@ class CreateMedia extends CreateRecord
     #[Override]
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        unset($data['media'], $data['video_preview']);
+        unset($data['media'], $data['video_preview'], $data['name']);
 
         // Se veio URL de vídeo no nested state, liga flag e desloca para model relacionado
         $videoUrl = $data['video']['url'] ?? null;

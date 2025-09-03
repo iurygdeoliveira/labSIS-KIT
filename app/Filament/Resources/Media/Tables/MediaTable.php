@@ -29,6 +29,12 @@ class MediaTable
                         'Vídeo' => 'warning',
                         'Documento' => 'success',
                         'Áudio' => 'danger'
+                    })
+                    ->icon(fn (string $state): string => match ($state) {
+                        'Imagem' => 'heroicon-c-photo',
+                        'Vídeo' => 'heroicon-c-video-camera',
+                        'Documento' => 'heroicon-c-document',
+                        'Áudio' => 'heroicon-c-musical-note',
                     }),
                 TextColumn::make('human_size')
                     ->label('Tamanho')

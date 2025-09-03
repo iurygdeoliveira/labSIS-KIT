@@ -25,6 +25,12 @@ class MediaInfolist
                                 'Documento' => 'success',
                                 'Áudio' => 'danger',
                                 default => 'secondary',
+                            })
+                            ->icon(fn (string $state): string => match ($state) {
+                                'Imagem' => 'heroicon-c-photo',
+                                'Vídeo' => 'heroicon-c-video-camera',
+                                'Documento' => 'heroicon-c-document',
+                                'Áudio' => 'heroicon-c-musical-note',
                             }),
                         TextEntry::make('human_size')
                             ->label('Tamanho'),

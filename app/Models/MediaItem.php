@@ -16,7 +16,10 @@ class MediaItem extends Model implements HasMedia
     protected $table = 'media_items';
 
     protected $fillable = [
+        'name',
         'video',
+        'mime_type',
+        'size',
     ];
 
     protected $appends = [
