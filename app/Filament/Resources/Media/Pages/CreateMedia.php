@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Media\Pages;
 
 use App\Filament\Resources\Media\MediaResource;
+use App\Services\VideoMetadataService;
 use App\Trait\Filament\HasBackButtonAction;
 use App\Trait\Filament\NotificationsTrait;
 use Filament\Notifications\Notification;
@@ -65,11 +66,80 @@ class CreateMedia extends CreateRecord
         // Se foi informado vídeo na criação, persiste relação básica (URL)
         $videoUrl = data_get($this->data, 'video.url');
         if (! empty($videoUrl)) {
-            $record->video()->create([
+            $video = $record->video()->create([
                 'url' => $videoUrl,
             ]);
+
+            try {
+                if ($this->isYoutubeUrl($videoUrl)) {
+                    $service = app(VideoMetadataService::class);
+                    $meta = $service->getYoutubeMetadata($videoUrl);
+
+                    $update = [];
+
+                    if (($meta['title'] ?? '') !== '') {
+                        $update['title'] = (string) $meta['title'];
+                        $update['provider'] = 'youtube';
+                    }
+
+                    if (($meta['durationSeconds'] ?? null) !== null) {
+                        $update['duration_seconds'] = (int) $meta['durationSeconds'];
+                    }
+
+                    $providerVideoId = $this->extractYoutubeId($videoUrl);
+                    if ($providerVideoId !== null) {
+                        $update['provider_video_id'] = $providerVideoId;
+                        $update['provider'] = 'youtube';
+                    }
+
+                    if (! empty($update)) {
+                        $video->update($update);
+                    }
+                }
+            } catch (\Throwable) {
+                // silencioso
+            }
         }
 
         $this->notifySuccess('Mídia criada com sucesso.');
+    }
+
+    private function isYoutubeUrl(?string $url): bool
+    {
+        if ($url === null || $url === '') {
+            return false;
+        }
+
+        $host = (string) parse_url($url, PHP_URL_HOST);
+        $host = str_replace('www.', '', strtolower($host));
+
+        return in_array($host, ['youtube.com', 'm.youtube.com', 'youtu.be'], true);
+    }
+
+    private function extractYoutubeId(string $url): ?string
+    {
+        $host = (string) parse_url($url, PHP_URL_HOST);
+        $host = str_replace('www.', '', strtolower($host));
+        $path = (string) (parse_url($url, PHP_URL_PATH) ?? '');
+
+        if ($host === 'youtu.be') {
+            $parts = array_values(array_filter(explode('/', $path)));
+
+            return $parts[0] ?? null;
+        }
+
+        if ($host === 'youtube.com' || $host === 'm.youtube.com') {
+            parse_str((string) (parse_url($url, PHP_URL_QUERY) ?? ''), $query);
+            if (! empty($query['v'])) {
+                return (string) $query['v'];
+            }
+
+            $parts = array_values(array_filter(explode('/', $path)));
+            if (($parts[0] ?? '') === 'shorts' && ! empty($parts[1] ?? '')) {
+                return (string) $parts[1];
+            }
+        }
+
+        return null;
     }
 }

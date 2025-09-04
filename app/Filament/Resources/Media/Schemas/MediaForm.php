@@ -129,6 +129,7 @@ class MediaForm
             ->components([
                 Section::make('Upload de Arquivos')
                     ->description('Faça upload de imagens, áudios e documentos (até 5MB)')
+                    ->visible(fn ($record): bool => $record === null || ! (bool) ($record?->video ?? false))
                     ->components([
                         SpatieMediaLibraryFileUpload::make('media')
                             ->hiddenLabel()
@@ -159,16 +160,45 @@ class MediaForm
                             })
                             ->partiallyRenderComponentsAfterStateUpdated(['video.url'])
                             ->columnSpanFull(),
+
+                        TextInput::make('attachment_name')
+                            ->label('Nome do Arquivo')
+                            ->afterStateHydrated(function (Set $set, $state, $record): void {
+                                if ($state !== null) {
+                                    return;
+                                }
+
+                                $existing = $record?->getFirstMedia('media')?->name;
+                                if ($existing) {
+                                    $set('attachment_name', (string) $existing);
+                                }
+                            })
+                            ->visible(fn ($record): bool => ! (bool) ($record?->video ?? false))
+                            ->dehydrated(false)
+                            ->columnSpanFull(),
                     ]),
 
                 Section::make('URL de Vídeo')
                     ->description('Informe a URL do vídeo (YouTube, Vimeo, etc.)')
+                    ->visible(fn ($record): bool => $record === null || (bool) ($record?->video ?? false))
                     ->components([
                         TextInput::make('video.url')
                             ->hiddenLabel()
                             ->id('videoUrl')
                             ->url()
                             ->placeholder('https://www.youtube.com/watch?v=...')
+                            ->afterStateHydrated(function (Set $set, ?string $state, $record): void {
+                                // Na edição, popula a URL do vídeo a partir do relacionamento
+                                // quando o estado ainda não foi definido pelo formulário.
+                                if ($state !== null) {
+                                    return;
+                                }
+
+                                $existing = $record?->video()?->value('url');
+                                if ($existing) {
+                                    $set('video.url', (string) $existing);
+                                }
+                            })
                             ->afterStateUpdated(function (?string $state, Set $set): void {
                                 if ($state === null) {
                                     return;
@@ -189,6 +219,22 @@ class MediaForm
                                 'x-on:media-toggled.window' => 'isDisabled = $event.detail.hasMedia',
                                 'x-bind:disabled' => 'isDisabled',
                             ])
+                            ->columnSpanFull(),
+
+                        TextInput::make('video_title')
+                            ->label('Título do Vídeo')
+                            ->afterStateHydrated(function (Set $set, $state, $record): void {
+                                if ($state !== null) {
+                                    return;
+                                }
+
+                                $existing = $record?->video()?->value('title');
+                                if ($existing) {
+                                    $set('video_title', (string) $existing);
+                                }
+                            })
+                            ->visible(fn ($record): bool => (bool) ($record?->video ?? false))
+                            ->dehydrated(false)
                             ->columnSpanFull(),
 
                         ViewField::make('video_preview')

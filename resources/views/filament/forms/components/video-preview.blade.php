@@ -53,9 +53,6 @@
                     class="w-full h-full rounded-lg shadow-md">
                 </iframe>
             </div>
-            <p class="text-sm text-gray-600 mt-2">
-                Preview do vídeo incorporado
-            </p>
         </div>
     </template>
 

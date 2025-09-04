@@ -17,7 +17,13 @@ class MediaTable
             ->columns([
                 TextColumn::make('attachment_name')
                     ->label('Nome do Arquivo')
-                    ->state(fn ($record) => $record->getFirstMedia('media')?->name ?? (($record->video ?? false) ? 'Vídeo (URL)' : '—'))
+                    ->state(function ($record) {
+                        if ((bool) ($record->video ?? false)) {
+                            return $record->video()->value('title') ?? 'Vídeo (URL)';
+                        }
+
+                        return $record->getFirstMedia('media')?->name ?? '—';
+                    })
                     ->searchable(isIndividual: true, isGlobal: false)
                     ->sortable(),
                 TextColumn::make('file_type')
@@ -36,9 +42,6 @@ class MediaTable
                         'Documento' => 'heroicon-c-document',
                         'Áudio' => 'heroicon-c-musical-note',
                     }),
-                TextColumn::make('human_size')
-                    ->label('Tamanho')
-                    ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime('d/m/Y H:i')

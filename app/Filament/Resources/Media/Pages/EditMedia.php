@@ -15,6 +15,11 @@ class EditMedia extends EditRecord
 
     protected static string $resource = MediaResource::class;
 
+    protected function getSavedNotificationTitle(): ?string
+    {
+        return null;
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -41,5 +46,28 @@ class EditMedia extends EditRecord
         $data['video'] = ! empty($videoUrl);
 
         return $data;
+    }
+
+    protected function afterSave(): void
+    {
+        $record = $this->getRecord();
+
+        // Atualiza nome do arquivo (quando não for vídeo)
+        $attachmentName = data_get($this->data, 'attachment_name');
+        if (! (bool) $record->video && $attachmentName !== null && $attachmentName !== '') {
+            if ($media = $record->getFirstMedia('media')) {
+                $media->name = (string) $attachmentName;
+                $media->save();
+            }
+        }
+
+        // Atualiza título do vídeo (quando for vídeo)
+        $videoTitle = data_get($this->data, 'video_title');
+        if ((bool) $record->video && $videoTitle !== null && $videoTitle !== '') {
+            $record->video()->update(['title' => (string) $videoTitle]);
+        }
+
+        $this->notifySuccess('Mídia atualizada com sucesso.');
+        $this->redirect($this->getResource()::getUrl('index'));
     }
 }
