@@ -15,6 +15,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 use Override;
 
 class MediaResource extends Resource
@@ -65,5 +67,20 @@ class MediaResource extends Resource
             'view' => ViewMedia::route('/{record}'),
             'edit' => EditMedia::route('/{record}/edit'),
         ];
+    }
+
+    public static function getRecordTitle(?Model $record): string|Htmlable|null
+    {
+        if (! $record) {
+            return null;
+        }
+
+        if ((bool) $record->video) {
+            $title = $record->video()->value('title');
+
+            return $title ?: 'Vídeo (URL)';
+        }
+
+        return $record->getFirstMedia('media')?->name ?? 'Sem nome';
     }
 }

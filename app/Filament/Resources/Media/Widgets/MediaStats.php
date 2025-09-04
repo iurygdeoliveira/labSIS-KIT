@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Media\Widgets;
 
+use App\Models\Video;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Livewire\Attributes\Computed;
@@ -13,11 +14,15 @@ class MediaStats extends BaseWidget
     protected function summary(): array
     {
         $images = SpatieMedia::query()->where('mime_type', 'like', 'image/%')->count();
-        $videos = SpatieMedia::query()->where('mime_type', 'like', 'video/%')->count();
+        // Vídeos são contabilizados pela tabela "videos" (fontes externas), não pelo Spatie
+        $videos = Video::query()->count();
         $audios = SpatieMedia::query()->where('mime_type', 'like', 'audio/%')->count();
         $documents = SpatieMedia::query()->where('mime_type', 'like', 'application/%')->count();
 
-        $totalSizeBytes = (int) SpatieMedia::query()->sum('size');
+        // Espaço total deve desconsiderar vídeos
+        $totalSizeBytes = (int) SpatieMedia::query()
+            ->where('mime_type', 'not like', 'video/%')
+            ->sum('size');
         $totalSizeHuman = $this->humanSize($totalSizeBytes);
 
         return [
@@ -31,50 +36,50 @@ class MediaStats extends BaseWidget
 
     protected function getStats(): array
     {
-        $s = $this->summary;
+        $stats = $this->summary;
 
         // Calcular total de arquivos
-        $totalFiles = $s['images'] + $s['videos'] + $s['audios'] + $s['documents'];
+        $totalFiles = $stats['images'] + $stats['videos'] + $stats['audios'] + $stats['documents'];
 
         // Calcular percentuais
         $imagesPercentage = $totalFiles > 0
-            ? round(($s['images'] / $totalFiles) * 100, 1)
+            ? round(($stats['images'] / $totalFiles) * 100, 1)
             : 0;
 
         $videosPercentage = $totalFiles > 0
-            ? round(($s['videos'] / $totalFiles) * 100, 1)
+            ? round(($stats['videos'] / $totalFiles) * 100, 1)
             : 0;
 
         $audiosPercentage = $totalFiles > 0
-            ? round(($s['audios'] / $totalFiles) * 100, 1)
+            ? round(($stats['audios'] / $totalFiles) * 100, 1)
             : 0;
 
         $documentsPercentage = $totalFiles > 0
-            ? round(($s['documents'] / $totalFiles) * 100, 1)
+            ? round(($stats['documents'] / $totalFiles) * 100, 1)
             : 0;
 
         return [
-            Stat::make('Imagens', number_format($s['images']))
+            Stat::make('Imagens', number_format($stats['images']))
                 ->description("{$imagesPercentage}% do total")
                 ->icon('heroicon-c-photo')
                 ->color('primary'),
 
-            Stat::make('Vídeos', number_format($s['videos']))
+            Stat::make('Vídeos', number_format($stats['videos']))
                 ->description("{$videosPercentage}% do total")
                 ->icon('heroicon-c-video-camera')
                 ->color('warning'),
 
-            Stat::make('Documentos', number_format($s['documents']))
+            Stat::make('Documentos', number_format($stats['documents']))
                 ->description("{$documentsPercentage}% do total")
                 ->icon('heroicon-c-document')
                 ->color('success'),
 
-            Stat::make('Áudios', number_format($s['audios']))
+            Stat::make('Áudios', number_format($stats['audios']))
                 ->description("{$audiosPercentage}% do total")
                 ->icon('heroicon-c-musical-note')
                 ->color('danger'),
 
-            Stat::make('Tamanho total', $s['size'])
+            Stat::make('Tamanho total', $stats['size'])
                 ->description('Espaço utilizado')
                 ->icon('heroicon-c-server-stack')
                 ->color('secondary'),
