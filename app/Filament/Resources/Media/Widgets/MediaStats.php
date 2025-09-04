@@ -97,8 +97,24 @@ class MediaStats extends BaseWidget
 
     private function humanSize(int $bytes): string
     {
-        $gigabytes = $bytes / (1024 * 1024 * 1024);
+        $gb = $bytes / (1024 * 1024 * 1024);
+        $gbRounded = round($gb, 2);
+        if ($gbRounded > 0) {
+            return $gbRounded.' GB';
+        }
 
-        return round($gigabytes, 2).' GB';
+        $mb = $bytes / (1024 * 1024);
+        $mbRounded = round($mb, 2);
+        if ($mbRounded > 0) {
+            return $mbRounded.' MB';
+        }
+
+        $kb = $bytes / 1024;
+        $kbRounded = round($kb, 2);
+        if ($kbRounded > 0) {
+            return $kbRounded.' KB';
+        }
+
+        return $bytes.' B';
     }
 }
