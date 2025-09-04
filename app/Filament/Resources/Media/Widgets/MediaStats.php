@@ -19,7 +19,7 @@ class MediaStats extends BaseWidget
         $audios = SpatieMedia::query()->where('mime_type', 'like', 'audio/%')->count();
         $documents = SpatieMedia::query()->where('mime_type', 'like', 'application/%')->count();
 
-        // Espaço total deve desconsiderar vídeos
+        // Espaço total deve desconsiderar vídeos (somente anexos do Spatie que não são vídeo)
         $totalSizeBytes = (int) SpatieMedia::query()
             ->where('mime_type', 'not like', 'video/%')
             ->sum('size');

@@ -158,7 +158,6 @@ class MediaForm
                             ->afterStateUpdated(function (mixed $state, Set $set): void {
                                 self::handleMediaStateUpdated($state, $set);
                             })
-                            ->partiallyRenderComponentsAfterStateUpdated(['video.url'])
                             ->columnSpanFull(),
 
                         TextInput::make('attachment_name')

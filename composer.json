@@ -12,6 +12,7 @@
         "filafly/brisk": "^1.0",
         "filament/filament": "^4.0",
         "filament/spatie-laravel-media-library-plugin": "^4.0",
+        "hugomyb/filament-media-action": "^4.0",
         "jeffersongoncalves/filament-cep-field": "^2.1",
         "joaopaulolndev/filament-edit-profile": "^2.0",
         "laravel/framework": "^12.0",
