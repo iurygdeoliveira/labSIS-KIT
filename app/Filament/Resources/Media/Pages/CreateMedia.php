@@ -62,6 +62,8 @@ class CreateMedia extends CreateRecord
     protected function afterCreate(): void
     {
         $record = $this->getRecord();
+        // Garante que relações e anexos salvos estejam disponíveis
+        $record->refresh();
 
         // Se foi informado vídeo na criação, persiste relação básica (URL)
         $videoUrl = data_get($this->data, 'video.url');
@@ -92,6 +94,12 @@ class CreateMedia extends CreateRecord
                         $update['provider'] = 'youtube';
                     }
 
+                    // Aplica título amigável informado no formulário (se houver)
+                    $friendlyTitle = (string) (data_get($this->data, 'video_title') ?? '');
+                    if ($friendlyTitle !== '') {
+                        $update['title'] = $friendlyTitle;
+                    }
+
                     if (! empty($update)) {
                         $video->update($update);
                     }
@@ -101,7 +109,26 @@ class CreateMedia extends CreateRecord
             }
         }
 
+        // Renomeação do anexo deve ocorrer após relacionamentos serem salvos
+        $this->afterSaveRenameAttachment($record);
+
         $this->notifySuccess('Mídia criada com sucesso.');
+    }
+
+    private function afterSaveRenameAttachment($record): void
+    {
+        $videoUrl = data_get($this->data, 'video.url');
+
+        // Se for arquivo (não vídeo), aplica nome amigável no anexo do Spatie
+        if (empty($videoUrl)) {
+            $attachmentName = data_get($this->data, 'attachment_name');
+            if ($attachmentName !== null && $attachmentName !== '') {
+                if ($media = $record->getFirstMedia('media')) {
+                    $media->name = (string) $attachmentName;
+                    $media->save();
+                }
+            }
+        }
     }
 
     private function isYoutubeUrl(?string $url): bool

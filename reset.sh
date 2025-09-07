@@ -18,3 +18,6 @@ npm update
 # Build para desenvolvimento
 echo "🔨 Executando build para desenvolvimento..."
 npm run build
+
+# Executando migrations e seeders
+./vendor/bin/sail artisan migrate:fresh --seed

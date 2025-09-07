@@ -147,7 +147,6 @@ class MediaForm
                             ->maxFiles(1)
                             ->maxSize(5120) // 5MB
                             ->collection('media')
-                            ->storeFileNamesIn('name')
                             ->required(fn (Get $get): bool => empty($get('video.url')))
                             ->disabled(fn ($get) => ! empty($get('video.url')))
                             ->responsiveImages()
@@ -182,7 +181,7 @@ class MediaForm
                     ->visible(fn ($record): bool => $record === null || (bool) ($record?->video ?? false))
                     ->components([
                         TextInput::make('video.url')
-                            ->hiddenLabel()
+                            ->label('URL do Vídeo')
                             ->id('videoUrl')
                             ->url()
                             ->placeholder('https://www.youtube.com/watch?v=...')
@@ -232,7 +231,15 @@ class MediaForm
                                     $set('video_title', (string) $existing);
                                 }
                             })
-                            ->visible(fn ($record): bool => (bool) ($record?->video ?? false))
+                            ->visible(fn ($record): bool => $record === null || (bool) ($record?->video ?? false))
+                            ->disabled(fn ($get) => ! empty($get('media')))
+                            ->hint(fn (Get $get): ?string => ! empty($get('media')) ? 'Um arquivo foi selecionado. Remova-o para editar o título do vídeo.' : null)
+                            ->hintColor('danger')
+                            ->extraInputAttributes([
+                                'x-data' => '{ isDisabled: false }',
+                                'x-on:media-toggled.window' => 'isDisabled = $event.detail.hasMedia',
+                                'x-bind:disabled' => 'isDisabled',
+                            ])
                             ->dehydrated(false)
                             ->columnSpanFull(),
 
