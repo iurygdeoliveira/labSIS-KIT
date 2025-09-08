@@ -31,7 +31,6 @@ return new class extends Migration
         // Tabela de domínio pai (App\\Models\\MediaItem)
         Schema::create('media_items', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
         });
     }
 
