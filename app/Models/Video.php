@@ -8,6 +8,33 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $media_item_id
+ * @property string|null $provider
+ * @property string|null $provider_video_id
+ * @property string $url
+ * @property string|null $title
+ * @property int|null $duration_seconds
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read \App\Models\MediaItem $mediaItem
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video whereDurationSeconds($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video whereMediaItemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video whereProvider($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video whereProviderVideoId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Video whereUrl($value)
+ *
+ * @mixin \Eloquent
+ */
 class Video extends Model
 {
     use HasFactory;

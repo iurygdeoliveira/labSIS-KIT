@@ -55,9 +55,8 @@ return [
             'bucket' => env('AWS_BUCKET', 'labsis'),
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT', env('AWS_URL')),
-            'temporary_url' => env('AWS_URL'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', true),
-            'visibility' => 'public',
+            'visibility' => 'private',
             'throw' => false,
             'report' => false,
             'options' => [

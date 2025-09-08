@@ -9,6 +9,28 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+/**
+ * @property int $id
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property \App\Models\Video|null $video
+ * @property-read string $file_type
+ * @property-read string $human_size
+ * @property-read string|null $image_url
+ * @property-read string $name
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read int|null $media_count
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MediaItem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MediaItem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MediaItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MediaItem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MediaItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MediaItem whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|MediaItem whereVideo($value)
+ *
+ * @mixin \Eloquent
+ */
 class MediaItem extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
@@ -72,7 +94,7 @@ class MediaItem extends Model implements HasMedia
             'video' => 'Vídeo',
             'audio' => 'Áudio',
             'application' => 'Documento',
-            'text' => 'Texto',
+            'text' => 'Documento',
             'font' => 'Fonte',
             default => ucfirst($main ?: 'Desconhecido'),
         };

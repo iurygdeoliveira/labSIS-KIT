@@ -138,7 +138,7 @@ class MediaForm
                             ->reorderable(false)
                             ->appendFiles(false)
                             ->disk('s3')
-                            ->visibility('public')
+                            ->visibility('private')
                             ->dehydrated(false)
                             ->downloadable(true)
                             ->openable(true)

@@ -23,13 +23,18 @@ O objetivo deste projeto é fornecer uma base sólida e rica em recursos para ac
 
 ## Documentação do Kit
 
-Toda a documentação sobre como utilizar os recursos, padrões e arquitetura deste kit está disponível na pasta [`/docs`](/docs). Recomendamos a leitura para todos os desenvolvedores que irão atuar neste projeto.
+Esta documentação foi criada para facilitar o entendimento de como as funcionalidades do kit foram implementadas, descrevendo os padrões adotados, decisões técnicas e exemplos práticos.
+
+Toda a documentação sobre como utilizar os recursos, padrões e arquitetura deste kit está disponível na pasta [`/docs`](/docs). Recomendamos a leitura para todos os desenvolvedores que pretendem utilizar este projeto.
+
+Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](https://deepwiki.com/iurygdeoliveira/labSIS-SaaS-KIT-V4) e [Context7](https://context7.com/iurygdeoliveira/labsis-saas-kit-v4), que auxiliam o leitor a explorar o código e compreender as implementações por meio de buscas contextuais e respostas explicativas.
 
 - [**Autenticação de Dois Fatores (2FA) no Filament**](/docs/autenticacao-2fa.md)
 - [**Cores no Filament**](/docs/cores-filament.md)
 - [**Customização da Aparência do Painel**](/docs/customizando-layout.md)
 - [**Edição de Perfil no Filament**](/docs/edicao-perfil.md)
 - [**Entendendo o AppServiceProvider**](/docs/app-service-provider.md)
+- [**Gestão de mídias**](/docs/gestao-de-midia.md)
 - [**Otimização com #[Computed]**](/docs/livewire-computed.md)
 - [**Login Unificado**](/docs/login-unificado.md)
 - [**Notificações**](/docs/notifications-trait.md)
@@ -114,17 +119,15 @@ Em especial, agradecemos a:
 
 O trabalho de vocês contribui significativamente para o avanço e a qualidade deste projeto.
 
-## ⚠️ Recursos em Desenvolvimento
-
-**Gestão de Mídias:**
-- **CRUD completo para mídias:** Sistema de gerenciamento para diferentes tipos de arquivos (áudio, vídeo, documento e imagem).
-- **Preview de Conteúdo:** Visualização direta de mídias com suporte a múltiplos formatos e fallbacks para conteúdo não carregável.
-- **Organização por Tipo:** Categorização automática baseada no MIME type com badges coloridos para identificação visual.
-- **Tamanho Humanizado:** Exibição do tamanho de arquivo em formato legível (KB, MB, GB).
-
 ## 🚀 Recursos Atuais
 
 O Kit oferece uma base sólida com os seguintes recursos já implementados:
+
+- **Gestão de Mídias:**
+  - **CRUD completo para mídias:** Sistema de gerenciamento para diferentes tipos de arquivos (áudio, vídeo, documento e imagem).
+  - **Preview de Conteúdo:** Visualização direta de mídias com suporte a múltiplos formatos e fallbacks para conteúdo não carregável.
+  - **Organização por Tipo:** Categorização automática baseada no MIME type com badges coloridos para identificação visual.
+  - **Tamanho Humanizado:** Exibição do tamanho de arquivo em formato legível (KB, MB, GB).
 
 - **Gestão de Usuários:**
   - **CRUD completo para usuários (Criação, Leitura, Atualização e Exclusão).**
