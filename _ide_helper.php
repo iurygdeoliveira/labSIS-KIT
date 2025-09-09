@@ -28373,6 +28373,31 @@ namespace App\Filament\Resources\Users\Widgets {
             }
     }
 
+namespace App\Filament\Clusters\AccessControl {
+    /**
+     */
+    class AccessControlCluster extends \Filament\Clusters\Cluster {
+            }
+    }
+
+namespace Filament\Clusters {
+    /**
+     */
+    class Cluster extends \Filament\Pages\Page {
+            }
+    }
+
+namespace App\Filament\Clusters\AccessControl\Pages {
+    /**
+     */
+    class MediaPermissions extends \Filament\Pages\Page {
+            }
+    /**
+     */
+    class UserPermissions extends \Filament\Pages\Page {
+            }
+    }
+
 namespace Illuminate\View {
     /**
      */

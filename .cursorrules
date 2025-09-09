@@ -120,7 +120,7 @@
 -   Mantenha classes de teste no mesmo arquivo quando possível
 -   Use nomes de métodos de teste descritivos
 -   Siga o padrão arrange-act-assert
--   Ao finalizar cada implementação, valide com o Tinker (via Sail) o funcionamento dos fluxos alterados antes de considerar concluído
+-   Ao finalizar cada implementação, valide com o Tinker (via Sail) o funcionamento dos fluxos alterados, depois use o playwright para validar a interface do usuário, se houver algum problema, corrija e valide novamente.
 
 # Migrations
 

@@ -17,12 +17,15 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $guard = config('auth.defaults.guard', 'web');
+        $resources = ['media', 'users'];
 
-        foreach (PermissionEnum::cases() as $permission) {
-            PermissionModel::firstOrCreate([
-                'name' => $permission->value,
-                'guard_name' => $guard,
-            ]);
+        foreach ($resources as $resource) {
+            foreach (PermissionEnum::cases() as $permission) {
+                PermissionModel::firstOrCreate([
+                    'name' => $permission->for($resource),
+                    'guard_name' => $guard,
+                ]);
+            }
         }
 
         Role::firstOrCreate(['name' => RoleType::ADMIN->value, 'guard_name' => $guard]);
@@ -37,6 +40,13 @@ class UserSeeder extends Seeder
             ],
         );
         $admin->syncRoles([RoleType::ADMIN->value]);
+
+        // Garante que a role Admin possua todas as permissões
+        $adminRole = Role::where('name', RoleType::ADMIN->value)->where('guard_name', $guard)->first();
+        if ($adminRole) {
+            // Garante que a role Admin possua todas as permissões
+            $adminRole->syncPermissions(PermissionModel::all());
+        }
 
         $user = User::query()->firstOrCreate(
             ['email' => 'user@labsis.dev.br'],

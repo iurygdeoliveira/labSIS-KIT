@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Models\User;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
@@ -47,6 +48,11 @@ class UserForm
                     ->label('Motivo da suspensão')
                     ->disabled(fn (?User $record): bool => $record?->getKey() === Auth::id())
                     ->hidden(fn (string $operation): bool => $operation === 'create'),
+                Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->label('Perfis (roles)')
+                    ->multiple()
+                    ->preload(),
             ]);
     }
 }

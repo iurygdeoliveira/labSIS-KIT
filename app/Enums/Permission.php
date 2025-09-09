@@ -22,4 +22,9 @@ enum Permission: string implements HasLabel
             self::VIEW => 'Visualizar',
         };
     }
+
+    public function for(string $resource): string
+    {
+        return "{$resource}.{$this->value}";
+    }
 }
