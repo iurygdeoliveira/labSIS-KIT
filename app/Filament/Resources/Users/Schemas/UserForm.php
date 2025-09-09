@@ -35,7 +35,7 @@ class UserForm
                 Toggle::make('is_suspended')
                     ->label(fn (Get $get): string => $get('is_suspended') ? 'Usuário não autorizado' : 'Usuário autorizado')
                     ->onColor('danger')
-                    ->offColor('success')
+                    ->offColor('primary')
                     ->onIcon('heroicon-c-no-symbol')
                     ->offIcon('heroicon-c-check')
                     ->default(fn ($record): bool => (bool) ($record?->is_suspended))

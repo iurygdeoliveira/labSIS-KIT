@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Models\User;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -23,7 +24,14 @@ class UserInfolist
                                     ->label('Nome'),
                                 TextEntry::make('email')
                                     ->label('E-mail'),
-                            ]),
+                                TextEntry::make('primary_role')
+                                    ->label('Função')
+                                    ->badge()
+                                    ->state(function (?User $record): string {
+                                        return $record?->getRoleNames()->first() ?? '-';
+                                    })
+                                    ->color('primary'),
+                            ])->columns(2),
                         Tab::make('Datas')
                             ->icon(Heroicon::Calendar)
                             ->schema([
@@ -44,7 +52,7 @@ class UserInfolist
                                     ->label('Status')
                                     ->formatStateUsing(fn (?bool $state): string => $state ? __('Suspenso') : __('Autorizado'))
                                     ->badge()
-                                    ->color(fn (?bool $state): string => $state ? 'danger' : 'success')
+                                    ->color(fn (?bool $state): string => $state ? 'danger' : 'primary')
                                     ->icon(fn (?bool $state): string => $state ? 'heroicon-c-no-symbol' : 'heroicon-c-check'),
                                 TextEntry::make('suspended_at')
                                     ->label('Suspenso em')

@@ -17,31 +17,41 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $guard = config('auth.defaults.guard', 'web');
+        $resources = ['media', 'users'];
 
-        foreach (PermissionEnum::cases() as $permission) {
-            PermissionModel::firstOrCreate([
-                'name' => $permission->value,
-                'guard_name' => $guard,
-            ]);
+        foreach ($resources as $resource) {
+            foreach (PermissionEnum::cases() as $permission) {
+                PermissionModel::firstOrCreate([
+                    'name' => $permission->for($resource),
+                    'guard_name' => $guard,
+                ]);
+            }
         }
 
         Role::firstOrCreate(['name' => RoleType::ADMIN->value, 'guard_name' => $guard]);
         Role::firstOrCreate(['name' => RoleType::USER->value, 'guard_name' => $guard]);
 
         $admin = User::query()->firstOrCreate(
-            ['email' => 'admin@labsis.dev.br'],
+            ['email' => 'fulano@labsis.dev.br'],
             [
-                'name' => 'Admin',
+                'name' => 'fulano',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
             ],
         );
         $admin->syncRoles([RoleType::ADMIN->value]);
 
+        // Garante que a role Admin possua todas as permissões
+        $adminRole = Role::where('name', RoleType::ADMIN->value)->where('guard_name', $guard)->first();
+        if ($adminRole) {
+            // Garante que a role Admin possua todas as permissões
+            $adminRole->syncPermissions(PermissionModel::all());
+        }
+
         $user = User::query()->firstOrCreate(
-            ['email' => 'user@labsis.dev.br'],
+            ['email' => 'sicrano@labsis.dev.br'],
             [
-                'name' => 'Usuário Padrão',
+                'name' => 'sicrano',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
             ],
