@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Clusters\AccessControl\Pages;
+namespace App\Filament\Clusters\PermissionRole\Pages;
 
 use App\Enums\Permission;
 use App\Enums\RoleType;
-use App\Filament\Clusters\AccessControl\AccessControlCluster;
+use App\Filament\Clusters\PermissionRole\PermissionRoleCluster;
 use Filament\Pages\Page;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -19,7 +19,7 @@ abstract class BasePermissionsPage extends Page implements Tables\Contracts\HasT
 {
     use Tables\Concerns\InteractsWithTable;
 
-    protected static ?string $cluster = AccessControlCluster::class;
+    protected static ?string $cluster = PermissionRoleCluster::class;
 
     protected static ?string $title = 'Controle de Permissões';
 

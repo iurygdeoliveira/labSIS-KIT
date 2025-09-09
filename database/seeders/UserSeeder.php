@@ -32,9 +32,9 @@ class UserSeeder extends Seeder
         Role::firstOrCreate(['name' => RoleType::USER->value, 'guard_name' => $guard]);
 
         $admin = User::query()->firstOrCreate(
-            ['email' => 'admin@labsis.dev.br'],
+            ['email' => 'fulano@labsis.dev.br'],
             [
-                'name' => 'Admin',
+                'name' => 'fulano',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
             ],
@@ -49,9 +49,9 @@ class UserSeeder extends Seeder
         }
 
         $user = User::query()->firstOrCreate(
-            ['email' => 'user@labsis.dev.br'],
+            ['email' => 'sicrano@labsis.dev.br'],
             [
-                'name' => 'Usuário Padrão',
+                'name' => 'sicrano',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
             ],

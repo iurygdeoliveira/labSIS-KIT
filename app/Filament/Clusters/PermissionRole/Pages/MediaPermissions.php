@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Clusters\AccessControl\Pages;
+namespace App\Filament\Clusters\PermissionRole\Pages;
 
 use BackedEnum;
 use Filament\Support\Icons\Heroicon;

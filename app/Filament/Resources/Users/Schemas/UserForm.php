@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Models\User;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
@@ -36,7 +35,7 @@ class UserForm
                 Toggle::make('is_suspended')
                     ->label(fn (Get $get): string => $get('is_suspended') ? 'Usuário não autorizado' : 'Usuário autorizado')
                     ->onColor('danger')
-                    ->offColor('success')
+                    ->offColor('primary')
                     ->onIcon('heroicon-c-no-symbol')
                     ->offIcon('heroicon-c-check')
                     ->default(fn ($record): bool => (bool) ($record?->is_suspended))
@@ -48,11 +47,6 @@ class UserForm
                     ->label('Motivo da suspensão')
                     ->disabled(fn (?User $record): bool => $record?->getKey() === Auth::id())
                     ->hidden(fn (string $operation): bool => $operation === 'create'),
-                Select::make('roles')
-                    ->relationship('roles', 'name')
-                    ->label('Perfis (roles)')
-                    ->multiple()
-                    ->preload(),
             ]);
     }
 }
