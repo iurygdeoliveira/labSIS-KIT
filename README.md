@@ -38,7 +38,7 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 - [**Otimização com #[Computed]**](/docs/livewire-computed.md)
 - [**Login Unificado**](/docs/login-unificado.md)
 - [**Notificações**](/docs/notifications-trait.md)
-- [**Roles/Permissions**](/docs/roles-e-permissoes.md)
+- [**Roles/Permissions**](/docs/roles-e-permissions.md)
 - [**Suspensão de Usuários**](/docs/suspensao-usuarios.md)
 - [**Utilizando Enumerações (Enums) com Filament**](/docs/enums.md)
 - [**Widgets no Filament**](/docs/widgets-filament.md)
