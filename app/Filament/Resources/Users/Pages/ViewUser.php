@@ -17,7 +17,7 @@ class ViewUser extends ViewRecord
     {
         return [
             $this->getBackButtonAction(),
-            EditAction::make(),
+            // EditAction::make(),
         ];
     }
 }

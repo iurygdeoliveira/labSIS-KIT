@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Filament\Resources\Users\Actions\DeleteUserAction;
 use App\Models\User;
 use App\Trait\Filament\NotificationsTrait;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Facades\Filament;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -39,6 +41,10 @@ class UsersTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteUserAction::make()
+                    ->visible(
+                        fn (User $record): bool => $record->id !== Filament::auth()->id()
+                    ),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

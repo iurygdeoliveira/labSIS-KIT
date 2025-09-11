@@ -29,7 +29,9 @@ class EditUser extends EditRecord
     {
         $actions = [
             $this->getBackButtonAction(),
-            ViewAction::make(),
+            $this->getSaveFormAction()->formId('form'),
+            $this->getCancelFormAction(),
+            // ViewAction::make(),
         ];
 
         // Só mostra o botão de deletar se não for o usuário logado
@@ -40,6 +42,11 @@ class EditUser extends EditRecord
         }
 
         return $actions;
+    }
+
+    protected function getFormActions(): array
+    {
+        return [];
     }
 
     protected function getSavedNotification(): ?Notification
