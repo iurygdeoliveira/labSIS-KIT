@@ -1,5 +1,25 @@
 ## Gestão de mídias privadas e URLs temporárias assinadas
 
+## 📋 Índice
+
+- [Gestão de mídias privadas e URLs temporárias assinadas](#gestão-de-mídias-privadas-e-urls-temporárias-assinadas)
+- [Por que buckets privados e URLs pré-assinadas?](#por-que-buckets-privados-e-urls-pré-assinadas)
+- [Proposta adotada neste projeto](#proposta-adotada-neste-projeto)
+- [Configurações essenciais](#configurações-essenciais)
+  - [1) Disco S3 privado e sem reescrita de host](#1-disco-s3-privado-e-sem-reescrita-de-host)
+  - [2) Configuração do Pacote Spatie Media Library](#2-configuração-do-pacote-spatie-media-library)
+  - [3) AppServiceProvider](#3-appserviceprovider)
+  - [4) Modelo Media e MediaItem](#4-modelo-media-e-mediaitem)
+  - [5) Modelo Video](#5-modelo-video)
+  - [6) Serviço MediaService](#6-serviço-mediaservice)
+  - [7) Serviço VideoMetadataService](#7-serviço-videometadataservice)
+  - [8) UI no Filament](#8-ui-no-filament)
+    - [Formulário de upload](#formulário-de-upload)
+    - [Infolist e abrir mídia](#infolist-e-abrir-mídia)
+    - [Tabela](#tabela)
+- [MinIO: bucket privado](#minio-bucket-privado)
+- [Referências](#referências)
+
 ### Por que buckets privados e URLs pré-assinadas?
 Manter buckets privados segue o princípio do menor privilégio e evita exposição acidental. Em vez de objetos públicos, usamos URLs pré‑assinadas e temporárias para liberar somente o arquivo necessário, pelo tempo necessário, sem expor credenciais. É possível restringir método (GET/PUT), tipo e tamanho do arquivo; qualquer alteração na URL invalida o acesso (assinatura SigV4). Isso reduz riscos como indexação, hotlink e brute force, diminui a superfície de ataque e favorece a conformidade (ex.: LGPD).
 
@@ -81,11 +101,9 @@ O `App\Services\MediaService` encapsula a lógica de criação e atualização d
 O `App\Services\VideoMetadataService` enriquece registros de vídeo externo (YouTube) com título e duração. Primeiro tenta obter o título via oEmbed oficial; se indisponível, efetua leitura do HTML com cURL e extrai `og:title` ou o `<title>` normalizado. Para a duração, tenta `lengthSeconds` no JSON do player e, alternativamente, interpreta um valor ISO‑8601 encontrado no HTML, convertendo para segundos. Com esses dados, o projeto persiste metadados suficientes em `Video` para rotular e exibir vídeos no painel sem armazenar arquivos de mídia pesados e chaves de API de YouTube.
 
 
-
 #### 8) UI no Filament
 
 ##### Formulário de upload
-
 Arquivo: `app/Filament/Resources/Media/Schemas/MediaForm.php`
 - Upload privado no S3 (`->disk('s3')->visibility('private')`).
 - Possui input para mídia e URL de vídeo.

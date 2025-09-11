@@ -28373,10 +28373,25 @@ namespace App\Filament\Resources\Users\Widgets {
             }
     }
 
-namespace App\Filament\Clusters\AccessControl {
+namespace App\Filament\Clusters\PermissionRole\Pages {
     /**
      */
-    class AccessControlCluster extends \Filament\Clusters\Cluster {
+    class BasePermissionsPage extends \Filament\Pages\Page {
+            }
+    /**
+     */
+    class MediaPermissions extends \App\Filament\Clusters\PermissionRole\Pages\BasePermissionsPage {
+            }
+    /**
+     */
+    class UserPermissions extends \App\Filament\Clusters\PermissionRole\Pages\BasePermissionsPage {
+            }
+    }
+
+namespace App\Filament\Clusters\PermissionRole {
+    /**
+     */
+    class PermissionRoleCluster extends \Filament\Clusters\Cluster {
             }
     }
 
@@ -28387,14 +28402,17 @@ namespace Filament\Clusters {
             }
     }
 
-namespace App\Filament\Clusters\AccessControl\Pages {
+namespace App\Filament\Clusters\UserRole\Pages {
     /**
      */
-    class MediaPermissions extends \Filament\Pages\Page {
+    class AssignRoles extends \Filament\Pages\Page {
             }
+    }
+
+namespace App\Filament\Clusters\UserRole {
     /**
      */
-    class UserPermissions extends \Filament\Pages\Page {
+    class UserRoleCluster extends \Filament\Clusters\Cluster {
             }
     }
 

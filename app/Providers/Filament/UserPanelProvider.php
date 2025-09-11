@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\Media\MediaResource;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\Widgets\AccountWidget;
@@ -19,6 +20,9 @@ class UserPanelProvider extends BasePanelProvider
         $panel = $panel
             ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\\Filament\\User\\Resources')
             ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\\Filament\\User\\Pages')
+            ->resources([
+                MediaResource::class,
+            ])
             ->pages([
                 Dashboard::class,
             ])

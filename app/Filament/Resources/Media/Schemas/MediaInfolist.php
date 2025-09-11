@@ -73,9 +73,19 @@ class MediaInfolist
                                 'Áudio' => 'heroicon-c-musical-note',
                             }),
 
-                        TextEntry::make('created_at')
+                        TextEntry::make('created_at_display')
                             ->label('Data de Criação')
-                            ->dateTime('d/m/Y H:i'),
+                            ->state(function ($record): ?string {
+                                if ((bool) $record->video) {
+                                    $createdAt = $record->video()->value('created_at');
+
+                                    return $createdAt ? \Illuminate\Support\Carbon::parse($createdAt)->format('d/m/Y H:i') : null;
+                                }
+
+                                $media = $record->getFirstMedia('media');
+
+                                return $media?->created_at?->format('d/m/Y H:i');
+                            }),
                     ])
                     ->columns(2),
             ]);

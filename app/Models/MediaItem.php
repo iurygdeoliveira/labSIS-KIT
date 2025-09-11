@@ -37,6 +37,8 @@ class MediaItem extends Model implements HasMedia
 
     protected $table = 'media_items';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
         'video',
@@ -100,20 +102,7 @@ class MediaItem extends Model implements HasMedia
         };
     }
 
-    public function getNameAttribute(): string
-    {
-        $attachment = $this->getFirstMedia('media');
-
-        if ($attachment) {
-            return (string) $attachment->name;
-        }
-
-        if ($this->video) {
-            return 'Vídeo (URL)';
-        }
-
-        return 'Sem nome';
-    }
+    // Removido accessor de name: passamos a usar a coluna em banco
 
     public function getImageUrlAttribute(): ?string
     {

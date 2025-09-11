@@ -8,6 +8,7 @@ use App\Trait\Filament\HasBackButtonAction;
 use App\Trait\Filament\NotificationsTrait;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Str;
 use Override;
 
 class CreateMedia extends CreateRecord
@@ -41,14 +42,28 @@ class CreateMedia extends CreateRecord
     #[Override]
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        unset($data['media'], $data['video_preview'], $data['name']);
+        unset($data['media'], $data['video_preview']);
 
-        // Se veio URL de vídeo no nested state, liga flag e desloca para model relacionado
+        // Se veio URL de vídeo no nested state, liga flag e garante nome amigável
         $videoUrl = $data['video']['url'] ?? null;
         if (! empty($videoUrl)) {
             $data['video'] = true;
+
+            // Define 'name' baseado no título informado ou no ID do provedor (YouTube)
+            $friendlyTitle = (string) (data_get($this->data, 'video_title') ?? '');
+            $candidate = $friendlyTitle !== ''
+                ? $friendlyTitle
+                : (string) ($this->extractYoutubeId($videoUrl) ?? 'video');
+
+            $data['name'] = Str::slug($candidate) ?: 'video';
         } else {
             $data['video'] = false;
+
+            // No fluxo de upload, o 'name' é preenchido no estado do form.
+            // Por segurança, define fallback se vier vazio.
+            if (empty($data['name'] ?? null)) {
+                $data['name'] = 'arquivo';
+            }
         }
 
         return $data;
