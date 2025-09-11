@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Media\Tables;
 
+use App\Filament\Resources\Media\Actions\DeleteMediaAction;
 use App\Models\MediaItem as MediaItemModel;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -77,6 +78,7 @@ class MediaTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteMediaAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

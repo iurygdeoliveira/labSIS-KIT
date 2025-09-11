@@ -28283,6 +28283,10 @@ namespace App\Filament\Resources\Media\Pages {
             }
     /**
      */
+    class DeleteMedia extends \Filament\Resources\Pages\ViewRecord {
+            }
+    /**
+     */
     class EditMedia extends \Filament\Resources\Pages\EditRecord {
             }
     /**
@@ -28308,16 +28312,16 @@ namespace Filament\Resources\Pages {
     /**
      * @property-read Schema $form
      */
+    class ViewRecord extends \Filament\Resources\Pages\Page {
+            }
+    /**
+     * @property-read Schema $form
+     */
     class EditRecord extends \Filament\Resources\Pages\Page {
             }
     /**
      */
     class ListRecords extends \Filament\Resources\Pages\Page {
-            }
-    /**
-     * @property-read Schema $form
-     */
-    class ViewRecord extends \Filament\Resources\Pages\Page {
             }
     }
 

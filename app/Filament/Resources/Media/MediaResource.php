@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Media;
 
 use App\Filament\Resources\Media\Pages\CreateMedia;
+use App\Filament\Resources\Media\Pages\DeleteMedia;
 use App\Filament\Resources\Media\Pages\EditMedia;
 use App\Filament\Resources\Media\Pages\ListMedia;
 use App\Filament\Resources\Media\Pages\ViewMedia;
@@ -66,6 +67,7 @@ class MediaResource extends Resource
             'create' => CreateMedia::route('/create'),
             'view' => ViewMedia::route('/{record}'),
             'edit' => EditMedia::route('/{record}/edit'),
+            'delete' => DeleteMedia::route('/{record}/delete'),
         ];
     }
 
