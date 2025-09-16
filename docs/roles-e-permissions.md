@@ -70,6 +70,8 @@ Estratégia de permissões no projeto:
 
 O enum `RoleType` lista e padroniza os papéis disponíveis, além de fornecer rótulos para UI.
 
+**Importante**: Para este projeto não será disponibilizada uma interface na UI para a criação de novas roles, pois entendemos que cada projeto é único e possui requisitos diferentes, portanto as roles devem ser definidas de forma programática para garantir consistência e controle total sobre a estrutura de autorização. A proposta deste projeto é que as roles devem ser criadas por meio da enum `RoleType` e o seeder `User`, permitindo que desenvolvedores adaptem o sistema de permissões conforme as necessidades específicas de cada aplicação.
+
 Arquivo: `app/Enums/RoleType.php`
 
 ### 2. Modelo de Usuário
