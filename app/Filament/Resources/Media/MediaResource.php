@@ -32,6 +32,8 @@ class MediaResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?int $navigationSort = 3;
+
     #[Override]
     public static function getModelLabel(): string
     {

@@ -26,6 +26,8 @@ class TenantResource extends Resource
 
     protected static ?string $title = 'Tenants';
 
+    protected static ?int $navigationSort = 1;
+
     public static function form(Schema $schema): Schema
     {
         return TenantForm::configure($schema);

@@ -15,8 +15,9 @@ class TenantsTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')->label('Nome')->searchable(),
-                TextColumn::make('slug')->label('Slug')->searchable(),
+                TextColumn::make('name')
+                    ->label('Nome')
+                    ->searchable(isIndividual: true, isGlobal: false),
                 IconColumn::make('is_active')->label('Ativo')->boolean(),
                 TextColumn::make('users_count')->counts('users')->label('Usuários'),
             ])
