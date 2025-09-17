@@ -7,17 +7,13 @@ use App\Filament\Resources\Tenants\Pages\DeleteTenant;
 use App\Filament\Resources\Tenants\Pages\EditTenant;
 use App\Filament\Resources\Tenants\Pages\ListTenants;
 use App\Filament\Resources\Tenants\Pages\ViewTenant;
+use App\Filament\Resources\Tenants\Schemas\TenantForm;
+use App\Filament\Resources\Tenants\Tables\TenantsTable;
 use App\Models\Tenant;
 use BackedEnum;
-use Filament\Actions\CreateAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables;
 use Filament\Tables\Table;
 
 class TenantResource extends Resource
@@ -32,45 +28,12 @@ class TenantResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema->schema([
-            Forms\Components\TextInput::make('name')->label('Nome')->required()->maxLength(255),
-            Forms\Components\TextInput::make('slug')->label('Slug')->required()->unique(ignoreRecord: true),
-            Forms\Components\Toggle::make('is_active')->label('Ativo')->default(true),
-            Forms\Components\Repeater::make('users')
-                ->relationship('users')
-                ->schema([
-                    Forms\Components\Select::make('user_id')
-                        ->relationship('users', 'name')
-                        ->searchable()
-                        ->preload()
-                        ->required(),
-                    Forms\Components\Toggle::make('is_owner')->label('Proprietário')->default(false),
-                ])
-                ->collapsed()
-                ->grid(1),
-        ]);
+        return TenantForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('name')->label('Nome')->searchable(),
-                Tables\Columns\TextColumn::make('slug')->label('Slug')->searchable(),
-                Tables\Columns\IconColumn::make('is_active')->label('Ativo')->boolean(),
-                Tables\Columns\TextColumn::make('users_count')->counts('users')->label('Usuários'),
-            ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
-            ])
-            ->headerActions([
-                CreateAction::make(),
-            ]);
+        return TenantsTable::configure($table);
     }
 
     public static function getPages(): array

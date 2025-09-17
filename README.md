@@ -119,6 +119,11 @@ Em especial, agradecemos a:
 
 O trabalho de vocês contribui significativamente para o avanço e a qualidade deste projeto.
 
+## Recurso em desenvolvimento
+- [ x ] Implementar o recurso de gerenciamento de tenants.
+- [ ] Implementar o recurso de gerenciamento de emails.
+- [ ] Implementar o recurso de gerenciamento de cache.
+
 ## 🚀 Recursos Atuais
 
 O Kit oferece uma base sólida com os seguintes recursos já implementados:
