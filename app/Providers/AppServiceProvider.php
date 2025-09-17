@@ -94,7 +94,7 @@ class AppServiceProvider extends ServiceProvider
         // Garante as pastas de mídia no MinIO (disco s3) apenas se estiver configurado
         try {
             if (config('filesystems.disks.s3.key') && config('filesystems.disks.s3.secret')) {
-                $directories = ['audios', 'images', 'documents'];
+                $directories = ['audios', 'images', 'documents', 'avatar'];
 
                 foreach ($directories as $directory) {
                     Storage::disk('s3')->makeDirectory($directory);

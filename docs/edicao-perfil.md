@@ -24,9 +24,9 @@ O sistema de edição de perfil utiliza o plugin `filament-edit-profile` que for
 
 ## 📁 Arquivos de Configuração
 
-### 1. AdminPanelProvider.php
+### 1. BasePanelProvider.php
 
-Localização: `app/Providers/Filament/AdminPanelProvider.php`
+Localização: `app/Providers/Filament/BasePanelProvider.php`
 
 Este arquivo configura o plugin de edição de perfil e define suas opções:
 
@@ -38,7 +38,7 @@ Este arquivo configura o plugin de edição de perfil e define suas opções:
         ->setIcon('heroicon-s-adjustments-horizontal')
         ->shouldShowAvatarForm(
             value: true,
-            directory: 'avatars',
+                directory: 'avatar',
             rules: 'mimes:png,jpg,jpeg|max:1024'
         )
         ->shouldShowEmailForm()
@@ -61,7 +61,7 @@ Este arquivo configura o plugin de edição de perfil e define suas opções:
 
 Localização: `app/Models/User.php`
 
-O modelo User implementa as interfaces necessárias para o funcionamento do plugin:
+O modelo User implementa as interfaces necessárias e integra a Spatie Media Library para avatar salvo em MinIO (s3) já como thumb (256x256):
 
 ```php
 use Filament\Models\Contracts\FilamentUser;
@@ -69,31 +69,35 @@ use Filament\Models\Contracts\HasAvatar;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 
-class User extends Authenticatable implements 
-    FilamentUser, 
-    HasAppAuthentication, 
-    HasAppAuthenticationRecovery, 
-    HasAvatar
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasAvatar, HasMedia
 {
-    // ... código do modelo
-}
-```
+    use InteractsWithMedia;
 
-#### Método getFilamentAvatarUrl():
-
-```php
-public function getFilamentAvatarUrl(): ?string
-{
-    $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
-
-    if (!$this->$avatarColumn) {
-        return null;
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->useDisk('s3')
+            ->singleFile();
     }
 
-    // Como agora estamos usando o disco 'public', usamos Storage::url diretamente
-    return Storage::url($this->$avatarColumn);
+    public function registerMediaConversions(?\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
+    {
+        // Intencionalmente vazio: avatar é salvo já como 256x256
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        $media = $this->getFirstMedia('avatar');
+        if ($media) {
+            return $media->getUrl();
+        }
+
+        return null;
+    }
 }
 ```
+
+O método `getFilamentAvatarUrl()` retorna a URL do arquivo da coleção `avatar`, que já é a imagem final (thumb 256x256) salva no bucket do MinIO.
 
 #### Campos Necessários:
 
@@ -132,8 +136,8 @@ return [
     'locale_column' => 'locale',
     'theme_color_column' => 'theme_color',
     'avatar_column' => 'avatar_url',
-    'disk' => 'public',              // Disco de armazenamento para avatares
-    'visibility' => 'public',        // Visibilidade dos arquivos
+    'disk' => 's3',                 // MinIO (S3)
+    'visibility' => 'private',      // URLs assinadas quando necessário
 ];
 ```
 
@@ -150,80 +154,27 @@ return [
 
 Localização: `config/filesystems.php`
 
-Configuração dos discos de armazenamento para upload de arquivos:
+Disco utilizado: s3 (MinIO).
 
 ```php
-'disks' => [
-    'local' => [
-        'driver' => 'local',
-        'root' => storage_path('app/private'),
-        'serve' => true,
-        'throw' => false,
-        'report' => false,
-    ],
-
-    'public' => [
-        'driver' => 'local',
-        'root' => storage_path('app/public'),
-        'url' => env('APP_URL').'/storage',
-        'visibility' => 'public',
-        'throw' => false,
-        'report' => false,
+'s3' => [
+    'driver' => 's3',
+    'key' => env('AWS_ACCESS_KEY_ID'),
+    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+    'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+    'bucket' => env('AWS_BUCKET', 'labsis'),
+    'url' => env('AWS_URL'),
+    'endpoint' => env('AWS_ENDPOINT', env('AWS_URL')),
+    'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', true),
+    'visibility' => 'private',
+    'throw' => false,
+    'report' => false,
+    'options' => [
+        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+        'signature_version' => 'v4',
     ],
 ],
-
-'links' => [
-    public_path('storage') => storage_path('app/public'),
-],
 ```
-
-## ⚙️ Configuração do Plugin
-
-### Configuração Básica no AdminPanelProvider:
-
-```php
-->plugin(
-    FilamentEditProfilePlugin::make()
-        ->setNavigationLabel('Editar Perfil')
-        ->setNavigationGroup('Configurações')
-        ->setIcon('heroicon-s-adjustments-horizontal')
-        ->shouldShowAvatarForm(
-            value: true,
-            directory: 'avatars',
-            rules: 'mimes:png,jpg,jpeg|max:1024'
-        )
-        ->shouldShowEmailForm()
-        ->shouldShowDeleteAccountForm(false)
-        ->shouldShowMultiFactorAuthentication()
-)
-```
-
-### Configuração de Avatar:
-
-```php
-->shouldShowAvatarForm(
-    value: true,                     // Exibe o formulário de avatar
-    directory: 'avatars',            // Diretório de armazenamento
-    rules: 'mimes:png,jpg,jpeg|max:1024' // Regras de validação
-)
-```
-
-**Regras de Validação Disponíveis:**
-- **`mimes`**: Tipos de arquivo permitidos
-- **`max`**: Tamanho máximo em kilobytes
-- **`dimensions`**: Dimensões da imagem (ex: `min:200,200|max:800,800`)
-
-### Configuração de 2FA:
-
-```php
-->shouldShowMultiFactorAuthentication()
-```
-
-Esta opção habilita:
-- Configuração de aplicativos de autenticação
-- Geração de códigos QR
-- Códigos de recuperação
-- Desativação de 2FA
 
 
 ## 📚 Documentação Oficial do Pacote
@@ -232,3 +183,4 @@ Esta opção habilita:
 
 
 **Nota**: Esta documentação é específica para a versão atual do projeto. Para versões mais recentes dos pacotes, consulte a documentação oficial.
+ 

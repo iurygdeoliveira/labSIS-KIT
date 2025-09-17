@@ -11,21 +11,27 @@ class MediaPathGenerator implements PathGenerator
 {
     public function getPath(Media $media): string
     {
-        $folder = $this->getFolderByMimeType($media->mime_type);
+        $folder = $media->collection_name === 'avatar'
+            ? 'avatar'
+            : $this->getFolderByMimeType($media->mime_type);
 
         return "{$folder}/{$media->id}/";
     }
 
     public function getPathForConversions(Media $media): string
     {
-        $folder = $this->getFolderByMimeType($media->mime_type);
+        $folder = $media->collection_name === 'avatar'
+            ? 'avatar'
+            : $this->getFolderByMimeType($media->mime_type);
 
         return "{$folder}/{$media->id}/conversions/";
     }
 
     public function getPathForResponsiveImages(Media $media): string
     {
-        $folder = $this->getFolderByMimeType($media->mime_type);
+        $folder = $media->collection_name === 'avatar'
+            ? 'avatar'
+            : $this->getFolderByMimeType($media->mime_type);
 
         return "{$folder}/{$media->id}/responsive-images/";
     }

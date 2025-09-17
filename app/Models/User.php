@@ -18,6 +18,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Override;
+use Spatie\Image\Enums\Fit;
+use Spatie\Image\Image;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -75,12 +80,13 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasAvatar
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasAvatar, HasMedia
 {
     use AppAuthenticationRecoveryCodes;
     use AppAuthenticationSecret;
     use HasFactory;
     use HasRoles;
+    use InteractsWithMedia;
     use Notifiable;
     use UuidTrait;
 
@@ -120,14 +126,32 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function getFilamentAvatarUrl(): ?string
     {
+        $media = $this->getFirstMedia('avatar');
+
+        if ($media) {
+            try {
+                return $media->getUrl();
+            } catch (\Throwable) {
+                // ignore
+            }
+        }
+
         $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
 
         if (! $this->$avatarColumn) {
             return null;
         }
 
-        // Como agora estamos usando o disco 'public', usamos Storage::url diretamente
-        return Storage::url($this->$avatarColumn);
+        try {
+            return Storage::disk(config('filament-edit-profile.disk', 's3'))
+                ->temporaryUrl($this->$avatarColumn, now()->addMinutes(5));
+        } catch (\Throwable) {
+            try {
+                return Storage::url($this->$avatarColumn);
+            } catch (\Throwable) {
+                return null;
+            }
+        }
     }
 
     public function isSuspended(): bool
@@ -164,5 +188,59 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         return false;
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->useDisk('s3')
+            ->singleFile();
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        // Avatar é salvo já redimensionado como arquivo original
+    }
+
+    public function setAvatarUrlAttribute(?string $value): void
+    {
+        if ($value === null || $value === '') {
+            $this->attributes['avatar_url'] = null;
+
+            return;
+        }
+
+        try {
+            $disk = (string) config('filament-edit-profile.disk', 's3');
+            $contents = Storage::disk($disk)->get($value);
+
+            if ($contents === null || $contents === '') {
+                $this->attributes['avatar_url'] = $value;
+
+                return;
+            }
+
+            $tmpPath = (string) tempnam(sys_get_temp_dir(), 'avatar_');
+            file_put_contents($tmpPath, $contents);
+
+            Image::load($tmpPath)
+                ->fit(Fit::Crop, 256, 256)
+                ->optimize()
+                ->save($tmpPath);
+
+            $this->clearMediaCollection('avatar');
+
+            $this->addMedia($tmpPath)
+                ->usingFileName(basename($value))
+                ->toMediaCollection('avatar');
+
+            @unlink($tmpPath);
+
+            Storage::disk($disk)->delete($value);
+
+            $this->attributes['avatar_url'] = null;
+        } catch (\Throwable) {
+            $this->attributes['avatar_url'] = $value;
+        }
     }
 }

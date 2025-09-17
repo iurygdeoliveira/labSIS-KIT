@@ -13,7 +13,10 @@ class MediaStats extends BaseWidget
     #[Computed]
     protected function summary(): array
     {
-        $images = SpatieMedia::query()->where('mime_type', 'like', 'image/%')->count();
+        $images = SpatieMedia::query()
+            ->where('mime_type', 'like', 'image/%')
+            ->where('collection_name', '!=', 'avatar')
+            ->count();
         // Vídeos são contabilizados pela tabela "videos" (fontes externas), não pelo Spatie
         $videos = Video::query()->count();
         $audios = SpatieMedia::query()->where('mime_type', 'like', 'audio/%')->count();
@@ -22,6 +25,7 @@ class MediaStats extends BaseWidget
         // Espaço total deve desconsiderar vídeos (somente anexos do Spatie que não são vídeo)
         $totalSizeBytes = (int) SpatieMedia::query()
             ->where('mime_type', 'not like', 'video/%')
+            ->where('collection_name', '!=', 'avatar')
             ->sum('size');
         $totalSizeHuman = $this->humanSize($totalSizeBytes);
 

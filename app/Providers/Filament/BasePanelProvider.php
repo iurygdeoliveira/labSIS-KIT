@@ -6,7 +6,6 @@ namespace App\Providers\Filament;
 
 use App\Http\Middleware\RedirectGuestsToCentralLoginMiddleware;
 use App\Http\Middleware\RedirectToProperPanelMiddleware;
-use App\Http\Middleware\SecurityHeadersMiddleware;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use Filafly\Themes\Brisk\BriskTheme;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
@@ -46,7 +45,6 @@ abstract class BasePanelProvider extends PanelProvider
             ->sidebarWidth('15rem')
             ->maxContentWidth(Width::Full)
             ->middleware([
-                SecurityHeadersMiddleware::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
@@ -75,7 +73,7 @@ abstract class BasePanelProvider extends PanelProvider
                     ->setIcon('heroicon-s-adjustments-horizontal')
                     ->shouldShowAvatarForm(
                         value: true,
-                        directory: 'avatars',
+                        directory: 'avatar',
                         rules: 'mimes:png,jpg,jpeg|max:1024'
                     )
                     ->shouldShowEmailForm()
