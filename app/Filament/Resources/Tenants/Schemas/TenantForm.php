@@ -2,32 +2,38 @@
 
 namespace App\Filament\Resources\Tenants\Schemas;
 
-use Filament\Forms\Components\Repeater;
+use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class TenantForm
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema->schema([
-            TextInput::make('name')->label('Nome')->required()->maxLength(255),
-            TextInput::make('slug')->label('Slug')->required()->unique(ignoreRecord: true),
-            Toggle::make('is_active')->label('Ativo')->default(true),
-            Repeater::make('users')
-                ->relationship('users')
-                ->schema([
-                    Select::make('user_id')
-                        ->relationship('users', 'name')
-                        ->searchable()
-                        ->preload()
-                        ->required(),
-                    Toggle::make('is_owner')->label('Proprietário')->default(false),
+        return $schema->components([
+            Section::make('Nome do Tenant')
+                ->description('Informe o nome do tenant')
+                ->components([
+                    TextInput::make('name')
+                        ->hiddenLabel()
+                        ->required()
+                        ->maxLength(255),
                 ])
-                ->collapsed()
-                ->grid(1),
+                ->columns(1),
+
+            Section::make('Usuários')
+                ->description('Associe usuários a este tenant')
+                ->components([
+                    Select::make('usersIds')
+                        ->hiddenLabel()
+                        ->options(User::query()->orderBy('name')->pluck('name', 'id')->all())
+                        ->multiple()
+                        ->preload()
+                        ->searchable(),
+                ])
+                ->columns(1),
         ]);
     }
 }

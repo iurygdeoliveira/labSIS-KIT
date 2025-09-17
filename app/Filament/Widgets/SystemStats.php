@@ -5,6 +5,8 @@ namespace App\Filament\Widgets;
 use App\Filament\Resources\Media\MediaResource;
 use App\Filament\Resources\Tenants\TenantResource;
 use App\Filament\Resources\Users\UserResource;
+use App\Models\Tenant;
+use App\Models\User;
 use App\Models\Video;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -17,15 +19,15 @@ class SystemStats extends BaseWidget
     protected function summary(): array
     {
         // Tenants
-        $totalTenants = \App\Models\Tenant::query()->count();
-        $activeTenants = \App\Models\Tenant::query()->where('is_active', true)->count();
+        $totalTenants = Tenant::query()->count();
+        $activeTenants = Tenant::query()->where('is_active', true)->count();
         $inactiveTenants = max($totalTenants - $activeTenants, 0);
         $activeTenantsPct = $totalTenants > 0 ? round(($activeTenants / $totalTenants) * 100, 1) : 0;
         $inactiveTenantsPct = $totalTenants > 0 ? round(($inactiveTenants / $totalTenants) * 100, 1) : 0;
 
         // Usuários
-        $totalUsers = \App\Models\User::query()->count();
-        $suspendedUsers = \App\Models\User::query()->where('is_suspended', true)->count();
+        $totalUsers = User::query()->count();
+        $suspendedUsers = User::query()->where('is_suspended', true)->count();
         $activeUsers = max($totalUsers - $suspendedUsers, 0);
         $activeUsersPct = $totalUsers > 0 ? round(($activeUsers / $totalUsers) * 100, 1) : 0;
         $suspendedUsersPct = $totalUsers > 0 ? round(($suspendedUsers / $totalUsers) * 100, 1) : 0;

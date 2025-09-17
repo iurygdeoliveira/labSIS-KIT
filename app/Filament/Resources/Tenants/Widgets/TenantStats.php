@@ -16,12 +16,6 @@ class TenantStats extends BaseWidget
         $activeTenants = Tenant::query()->where('is_active', true)->count();
         $inactiveTenants = max($totalTenants - $activeTenants, 0);
 
-        $tenantsWithOwner = Tenant::query()
-            ->whereHas('users', function ($query) {
-                $query->where('tenant_user.is_owner', true);
-            })
-            ->count();
-
         $totalUsersLinked = Tenant::query()
             ->withCount('users')
             ->get()
@@ -35,7 +29,6 @@ class TenantStats extends BaseWidget
             'total' => $totalTenants,
             'active' => $activeTenants,
             'inactive' => $inactiveTenants,
-            'withOwner' => $tenantsWithOwner,
             'avgUsers' => $avgUsersPerTenant,
         ];
     }
@@ -45,7 +38,6 @@ class TenantStats extends BaseWidget
         $summary = $this->summary;
 
         $activePct = $summary['total'] > 0 ? round(($summary['active'] / $summary['total']) * 100, 1) : 0;
-        $withOwnerPct = $summary['total'] > 0 ? round(($summary['withOwner'] / $summary['total']) * 100, 1) : 0;
 
         return [
             Stat::make('Tenants Ativos', number_format($summary['active']))
@@ -63,11 +55,6 @@ class TenantStats extends BaseWidget
                 ->icon('heroicon-c-building-office')
                 ->color('secondary'),
 
-            Stat::make('Com Proprietário', number_format($summary['withOwner']))
-                ->description("{$withOwnerPct}% com owner")
-                ->icon('heroicon-c-shield-check')
-                ->color('primary'),
-
             Stat::make('Usuários / Tenant', (string) $summary['avgUsers'])
                 ->description('Usuários por tenant')
                 ->icon('heroicon-c-user-group')
@@ -80,7 +67,12 @@ class TenantStats extends BaseWidget
         return [
             'sm' => 2,
             'md' => 3,
-            'xl' => 5,
+            'xl' => 4,
         ];
+    }
+
+    public function getColumnSpan(): int|string|array
+    {
+        return 'full';
     }
 }
