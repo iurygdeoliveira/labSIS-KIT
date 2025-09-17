@@ -131,12 +131,12 @@ return [
      * (view the latest version of this package's migration file)
      */
 
-    'teams' => false,
+    'teams' => true,
 
     /*
      * The class to use to resolve the permissions team id
      */
-    'team_resolver' => \Spatie\Permission\DefaultTeamResolver::class,
+    'team_resolver' => App\Tenancy\SpatieTeamResolver::class,
 
     /*
      * Passport Client Credentials Grant

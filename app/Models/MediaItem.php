@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -44,6 +45,7 @@ class MediaItem extends Model implements HasMedia
         'video',
         'mime_type',
         'size',
+        'tenant_id',
     ];
 
     protected $appends = [
@@ -122,5 +124,10 @@ class MediaItem extends Model implements HasMedia
     public function video()
     {
         return $this->hasOne(Video::class);
+    }
+
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\LogoutResponse;
+use App\Tenancy\SpatieTeamResolver as AppSpatieTeamResolver;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Override;
+use Spatie\Permission\Contracts\PermissionsTeamResolver as SpatiePermissionsTeamResolver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(FilamentLoginResponse::class, LoginResponse::class);
         $this->app->bind(LogoutResponseContract::class, LogoutResponse::class);
+        $this->app->bind(SpatiePermissionsTeamResolver::class, AppSpatieTeamResolver::class);
     }
 
     /**

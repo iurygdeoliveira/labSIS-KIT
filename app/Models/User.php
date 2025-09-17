@@ -12,8 +12,10 @@ use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
+use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -80,7 +82,7 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasAvatar, HasMedia
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasAvatar, HasMedia, HasTenants
 {
     use AppAuthenticationRecoveryCodes;
     use AppAuthenticationSecret;
@@ -184,7 +186,14 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         if ($panel->getId() === 'user') {
-            return $this->hasRole(RoleType::USER->value);
+            // Permite acesso ao painel de usuário se:
+            // - possuir role global 'User', ou
+            // - estiver vinculado a pelo menos um tenant (seleciona depois via switcher)
+            if ($this->hasRole(RoleType::USER->value)) {
+                return true;
+            }
+
+            return $this->tenants()->exists();
         }
 
         return false;
@@ -200,6 +209,31 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     public function registerMediaConversions(?Media $media = null): void
     {
         // Avatar é salvo já redimensionado como arquivo original
+    }
+
+    public function tenants(): BelongsToMany
+    {
+        return $this->belongsToMany(Tenant::class, 'tenant_user')
+            ->withPivot('is_owner')
+            ->withTimestamps();
+    }
+
+    public function getTenants(Panel $panel): array|\Illuminate\Support\Collection
+    {
+        return $this->tenants()->where('is_active', true)->get();
+    }
+
+    public function canAccessTenant(\Illuminate\Database\Eloquent\Model $tenant): bool
+    {
+        if (! $tenant instanceof Tenant) {
+            return false;
+        }
+
+        if (! $tenant->is_active) {
+            return false;
+        }
+
+        return $this->tenants()->whereKey($tenant->getKey())->exists();
     }
 
     public function setAvatarUrlAttribute(?string $value): void
