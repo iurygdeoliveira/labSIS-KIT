@@ -28,10 +28,28 @@ abstract class BasePermissionsPage extends Page implements Tables\Contracts\HasT
     public function table(Table $table): Table
     {
         return $table
-            ->query(Role::query()->where('name', '!=', RoleType::ADMIN->value))
+            ->query(
+                Role::query()
+                    ->select(['roles.*', 'tenants.name as tenant_name'])
+                    ->leftJoin('tenants', 'tenants.id', '=', 'roles.team_id')
+                    ->whereNotNull('roles.team_id')
+                    ->where('roles.team_id', '!=', 0)
+                    ->where('roles.name', '!=', RoleType::ADMIN->value)
+            )
             ->columns([
                 TextColumn::make('name')
                     ->label('Role'),
+                TextColumn::make('tenant_name')
+                    ->label('Tenant')
+                    ->formatStateUsing(static function ($state, Role $record): string {
+                        if (empty($record->team_id) || (int) $record->team_id === 0) {
+                            return 'Global';
+                        }
+
+                        return (string) ($state ?: '—');
+                    })
+                    ->badge()
+                    ->color('primary'),
                 $this->makeToggleColumnForAction(Permission::VIEW->value, 'Visualizar'),
                 $this->makeToggleColumnForAction(Permission::CREATE->value, 'Criar'),
                 $this->makeToggleColumnForAction(Permission::UPDATE->value, 'Editar'),
@@ -50,6 +68,9 @@ abstract class BasePermissionsPage extends Page implements Tables\Contracts\HasT
             ->onIcon('heroicon-c-check')
             ->offIcon('heroicon-c-x-mark')
             ->getStateUsing(static function (Role $record) use ($permissionName): bool {
+                // Garante que a permissão exista antes de checar estado, evitando exceção
+                PermissionModel::findOrCreate($permissionName, config('auth.defaults.guard', 'web'));
+
                 return $record->hasPermissionTo($permissionName);
             })
             ->updateStateUsing(static function (Role $record, $state) use ($permissionName): void {

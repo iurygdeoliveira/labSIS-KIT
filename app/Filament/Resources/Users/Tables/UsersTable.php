@@ -38,8 +38,7 @@ class UsersTable
 
                         return empty($tenantNames) ? '—' : implode(', ', $tenantNames);
                     })
-                    ->wrap()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->wrap(),
                 TextColumn::make('is_suspended')
                     ->label('Status')
                     ->sortable()

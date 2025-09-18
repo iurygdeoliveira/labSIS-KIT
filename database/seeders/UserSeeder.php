@@ -31,8 +31,7 @@ class UserSeeder extends Seeder
             }
         }
 
-        Role::firstOrCreate(['name' => RoleType::ADMIN->value, 'guard_name' => $guard]);
-        Role::firstOrCreate(['name' => RoleType::USER->value, 'guard_name' => $guard]);
+        RoleType::ensureGlobalRoles($guard);
 
         $admin = User::query()->firstOrCreate(
             ['email' => 'fulano@labsis.dev.br'],
@@ -62,54 +61,43 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('mudar123'),
             ],
         );
-        $globalResolver->setPermissionsTeamId(0);
-        $user->syncRoles([RoleType::USER->value]);
+        // Não atribui role "User" no escopo global. Roles de usuário serão atribuídas por tenant abaixo.
 
-        // Tenants para o 'sicrano'
+        // Tenants para o 'sicrano' (sem slug)
         $tenantA = Tenant::firstOrCreate(
-            ['slug' => 'tenant-a'],
+            ['name' => 'Tenant A'],
             [
                 'uuid' => (string) Str::uuid(),
-                'name' => 'Tenant A',
                 'is_active' => true,
             ],
         );
 
         $tenantB = Tenant::firstOrCreate(
-            ['slug' => 'tenant-b'],
+            ['name' => 'Tenant B'],
             [
                 'uuid' => (string) Str::uuid(),
-                'name' => 'Tenant B',
                 'is_active' => true,
             ],
         );
 
-        // Vincula o usuário aos dois tenants
+        // Vincula o usuário aos dois tenants (sem atributos de pivot)
         $user->tenants()->syncWithoutDetaching([
-            $tenantA->id => ['is_owner' => true],
-            $tenantB->id => ['is_owner' => false],
+            $tenantA->id,
+            $tenantB->id,
         ]);
 
         // Define roles por tenant usando o team resolver
         $resolver = app(SpatieTeamResolver::class);
 
-        // Team: tenant-a
+        // Team: tenant A
         $resolver->setPermissionsTeamId($tenantA->id);
-        $roleUserA = Role::firstOrCreate([
-            'team_id' => $tenantA->id,
-            'name' => 'user',
-            'guard_name' => $guard,
-        ]);
+        $roleUserA = RoleType::ensureUserRoleForTeam($tenantA->id, $guard);
         $user->assignRole($roleUserA);
 
-        // Team: tenant-b
+        // Team: tenant B
         $resolver->setPermissionsTeamId($tenantB->id);
-        $roleManagerB = Role::firstOrCreate([
-            'team_id' => $tenantB->id,
-            'name' => 'manager',
-            'guard_name' => $guard,
-        ]);
-        $user->assignRole($roleManagerB);
+        $roleUserB = RoleType::ensureUserRoleForTeam($tenantB->id, $guard);
+        $user->assignRole($roleUserB);
 
         // Limpa override do team id para não vazar para outros seeders
         $resolver->setPermissionsTeamId(null);
