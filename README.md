@@ -57,50 +57,65 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 
 Siga os passos abaixo para configurar o ambiente de desenvolvimento localmente.
 
-**1. Clonar o Repositório**
+**1. Fazer um fork deste repositório**
 
-Primeiro, clone este repositório para a sua máquina local utilizando Git:
+- No GitHub, acesse `https://github.com/iurygdeoliveira/labSIS-SaaS-KIT-V4` e clique em "Fork" para criar sua cópia.
+
+**2. Clonar o seu fork**
+
+Use o endereço do seu fork (substitua SEU_USUARIO pelo seu usuário do GitHub):
 
 ```bash
-git clone git@github.com:iurygdeoliveira/labSIS-SaaS-KIT-V4.git
+git clone git@github.com:SEU_USUARIO/labSIS-SaaS-KIT-V4.git
 cd labSIS-SaaS-KIT-V4
 ```
 
-**2. Instalar Dependências (PHP e JS)**
+Se preferir HTTPS:
 
-Execute os comandos abaixo para instalar as dependências do Composer (backend) e do NPM (frontend).
+```bash
+git clone https://github.com/SEU_USUARIO/labSIS-SaaS-KIT-V4.git
+cd labSIS-SaaS-KIT-V4
+```
+
+**3. Atualizar a variável do repositório no .env.example**
+
+Edite o arquivo `.env.example` e ajuste o valor para o endereço do SEU fork:
+
+```env
+GITHUB_REPOSITORY="https://github.com/SEU_USUARIO/labSIS-SaaS-KIT-V4"
+```
+
+Observação: Se você já criou o `.env`, ajuste a mesma variável também no `.env`.
+
+**4. Instalar Dependências (PHP e JS)**
 
 ```bash
 composer install
 npm install
 ```
 
-**3. Configurar o Ambiente**
-
-Copie o arquivo de exemplo `.env.example` para criar seu próprio arquivo de configuração `.env`. Em seguida, gere a chave da aplicação, que é essencial para a segurança da sua instância Laravel.
+**5. Configurar o Ambiente**
 
 ```bash
 cp .env.example .env
 ```
 
-**4. Configurar o Banco de Dados**
+**6. Configurar o Banco de Dados**
 
-Este projeto está configurado para utilizar PostgreSQL com Laravel Sail. Execute as migrations para criar as tabelas no banco de dados. Para popular o banco com dados de exemplo, execute as seeders.
+Este projeto está configurado para utilizar PostgreSQL com Laravel Sail. Suba os containers e execute as migrations/seeders:
 
 ```bash
 ./vendor/bin/sail up -d
 ./vendor/bin/sail artisan migrate --seed
 ```
 
-**5. Compilar os Assets**
-
-Compile os arquivos de frontend (CSS e JavaScript) utilizando o Vite.
+**7. Compilar os Assets**
 
 ```bash
 ./vendor/bin/sail npm run build
 ```
 
-A aplicação estará disponível em `http://localhost`. 
+A aplicação estará disponível em `http://localhost`.
 
 ## Agradecimentos
 
