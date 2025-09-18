@@ -4,10 +4,12 @@ namespace App\Filament\Resources\Media\Tables;
 
 use App\Filament\Resources\Media\Actions\DeleteMediaAction;
 use App\Models\MediaItem as MediaItemModel;
+use App\Models\Tenant;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Facades\Filament;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Carbon;
@@ -71,6 +73,17 @@ class MediaTable
 
                         return $media?->created_at?->format('d/m/Y H:i') ?? '—';
                     }),
+                TextColumn::make('tenant.name')
+                    ->label('Tenant')
+                    ->state(function ($record) {
+                        $tenantId = $record->tenant_id ?? null;
+                        if (! $tenantId) {
+                            return Filament::hasTenancy() ? '—' : 'Global';
+                        }
+
+                        return Tenant::query()->whereKey($tenantId)->value('name') ?? '—';
+                    })
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
                 //

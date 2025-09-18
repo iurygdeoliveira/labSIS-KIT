@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Tables;
 
 use App\Filament\Resources\Users\Actions\DeleteUserAction;
+use App\Models\Tenant;
 use App\Models\User;
 use App\Trait\Filament\NotificationsTrait;
 use Filament\Actions\BulkActionGroup;
@@ -26,6 +27,18 @@ class UsersTable
                     ->sortable(),
                 TextColumn::make('email')
                     ->label('Email address'),
+                TextColumn::make('tenants_list')
+                    ->label('Tenants')
+                    ->state(function (User $record) {
+                        $tenantNames = Tenant::query()
+                            ->select('name')
+                            ->whereIn('id', $record->tenants()->pluck('tenants.id'))
+                            ->pluck('name')
+                            ->all();
+
+                        return empty($tenantNames) ? '—' : implode(', ', $tenantNames);
+                    })
+                    ->wrap(),
                 TextColumn::make('is_suspended')
                     ->label('Status')
                     ->sortable()

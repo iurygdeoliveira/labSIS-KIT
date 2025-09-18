@@ -33,7 +33,9 @@ class RedirectGuestsToCentralLoginMiddleware
             return $next($request);
         }
 
-        // Se o usuário convidado tentou acessar qualquer outro painel, redireciona para /login
-        return redirect()->to('/login');
+        // Se o usuário convidado tentou acessar qualquer outro painel, redireciona para a URL de login do painel atual
+        $panel = Filament::getCurrentPanel() ?? Filament::getPanel('admin');
+
+        return redirect()->to($panel->getLoginUrl());
     }
 }

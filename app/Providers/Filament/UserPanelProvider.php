@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Resources\Media\MediaResource;
+use App\Models\Tenant;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\Widgets\AccountWidget;
@@ -23,6 +24,8 @@ class UserPanelProvider extends BasePanelProvider
             ->resources([
                 MediaResource::class,
             ])
+            ->tenant(Tenant::class, 'slug', 'tenant')
+            ->tenantMenu(true)
             ->pages([
                 Dashboard::class,
             ])

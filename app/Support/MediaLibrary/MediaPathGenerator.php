@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support\MediaLibrary;
 
+use Filament\Facades\Filament;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
 
@@ -15,7 +16,10 @@ class MediaPathGenerator implements PathGenerator
             ? 'avatar'
             : $this->getFolderByMimeType($media->mime_type);
 
-        return "{$folder}/{$media->id}/";
+        $tenant = Filament::getTenant();
+        $prefix = $tenant ? 'tenants/'.$tenant->getKey().'/' : '';
+
+        return "{$prefix}{$folder}/{$media->id}/";
     }
 
     public function getPathForConversions(Media $media): string
@@ -24,7 +28,10 @@ class MediaPathGenerator implements PathGenerator
             ? 'avatar'
             : $this->getFolderByMimeType($media->mime_type);
 
-        return "{$folder}/{$media->id}/conversions/";
+        $tenant = Filament::getTenant();
+        $prefix = $tenant ? 'tenants/'.$tenant->getKey().'/' : '';
+
+        return "{$prefix}{$folder}/{$media->id}/conversions/";
     }
 
     public function getPathForResponsiveImages(Media $media): string
@@ -33,7 +40,10 @@ class MediaPathGenerator implements PathGenerator
             ? 'avatar'
             : $this->getFolderByMimeType($media->mime_type);
 
-        return "{$folder}/{$media->id}/responsive-images/";
+        $tenant = Filament::getTenant();
+        $prefix = $tenant ? 'tenants/'.$tenant->getKey().'/' : '';
+
+        return "{$prefix}{$folder}/{$media->id}/responsive-images/";
     }
 
     private function getFolderByMimeType(string $mimeType): string

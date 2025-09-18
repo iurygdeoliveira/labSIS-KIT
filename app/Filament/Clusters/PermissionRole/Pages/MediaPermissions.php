@@ -15,6 +15,8 @@ class MediaPermissions extends BasePermissionsPage
 
     protected static ?string $navigationLabel = 'Mídia';
 
+    protected static ?int $navigationSort = 3;
+
     public function getResourceName(): string
     {
         return 'media';

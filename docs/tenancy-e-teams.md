@@ -1,0 +1,11 @@
+### Tenancy (single database) e “teams” do Spatie Permission
+
+Quando falamos de multi-tenant em single database, estamos dizendo que todos os dados vivem nas mesmas tabelas, mas cada registro “pertence” a um tenant específico através de uma coluna como `tenant_id`. Isso resolve o isolamento dos DADOS: cada mídia, cada vídeo, cada item de negócio aponta para o seu tenant por meio do `tenant_id`.
+
+Controle de acesso (RBAC) é um problema diferente do dado em si. Em vez de isolar registros, precisamos isolar quais papéis e permissões um usuário possui em cada tenant. É aqui que entram os “teams” do Spatie Permission: eles adicionam um escopo (`team_id`) nas relações de papéis e permissões. Na prática, isso permite que o mesmo usuário tenha, por exemplo, o papel “User” no Tenant A e nenhum papel no Tenant B, ou ainda que tenha permissão de “editar mídias” em um tenant e não no outro. Tudo isso sem colisão de nomes nem gambiarras, porque cada vínculo de role/permission fica salvo com o `team_id` correto.
+
+Neste projeto, o `SpatieTeamResolver` integra esse conceito com o Filament. Quando você está no painel do admin (sem tenant selecionado), o resolver retorna `0` como `team_id`, que usamos como “time global”. Já no dia a dia, você navega no painel do usuário e escolhe o tenant pelo menu de tenant. Ao selecionar um tenant nesse menu, o resolver passa a retornar o `id` desse tenant como `team_id`. Assim, qualquer checagem de autorização feita pelo Spatie (como `hasRole`, `can`, `hasPermissionTo`) automaticamente considera o tenant selecionado no painel do usuário. Você não precisa ficar filtrando “na unha”: o escopo do time já está embutido nas consultas do pacote.
+
+Em resumo, o `tenant_id` mantém os REGISTROS no seu condomínio certo, enquanto o `team_id` mantém os CRACHÁS (roles) e CHAVES (permissions) válidos apenas dentro daquele condomínio. É por isso que usamos as duas coisas ao mesmo tempo: `tenant_id` garante isolação de dados; “teams” garantem isolação de regras de acesso. Essa combinação dá segurança e previsibilidade: cada tenant enxerga seus dados e aplica suas próprias regras, enquanto o painel admin (time 0) continua com uma visão e um controle globais, sem conflitar com o que acontece dentro dos tenants.
+
+

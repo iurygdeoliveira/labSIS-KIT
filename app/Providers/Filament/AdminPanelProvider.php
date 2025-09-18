@@ -3,8 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Configurators\FilamentComponentsConfigurator;
-use App\Filament\Resources\Media\Widgets\MediaStats;
-use App\Filament\Resources\Users\Widgets\UsersStats;
+use App\Filament\Resources\Tenants\TenantResource;
+use App\Filament\Widgets\SystemStats;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\Widgets\AccountWidget;
@@ -34,8 +34,11 @@ class AdminPanelProvider extends BasePanelProvider
             ->widgets([
                 // AccountWidget::class,
                 // FilamentInfoWidget::class,
-                UsersStats::class,
-                MediaStats::class,
+                SystemStats::class,
+            ])
+            ->tenant(null) // desabilita tenancy e o menu de tenant no painel admin
+            ->resources([
+                TenantResource::class,
             ]);
 
         return $panel;

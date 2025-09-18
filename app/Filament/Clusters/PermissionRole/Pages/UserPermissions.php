@@ -15,6 +15,8 @@ class UserPermissions extends BasePermissionsPage
 
     protected static ?string $navigationLabel = 'Usuários';
 
+    protected static ?int $navigationSort = 2;
+
     public function getResourceName(): string
     {
         return 'users';
