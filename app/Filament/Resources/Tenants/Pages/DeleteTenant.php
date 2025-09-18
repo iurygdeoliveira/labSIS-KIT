@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Tenants\Pages;
 
 use App\Filament\Resources\Tenants\TenantResource;
 use App\Trait\Filament\HasBackButtonAction;
+use App\Trait\Filament\NotificationsTrait;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;
@@ -11,6 +12,7 @@ use Illuminate\Contracts\Support\Htmlable;
 class DeleteTenant extends ViewRecord
 {
     use HasBackButtonAction;
+    use NotificationsTrait;
 
     protected static string $resource = TenantResource::class;
 
@@ -33,7 +35,20 @@ class DeleteTenant extends ViewRecord
                 ->modalSubmitActionLabel('Sim, Excluir')
                 ->modalCancelActionLabel('Cancelar')
                 ->action(function (): void {
-                    $this->getRecord()->delete();
+                    $tenant = $this->getRecord();
+
+                    if ($tenant->users()->exists()) {
+                        $this->notifyDanger(
+                            'Não é possível excluir o tenant',
+                            'Existem usuários associados a este tenant. Remova as associações antes de excluir.',
+                        );
+
+                        return;
+                    }
+
+                    $tenant->delete();
+                    $this->notifySuccess('Tenant excluído com sucesso');
+
                     $this->redirect($this->getResource()::getUrl('index'));
                 }),
         ];
