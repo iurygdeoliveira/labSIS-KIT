@@ -3,16 +3,26 @@
 namespace App\Filament\Resources\Tenants\Pages;
 
 use App\Filament\Resources\Tenants\TenantResource;
+use App\Trait\Filament\HasBackButtonAction;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Contracts\Support\Htmlable;
 
 class DeleteTenant extends ViewRecord
 {
+    use HasBackButtonAction;
+
     protected static string $resource = TenantResource::class;
+
+    public function getView(): string
+    {
+        return 'filament.resources.tenants.pages.delete-tenant';
+    }
 
     protected function getHeaderActions(): array
     {
         return [
+            $this->getBackButtonAction(),
             Action::make('delete')
                 ->label('Confirmar Exclusão')
                 ->color('danger')
@@ -27,5 +37,21 @@ class DeleteTenant extends ViewRecord
                     $this->redirect($this->getResource()::getUrl('index'));
                 }),
         ];
+    }
+
+    public function getTitle(): string|Htmlable
+    {
+        return $this->resolveDynamicTitle();
+    }
+
+    protected function resolveDynamicTitle(): string
+    {
+        $record = $this->getRecord();
+
+        if (! $record) {
+            return 'Excluir Tenant';
+        }
+
+        return 'Excluir: '.($record->name ?? 'Tenant sem nome');
     }
 }

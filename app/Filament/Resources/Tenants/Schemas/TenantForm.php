@@ -5,7 +5,9 @@ namespace App\Filament\Resources\Tenants\Schemas;
 use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 
 class TenantForm
@@ -20,6 +22,10 @@ class TenantForm
                         ->hiddenLabel()
                         ->required()
                         ->maxLength(255),
+
+                    Toggle::make('is_active')
+                        ->label('Ativo')
+                        ->visible(fn ($record): bool => $record !== null),
                 ])
                 ->columns(1),
 
@@ -31,7 +37,14 @@ class TenantForm
                         ->options(User::query()->orderBy('name')->pluck('name', 'id')->all())
                         ->multiple()
                         ->preload()
-                        ->searchable(),
+                        ->searchable()
+                        ->afterStateHydrated(function (Set $set, $state, $record): void {
+                            if ($record === null) {
+                                return;
+                            }
+
+                            $set('usersIds', $record->users()->pluck('users.id')->all());
+                        }),
                 ])
                 ->columns(1),
         ]);

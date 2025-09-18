@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Users\Pages;
 use App\Filament\Resources\Users\UserResource;
 use App\Trait\Filament\HasBackButtonAction;
 use App\Trait\Filament\NotificationsTrait;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
@@ -33,13 +32,6 @@ class EditUser extends EditRecord
             $this->getCancelFormAction(),
             // ViewAction::make(),
         ];
-
-        // Só mostra o botão de deletar se não for o usuário logado
-        if ($this->canDelete) {
-            $actions[] = DeleteAction::make()
-                ->successNotification(Notification::make())
-                ->after(fn () => $this->notifySuccess('Usuário excluído com sucesso.'));
-        }
 
         return $actions;
     }
