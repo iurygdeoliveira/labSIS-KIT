@@ -94,10 +94,14 @@ class UserSeeder extends Seeder
         $roleUserA = RoleType::ensureUserRoleForTeam($tenantA->id, $guard);
         $user->assignRole($roleUserA);
 
+        // Role User do tenant A criada sem permissões - será atribuída manualmente pelo admin
+
         // Team: tenant B
         $resolver->setPermissionsTeamId($tenantB->id);
         $roleUserB = RoleType::ensureUserRoleForTeam($tenantB->id, $guard);
         $user->assignRole($roleUserB);
+
+        // Role User do tenant B criada sem permissões - será atribuída manualmente pelo admin
 
         // Limpa override do team id para não vazar para outros seeders
         $resolver->setPermissionsTeamId(null);

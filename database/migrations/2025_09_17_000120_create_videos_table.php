@@ -11,6 +11,8 @@ return new class extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('tenant_id')->nullable()->after('id')->constrained('tenants')->nullOnDelete();
+
             $table->foreignId('media_item_id')
                 ->constrained('media_items')
                 ->cascadeOnDelete()

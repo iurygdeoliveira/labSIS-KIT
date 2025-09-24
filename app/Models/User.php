@@ -214,7 +214,6 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     public function tenants(): BelongsToMany
     {
         return $this->belongsToMany(Tenant::class, 'tenant_user')
-            ->withPivot('is_owner')
             ->withTimestamps();
     }
 

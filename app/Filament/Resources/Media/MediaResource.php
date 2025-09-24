@@ -87,4 +87,29 @@ class MediaResource extends Resource
 
         return $record->getFirstMedia('media')?->name ?? 'Sem nome';
     }
+
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->can('media.view') ?? false;
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->can('media.create') ?? false;
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return auth()->user()?->can('media.update') ?? false;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return auth()->user()?->can('media.delete') ?? false;
+    }
+
+    public static function canView(Model $record): bool
+    {
+        return auth()->user()?->can('media.view') ?? false;
+    }
 }

@@ -33,6 +33,9 @@ class UserPanelProvider extends BasePanelProvider
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
+            ])
+            ->middleware([
+                // SetTenantContextMiddleware::class,
             ]);
 
         return $panel;

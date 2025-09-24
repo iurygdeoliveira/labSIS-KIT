@@ -37,5 +37,6 @@ class RedirectGuestsToCentralLoginMiddleware
         $panel = Filament::getCurrentPanel() ?? Filament::getPanel('admin');
 
         return redirect()->to($panel->getLoginUrl());
+
     }
 }
