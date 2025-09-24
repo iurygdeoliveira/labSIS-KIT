@@ -24,7 +24,7 @@ class UserPanelProvider extends BasePanelProvider
             ->resources([
                 MediaResource::class,
             ])
-            ->tenant(Tenant::class, 'slug', 'tenant')
+            ->tenant(Tenant::class, 'uuid', 'tenant')
             ->tenantMenu(true)
             ->pages([
                 Dashboard::class,
