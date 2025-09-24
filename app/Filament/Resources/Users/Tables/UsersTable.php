@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Enums\RoleType;
 use App\Filament\Resources\Users\Actions\DeleteUserAction;
 use App\Models\Tenant;
 use App\Models\User;
@@ -30,6 +31,11 @@ class UsersTable
                 TextColumn::make('tenants_list')
                     ->label('Tenants')
                     ->state(function (User $record) {
+                        // Se for admin, não consulta tenants e retorna texto fixo
+                        if (method_exists($record, 'hasRole') && $record->hasRole(RoleType::ADMIN->value)) {
+                            return 'Usuário admin';
+                        }
+
                         $tenantNames = Tenant::query()
                             ->select('name')
                             ->whereIn('id', $record->tenants()->pluck('tenants.id'))

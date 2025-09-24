@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Responses;
 
-use App\Enums\RoleType;
 use App\Models\User;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
 use Filament\Facades\Filament;
@@ -18,11 +17,11 @@ class LoginResponse implements FilamentLoginResponse
         /** @var User $user */
         $user = Filament::auth()->user();
 
-        if ($user->hasRole(RoleType::ADMIN->value)) {
+        if ($user->canAccessPanel(Filament::getPanel('admin'))) {
             return redirect()->to('/admin');
         }
 
-        if ($user->hasRole(RoleType::USER->value)) {
+        if ($user->canAccessPanel(Filament::getPanel('user'))) {
             return redirect()->to('/user');
         }
 

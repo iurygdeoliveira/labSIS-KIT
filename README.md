@@ -40,6 +40,7 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 - [**Notificações**](/docs/notifications-trait.md)
 - [**Roles/Permissions**](/docs/roles-e-permissions.md)
 - [**Suspensão de Usuários**](/docs/suspensao-usuarios.md)
+- [**Gestão de Tenants**](/docs/tenancy-e-teams.md)
 - [**Utilizando Enumerações (Enums) com Filament**](/docs/enums.md)
 - [**Widgets no Filament**](/docs/widgets-filament.md)
 
@@ -116,6 +117,19 @@ Este projeto está configurado para utilizar PostgreSQL com Laravel Sail. Suba o
 ```
 
 A aplicação estará disponível em `http://localhost`.
+
+**8. Primeiro acesso (usuários padrão)**
+
+Após rodar as migrations e seeders, você pode acessar usando os usuários criados pelo `UserSeeder`:
+
+- Admin:
+  - Email: `fulano@labsis.dev.br`
+  - Senha: `mudar123`
+- Usuário:
+  - Email: `sicrano@labsis.dev.br`
+  - Senha: `mudar123`
+
+Acesse o painel em `/admin`. O usuário “fulano” possui a role Admin em escopo global. O usuário “sicrano” já está vinculado aos tenants “Tenant A” e “Tenant B”.
 
 ## Agradecimentos
 

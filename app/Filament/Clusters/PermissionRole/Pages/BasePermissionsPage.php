@@ -38,7 +38,12 @@ abstract class BasePermissionsPage extends Page implements Tables\Contracts\HasT
             )
             ->columns([
                 TextColumn::make('name')
-                    ->label('Role'),
+                    ->label('Role')
+                    ->formatStateUsing(static function (string $state): string {
+                        $role = RoleType::tryFrom($state);
+
+                        return $role ? $role->getLabel() : $state;
+                    }),
                 TextColumn::make('tenant_name')
                     ->label('Tenant')
                     ->formatStateUsing(static function ($state, Role $record): string {
