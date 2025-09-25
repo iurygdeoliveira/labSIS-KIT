@@ -29,8 +29,14 @@ Entre no diretório e execute o script de instalação (idempotente):
 
 ```bash
 cd minha-app
-./vendor/bin/sail install.php
+./vendor/bin/sail php install.php
+
+Se tiver o PHP instalado globalmente, prefira executar via PHP:
+
+```bash
+php install.php
 ```
+
 
 A aplicação ficará disponível em `http://localhost` (ajuste portas no `.env` se necessário).
 

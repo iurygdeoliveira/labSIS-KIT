@@ -19,28 +19,18 @@ git clone git@github.com:iurygdeoliveira/labSIS-KIT.git minha-app
 cd minha-app
 ```
 
-3. Instalar dependências e preparar o ambiente:
+4. Executar o script de instalação (obrigatório):
 
 ```bash
-composer install
-npm install
-cp .env.example .env
+./vendor/bin/sail php install.php
 ```
 
-4. Ajustar o arquivo `.env` conforme necessário (DB, portas e variáveis).
-
-5. Executar o script de instalação (obrigatório):
+Se tiver o PHP instalado globalmente, prefira executar via PHP:
 
 ```bash
-./vendor/bin/sail install.php
+php install.php
 ```
-
-6. (Opcional) Rodar com Docker Sail e validar no Tinker:
-
-```bash
-./vendor/bin/sail up -d
-./vendor/bin/sail artisan tinker
-```
+5. Ajustar o arquivo `.env` conforme necessário (DB, portas e variáveis).
 
 A aplicação ficará disponível em `http://localhost`.
 
