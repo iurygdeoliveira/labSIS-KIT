@@ -56,80 +56,31 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 
 ## Como realizar a instalação
 
-Siga os passos abaixo para configurar o ambiente de desenvolvimento localmente.
+- [Instalação via Laravel Installer](/docs/instalacao-via-laravel-installer.md)
+- [Instalação manual (clonando o repositório)](/docs/instalacao-manual.md)
 
-**1. Fazer um fork deste repositório**
 
-- No GitHub, acesse `https://github.com/iurygdeoliveira/labSIS-SaaS-KIT-V4` e clique em "Fork" para criar sua cópia.
+## Primeiro acesso
 
-**2. Clonar o seu fork**
+Após rodar as migrations e seeders, os seguintes usuários são criados pelo `UserSeeder`:
 
-Use o endereço do seu fork (substitua SEU_USUARIO pelo seu usuário do GitHub):
-
-```bash
-git clone git@github.com:SEU_USUARIO/labSIS-SaaS-KIT-V4.git
-cd labSIS-SaaS-KIT-V4
-```
-
-Se preferir HTTPS:
-
-```bash
-git clone https://github.com/SEU_USUARIO/labSIS-SaaS-KIT-V4.git
-cd labSIS-SaaS-KIT-V4
-```
-
-**3. Atualizar a variável do repositório no .env.example**
-
-Edite o arquivo `.env.example` e ajuste o valor para o endereço do SEU fork:
-
-```env
-GITHUB_REPOSITORY="https://github.com/SEU_USUARIO/labSIS-SaaS-KIT-V4"
-```
-
-Observação: Se você já criou o `.env`, ajuste a mesma variável também no `.env`.
-
-**4. Instalar Dependências (PHP e JS)**
-
-```bash
-composer install
-npm install
-```
-
-**5. Configurar o Ambiente**
-
-```bash
-cp .env.example .env
-```
-
-**6. Configurar o Banco de Dados**
-
-Este projeto está configurado para utilizar PostgreSQL com Laravel Sail. Suba os containers e execute as migrations/seeders:
-
-```bash
-./vendor/bin/sail up -d
-./vendor/bin/sail artisan migrate --seed
-```
-
-**7. Compilar os Assets**
-
-```bash
-./vendor/bin/sail npm run build
-```
-
-A aplicação estará disponível em `http://localhost`.
-
-**8. Primeiro acesso (usuários padrão)**
-
-Após rodar as migrations e seeders, você pode acessar usando os usuários criados pelo `UserSeeder`:
-
-- Admin:
-  - Email: `fulano@labsis.dev.br`
+- Admin (escopo global):
+  - Email: `admin@labsis.dev.br`
   - Senha: `mudar123`
-- Usuário:
-  - Email: `sicrano@labsis.dev.br`
-  - Senha: `mudar123`
+  - Acesso ao painel: `/admin`
+  - Observação: Possui a role Admin em escopo global.
 
-Acesse o painel em `/admin`. O usuário “fulano” possui a role Admin em escopo global. O usuário “sicrano” já está vinculado aos tenants “Tenant A” e “Tenant B”.
+- Usuários de exemplo (escopo por tenant):
+  - Sicrano
+    - Email: `sicrano@labsis.dev.br`
+    - Senha: `mudar123`
+    - Tenants: Tenant A (Owner), Tenant B (User)
+     - Acesso ao painel: `/user`
+  - Beltrano
+    - Email: `beltrano@labsis.dev.br`
+    - Senha: `mudar123`
+    - Tenants: Tenant A (User), Tenant B (Owner)
+    - Acesso ao painel: `/user`
 
 ## Agradecimentos
 
