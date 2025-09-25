@@ -1,4 +1,4 @@
-# LabSIS SaaS KIT V4
+# LabSIS KIT
 
 <div align="center">
   <img src="public/images/LabSIS.png" alt="LabSIS Logo" width="700" />
@@ -15,7 +15,7 @@
     <a href="https://php.net"><img alt="PHP 8.4+" src="https://img.shields.io/badge/PHP-8.4+-777BB4?style=for-the-badge&logo=php"></a>
 </p>
 
-## Sobre o labSIS SaaS KIT
+## Sobre o labSIS KIT
 
 Este repositório é um Kit de Iniciação (Starter Kit) para o desenvolvimento de aplicações SaaS (Software as a Service) utilizando a stack TALL (Tailwind, Alpine.js, Laravel, Livewire) e Filament.
 
@@ -90,6 +90,7 @@ Em especial, agradecemos a:
 
 -   **Equipe Laravel**: Pela criação e manutenção de um framework robusto, elegante e inovador, disponível em [laravel/laravel](https://github.com/laravel/laravel).
 -   **Equipe Filament**: Pelo incrível trabalho no [Filament](https://github.com/filamentphp/filament), que nos permite construir painéis administrativos complexos com uma velocidade e simplicidade impressionantes.
+ -   **Equipe Spatie** ([spatie.be](https://spatie.be/)): Pelo desenvolvimento dos pacotes [laravel-permission](https://github.com/spatie/laravel-permission) e [laravel-medialibrary](https://github.com/spatie/laravel-medialibrary), amplamente utilizados no ecossistema Laravel.
 -   **Comunidade Beer and Code** ([beerandcode.com.br](https://beerandcode.com.br/)): Pela excelente metodologia de ensino em Laravel, que tem colaborador com a formação de desenvolvedores PHP, fornecendo conhecimento prático e focado em soluções reais.
 -   **Leandro Costa** ([@leandrocfe](https://github.com/leandrocfe)): Por suas valiosas contribuições e por compartilhar conhecimento de alta qualidade sobre Filament em seu canal [Filament Brasil no YouTube](https://www.youtube.com/@filamentbr), que foi fundamental para a implementação de diversas features neste projeto.
 -   **Nanderson Castro** ([@NandoKstroNet](https://github.com/NandoKstroNet)): Pelo excelente trabalho no canal [Code Experts](https://www.youtube.com/@codeexperts), que tem sido uma fonte valiosa de conhecimento técnico e boas práticas de desenvolvimento.
