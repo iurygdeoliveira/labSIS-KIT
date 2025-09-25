@@ -174,4 +174,21 @@ if (is_file($basePath.'/package.json')) {
     runNpm('run build', $basePath);
 }
 
+// Remove workflow de testes do Starter Kit, caso exista
+$workflowPath = $basePath.'/.github/workflows/tests.yml';
+if (is_file($workflowPath)) {
+    @unlink($workflowPath);
+
+    $workflowsDir = dirname($workflowPath);
+    $githubDir = dirname($workflowsDir);
+
+    if (is_dir($workflowsDir) && count(scandir($workflowsDir)) === 2) {
+        @rmdir($workflowsDir);
+    }
+
+    if (is_dir($githubDir) && count(scandir($githubDir)) === 2) {
+        @rmdir($githubDir);
+    }
+}
+
 echo "\nInstalação concluída com sucesso.\n";

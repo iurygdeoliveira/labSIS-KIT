@@ -1,0 +1,12 @@
+name: tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "No tests configured for this starter kit."
+
+
