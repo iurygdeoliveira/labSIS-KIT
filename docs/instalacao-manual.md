@@ -22,6 +22,7 @@ cd minha-app
 4. Executar o script de instalação (obrigatório):
 
 ```bash
+./vendor/bin/sail up -d
 ./vendor/bin/sail php install.php
 ```
 

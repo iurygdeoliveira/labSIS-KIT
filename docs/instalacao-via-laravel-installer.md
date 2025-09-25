@@ -29,6 +29,7 @@ Entre no diretório e execute o script de instalação (idempotente):
 
 ```bash
 cd minha-app
+./vendor/bin/sail up -d
 ./vendor/bin/sail php install.php
 
 Se tiver o PHP instalado globalmente, prefira executar via PHP:
