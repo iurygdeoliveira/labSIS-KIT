@@ -11,11 +11,12 @@ use Filament\Pages\Page;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Spatie\Permission\Models\Permission as PermissionModel;
 use Spatie\Permission\Models\Role;
 
-abstract class BasePermissionsPage extends Page implements Tables\Contracts\HasTable
+abstract class BasePermissionsPage extends Page implements HasTable
 {
     use Tables\Concerns\InteractsWithTable;
 

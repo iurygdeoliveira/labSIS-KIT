@@ -5,58 +5,38 @@ declare(strict_types=1);
 namespace App\Filament\Clusters\UserRole\Pages;
 
 use App\Enums\RoleType;
-use App\Filament\Clusters\UserRole\UserRoleCluster;
-use App\Models\User;
-use BackedEnum;
-use Filament\Facades\Filament;
-use Filament\Pages\Page;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
+use App\Models\TenantUser;
 use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Table;
 
-class AssignRoleAdmin extends Page implements Tables\Contracts\HasTable
+class AssignRoleAdmin extends BaseAssignRolePage
 {
-    use Tables\Concerns\InteractsWithTable;
-
-    protected static string|BackedEnum|null $navigationIcon = 'icon-admin';
+    protected static string|\BackedEnum|null $navigationIcon = 'icon-admin';
 
     protected string $view = 'filament.clusters.user-role.pages.assign-role-admin';
 
-    protected static ?string $cluster = UserRoleCluster::class;
+    protected static ?string $title = 'Definir Administradores';
 
-    protected static ?string $title = 'Atribuir Função Admin';
+    protected static ?string $navigationLabel = 'Administradores';
 
-    protected static ?string $navigationLabel = 'Atribuir Admininstração';
-
-    public function table(Table $table): Table
+    protected function getExtraColumns(): array
     {
-        return $table
-            ->query(
-                User::query()
-                    ->when(Filament::auth()->check(), fn ($query) => $query->whereKeyNot(Filament::auth()->id()))
-            )
-            ->columns([
-                TextColumn::make('name')
-                    ->label('Usuário'),
-                TextColumn::make('email')
-                    ->label('E-mail'),
-                ToggleColumn::make('role_admin')
-                    ->label(RoleType::ADMIN->value)
-                    ->onColor('primary')
-                    ->offColor('danger')
-                    ->onIcon('heroicon-c-check')
-                    ->offIcon('heroicon-c-x-mark')
-                    ->getStateUsing(static function (User $record): bool {
-                        return $record->hasRole(RoleType::ADMIN->value);
-                    })
-                    ->updateStateUsing(static function (User $record, bool $state): void {
-                        if ($state) {
-                            $record->syncRoles([RoleType::ADMIN->value]);
-                        } else {
-                            $record->removeRole(RoleType::ADMIN->value);
-                        }
-                    }),
-            ]);
+        return [
+            ToggleColumn::make('role_admin')
+                ->label('Administrador')
+                ->onColor('primary')
+                ->offColor('danger')
+                ->onIcon('heroicon-c-check')
+                ->offIcon('heroicon-c-x-mark')
+                ->getStateUsing(static function (TenantUser $record): bool {
+                    return $record->user->hasRole(RoleType::ADMIN->value);
+                })
+                ->updateStateUsing(static function (TenantUser $record, bool $state): void {
+                    if ($state) {
+                        $record->user->syncRoles([RoleType::ADMIN->value]);
+                    } else {
+                        $record->user->removeRole(RoleType::ADMIN->value);
+                    }
+                }),
+        ];
     }
 }

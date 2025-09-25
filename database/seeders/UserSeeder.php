@@ -10,6 +10,7 @@ use App\Models\Tenant;
 use App\Models\User;
 use App\Tenancy\SpatieTeamResolver;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission as PermissionModel;
@@ -34,9 +35,9 @@ class UserSeeder extends Seeder
         RoleType::ensureGlobalRoles($guard);
 
         $admin = User::query()->firstOrCreate(
-            ['email' => 'fulano@labsis.dev.br'],
+            ['email' => 'admin@labsis.dev.br'],
             [
-                'name' => 'fulano',
+                'name' => 'Administrador',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
             ],
@@ -45,6 +46,8 @@ class UserSeeder extends Seeder
         $globalResolver = app(SpatieTeamResolver::class);
         $globalResolver->setPermissionsTeamId(0);
         $admin->syncRoles([RoleType::ADMIN->value]);
+        // Reset do resolver para evitar vazamento de contexto
+        $globalResolver->setPermissionsTeamId(null);
 
         // Garante que a role Admin possua todas as permissões
         $adminRole = Role::where('name', RoleType::ADMIN->value)->where('guard_name', $guard)->first();
@@ -53,17 +56,26 @@ class UserSeeder extends Seeder
             $adminRole->syncPermissions(PermissionModel::all());
         }
 
-        $user = User::query()->firstOrCreate(
+        $sicrano = User::query()->firstOrCreate(
             ['email' => 'sicrano@labsis.dev.br'],
             [
-                'name' => 'sicrano',
+                'name' => 'Sicrano',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
             ],
         );
-        // Não atribui role "User" no escopo global. Roles de usuário serão atribuídas por tenant abaixo.
 
-        // Tenants para o 'sicrano' (sem slug)
+        $beltrano = User::query()->firstOrCreate(
+            ['email' => 'beltrano@labsis.dev.br'],
+            [
+                'name' => 'Beltrano',
+                'email_verified_at' => now(),
+                'password' => Hash::make('mudar123'),
+            ],
+        );
+        // Não atribui roles no escopo global. Roles de usuário serão atribuídas por tenant abaixo.
+
+        // Tenants para demonstração
         $tenantA = Tenant::firstOrCreate(
             ['name' => 'Tenant A'],
             [
@@ -80,30 +92,55 @@ class UserSeeder extends Seeder
             ],
         );
 
-        // Vincula o usuário aos dois tenants (sem atributos de pivot)
-        $user->tenants()->syncWithoutDetaching([
+        // Vincula os usuários aos tenants
+        $sicrano->tenants()->syncWithoutDetaching([
             $tenantA->id,
             $tenantB->id,
         ]);
 
-        // Define roles por tenant usando o team resolver
-        $resolver = app(SpatieTeamResolver::class);
+        $beltrano->tenants()->syncWithoutDetaching([
+            $tenantA->id,
+            $tenantB->id,
+        ]);
 
-        // Team: tenant A
-        $resolver->setPermissionsTeamId($tenantA->id);
+        // Define roles por tenant
+        // Garantir existência das roles por tenant
+        $roleOwnerA = RoleType::ensureOwnerRoleForTeam($tenantA->id, $guard);
         $roleUserA = RoleType::ensureUserRoleForTeam($tenantA->id, $guard);
-        $user->assignRole($roleUserA);
-
-        // Role User do tenant A criada sem permissões - será atribuída manualmente pelo admin
-
-        // Team: tenant B
-        $resolver->setPermissionsTeamId($tenantB->id);
+        $roleOwnerB = RoleType::ensureOwnerRoleForTeam($tenantB->id, $guard);
         $roleUserB = RoleType::ensureUserRoleForTeam($tenantB->id, $guard);
-        $user->assignRole($roleUserB);
 
-        // Role User do tenant B criada sem permissões - será atribuída manualmente pelo admin
+        // Atribuições explícitas com team_id na tabela model_has_roles
+        DB::table('model_has_roles')->insert([
+            // Tenant A
+            [
+                'role_id' => $roleOwnerA->id,
+                'model_type' => User::class,
+                'model_id' => $sicrano->id,
+                'team_id' => $tenantA->id,
+            ],
+            [
+                'role_id' => $roleUserA->id,
+                'model_type' => User::class,
+                'model_id' => $beltrano->id,
+                'team_id' => $tenantA->id,
+            ],
+            // Tenant B
+            [
+                'role_id' => $roleOwnerB->id,
+                'model_type' => User::class,
+                'model_id' => $beltrano->id,
+                'team_id' => $tenantB->id,
+            ],
+            [
+                'role_id' => $roleUserB->id,
+                'model_type' => User::class,
+                'model_id' => $sicrano->id,
+                'team_id' => $tenantB->id,
+            ],
+        ]);
 
-        // Limpa override do team id para não vazar para outros seeders
-        $resolver->setPermissionsTeamId(null);
+        // Limpa o cache de permissões para garantir que as alterações sejam aplicadas
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
     }
 }

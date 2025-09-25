@@ -22,7 +22,6 @@ class RedirectGuestsToCentralLoginMiddleware
 
         $path = $request->path();
 
-        // Permitir acessar páginas públicas e as próprias rotas do painel de autenticação
         $isPublicAuthRoute = $path === 'login'
             || $path === 'register'
             || str_starts_with($path, 'password-reset')
@@ -33,10 +32,8 @@ class RedirectGuestsToCentralLoginMiddleware
             return $next($request);
         }
 
-        // Se o usuário convidado tentou acessar qualquer outro painel, redireciona para a URL de login do painel atual
         $panel = Filament::getCurrentPanel() ?? Filament::getPanel('admin');
 
         return redirect()->to($panel->getLoginUrl());
-
     }
 }

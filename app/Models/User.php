@@ -25,6 +25,7 @@ use Spatie\Image\Image;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -145,8 +146,10 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         try {
-            return Storage::disk(config('filament-edit-profile.disk', 's3'))
-                ->temporaryUrl($this->$avatarColumn, now()->addMinutes(5));
+            /** @var \Illuminate\Contracts\Filesystem\Filesystem&\Illuminate\Filesystem\FilesystemAdapter $disk */
+            $disk = Storage::disk(config('filament-edit-profile.disk', 's3'));
+
+            return $disk->temporaryUrl($this->$avatarColumn, now()->addMinutes(5));
         } catch (\Throwable) {
             try {
                 return Storage::url($this->$avatarColumn);
@@ -188,8 +191,21 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         if ($panel->getId() === 'user') {
             // Permite acesso ao painel de usuário se:
             // - possuir role global 'User', ou
+            // - possuir role 'Owner' em algum tenant, ou
             // - estiver vinculado a pelo menos um tenant (seleciona depois via switcher)
             if ($this->hasRole(RoleType::USER->value)) {
+                return true;
+            }
+
+            // Verificar se possui role Owner em algum tenant
+            if (
+                Role::query()
+                    ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
+                    ->where('mhr.model_type', self::class)
+                    ->where('mhr.model_id', $this->id)
+                    ->where('roles.name', RoleType::OWNER->value)
+                    ->exists()
+            ) {
                 return true;
             }
 
@@ -233,6 +249,49 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         return $this->tenants()->whereKey($tenant->getKey())->exists();
+    }
+
+    public function isOwnerOfTenant(Tenant $tenant): bool
+    {
+        return Role::query()
+            ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
+            ->where('mhr.model_type', self::class)
+            ->where('mhr.model_id', $this->id)
+            ->where('mhr.team_id', $tenant->id)
+            ->where('roles.name', RoleType::OWNER->value)
+            ->exists();
+    }
+
+    public function isUserOfTenant(Tenant $tenant): bool
+    {
+        return Role::query()
+            ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
+            ->where('mhr.model_type', self::class)
+            ->where('mhr.model_id', $this->id)
+            ->where('mhr.team_id', $tenant->id)
+            ->where('roles.name', RoleType::USER->value)
+            ->exists();
+    }
+
+    public function getRolesForTenant(Tenant $tenant): \Illuminate\Support\Collection
+    {
+        return Role::query()
+            ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
+            ->where('mhr.model_type', self::class)
+            ->where('mhr.model_id', $this->id)
+            ->where('mhr.team_id', $tenant->id)
+            ->select('roles.*')
+            ->get();
+    }
+
+    public function hasAnyRoleInTenant(Tenant $tenant): bool
+    {
+        return Role::query()
+            ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
+            ->where('mhr.model_type', self::class)
+            ->where('mhr.model_id', $this->id)
+            ->where('mhr.team_id', $tenant->id)
+            ->exists();
     }
 
     public function setAvatarUrlAttribute(?string $value): void

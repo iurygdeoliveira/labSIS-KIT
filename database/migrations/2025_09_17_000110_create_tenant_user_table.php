@@ -9,12 +9,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tenant_user', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('tenant_id')->constrained('tenants')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->bigIncrements('id');
+            $table->foreignId('tenant_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
 
-            $table->unique(['tenant_id', 'user_id']);
+            $table->unique(['tenant_id', 'user_id'], 'tenant_user_tenant_user_unique');
         });
 
         // Relacionamento de domínio: media_items pertence a um tenant

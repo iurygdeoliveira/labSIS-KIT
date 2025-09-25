@@ -10,12 +10,14 @@ use Spatie\Permission\Models\Role;
 enum RoleType: string implements HasLabel
 {
     case ADMIN = 'Admin';
+    case OWNER = 'Owner';
     case USER = 'User';
 
     public function getLabel(): string
     {
         return match ($this) {
             self::ADMIN => 'Administrador',
+            self::OWNER => 'Proprietário',
             self::USER => 'Usuário',
         };
     }
@@ -25,6 +27,15 @@ enum RoleType: string implements HasLabel
         // Apenas Admin deve existir de forma global
         Role::firstOrCreate([
             'name' => self::ADMIN->value,
+            'guard_name' => $guard,
+        ]);
+    }
+
+    public static function ensureOwnerRoleForTeam(int $teamId, string $guard): Role
+    {
+        return Role::firstOrCreate([
+            'team_id' => $teamId,
+            'name' => self::OWNER->value,
             'guard_name' => $guard,
         ]);
     }
