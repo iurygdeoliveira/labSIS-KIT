@@ -7,14 +7,15 @@ namespace App\Filament\Clusters\PermissionRole\Pages;
 use App\Enums\Permission;
 use App\Enums\RoleType;
 use App\Filament\Clusters\PermissionRole\PermissionRoleCluster;
+use App\Models\Role;
 use Filament\Pages\Page;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Spatie\Permission\Models\Permission as PermissionModel;
-use Spatie\Permission\Models\Role;
 
 abstract class BasePermissionsPage extends Page implements HasTable
 {
@@ -31,12 +32,17 @@ abstract class BasePermissionsPage extends Page implements HasTable
         return $table
             ->query(
                 Role::query()
-                    ->select(['roles.*', 'tenants.name as tenant_name'])
-                    ->leftJoin('tenants', 'tenants.id', '=', 'roles.team_id')
-                    ->whereNotNull('roles.team_id')
-                    ->where('roles.team_id', '!=', 0)
-                    ->where('roles.name', '!=', RoleType::ADMIN->value)
+                    ->with(['tenant'])
+                    ->whereNotNull('team_id')
+                    ->where('team_id', '!=', 0)
+                    ->where('name', '!=', RoleType::ADMIN->value)
             )
+            ->groups([
+                Group::make('tenant.name')
+                    ->label('Tenant'),
+            ])
+            ->defaultGroup('tenant.name')
+            ->groupingSettingsHidden()
             ->columns([
                 TextColumn::make('name')
                     ->label('Role')
@@ -45,17 +51,6 @@ abstract class BasePermissionsPage extends Page implements HasTable
 
                         return $role ? $role->getLabel() : $state;
                     }),
-                TextColumn::make('tenant_name')
-                    ->label('Tenant')
-                    ->formatStateUsing(static function ($state, Role $record): string {
-                        if (empty($record->team_id) || (int) $record->team_id === 0) {
-                            return 'Global';
-                        }
-
-                        return (string) ($state ?: '—');
-                    })
-                    ->badge()
-                    ->color('primary'),
                 $this->makeToggleColumnForAction(Permission::VIEW->value, 'Visualizar'),
                 $this->makeToggleColumnForAction(Permission::CREATE->value, 'Criar'),
                 $this->makeToggleColumnForAction(Permission::UPDATE->value, 'Editar'),
