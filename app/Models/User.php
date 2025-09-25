@@ -16,6 +16,7 @@ use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +26,6 @@ use Spatie\Image\Image;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -233,6 +233,17 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             ->withTimestamps();
     }
 
+    public function rolesWithTeams(): MorphToMany
+    {
+        return $this->morphToMany(
+            Role::class,
+            'model',
+            config('permission.table_names.model_has_roles', 'model_has_roles'),
+            'model_id',
+            'role_id'
+        )->withPivot('team_id');
+    }
+
     public function getTenants(Panel $panel): array|\Illuminate\Support\Collection
     {
         return $this->tenants()->where('is_active', true)->get();
@@ -292,6 +303,61 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             ->where('mhr.model_id', $this->id)
             ->where('mhr.team_id', $tenant->id)
             ->exists();
+    }
+
+    public function assignRoleInTenant(Role $role, Tenant $tenant): void
+    {
+        $this->rolesWithTeams()->syncWithoutDetaching([
+            $role->getKey() => ['team_id' => $tenant->id],
+        ]);
+    }
+
+    public function removeRoleFromTenant(string $roleName, Tenant $tenant): void
+    {
+        $role = Role::query()
+            ->where('name', $roleName)
+            ->where('team_id', $tenant->id)
+            ->first();
+
+        if (! $role) {
+            return;
+        }
+
+        $this->rolesWithTeams()
+            ->wherePivot('team_id', $tenant->id)
+            ->detach($role->getKey());
+    }
+
+    public function removeAllUserRolesFromTenant(Tenant $tenant): void
+    {
+        $roleIds = Role::query()
+            ->where('name', RoleType::USER->value)
+            ->where('team_id', $tenant->id)
+            ->pluck('id');
+
+        if ($roleIds->isEmpty()) {
+            return;
+        }
+
+        $this->rolesWithTeams()
+            ->wherePivot('team_id', $tenant->id)
+            ->detach($roleIds->toArray());
+    }
+
+    public function removeAllOwnerRolesFromTenant(Tenant $tenant): void
+    {
+        $roleIds = Role::query()
+            ->where('name', RoleType::OWNER->value)
+            ->where('team_id', $tenant->id)
+            ->pluck('id');
+
+        if ($roleIds->isEmpty()) {
+            return;
+        }
+
+        $this->rolesWithTeams()
+            ->wherePivot('team_id', $tenant->id)
+            ->detach($roleIds->toArray());
     }
 
     public function setAvatarUrlAttribute(?string $value): void

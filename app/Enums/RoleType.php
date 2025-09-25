@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Models\Role;
 use Filament\Support\Contracts\HasLabel;
-use Spatie\Permission\Models\Role;
 
 enum RoleType: string implements HasLabel
 {
