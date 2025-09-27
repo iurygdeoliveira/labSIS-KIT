@@ -18,7 +18,7 @@ enum RoleType: string implements HasLabel
         return match ($this) {
             self::ADMIN => 'Administrador',
             self::OWNER => 'Proprietário',
-            self::USER => 'Usuário',
+            self::USER => 'Usuário Comum',
         };
     }
 
