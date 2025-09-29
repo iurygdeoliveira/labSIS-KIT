@@ -36,6 +36,11 @@ class RedirectToProperPanelMiddleware
             }
 
             if ($user->canAccessPanel(Filament::getPanel('user'))) {
+                $firstTenant = $user->getTenants(Filament::getPanel('user'))->first();
+                if ($firstTenant) {
+                    return redirect()->to('/user/'.$firstTenant->uuid);
+                }
+
                 return redirect()->to('/user');
             }
         }
@@ -48,6 +53,11 @@ class RedirectToProperPanelMiddleware
             }
 
             if ($user->canAccessPanel(Filament::getPanel('user'))) {
+                $firstTenant = $user->getTenants(Filament::getPanel('user'))->first();
+                if ($firstTenant) {
+                    return redirect()->to('/user/'.$firstTenant->uuid);
+                }
+
                 return redirect()->to('/user');
             }
         }

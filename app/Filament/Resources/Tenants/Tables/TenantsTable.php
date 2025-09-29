@@ -22,18 +22,22 @@ class TenantsTable
                     ->formatStateUsing(fn (bool $state): string => $state ? 'Sim' : 'Não')
                     ->badge()
                     ->color(fn ($record): string => (bool) $record->is_active ? 'primary' : 'danger'),
-                TextColumn::make('users_count')->counts('users')->label('Usuários'),
+                TextColumn::make('users.name')
+                    ->label('Usuários')
+                    ->listWithLineBreaks()
+                    ->bulleted(),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteTenantAction::make(),
+                ViewAction::make()->icon('heroicon-s-eye')->label('')->tooltip('Visualizar'),
+                EditAction::make()->icon('heroicon-s-pencil')->label('')->tooltip('Editar'),
+                DeleteTenantAction::make()->icon('heroicon-s-trash')->label('')->tooltip('Excluir'),
             ])
             ->headerActions([
 
-            ]);
+            ])
+            ->defaultSort('name', 'desc');
     }
 }

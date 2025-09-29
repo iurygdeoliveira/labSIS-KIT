@@ -22,6 +22,9 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    // Define o relacionamento de pertença ao tenant para este Resource
+    protected static ?string $tenantOwnershipRelationshipName = 'tenants';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::UserGroup;
 
     protected static ?string $recordTitleAttribute = 'name';

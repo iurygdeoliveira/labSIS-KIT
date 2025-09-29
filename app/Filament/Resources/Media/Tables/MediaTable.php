@@ -89,9 +89,9 @@ class MediaTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteMediaAction::make(),
+                ViewAction::make()->icon('heroicon-s-eye')->label('')->tooltip('Visualizar'),
+                EditAction::make()->icon('heroicon-s-pencil')->label('')->tooltip('Editar'),
+                DeleteMediaAction::make()->icon('heroicon-s-trash')->label('')->tooltip('Excluir'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

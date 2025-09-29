@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Resources\Media\MediaResource;
+use App\Filament\Resources\Users\UserResource;
+use App\Http\Middleware\TeamSyncMiddleware;
 use App\Models\Tenant;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
@@ -19,23 +21,22 @@ class UserPanelProvider extends BasePanelProvider
 
         // Particularidades do painel user
         $panel = $panel
-            ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\\Filament\\User\\Resources')
-            ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\\Filament\\User\\Pages')
+            ->tenant(Tenant::class, slugAttribute: 'uuid', ownershipRelationship: 'tenants')
+            ->tenantMenu(true)
             ->resources([
+                UserResource::class,
                 MediaResource::class,
             ])
-            ->tenant(Tenant::class, 'uuid', 'tenant')
-            ->tenantMenu(true)
+            ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/User/Widgets'), for: 'App\\Filament\\User\\Widgets')
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
             ])
             ->middleware([
-                // SetTenantContextMiddleware::class,
+                TeamSyncMiddleware::class,
             ]);
 
         return $panel;
