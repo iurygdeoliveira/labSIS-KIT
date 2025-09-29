@@ -181,7 +181,7 @@ Sempre que eu pedir por um commit, execute os seguintes comandos:
 - git commit -m "mensagem do commit"
 - git push
 
-Por favor analise o contexto fornecido e sugira uma mensagem de commit seguindo o formato Conventional Commits, em português do Brasil, seja objetivo na geração das mensagens de commit. Realizar os comandos apenas quando eu solicitar explicitamente.
+Por favor analise o contexto fornecido e sugira uma mensagem de commit seguindo o formato Conventional Commits, em português do Brasil, seja objetivo na geração das mensagens de commit, no máximo três tópicos. Realizar os comandos apenas quando eu solicitar explicitamente.
 
 ## Formato esperado
 

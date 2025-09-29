@@ -43,7 +43,9 @@ class FilamentComponentsConfigurator
 
         Table::configureUsing(function (Table $table): void {
             $table
+                ->deferLoading()
                 ->persistSortInSession()
+                ->persistSearchInSession()
                 ->extremePaginationLinks()
                 ->defaultPaginationPageOption(20)
                 ->paginated([20, 40, 60, 80, 'all'])

@@ -6,12 +6,11 @@ namespace App\Filament\Clusters\UserRole;
 
 use BackedEnum;
 use Filament\Clusters\Cluster;
-use Filament\Support\Icons\Heroicon;
 use UnitEnum;
 
 class UserRoleCluster extends Cluster
 {
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
+    protected static string|BackedEnum|null $navigationIcon = 'icon-role';
 
     protected static ?string $navigationLabel = 'Funções';
 

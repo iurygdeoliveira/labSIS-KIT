@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Configurators\FilamentComponentsConfigurator;
-use App\Filament\Pages\Permission as PermissionPage;
 use App\Filament\Resources\Tenants\TenantResource;
 use App\Filament\Widgets\SystemStats;
 use Filament\Pages\Dashboard;
@@ -30,7 +29,6 @@ class AdminPanelProvider extends BasePanelProvider
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->pages([
                 Dashboard::class,
-                PermissionPage::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
