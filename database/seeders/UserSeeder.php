@@ -10,7 +10,6 @@ use App\Models\Tenant;
 use App\Models\User;
 use App\Tenancy\SpatieTeamResolver;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission as PermissionModel;
@@ -110,37 +109,53 @@ class UserSeeder extends Seeder
         $roleOwnerB = RoleType::ensureOwnerRoleForTeam($tenantB->id, $guard);
         $roleUserB = RoleType::ensureUserRoleForTeam($tenantB->id, $guard);
 
+        // Limpar cache antes de atribuir permissões
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // Atribuir permissões às roles por tenant
+        $this->assignPermissionsToRolesByTenant($roleOwnerA, $roleUserA, $tenantA->id, $guard);
+        $this->assignPermissionsToRolesByTenant($roleOwnerB, $roleUserB, $tenantB->id, $guard);
+
         // Atribuições explícitas com team_id na tabela model_has_roles
-        DB::table('model_has_roles')->insert([
-            // Tenant A
-            [
-                'role_id' => $roleOwnerA->id,
-                'model_type' => User::class,
-                'model_id' => $sicrano->id,
-                'team_id' => $tenantA->id,
-            ],
-            [
-                'role_id' => $roleUserA->id,
-                'model_type' => User::class,
-                'model_id' => $beltrano->id,
-                'team_id' => $tenantA->id,
-            ],
-            // Tenant B
-            [
-                'role_id' => $roleOwnerB->id,
-                'model_type' => User::class,
-                'model_id' => $beltrano->id,
-                'team_id' => $tenantB->id,
-            ],
-            [
-                'role_id' => $roleUserB->id,
-                'model_type' => User::class,
-                'model_id' => $sicrano->id,
-                'team_id' => $tenantB->id,
-            ],
-        ]);
+        // Tenant A
+        $sicrano->assignRoleInTenant($roleOwnerA, $tenantA);
+        $beltrano->assignRoleInTenant($roleUserA, $tenantA);
+
+        // Tenant B
+        $beltrano->assignRoleInTenant($roleOwnerB, $tenantB);
+        $sicrano->assignRoleInTenant($roleUserB, $tenantB);
 
         // Limpa o cache de permissões para garantir que as alterações sejam aplicadas
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+    }
+
+    /**
+     * Atribui permissões às roles Owner e User para um tenant específico
+     */
+    private function assignPermissionsToRolesByTenant(Role $ownerRole, Role $userRole, int $tenantId, string $guard): void
+    {
+        $resources = ['media', 'users'];
+
+        // Configurar o contexto de team para o tenant
+        $teamResolver = app(SpatieTeamResolver::class);
+        $teamResolver->setPermissionsTeamId($tenantId);
+
+        // Owner recebe todas as permissões
+        foreach ($resources as $resource) {
+            foreach (PermissionEnum::cases() as $permission) {
+                $permissionName = $permission->for($resource);
+                $permissionModel = PermissionModel::firstOrCreate([
+                    'name' => $permissionName,
+                    'guard_name' => $guard,
+                ]);
+
+                if (! $ownerRole->hasPermissionTo($permissionName, $guard)) {
+                    $ownerRole->givePermissionTo($permissionName);
+                }
+            }
+        }
+
+        // Reset do resolver para evitar vazamento de contexto
+        $teamResolver->setPermissionsTeamId(null);
     }
 }
