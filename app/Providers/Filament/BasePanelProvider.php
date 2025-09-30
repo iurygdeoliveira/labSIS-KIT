@@ -69,7 +69,7 @@ abstract class BasePanelProvider extends PanelProvider
             ->plugin(
                 FilamentEditProfilePlugin::make()
                     ->setNavigationLabel('Editar Perfil')
-                    ->setNavigationGroup('Configurações')
+                    ->setNavigationGroup('')
                     ->setIcon('heroicon-s-adjustments-horizontal')
                     ->shouldShowAvatarForm(
                         value: true,
