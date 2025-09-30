@@ -101,44 +101,28 @@ Em especial, agradecemos a:
 O trabalho de vocês contribui significativamente para o avanço e a qualidade deste projeto.
 
 ## Recurso em desenvolvimento
-- [ x ] Implementar o recurso de gerenciamento de tenants.
-- [ ] Implementar o recurso de gerenciamento de emails.
+
+- [ x ] Implementar o recurso de gerenciamento de emails.
 - [ ] Implementar o recurso de gerenciamento de cache.
 
 ## 🚀 Recursos Atuais
 
 O Kit oferece uma base sólida com os seguintes recursos já implementados:
 
-- **Gestão de Mídias:**
-  - **CRUD completo para mídias:** Sistema de gerenciamento para diferentes tipos de arquivos (áudio, vídeo, documento e imagem).
-  - **Preview de Conteúdo:** Visualização direta de mídias com suporte a múltiplos formatos e fallbacks para conteúdo não carregável.
-  - **Organização por Tipo:** Categorização automática baseada no MIME type com badges coloridos para identificação visual.
-  - **Tamanho Humanizado:** Exibição do tamanho de arquivo em formato legível (KB, MB, GB).
+- **Gestão de Tenants:** Sistema multi-tenant completo com isolamento de dados por organização. Inclui criação e gerenciamento de tenants, controle de acesso baseado em roles (Admin, Owner, User), e interface administrativa para configuração de permissões por tenant.
 
-- **Gestão de Usuários:**
-  - **CRUD completo para usuários (Criação, Leitura, Atualização e Exclusão).**
-  - **Sistema de Suspensão de Usuários:** Controle completo de acesso com toggle de suspensão, registro de motivo e timestamp automático. Usuários suspensos são automaticamente bloqueados do acesso aos paineis.
-  - **Organização em Abas:** Visualização detalhada organizada em abas (Informações Pessoais, Datas, Suspensão).
+- **Gestão de Roles e Permissões:** Sistema hierárquico de autorização com três níveis (Admin global, Owner por tenant, User por tenant). CRUD completo para roles e permissões com isolamento por tenant, policies centralizadas e interface de gerenciamento intuitiva.
 
-- **Edição de Perfil:**
-    - **Avatar:** Upload e gerenciamento de foto de perfil com suporte a PNG, JPG e JPEG (máximo 1MB).
-    - **Configurações Personalizáveis:** Interface intuitiva para edição de informações pessoais, email e senha.
-    - **Autenticação de Dois Fatores (2FA):** Sistema de 2FA integrado ao perfil do usuário, compatível com aplicativos de autenticação (Google Authenticator, Authy, etc.).
+- **Gestão de Mídias:** CRUD completo para mídias, com Preview de Conteúdo, Organização por Tipo e Tamanho Humanizado.
 
-- **Login Unificado:**
-  - **Login com Email e Senha:** Acesso ao painel administrativo com autenticação padrão.
+- **Gestão de Usuários:** CRUD completo para usuários (Criação, Leitura, Atualização e Exclusão). Sistema de Suspensão de Usuários, Organização em Abas com informações detalhadas (Informações Pessoais, Datas, Suspensão).
+
+- **Edição de Perfil:** Avatar, Configurações Personalizáveis e Autenticação de Dois Fatores (2FA).
+
+- **Login Unificado para diferentes painéis:** Login com Email e Senha.
 - **Exibição de Widgets:** Widgets personalizados para exibição de métricas e informações relevantes.
 
-- **Website / Landing Page**
-  - **Página Inicial Completa:** Uma landing page moderna e responsiva construída com componentes Blade e TailwindCSS.
-  - **Seções Pré-definidas:**
-  - **Hero:** Seção principal de boas-vindas.
-  - **Benefícios:** Lista de vantagens da plataforma.
-  - **Como Funciona:** Guia visual do processo.
-  - **Depoimentos:** Seção de prova social com scroll automático.
-  - **Tabela de Preços:** Componente interativo com seleção de ciclo de pagamento (mensal/anual).
-  - **FAQ:** Acordeão de perguntas e respostas.
-  - **Navegação Integrada:** Header e footer padronizados com links de navegação e acesso direto à plataforma (`/admin`).
+- **Website / Landing Page**: Página Inicial Completa, Seções Pré-definidas (Hero, Benefícios, Como Funciona, Depoimentos, Tabela de Preços, FAQ, Navegação Integrada).
 
 ## 🛠️ Recomendação de Ferramentas de Desenvolvimento
 
