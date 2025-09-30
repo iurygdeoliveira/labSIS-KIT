@@ -6,10 +6,13 @@
 - [Por que usar Roles e Permissões?](#por-que-usar-roles-e-permissões)
 - [Pacote Utilizado (Spatie)](#pacote-utilizado-spatie)
 - [Arquitetura no Projeto](#arquitetura-no-projeto)
+- [Sistema Multi-Tenant](#sistema-multi-tenant)
 - [Implementação](#implementação)
+- [Policies de Autorização](#policies-de-autorização)
 - [Gerenciamento no Filament](#gerenciamento-no-filament)
-  - [PermissionRole (Permissões por Role)](#permissionrole-permissões-por-role)
-  - [UserRole (Funções por Usuário)](#userrole-funções-por-usuário)
+  - [PermissionsCluster (Permissões por Role)](#permissionscluster-permissões-por-role)
+  - [UserRoleCluster (Funções por Usuário)](#userrolecluster-funções-por-usuário)
+- [Isolamento de Dados por Tenant](#isolamento-de-dados-por-tenant)
 - [Boas Práticas](#boas-práticas)
 - [Problemas Comuns](#problemas-comuns)
 - [Conclusão](#conclusão)
@@ -39,106 +42,186 @@ Após a instalação, o pacote registra tabelas para `roles`, `permissions` e pi
 
 ## Arquitetura no Projeto
 
-Os principais arquivos que centralizam a configuração e aplicação das permissões são:
+O sistema de roles e permissões foi projetado para funcionar em um ambiente **multi-tenant**, onde cada tenant possui suas próprias roles e permissões isoladas. Os principais arquivos que centralizam a configuração e aplicação das permissões são:
 
-- `app/Enums/RoleType.php`: enum que define as roles disponíveis no sistema (ex.: `Admin`, `User`).
-- `app/Enums/Permission.php`: enum que define e padroniza todas as permissions do sistema (ex.: `create`, `view`, `update`, `delete`). Ele:
-  - Evita strings “mágicas” e erros de digitação;
-  - Centraliza a lista de permissions válidas;
-  - Facilita o seeding inicial das permissions no banco.
-- `app/Models/User.php`: modelo do usuário que utiliza o trait `Spatie\Permission\Traits\HasRoles` e contém a lógica de acesso ao painel do Filament.
-- Clusters do Filament para administração:
-  - `app/Filament/Clusters/PermissionRole/`: cluster para gerenciar permissões por role.
-  - `app/Filament/Clusters/UserRole/`: cluster para gerenciar as roles atribuídas a cada usuário.
+### Arquivos Centrais
 
-Motivos para usar um `enum` (`RoleType`):
+- **`app/Enums/RoleType.php`**: enum que define as roles disponíveis no sistema (`Admin`, `Owner`, `User`).
+- **`app/Enums/Permission.php`**: enum que define e padroniza todas as permissions do sistema (`create`, `view`, `update`, `delete`).
+- **`app/Models/User.php`**: modelo do usuário com trait `HasRoles` e lógica de acesso aos painéis.
+- **`app/Models/Tenant.php`**: modelo do tenant com relacionamentos para usuários e mídias.
+- **`app/Models/TenantUser.php`**: modelo pivot para relacionamento many-to-many entre usuários e tenants.
+- **`app/Models/Role.php`**: modelo de role estendido do Spatie com relacionamento para tenant.
+- **`app/Tenancy/SpatieTeamResolver.php`**: resolver customizado para definir o team_id baseado no tenant atual.
 
-- Evita strings “soltas” no código, reduzindo erros de digitação;
-- Facilita a integração entre backend e UI (rótulos e valores consistentes);
-- Centraliza os papéis válidos do sistema, simplificando manutenção e evolução.
+### Policies de Autorização
 
-Estratégia de permissões no projeto:
+- Na pasta `app/Policies` encontramos as policies de autorização.
 
-- As permissions são semeadas a partir de `app/Enums/Permission.php` no `UserSeeder` (persistidas com `firstOrCreate`).
-- No cadastro inicial, nenhuma permission é atribuída automaticamente a usuários ou roles.
-- As permissions serão atribuídas a roles (ex.: `RoleType::ADMIN`, `RoleType::USER`) usando APIs do pacote (ex.: `givePermissionTo()`), e os usuários herdarão essas permissions ao receberem a role (ex.: `assignRole()`).
-- O usuário Admin acessa o painel `admin` por role; o usuário comum inicia sem permissions, recebendo-as futuramente via roles conforme a necessidade.
+### Clusters do Filament
+
+- **`app/Filament/Clusters/Permissions/`**: cluster para gerenciar permissões por role.
+- **`app/Filament/Clusters/UserRole/`**: cluster para gerenciar as roles atribuídas a cada usuário.
+
+### Providers de Painel
+
+- **`app/Providers/Filament/UserPanelProvider.php`**: configuração do painel de usuários com suporte a multi-tenancy.
+- **`app/Providers/Filament/AdminPanelProvider.php`**: configuração do painel administrativo global.
+
+### Estratégia de Permissões
+
+- As permissions são semeadas a partir de `app/Enums/Permission.php` no `UserSeeder`.
+- Roles são criadas dinamicamente por tenant usando métodos estáticos do `RoleType`.
+- O sistema utiliza hierarquia de autorização: **Admin** (global) → **Owner** (por tenant) → **User** (por tenant).
+- Policies implementam lógica de `before()` para verificar Admin e Owner antes de verificar permissões específicas.
+
+## Sistema Multi-Tenant
+
+O projeto implementa um sistema multi-tenant onde cada tenant possui suas próprias roles e permissões isoladas. Esta arquitetura permite que diferentes organizações utilizem o sistema de forma independente e segura.
+
+### Hierarquia de Acesso
+
+1. **Admin (Global)**: Acesso total a todos os tenants e recursos
+2. **Owner (Por Tenant)**: Acesso total dentro do tenant específico
+3. **User (Por Tenant)**: Acesso baseado em permissões específicas dentro do tenant
+
+### Isolamento de Dados
+
+- Cada tenant possui suas próprias roles (`Owner`, `User`) criadas dinamicamente
+- Permissões são aplicadas no contexto do tenant atual
+- O `SpatieTeamResolver` garante que as permissões sejam verificadas no tenant correto
+- Policies implementam verificação de tenant antes de aplicar permissões
+
+### Controle de Acesso aos Painéis
+
+- **Admin Panel**: Apenas usuários com role `Admin` global
+- **User Panel**: Usuários com role `User`, `Owner` em algum tenant, ou vinculados a tenants
 
 ## Implementação
 
 ### 1. Enum de Roles
 
-O enum `RoleType` lista e padroniza os papéis disponíveis, além de fornecer rótulos para UI.
+O enum `RoleType` define três tipos de roles no sistema:
 
-**Importante**: Para este projeto não será disponibilizada uma interface na UI para a criação de novas roles, pois entendemos que cada projeto é único e possui requisitos diferentes, portanto as roles devem ser definidas de forma programática para garantir consistência e controle total sobre a estrutura de autorização. A proposta deste projeto é que as roles devem ser criadas por meio da enum `RoleType` e o seeder `User`, permitindo que desenvolvedores adaptem o sistema de permissões conforme as necessidades específicas de cada aplicação.
+- **`ADMIN`**: Administrador global com acesso total
+- **`OWNER`**: Proprietário de um tenant específico
+- **`USER`**: Usuário comum de um tenant específico
 
-Arquivo: `app/Enums/RoleType.php`
+O enum inclui métodos estáticos para criação dinâmica de roles:
+- `ensureGlobalRoles()`: Cria role Admin global
+- `ensureOwnerRoleForTeam()`: Cria role Owner para um tenant específico
+- `ensureUserRoleForTeam()`: Cria role User para um tenant específico
 
-### 2. Modelo de Usuário
+**Arquivo**: `app/Enums/RoleType.php`
 
-O modelo `User` adota o trait `HasRoles` e implementa o controle de acesso ao painel administrativo (Filament) através do método `canAccessPanel()`:
+### 2. Enum de Permissões
 
-- Garante e-mail verificado;
-- Bloqueia usuários suspensos;
-- Restringe o painel `admin` somente a quem possui a role `RoleType::ADMIN`.
+O enum `Permission` define as permissões básicas do sistema:
 
-Arquivo: `app/Models/User.php`
+- **`VIEW`**: Visualizar recursos
+- **`CREATE`**: Criar recursos
+- **`UPDATE`**: Editar recursos
+- **`DELETE`**: Apagar recursos
 
-### 3. Seeds e Factory
+O método `for(string $resource)` gera permissões específicas por recurso (ex.: `media.view`, `users.create`).
 
-- `database/seeders/UserSeeder.php`: cria as roles (`Admin`, `User`) e assegura um usuário administrador e um usuário padrão, ambos com senha `mudar123`.
-- `database/factories/UserFactory.php`: fornece states (`admin()` e `user()`) para criar usuários já com suas respectivas roles.
+**Arquivo**: `app/Enums/Permission.php`
 
-### 4. Filament Panel
+### 3. Modelo de Usuário
 
-O painel administrativo está em `app/Providers/Filament/AdminPanelProvider.php` e possui `id('admin')`. A verificação em `User::canAccessPanel()` usa este `id` para garantir que apenas administradores acessem o painel.
+O modelo `User` implementa múltiplas interfaces e traits:
+
+- `HasRoles`: Trait do Spatie para gerenciamento de roles
+- `HasTenants`: Interface do Filament para multi-tenancy
+- `FilamentUser`: Interface para controle de acesso aos painéis
+
+Métodos importantes:
+- `canAccessPanel()`: Controla acesso aos painéis baseado em roles
+- `isOwnerOfTenant()`: Verifica se é Owner de um tenant específico
+- `isUserOfTenant()`: Verifica se é User de um tenant específico
+- `assignRoleInTenant()`: Atribui role no contexto de um tenant
+
+**Arquivo**: `app/Models/User.php`
+
+### 4. Modelos de Tenant
+
+- **`Tenant`**: Representa uma organização/empresa no sistema
+- **`TenantUser`**: Modelo pivot para relacionamento many-to-many
+- **`Role`**: Estende o modelo do Spatie com relacionamento para tenant
+
+**Arquivos**: `app/Models/Tenant.php`, `app/Models/TenantUser.php`, `app/Models/Role.php`
+
+### 5. Resolver de Team
+
+O `SpatieTeamResolver` define como o Spatie identifica o contexto atual para permissões:
+
+- Usa o tenant atual do Filament como `team_id`
+- Fallback para `0` quando não há tenant selecionado
+- Permite override manual para casos específicos
+
+**Arquivo**: `app/Tenancy/SpatieTeamResolver.php`
+
+## Policies de Autorização
+
+As policies implementam a lógica de autorização hierárquica do sistema, garantindo que Admin e Owner tenham acesso apropriado antes de verificar permissões específicas.
+
+### Estrutura das Policies
+
+Todas as policies seguem o mesmo padrão:
+
+```php
+public function before(User $user): ?bool
+{
+    // Admin tem acesso total
+    if ($user->hasRole(RoleType::ADMIN->value)) {
+        return true;
+    }
+
+    // Owner tem acesso total no tenant atual
+    $currentTenant = Filament::getTenant();
+    if ($currentTenant instanceof Tenant && $user->isOwnerOfTenant($currentTenant)) {
+        return true;
+    }
+
+    // Deixa para os métodos específicos verificarem permissões
+    return null;
+}
+```
+
+### Métodos de Autorização
+
+Cada policy implementa os métodos padrão do Laravel:
+- `viewAny()`: Listar recursos
+- `view()`: Visualizar recurso específico
+- `create()`: Criar recursos
+- `update()`: Editar recursos
+- `delete()`: Apagar recursos
+- `deleteAny()`: Apagar múltiplos recursos
+
+Todos os métodos verificam permissões usando `Permission::for($resource)`.
+
+**Arquivos**: `app/Policies/MediaItemPolicy.php`, `app/Policies/UserPolicy.php`
 
 ## Gerenciamento no Filament
 
-A administração é feita por dois clusters: `PermissionRole` (permissões por role) e `UserRole` (roles por usuário). Ambos ficam no painel `admin`, grupo de navegação “Configurações”.
+A administração é feita por dois clusters principais: `PermissionsCluster` (permissões por role) e `UserRoleCluster` (roles por usuário). Ambos implementam controle de acesso baseado em roles e são visíveis apenas para Admin e Owner.
 
-### PermissionRole (Permissões por Role)
 
-- Caminho: `Admin > Configurações > Permissões`.
-- Páginas disponíveis (exemplos): `Mídia`, `Usuários`.
-- Em cada página há uma tabela onde cada linha representa uma role (exceto Admin, conforme regra do projeto) e as colunas representam as ações (permissões) padrão: `Visualizar`, `Criar`, `Editar`, `Apagar`.
-- Cada célula é um toggle. Ao habilitar:
-  - A permission correspondente é criada caso não exista (`findOrCreate`) e atribuída à role.
-  - Ao desabilitar, a permission é removida da role.
-- Implementação base: `app/Filament/Clusters/PermissionRole/Pages/BasePermissionsPage.php`.
+## Isolamento de Dados por Tenant
 
-### UserRole (Funções por Usuário)
+O sistema implementa isolamento completo de dados por tenant, garantindo que cada organização veja apenas seus próprios dados e configurações.
 
-- Caminho: `Admin > Configurações > Funções > Atribuir Funções`.
-- Página: `app/Filament/Clusters/UserRole/Pages/AssignRoles.php`.
-- Estrutura em tabela com 3 colunas fixas:
-  - `Nome` (usuário);
-  - `Admin` (toggle);
-  - `User` (toggle).
-- Regras de UX/negócio aplicadas:
-  - Exclusividade entre roles: ao habilitar `Admin`, a role `User` é automaticamente removida, e vice-versa.
-    - Implementado com `syncRoles([RoleType::ADMIN])` ou `syncRoles([RoleType::USER])`, refletindo imediatamente na UI.
-  - Linha do próprio usuário autenticado não é exibida para evitar auto-atribuição.
-    - Implementado na query: `->when(Filament::auth()->check(), fn ($query) => $query->whereKeyNot(Filament::auth()->id()))`.
-  - Guard utilizado: `web`.
 
-Dica: No infolist do usuário, exibimos um badge com a função atual em `app/Filament/Resources/Users/Schemas/UserInfolist.php`.
-
-## Boas Práticas
-
-- Padronize as roles e permissions via `Enum` para evitar strings soltas.
-- Prefira atribuir permissions às roles; usuários herdam permissions via roles.
-- Revise periodicamente as roles (ex.: `User` deve possuir o mínimo necessário; `Admin` pode ter todas as permissions).
-- Para mudanças estruturais (novas permissions), ajuste o seeder e rode migrações/seed conforme necessário.
-
-## Problemas Comuns
-
-- Permissões não aplicam após mudança: limpe cache de config/rotas/views (`php artisan optimize:clear`).
-- Roles/permissions faltando: confirme se as migrations do Spatie foram executadas e os seeders rodaram.
-- Uso de UUID: se a PK do seu modelo for UUID, ajuste as migrations/config conforme a documentação avançada da Spatie.
 
 ## Conclusão
 
-Com `spatie/laravel-permission` a aplicação ganha um controle de acesso robusto, flexível e idiomático no Laravel, integrado ao Filament para uma ótima experiência administrativa. Os clusters `PermissionRole` e `UserRole` oferecem uma UI clara para manutenção contínua de permissões e papéis.
+O sistema de roles e permissões implementado oferece uma solução para controle de acesso em ambiente multi-tenant. A integração entre Spatie Laravel Permission, Filament e o sistema de tenancy garante:
+
+- **Segurança**: Isolamento completo de dados entre tenants
+- **Flexibilidade**: Hierarquia de acesso clara e configurável
+- **Usabilidade**: Interface intuitiva para gerenciamento de permissões
+- **Manutenibilidade**: Código organizado e bem documentado
+
+Os clusters `PermissionsCluster` e `UserRoleCluster` proporcionam uma experiência administrativa completa, permitindo que administradores e proprietários gerenciem permissões de forma eficiente e segura, respeitando o isolamento de dados por tenant.
 
 
