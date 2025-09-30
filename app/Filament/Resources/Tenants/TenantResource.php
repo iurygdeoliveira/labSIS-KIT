@@ -28,11 +28,11 @@ class TenantResource extends Resource
 
     protected static ?string $navigationLabel = 'Tenants';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Administração';
+    protected static string|\UnitEnum|null $navigationGroup = 'Sistema';
 
     protected static ?string $title = 'Tenants';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 3;
 
     #[Override]
     public static function getModelLabel(): string

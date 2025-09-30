@@ -41,6 +41,6 @@ class UserRoleCluster extends Cluster
             return true;
         }
 
-        return parent::canAccessClusteredComponents();
+        return false;
     }
 }

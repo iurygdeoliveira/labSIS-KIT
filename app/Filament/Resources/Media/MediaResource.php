@@ -24,6 +24,9 @@ class MediaResource extends Resource
 {
     protected static ?string $model = MediaItem::class;
 
+    // Define o relacionamento de pertença ao tenant para este Resource
+    protected static ?string $tenantOwnershipRelationshipName = 'tenant';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Photo;
 
     protected static ?string $navigationLabel = 'Mídias';
@@ -32,7 +35,7 @@ class MediaResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     #[Override]
     public static function getModelLabel(): string

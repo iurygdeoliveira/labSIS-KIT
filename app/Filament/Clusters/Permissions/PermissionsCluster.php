@@ -40,6 +40,6 @@ class PermissionsCluster extends Cluster
             return true;
         }
 
-        return parent::canAccessClusteredComponents();
+        return false;
     }
 }
