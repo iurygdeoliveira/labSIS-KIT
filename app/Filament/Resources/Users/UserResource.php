@@ -29,6 +29,8 @@ class UserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Administração';
+
     protected static ?string $navigationLabel = 'Usuários';
 
     protected static ?string $title = 'Usuários';

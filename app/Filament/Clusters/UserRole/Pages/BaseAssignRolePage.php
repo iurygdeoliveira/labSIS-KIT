@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Clusters\UserRole\Pages;
 
+use App\Enums\RoleType;
 use App\Filament\Clusters\UserRole\UserRoleCluster;
 use App\Models\TenantUser;
+use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Pages\Page;
 use Filament\Tables;
@@ -24,29 +26,41 @@ abstract class BaseAssignRolePage extends Page implements HasTable
 
     public function table(Table $table): Table
     {
-        return $table
-            ->query(
-                TenantUser::query()
-                    ->with(['user', 'tenant'])
-                    ->whereHas(
-                        'user',
-                        fn ($query) => $query->when(
-                            Filament::auth()->check(),
-                            fn ($query) => $query->whereKeyNot(Filament::auth()->id())
-                        )
-                    )
-            )
-            ->groups([
-                Group::make('tenant.name')
-                    ->label('Tenant'),
-            ])
-            ->defaultGroup('tenant.name')
-            ->groupingSettingsHidden()
-            ->columns(array_merge([
-                TextColumn::make('user.name')
-                    ->label('Nome'),
-                TextColumn::make('user.email')
-                    ->label('E-mail'),
-            ], $this->getExtraColumns()));
+        $currentUser = Filament::auth()->user();
+        $isAdmin = false;
+
+        if ($currentUser instanceof User && method_exists($currentUser, 'hasRole')) {
+            $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
+        }
+
+        $currentTenant = Filament::getTenant();
+
+        $query = TenantUser::query()
+            ->with(['user', 'tenant']);
+
+        // Se não for admin, filtra apenas o tenant atual
+        if (! $isAdmin && $currentTenant) {
+            $query->where('tenant_id', $currentTenant->id);
+        }
+
+        $tableConfig = $table->query($query);
+
+        // Se for admin, agrupa por tenant
+        if ($isAdmin) {
+            $tableConfig = $tableConfig
+                ->groups([
+                    Group::make('tenant.name')
+                        ->label('Tenant'),
+                ])
+                ->defaultGroup('tenant.name')
+                ->groupingSettingsHidden();
+        }
+
+        return $tableConfig->columns(array_merge([
+            TextColumn::make('user.name')
+                ->label('Nome'),
+            TextColumn::make('user.email')
+                ->label('E-mail'),
+        ], $this->getExtraColumns()));
     }
 }
