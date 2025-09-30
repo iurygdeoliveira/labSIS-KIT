@@ -9,6 +9,8 @@ use App\Enums\RoleType;
 use App\Filament\Clusters\Permissions\PermissionsCluster;
 use App\Models\Role;
 use App\Models\Tenant;
+use App\Models\User;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle as ToggleForm;
@@ -50,114 +52,149 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
 
     public function form(Schema $schema): Schema
     {
-        return $schema->schema([
+        $currentUser = Filament::auth()->user();
+        $isAdmin = false;
+
+        if ($currentUser instanceof User && method_exists($currentUser, 'hasRole')) {
+            $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
+        }
+
+        $sectionSchema = [
+            Select::make('selectedRole')
+                ->label('Tipo de usuário')
+                ->options([
+                    RoleType::USER->value => RoleType::USER->getLabel(),
+                ])
+                ->native(false)
+                ->required()
+                ->reactive(),
+        ];
+
+        // Toggle mestre só aparece para Admin
+        if ($isAdmin) {
+            $sectionSchema[] = ToggleForm::make('selectAll')
+                ->label('Habilitar todas as permissões em todos os Tenants')
+                ->onColor('primary')
+                ->offColor('danger')
+                ->onIcon('heroicon-c-check')
+                ->offIcon('heroicon-c-x-mark')
+                ->dehydrated(false)
+                ->reactive()
+                ->afterStateUpdated(function (bool $state): void {
+                    $this->toggleAll($state);
+                });
+        }
+
+        $schemaComponents = [
             Section::make('Configurações')
                 ->columns(2)
-                ->schema([
-                    Select::make('selectedRole')
-                        ->label('Tipo de usuário')
-                        ->options([
-                            RoleType::USER->value => RoleType::USER->getLabel(),
-                        ])
-                        ->native(false)
-                        ->required()
-                        ->reactive(),
+                ->schema($sectionSchema),
+        ];
 
-                    ToggleForm::make('selectAll')
-                        ->label('Habilitar todas as permissões em todos os Tenants')
-                        ->onColor('primary')
-                        ->offColor('danger')
-                        ->onIcon('heroicon-c-check')
-                        ->offIcon('heroicon-c-x-mark')
-                        ->dehydrated(false)
-                        ->reactive()
-                        ->afterStateUpdated(function (bool $state): void {
-                            $this->toggleAll($state);
-                        }),
-                ]),
-        ]);
+        return $schema->schema($schemaComponents);
     }
 
     public function table(Table $table): Table
     {
         $slug = static::$resourceSlug;
+        $currentUser = Filament::auth()->user();
+        $isAdmin = false;
+
+        if ($currentUser instanceof User && method_exists($currentUser, 'hasRole')) {
+            $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
+        }
+
+        $currentTenant = Filament::getTenant();
+
+        $query = Tenant::query()
+            ->where('is_active', true)
+            ->select(['id', 'name']);
+
+        // Se não for admin, filtra apenas o tenant atual
+        if (! $isAdmin && $currentTenant) {
+            $query->where('id', $currentTenant->id);
+        }
+
+        $columns = [
+            TextColumn::make('name')
+                ->label('Tenant')
+                ->when($isAdmin, fn ($column) => $column->searchable(isIndividual: true, isGlobal: false)),
+        ];
+
+        // Coluna "Todas" só aparece para Admin
+        if ($isAdmin) {
+            $columns[] = ToggleColumn::make('all')
+                ->label('Todas')
+                ->onColor('primary')
+                ->offColor('danger')
+                ->onIcon('heroicon-c-check')
+                ->offIcon('heroicon-c-x-mark')
+                ->getStateUsing(
+                    fn (Tenant $record): bool => $this->rowAllEnabled($record->id, $slug)
+                )
+                ->updateStateUsing(
+                    fn (bool $state, Tenant $record) => tap($state, fn () => $this->setAllPermissionsForTenant($record->id, $slug, $state))
+                );
+        }
+
+        // Colunas de permissões individuais
+        $columns = array_merge($columns, [
+            ToggleColumn::make('view')
+                ->label(PermissionEnum::VIEW->getLabel())
+                ->onColor('primary')
+                ->offColor('danger')
+                ->onIcon('heroicon-c-check')
+                ->offIcon('heroicon-c-x-mark')
+                ->getStateUsing(
+                    fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::VIEW)
+                )
+                ->afterStateUpdated(
+                    fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::VIEW, $state)
+                ),
+
+            ToggleColumn::make('create')
+                ->label(PermissionEnum::CREATE->getLabel())
+                ->onColor('primary')
+                ->offColor('danger')
+                ->onIcon('heroicon-c-check')
+                ->offIcon('heroicon-c-x-mark')
+                ->getStateUsing(
+                    fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::CREATE)
+                )
+                ->afterStateUpdated(
+                    fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::CREATE, $state)
+                ),
+
+            ToggleColumn::make('update')
+                ->label(PermissionEnum::UPDATE->getLabel())
+                ->onColor('primary')
+                ->offColor('danger')
+                ->onIcon('heroicon-c-check')
+                ->offIcon('heroicon-c-x-mark')
+                ->getStateUsing(
+                    fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::UPDATE)
+                )
+                ->afterStateUpdated(
+                    fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::UPDATE, $state)
+                ),
+
+            ToggleColumn::make('delete')
+                ->label(PermissionEnum::DELETE->getLabel())
+                ->onColor('primary')
+                ->offColor('danger')
+                ->onIcon('heroicon-c-check')
+                ->offIcon('heroicon-c-x-mark')
+                ->getStateUsing(
+                    fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::DELETE)
+                )
+                ->afterStateUpdated(
+                    fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::DELETE, $state)
+                ),
+        ]);
 
         return $table
-            ->query(
-                Tenant::query()
-                    ->where('is_active', true)
-                    ->select(['id', 'name'])
-            )
-            ->columns([
-                TextColumn::make('name')
-                    ->label('Tenant')
-                    ->searchable(isIndividual: true, isGlobal: false),
-
-                ToggleColumn::make('all')
-                    ->label('Todas')
-                    ->onColor('primary')
-                    ->offColor('danger')
-                    ->onIcon('heroicon-c-check')
-                    ->offIcon('heroicon-c-x-mark')
-                    ->getStateUsing(
-                        fn (Tenant $record): bool => $this->rowAllEnabled($record->id, $slug)
-                    )
-                    ->updateStateUsing(
-                        fn (bool $state, Tenant $record) => tap($state, fn () => $this->setAllPermissionsForTenant($record->id, $slug, $state))
-                    ),
-
-                ToggleColumn::make('view')
-                    ->label(PermissionEnum::VIEW->getLabel())
-                    ->onColor('primary')
-                    ->offColor('danger')
-                    ->onIcon('heroicon-c-check')
-                    ->offIcon('heroicon-c-x-mark')
-                    ->getStateUsing(
-                        fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::VIEW)
-                    )
-                    ->afterStateUpdated(
-                        fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::VIEW, $state)
-                    ),
-
-                ToggleColumn::make('create')
-                    ->label(PermissionEnum::CREATE->getLabel())
-                    ->onColor('primary')
-                    ->offColor('danger')
-                    ->onIcon('heroicon-c-check')
-                    ->offIcon('heroicon-c-x-mark')
-                    ->getStateUsing(
-                        fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::CREATE)
-                    )
-                    ->afterStateUpdated(
-                        fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::CREATE, $state)
-                    ),
-
-                ToggleColumn::make('update')
-                    ->label(PermissionEnum::UPDATE->getLabel())
-                    ->onColor('primary')
-                    ->offColor('danger')
-                    ->onIcon('heroicon-c-check')
-                    ->offIcon('heroicon-c-x-mark')
-                    ->getStateUsing(
-                        fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::UPDATE)
-                    )
-                    ->afterStateUpdated(
-                        fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::UPDATE, $state)
-                    ),
-
-                ToggleColumn::make('delete')
-                    ->label(PermissionEnum::DELETE->getLabel())
-                    ->onColor('primary')
-                    ->offColor('danger')
-                    ->onIcon('heroicon-c-check')
-                    ->offIcon('heroicon-c-x-mark')
-                    ->getStateUsing(
-                        fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::DELETE)
-                    )
-                    ->afterStateUpdated(
-                        fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::DELETE, $state)
-                    ),
-            ]);
+            ->query($query)
+            ->columns($columns);
     }
 
     protected function hasPermission(int $tenantId, string $resourceSlug, PermissionEnum $action): bool
