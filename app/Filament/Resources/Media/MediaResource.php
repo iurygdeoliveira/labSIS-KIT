@@ -12,7 +12,6 @@ use App\Filament\Resources\Media\Schemas\MediaInfolist;
 use App\Filament\Resources\Media\Tables\MediaTable;
 use App\Models\MediaItem;
 use BackedEnum;
-use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -87,41 +86,5 @@ class MediaResource extends Resource
         }
 
         return $record->getFirstMedia('media')?->name ?? 'Sem nome';
-    }
-
-    public static function canViewAny(): bool
-    {
-        return self::currentUserCan('media.view');
-    }
-
-    public static function canCreate(): bool
-    {
-        return self::currentUserCan('media.create');
-    }
-
-    public static function canEdit(Model $record): bool
-    {
-        return self::currentUserCan('media.update');
-    }
-
-    public static function canDelete(Model $record): bool
-    {
-        return self::currentUserCan('media.delete');
-    }
-
-    public static function canView(Model $record): bool
-    {
-        return self::currentUserCan('media.view');
-    }
-
-    private static function currentUserCan(string $permission): bool
-    {
-        $user = Filament::auth()->user();
-
-        if (! $user instanceof \App\Models\User) {
-            return false;
-        }
-
-        return $user->can($permission);
     }
 }

@@ -6,12 +6,11 @@ namespace App\Policies;
 
 use App\Enums\Permission;
 use App\Enums\RoleType;
-use App\Models\MediaItem;
 use App\Models\Tenant;
 use App\Models\User;
 use Filament\Facades\Filament;
 
-class MediaItemPolicy
+class UserPolicy
 {
     public function before(User $user): ?bool
     {
@@ -29,31 +28,31 @@ class MediaItemPolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->can(Permission::VIEW->for('media'));
+        return $user->can(Permission::VIEW->for('users'));
     }
 
-    public function view(User $user, MediaItem $record): bool
+    public function view(User $user, User $record): bool
     {
-        return $user->can(Permission::VIEW->for('media'));
+        return $user->can(Permission::VIEW->for('users'));
     }
 
     public function create(User $user): bool
     {
-        return $user->can(Permission::CREATE->for('media'));
+        return $user->can(Permission::CREATE->for('users'));
     }
 
-    public function update(User $user, MediaItem $record): bool
+    public function update(User $user, User $record): bool
     {
-        return $user->can(Permission::UPDATE->for('media'));
+        return $user->can(Permission::UPDATE->for('users'));
     }
 
-    public function delete(User $user, MediaItem $record): bool
+    public function delete(User $user, User $record): bool
     {
-        return $user->can(Permission::DELETE->for('media'));
+        return $user->can(Permission::DELETE->for('users'));
     }
 
     public function deleteAny(User $user): bool
     {
-        return $user->can(Permission::DELETE->for('media'));
+        return $user->can(Permission::DELETE->for('users'));
     }
 }
