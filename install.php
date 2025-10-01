@@ -60,6 +60,50 @@ function isRunningInDocker(): bool
 }
 
 /**
+ * Verifica se o usuário atual está no grupo docker.
+ */
+function isUserInDockerGroup(): bool
+{
+    $groups = shell_exec('groups');
+    if (! is_string($groups)) {
+        return false;
+    }
+
+    return str_contains($groups, 'docker');
+}
+
+/**
+ * Configura o grupo Docker para o usuário atual.
+ */
+function setupDockerGroup(): void
+{
+    if (isUserInDockerGroup()) {
+        echo "Usuário já está no grupo docker.\n";
+
+        return;
+    }
+
+    echo "Configurando grupo Docker...\n";
+
+    // Verifica se o grupo docker existe
+    $groupExists = shell_exec('getent group docker 2>/dev/null');
+    if (! $groupExists) {
+        echo "Criando grupo docker...\n";
+        run('sudo groupadd docker');
+    } else {
+        echo "Grupo docker já existe.\n";
+    }
+
+    // Adiciona usuário ao grupo docker
+    echo "Adicionando usuário ao grupo docker...\n";
+    run('sudo usermod -aG docker $USER');
+
+    echo "Configuração do grupo Docker concluída.\n";
+    echo "IMPORTANTE: Você precisa fazer logout e login novamente (ou reiniciar) para que as mudanças tenham efeito.\n";
+    echo "Alternativamente, execute: newgrp docker\n";
+}
+
+/**
  * Verifica se devemos usar o Sail (fora do container e com vendor/bin/sail presente).
  */
 function shouldUseSail(string $basePath): bool
@@ -123,6 +167,11 @@ function runNpm(string $args, string $basePath): void
     }
 
     run("npm {$args}");
+}
+
+// Configuração do Docker (apenas se não estiver rodando dentro do container)
+if (! isRunningInDocker()) {
+    setupDockerGroup();
 }
 
 // .env
