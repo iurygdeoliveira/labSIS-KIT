@@ -31,18 +31,25 @@ class UsersStats extends BaseWidget
         ];
     }
 
-    protected function getStats(): array
+    #[Computed]
+    protected function percentages(): array
     {
         $summary = $this->summary;
 
-        // Calcular percentuais
-        $verifiedPercentage = $summary['total'] > 0
-            ? round(($summary['verified'] / $summary['total']) * 100, 1)
-            : 0;
+        return [
+            'verified' => $summary['total'] > 0
+                ? round(($summary['verified'] / $summary['total']) * 100, 1)
+                : 0,
+            'suspended' => $summary['total'] > 0
+                ? round(($summary['suspended'] / $summary['total']) * 100, 1)
+                : 0,
+        ];
+    }
 
-        $suspendedPercentage = $summary['total'] > 0
-            ? round(($summary['suspended'] / $summary['total']) * 100, 1)
-            : 0;
+    protected function getStats(): array
+    {
+        $summary = $this->summary;
+        $percentages = $this->percentages;
 
         return [
             Stat::make('Total de Usuários', number_format($summary['total']))
@@ -51,12 +58,12 @@ class UsersStats extends BaseWidget
                 ->color('secondary'),
 
             Stat::make('Usuários Verificados', number_format($summary['verified']))
-                ->description("{$verifiedPercentage}% do total")
+                ->description("{$percentages['verified']}% do total")
                 ->icon('heroicon-c-check-badge')
                 ->color('primary'),
 
             Stat::make('Usuários Suspensos', number_format($summary['suspended']))
-                ->description("{$suspendedPercentage}% do total")
+                ->description("{$percentages['suspended']}% do total")
                 ->icon('heroicon-c-no-symbol')
                 ->color('danger'),
         ];

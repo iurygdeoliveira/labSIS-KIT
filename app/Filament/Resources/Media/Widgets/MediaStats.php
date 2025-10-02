@@ -38,48 +38,54 @@ class MediaStats extends BaseWidget
         ];
     }
 
-    protected function getStats(): array
+    #[Computed]
+    protected function percentages(): array
     {
         $stats = $this->summary;
 
         // Calcular total de arquivos
         $totalFiles = $stats['images'] + $stats['videos'] + $stats['audios'] + $stats['documents'];
 
-        // Calcular percentuais
-        $imagesPercentage = $totalFiles > 0
-            ? round(($stats['images'] / $totalFiles) * 100, 1)
-            : 0;
+        if ($totalFiles === 0) {
+            return [
+                'images' => 0,
+                'videos' => 0,
+                'audios' => 0,
+                'documents' => 0,
+            ];
+        }
 
-        $videosPercentage = $totalFiles > 0
-            ? round(($stats['videos'] / $totalFiles) * 100, 1)
-            : 0;
+        return [
+            'images' => round(($stats['images'] / $totalFiles) * 100, 1),
+            'videos' => round(($stats['videos'] / $totalFiles) * 100, 1),
+            'audios' => round(($stats['audios'] / $totalFiles) * 100, 1),
+            'documents' => round(($stats['documents'] / $totalFiles) * 100, 1),
+        ];
+    }
 
-        $audiosPercentage = $totalFiles > 0
-            ? round(($stats['audios'] / $totalFiles) * 100, 1)
-            : 0;
-
-        $documentsPercentage = $totalFiles > 0
-            ? round(($stats['documents'] / $totalFiles) * 100, 1)
-            : 0;
+    protected function getStats(): array
+    {
+        $stats = $this->summary;
+        $percentages = $this->percentages;
 
         return [
             Stat::make('Imagens', number_format($stats['images']))
-                ->description("{$imagesPercentage}% do total")
+                ->description("{$percentages['images']}% do total")
                 ->icon('heroicon-c-photo')
                 ->color('primary'),
 
             Stat::make('Vídeos', number_format($stats['videos']))
-                ->description("{$videosPercentage}% do total")
+                ->description("{$percentages['videos']}% do total")
                 ->icon('heroicon-c-video-camera')
                 ->color('warning'),
 
             Stat::make('Documentos', number_format($stats['documents']))
-                ->description("{$documentsPercentage}% do total")
+                ->description("{$percentages['documents']}% do total")
                 ->icon('heroicon-c-document')
                 ->color('success'),
 
             Stat::make('Áudios', number_format($stats['audios']))
-                ->description("{$audiosPercentage}% do total")
+                ->description("{$percentages['audios']}% do total")
                 ->icon('heroicon-c-musical-note')
                 ->color('danger'),
 
