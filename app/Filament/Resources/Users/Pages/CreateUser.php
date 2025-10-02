@@ -6,7 +6,7 @@ use App\Enums\RoleType;
 use App\Filament\Resources\Users\UserResource;
 use App\Models\Tenant;
 use App\Models\User;
-use App\Trait\Filament\NotificationsTrait;
+use App\Traits\Filament\NotificationsTrait;
 use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;

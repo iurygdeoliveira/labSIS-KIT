@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\RoleType;
-use App\Trait\Filament\AppAuthenticationRecoveryCodes;
-use App\Trait\Filament\AppAuthenticationSecret;
-use App\Trait\UuidTrait;
+use App\Services\AvatarService;
+use App\Traits\Filament\AppAuthenticationRecoveryCodes;
+use App\Traits\Filament\AppAuthenticationSecret;
+use App\Traits\UuidTrait;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Models\Contracts\FilamentUser;
@@ -18,12 +19,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
-use Override;
-use Spatie\Image\Enums\Fit;
-use Spatie\Image\Image;
+use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -130,45 +129,12 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function getFilamentAvatarUrl(): ?string
     {
-        $media = $this->getFirstMedia('avatar');
-
-        if ($media) {
-            try {
-                return $media->getUrl();
-            } catch (\Throwable) {
-                // ignore
-            }
-        }
-
-        $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
-
-        if (! $this->$avatarColumn) {
-            return null;
-        }
-
-        try {
-            /** @var \Illuminate\Contracts\Filesystem\Filesystem&\Illuminate\Filesystem\FilesystemAdapter $disk */
-            $disk = Storage::disk(config('filament-edit-profile.disk', 's3'));
-
-            return $disk->temporaryUrl($this->$avatarColumn, now()->addMinutes(5));
-        } catch (\Throwable) {
-            try {
-                return Storage::url($this->$avatarColumn);
-            } catch (\Throwable) {
-                return null;
-            }
-        }
+        return app(AvatarService::class)->getAvatarUrl($this);
     }
 
     public function isSuspended(): bool
     {
         return $this->is_suspended;
-    }
-
-    #[Override]
-    public function getRouteKeyName(): string
-    {
-        return 'uuid';  // Substitua por 'uuid' ou o nome do campo que contém seu UUID
     }
 
     public function canAccessPanel(Panel $panel): bool
@@ -190,23 +156,11 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         if ($panel->getId() === 'user') {
-            // Permite acesso ao painel de usuário se:
-            // - possuir role global 'User', ou
-            // - possuir role 'Owner' em algum tenant, ou
-            // - estiver vinculado a pelo menos um tenant (seleciona depois via switcher)
             if ($this->hasRole(RoleType::USER->value)) {
                 return true;
             }
 
-            // Verificar se possui role Owner em algum tenant
-            if (
-                Role::query()
-                    ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
-                    ->where('mhr.model_type', self::class)
-                    ->where('mhr.model_id', $this->id)
-                    ->where('roles.name', RoleType::OWNER->value)
-                    ->exists()
-            ) {
+            if ($this->hasOwnerRoleInAnyTenant()) {
                 return true;
             }
 
@@ -223,10 +177,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             ->singleFile();
     }
 
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        // Avatar é salvo já redimensionado como arquivo original
-    }
+    public function registerMediaConversions(?Media $media = null): void {}
 
     public function tenants(): BelongsToMany
     {
@@ -265,45 +216,51 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function isOwnerOfTenant(Tenant $tenant): bool
     {
-        return Role::query()
-            ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
-            ->where('mhr.model_type', self::class)
-            ->where('mhr.model_id', $this->id)
-            ->where('mhr.team_id', $tenant->id)
+        return $this->getRoleQueryBuilder($tenant)
             ->where('roles.name', RoleType::OWNER->value)
             ->exists();
     }
 
     public function isUserOfTenant(Tenant $tenant): bool
     {
-        return Role::query()
-            ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
-            ->where('mhr.model_type', self::class)
-            ->where('mhr.model_id', $this->id)
-            ->where('mhr.team_id', $tenant->id)
+        return $this->getRoleQueryBuilder($tenant)
             ->where('roles.name', RoleType::USER->value)
             ->exists();
     }
 
-    public function getRolesForTenant(Tenant $tenant): \Illuminate\Support\Collection
+    public function getRolesForTenant(Tenant $tenant): Collection
     {
-        return Role::query()
-            ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
-            ->where('mhr.model_type', self::class)
-            ->where('mhr.model_id', $this->id)
-            ->where('mhr.team_id', $tenant->id)
+        return $this->getRoleQueryBuilder($tenant)
             ->select('roles.*')
             ->get();
     }
 
     public function hasAnyRoleInTenant(Tenant $tenant): bool
     {
+        return $this->getRoleQueryBuilder($tenant)->exists();
+    }
+
+    public function hasOwnerRoleInAnyTenant(): bool
+    {
+        return $this->rolesWithTeams()
+            ->where('roles.name', RoleType::OWNER->value)
+            ->exists();
+    }
+
+    private function getRoleQueryBuilder(Tenant $tenant): Builder
+    {
         return Role::query()
             ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
             ->where('mhr.model_type', self::class)
             ->where('mhr.model_id', $this->id)
-            ->where('mhr.team_id', $tenant->id)
-            ->exists();
+            ->where('mhr.team_id', $tenant->id);
+    }
+
+    public function scopeWithRolesForTenant($query, Tenant $tenant): void
+    {
+        $query->with([
+            'rolesWithTeams' => fn ($q) => $q->where('team_id', $tenant->id),
+        ]);
     }
 
     public function assignRoleInTenant(Role $role, Tenant $tenant): void
@@ -369,36 +326,11 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             return;
         }
 
-        try {
-            $disk = (string) config('filament-edit-profile.disk', 's3');
-            $contents = Storage::disk($disk)->get($value);
+        $avatarService = app(\App\Services\AvatarService::class);
 
-            if ($contents === null || $contents === '') {
-                $this->attributes['avatar_url'] = $value;
-
-                return;
-            }
-
-            $tmpPath = (string) tempnam(sys_get_temp_dir(), 'avatar_');
-            file_put_contents($tmpPath, $contents);
-
-            Image::load($tmpPath)
-                ->fit(Fit::Crop, 256, 256)
-                ->optimize()
-                ->save($tmpPath);
-
-            $this->clearMediaCollection('avatar');
-
-            $this->addMedia($tmpPath)
-                ->usingFileName(basename($value))
-                ->toMediaCollection('avatar');
-
-            @unlink($tmpPath);
-
-            Storage::disk($disk)->delete($value);
-
+        if ($avatarService->processAndSaveAvatar($this, $value)) {
             $this->attributes['avatar_url'] = null;
-        } catch (\Throwable) {
+        } else {
             $this->attributes['avatar_url'] = $value;
         }
     }

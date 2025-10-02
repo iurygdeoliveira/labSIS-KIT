@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -64,19 +65,7 @@ class MediaItem extends Model implements HasMedia
     {
         $size = (int) ($this->getFirstMedia('media')?->size ?? 0);
 
-        if ($size < 1024) {
-            return $size.' B';
-        }
-
-        if ($size < 1024 * 1024) {
-            return round($size / 1024, 2).' KB';
-        }
-
-        if ($size < 1024 * 1024 * 1024) {
-            return round($size / (1024 * 1024), 2).' MB';
-        }
-
-        return round($size / (1024 * 1024 * 1024), 2).' GB';
+        return formatBytes($size);
     }
 
     public function getFileTypeAttribute(): string
@@ -121,7 +110,7 @@ class MediaItem extends Model implements HasMedia
         }
     }
 
-    public function video()
+    public function video(): HasOne
     {
         return $this->hasOne(Video::class);
     }

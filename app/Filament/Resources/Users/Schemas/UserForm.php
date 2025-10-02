@@ -2,10 +2,8 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
-use App\Enums\RoleType;
 use App\Models\Tenant;
 use App\Models\User;
-use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -30,30 +28,8 @@ class UserForm
                     ->preload()
                     ->native(false)
                     ->dehydrated(false)
-                    ->visible(function (string $operation): bool {
-                        if ($operation !== 'create') {
-                            return false;
-                        }
-
-                        $user = Filament::auth()->user();
-                        if (! ($user instanceof User) || ! method_exists($user, 'hasRole')) {
-                            return false;
-                        }
-
-                        return (bool) $user->hasRole(RoleType::ADMIN->value);
-                    })
-                    ->required(function (string $operation): bool {
-                        if ($operation !== 'create') {
-                            return false;
-                        }
-
-                        $user = Filament::auth()->user();
-                        if (! ($user instanceof User) || ! method_exists($user, 'hasRole')) {
-                            return false;
-                        }
-
-                        return (bool) $user->hasRole(RoleType::ADMIN->value);
-                    }),
+                    ->visible(fn (string $operation): bool => self::shouldShowTenantField($operation))
+                    ->required(fn (string $operation): bool => self::shouldShowTenantField($operation)),
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('email')
@@ -87,5 +63,19 @@ class UserForm
                     ->disabled(fn (?User $record): bool => $record?->getKey() === Auth::id())
                     ->hidden(fn (string $operation): bool => $operation === 'create'),
             ]);
+    }
+
+    private static function shouldShowTenantField(string $operation): bool
+    {
+        if ($operation !== 'create') {
+            return false;
+        }
+
+        $user = \Filament\Facades\Filament::auth()->user();
+        if (! ($user instanceof User) || ! method_exists($user, 'hasRole')) {
+            return false;
+        }
+
+        return (bool) $user->hasRole(\App\Enums\RoleType::ADMIN->value);
     }
 }

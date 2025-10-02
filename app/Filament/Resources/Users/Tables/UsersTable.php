@@ -4,11 +4,8 @@ namespace App\Filament\Resources\Users\Tables;
 
 use App\Enums\RoleType;
 use App\Filament\Resources\Users\Actions\DeleteUserAction;
-use App\Models\Role;
 use App\Models\User;
-use App\Trait\Filament\NotificationsTrait;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Facades\Filament;
@@ -17,8 +14,6 @@ use Filament\Tables\Table;
 
 class UsersTable
 {
-    use NotificationsTrait;
-
     public static function configure(Table $table): Table
     {
         $currentUser = Filament::auth()->user();
@@ -29,18 +24,16 @@ class UsersTable
         }
 
         $query = User::query()->withoutRole(RoleType::ADMIN->value);
+        $currentTenant = Filament::getTenant();
 
-        // Se não for admin, filtra apenas usuários do tenant atual
         if (! $isAdmin) {
-            $currentTenant = Filament::getTenant();
             if ($currentTenant) {
                 $query->whereHas('tenants', function ($q) use ($currentTenant) {
                     $q->where('tenants.id', $currentTenant->id);
-                });
+                })->withRolesForTenant($currentTenant);
             }
         } else {
-            // Admin vê todos os usuários com seus tenants
-            $query->with('tenants');
+            $query->with(['tenants', 'rolesWithTeams']);
         }
 
         return $table
@@ -96,76 +89,60 @@ class UsersTable
             return '—';
         }
 
-        // Se for Admin, mostra todas as roles de todos os tenants
         if ($isAdmin) {
-            $tenants = $record->tenants;
-
-            if ($tenants->isEmpty()) {
-                return '—';
-            }
-
-            $lines = [];
-
-            foreach ($tenants as $tenant) {
-                $roleNames = Role::query()
-                    ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
-                    ->where('mhr.model_type', User::class)
-                    ->where('mhr.model_id', $record->id)
-                    ->where('mhr.team_id', $tenant->id)
-                    ->pluck('roles.name')
-                    ->all();
-
-                if (empty($roleNames)) {
-                    $lines[] = '—';
-
-                    continue;
-                }
-
-                $labels = array_map(static function (string $name): string {
-                    try {
-                        return RoleType::from($name)->getLabel();
-                    } catch (\ValueError) {
-                        return $name;
-                    }
-                }, $roleNames);
-
-                $lines[] = implode(', ', $labels);
-            }
-
-            return $lines;
+            return self::getAdminViewRoles($record);
         }
 
-        // Se não for Admin, mostra apenas a role do tenant atual
-        $currentTenant = Filament::getTenant();
-        if (! $currentTenant) {
-            return '—';
-        }
-
-        $roleName = Role::query()
-            ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
-            ->where('mhr.model_type', User::class)
-            ->where('mhr.model_id', $record->id)
-            ->where('mhr.team_id', $currentTenant->id)
-            ->value('roles.name');
-
-        if (! $roleName) {
-            return '—';
-        }
-
-        try {
-            return RoleType::from($roleName)->getLabel();
-        } catch (\ValueError) {
-            return $roleName;
-        }
+        return self::getTenantViewRoles($record);
     }
 
-    private static function getRoleColor(string $state): string
+    private static function getAdminViewRoles(User $record): array|string
     {
-        return match ($state) {
-            'Administrador' => 'danger',
-            'Proprietário' => 'warning',
-            'Usuário' => 'primary',
-            default => 'gray'
-        };
+        $tenants = $record->tenants;
+
+        if ($tenants->isEmpty()) {
+            return '—';
+        }
+
+        $lines = [];
+
+        foreach ($tenants as $tenant) {
+            $roles = $record->rolesWithTeams
+                ->where('team_id', $tenant->id);
+
+            if ($roles->isEmpty()) {
+                $lines[] = '—';
+
+                continue;
+            }
+
+            $labels = $roles->map(fn ($role) => self::getRoleLabel($role->name))->all();
+
+            $lines[] = implode(', ', $labels);
+        }
+
+        return $lines;
+    }
+
+    private static function getTenantViewRoles(User $record): string
+    {
+        $roles = $record->rolesWithTeams ?? collect();
+
+        if ($roles->isEmpty()) {
+            return '—';
+        }
+
+        $firstRole = $roles->first();
+
+        return $firstRole ? self::getRoleLabel($firstRole->name) : '—';
+    }
+
+    private static function getRoleLabel(string $name): string
+    {
+        try {
+            return RoleType::from($name)->getLabel();
+        } catch (\ValueError) {
+            return $name;
+        }
     }
 }

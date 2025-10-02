@@ -28,31 +28,36 @@ class UserPolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->can(Permission::VIEW->for('users'));
+        return $this->hasPermission($user, Permission::VIEW);
     }
 
     public function view(User $user, User $record): bool
     {
-        return $user->can(Permission::VIEW->for('users'));
+        return $this->hasPermission($user, Permission::VIEW);
     }
 
     public function create(User $user): bool
     {
-        return $user->can(Permission::CREATE->for('users'));
+        return $this->hasPermission($user, Permission::CREATE);
     }
 
     public function update(User $user, User $record): bool
     {
-        return $user->can(Permission::UPDATE->for('users'));
+        return $this->hasPermission($user, Permission::UPDATE);
     }
 
     public function delete(User $user, User $record): bool
     {
-        return $user->can(Permission::DELETE->for('users'));
+        return $this->hasPermission($user, Permission::DELETE);
     }
 
     public function deleteAny(User $user): bool
     {
-        return $user->can(Permission::DELETE->for('users'));
+        return $this->hasPermission($user, Permission::DELETE);
+    }
+
+    private function hasPermission(User $user, Permission $permission): bool
+    {
+        return $user->can($permission->for('users'));
     }
 }

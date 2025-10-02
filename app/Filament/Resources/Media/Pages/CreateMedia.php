@@ -4,8 +4,8 @@ namespace App\Filament\Resources\Media\Pages;
 
 use App\Filament\Resources\Media\MediaResource;
 use App\Services\VideoMetadataService;
-use App\Trait\Filament\HasBackButtonAction;
-use App\Trait\Filament\NotificationsTrait;
+use App\Traits\Filament\HasBackButtonAction;
+use App\Traits\Filament\NotificationsTrait;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Str;

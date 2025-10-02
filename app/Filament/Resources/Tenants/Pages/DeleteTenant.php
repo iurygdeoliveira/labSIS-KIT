@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\Tenants\Pages;
 
 use App\Filament\Resources\Tenants\TenantResource;
-use App\Trait\Filament\HasBackButtonAction;
-use App\Trait\Filament\NotificationsTrait;
+use App\Traits\Filament\HasBackButtonAction;
+use App\Traits\Filament\NotificationsTrait;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;

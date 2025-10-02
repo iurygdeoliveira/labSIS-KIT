@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trait;
+namespace App\Traits;
 
 use Illuminate\Support\Str;
 

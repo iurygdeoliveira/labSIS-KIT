@@ -20,9 +20,9 @@ class UsersStats extends BaseWidget
                 $query->where('name', RoleType::ADMIN->value);
             });
 
-        $totalUsers = (clone $baseQuery)->count();
-        $suspendedUsers = (clone $baseQuery)->where('is_suspended', true)->count();
-        $verifiedUsers = (clone $baseQuery)->whereNotNull('email_verified_at')->count();
+        $totalUsers = $baseQuery->count();
+        $suspendedUsers = $baseQuery->where('is_suspended', true)->count();
+        $verifiedUsers = $baseQuery->whereNotNull('email_verified_at')->count();
 
         return [
             'total' => $totalUsers,
@@ -45,7 +45,7 @@ class UsersStats extends BaseWidget
             : 0;
 
         return [
-            Stat::make('Total de Usuários', number_format($summary['verified']))
+            Stat::make('Total de Usuários', number_format($summary['total']))
                 ->description('Usuários Cadastrados no sistema')
                 ->icon('heroicon-c-user-group')
                 ->color('secondary'),

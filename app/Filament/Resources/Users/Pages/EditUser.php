@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
-use App\Trait\Filament\HasBackButtonAction;
-use App\Trait\Filament\NotificationsTrait;
+use App\Traits\Filament\HasBackButtonAction;
+use App\Traits\Filament\NotificationsTrait;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;

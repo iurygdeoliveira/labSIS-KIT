@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Trait\Filament;
+namespace App\Traits\Filament;
 
 trait AppAuthenticationSecret
 {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Pages\Auth;
 
 use App\Models\User;
-use App\Trait\Filament\NotificationsTrait;
+use App\Traits\Filament\NotificationsTrait;
 use Filament\Auth\Pages\Login as AuthLogin;
 use Filament\Facades\Filament;
 use Illuminate\Auth\SessionGuard;

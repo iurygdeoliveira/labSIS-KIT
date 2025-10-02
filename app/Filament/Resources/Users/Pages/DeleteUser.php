@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
-use App\Trait\Filament\HasBackButtonAction;
+use App\Traits\Filament\HasBackButtonAction;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;

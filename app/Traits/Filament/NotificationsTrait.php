@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trait\Filament;
+namespace App\Traits\Filament;
 
 use Filament\Notifications\Notification;
 
@@ -31,31 +31,22 @@ trait NotificationsTrait
             $notification->body($body);
         }
 
-        switch ($type) {
-            case 'primary':
-                $notification->success()
-                    ->icon('heroicon-s-check-circle')
-                    ->iconColor('primary')
-                    ->color('primary');
+        match ($type) {
+            'primary' => $notification->success()
+                ->icon('heroicon-s-check-circle')
+                ->iconColor('primary')
+                ->color('primary'),
 
-                break;
+            'danger' => $notification->danger()
+                ->icon('heroicon-c-no-symbol')
+                ->iconColor('danger')
+                ->color('danger'),
 
-            case 'danger':
-                $notification->danger()
-                    ->icon('heroicon-c-no-symbol')
-                    ->iconColor('danger')
-                    ->color('danger');
-
-                break;
-
-            case 'warning':
-                $notification->warning()
-                    ->icon('heroicon-s-exclamation-triangle')
-                    ->iconColor('warning')
-                    ->color('warning');
-
-                break;
-        }
+            'warning' => $notification->warning()
+                ->icon('heroicon-s-exclamation-triangle')
+                ->iconColor('warning')
+                ->color('warning'),
+        };
 
         if ($persistent) {
             $notification->persistent();

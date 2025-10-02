@@ -6,11 +6,9 @@ namespace App\Services;
 
 class VideoMetadataService
 {
-    private const OEMBED_ENDPOINT = 'https://www.youtube.com/oembed';
-
-    private const DEFAULT_USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
-
-    private const DEFAULT_ACCEPT_LANGUAGE = 'en-US,en;q=0.8';
+    public function __construct(
+        private readonly HttpClient $httpClient
+    ) {}
 
     public function getYoutubeTitle(string $videoUrl): string
     {
@@ -19,7 +17,7 @@ class VideoMetadataService
             return $title;
         }
 
-        $html = $this->curlGet($videoUrl);
+        $html = $this->httpClient->get($videoUrl);
         if ($html === '') {
             return '';
         }
@@ -38,7 +36,7 @@ class VideoMetadataService
     {
         $title = $this->getYoutubeTitle($videoUrl);
 
-        $html = $this->curlGet($videoUrl);
+        $html = $this->httpClient->get($videoUrl);
         $durationSeconds = null;
         $durationIso8601 = null;
 
@@ -61,8 +59,8 @@ class VideoMetadataService
 
     private function fetchTitleFromOEmbed(string $videoUrl): string
     {
-        $endpoint = self::OEMBED_ENDPOINT.'?format=json&url='.rawurlencode($videoUrl);
-        $json = $this->curlGet($endpoint);
+        $endpoint = config('video-metadata.youtube.oembed_endpoint').'?format=json&url='.rawurlencode($videoUrl);
+        $json = $this->httpClient->get($endpoint);
         if ($json === '') {
             return '';
         }
@@ -75,66 +73,6 @@ class VideoMetadataService
         $title = (string) ($data['title'] ?? '');
 
         return trim($title);
-    }
-
-    private function curlGet(string $url): string
-    {
-        if (function_exists('curl_init')) {
-            $ch = curl_init($url);
-            if ($ch === false) {
-                return '';
-            }
-
-            $headers = [
-                'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language: '.self::DEFAULT_ACCEPT_LANGUAGE,
-            ];
-
-            curl_setopt_array($ch, [
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_MAXREDIRS => 5,
-                CURLOPT_CONNECTTIMEOUT => 10,
-                CURLOPT_TIMEOUT => 15,
-                CURLOPT_USERAGENT => self::DEFAULT_USER_AGENT,
-                CURLOPT_HTTPHEADER => $headers,
-                CURLOPT_SSL_VERIFYPEER => true,
-                CURLOPT_SSL_VERIFYHOST => 2,
-            ]);
-
-            $response = curl_exec($ch);
-            if ($response === false) {
-                curl_close($ch);
-
-                return '';
-            }
-
-            $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
-
-            if ($status >= 200 && $status < 300) {
-                return (string) $response;
-            }
-
-            return '';
-        }
-
-        $context = stream_context_create([
-            'http' => [
-                'method' => 'GET',
-                'header' => implode("\r\n", [
-                    'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                    'Accept-Language: '.self::DEFAULT_ACCEPT_LANGUAGE,
-                    'User-Agent: '.self::DEFAULT_USER_AGENT,
-                ]),
-                'ignore_errors' => true,
-                'timeout' => 15,
-            ],
-        ]);
-
-        $response = @file_get_contents($url, false, $context);
-
-        return $response === false ? '' : (string) $response;
     }
 
     private function extractOgMeta(string $html, string $property): ?string
@@ -152,7 +90,6 @@ class VideoMetadataService
         if (preg_match('/<title>(.*?)<\/title>/is', $html, $m) === 1) {
             $title = trim((string) $m[1]);
             $title = html_entity_decode($title, ENT_QUOTES | ENT_HTML5);
-            // Remove sufixos comuns do YouTube
             $title = preg_replace('/\s*-\s*YouTube$/i', '', $title);
 
             return trim((string) $title);
@@ -163,7 +100,6 @@ class VideoMetadataService
 
     private function extractLengthSecondsFromPlayerJson(string $html): ?int
     {
-        // Procura por "lengthSeconds":"123" no JSON do player
         if (preg_match('/\"lengthSeconds\"\s*:\s*\"?(\d+)\"?/i', $html, $m) === 1) {
             return (int) $m[1];
         }

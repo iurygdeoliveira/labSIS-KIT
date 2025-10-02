@@ -42,7 +42,7 @@ Cada tipo de notificação recebe automaticamente:
 
 ### 1. **Código da Trait**
 
-O código da trait está localizado em `app/Trait/Filament/NotificationsTrait.php`.
+O código da trait está localizado em `app/Traits/Filament/NotificationsTrait.php`.
 
 ### 2. **Parâmetros dos Métodos**
 
@@ -74,7 +74,7 @@ Para usar a trait em qualquer classe Filament:
 
 namespace App\Filament\Resources\Users\Pages;
 
-use App\Trait\Filament\NotificationsTrait;
+use App\Traits\Filament\NotificationsTrait;
 use Filament\Resources\Pages\EditRecord;
 
 class EditUser extends EditRecord
@@ -214,7 +214,7 @@ $this->notifySuccess('Operação concluída.', 'Algumas configurações foram aj
 **Solução:**
 ```php
 // Verifique se o use está correto
-use App\Trait\Filament\NotificationsTrait;
+use App\Traits\Filament\NotificationsTrait;
 
 // E se a trait está sendo usada na classe
 use NotificationsTrait;

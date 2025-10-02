@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Tenants\Pages;
 
 use App\Filament\Resources\Tenants\TenantResource;
-use App\Trait\Filament\HasBackButtonAction;
+use App\Traits\Filament\HasBackButtonAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewTenant extends ViewRecord

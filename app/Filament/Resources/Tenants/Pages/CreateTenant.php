@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Tenants\Pages;
 
 use App\Filament\Resources\Tenants\TenantResource;
-use App\Trait\Filament\NotificationsTrait;
+use App\Traits\Filament\NotificationsTrait;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
