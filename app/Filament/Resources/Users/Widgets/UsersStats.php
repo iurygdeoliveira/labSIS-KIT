@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Widgets;
 
+use App\Enums\RoleType;
 use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -14,9 +15,14 @@ class UsersStats extends BaseWidget
     #[Computed]
     protected function summary(): array
     {
-        $totalUsers = User::query()->count();
-        $suspendedUsers = User::query()->where('is_suspended', true)->count();
-        $verifiedUsers = User::query()->whereNotNull('email_verified_at')->count();
+        $baseQuery = User::query()
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', RoleType::ADMIN->value);
+            });
+
+        $totalUsers = (clone $baseQuery)->count();
+        $suspendedUsers = (clone $baseQuery)->where('is_suspended', true)->count();
+        $verifiedUsers = (clone $baseQuery)->whereNotNull('email_verified_at')->count();
 
         return [
             'total' => $totalUsers,

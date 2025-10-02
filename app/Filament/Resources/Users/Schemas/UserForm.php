@@ -2,7 +2,11 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Enums\RoleType;
+use App\Models\Tenant;
 use App\Models\User;
+use Filament\Facades\Filament;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
@@ -15,6 +19,41 @@ class UserForm
     {
         return $schema
             ->components([
+                Select::make('tenant_id')
+                    ->label('Tenant')
+                    ->options(fn (): array => Tenant::query()
+                        ->where('is_active', true)
+                        ->orderBy('name')
+                        ->pluck('name', 'id')
+                        ->all())
+                    ->searchable()
+                    ->preload()
+                    ->native(false)
+                    ->dehydrated(false)
+                    ->visible(function (string $operation): bool {
+                        if ($operation !== 'create') {
+                            return false;
+                        }
+
+                        $user = Filament::auth()->user();
+                        if (! ($user instanceof User) || ! method_exists($user, 'hasRole')) {
+                            return false;
+                        }
+
+                        return (bool) $user->hasRole(RoleType::ADMIN->value);
+                    })
+                    ->required(function (string $operation): bool {
+                        if ($operation !== 'create') {
+                            return false;
+                        }
+
+                        $user = Filament::auth()->user();
+                        if (! ($user instanceof User) || ! method_exists($user, 'hasRole')) {
+                            return false;
+                        }
+
+                        return (bool) $user->hasRole(RoleType::ADMIN->value);
+                    }),
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('email')

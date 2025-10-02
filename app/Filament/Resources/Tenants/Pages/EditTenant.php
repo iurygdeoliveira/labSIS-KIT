@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Tenants\Pages;
 
 use App\Filament\Resources\Tenants\TenantResource;
 use App\Trait\Filament\HasBackButtonAction;
+use App\Trait\Filament\NotificationsTrait;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class EditTenant extends EditRecord
 {
     use HasBackButtonAction;
+    use NotificationsTrait;
 
     protected static string $resource = TenantResource::class;
 
@@ -44,5 +46,12 @@ class EditTenant extends EditRecord
     protected function getSavedNotification(): ?Notification
     {
         return null;
+    }
+
+    protected function afterSave(): void
+    {
+
+        $this->notifySuccess('Tenant atualizado com sucesso.');
+        $this->redirect($this->getResource()::getUrl('index'));
     }
 }

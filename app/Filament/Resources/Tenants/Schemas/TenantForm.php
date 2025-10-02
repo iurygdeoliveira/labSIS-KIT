@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Tenants\Schemas;
 
+use App\Enums\RoleType;
 use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -34,7 +35,13 @@ class TenantForm
                 ->components([
                     Select::make('usersIds')
                         ->hiddenLabel()
-                        ->options(User::query()->orderBy('name')->pluck('name', 'id')->all())
+                        ->options(fn (): array => User::query()
+                            ->whereDoesntHave('roles', function ($query) {
+                                $query->where('name', RoleType::ADMIN->value);
+                            })
+                            ->orderBy('name')
+                            ->pluck('name', 'id')
+                            ->all())
                         ->multiple()
                         ->preload()
                         ->searchable()
