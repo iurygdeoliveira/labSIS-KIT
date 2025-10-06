@@ -44,6 +44,9 @@ class CreateUser extends CreateRecord
             }
         }
 
+        // Disparar evento de usuário registrado
+        event(new UserRegistered($this->record, $this->data['password'] ?? null));
+
         $this->notifySuccess('Usuário criado com sucesso.');
     }
 
