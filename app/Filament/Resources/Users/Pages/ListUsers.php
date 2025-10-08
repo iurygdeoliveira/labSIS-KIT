@@ -32,13 +32,13 @@ class ListUsers extends ListRecords
     {
         return [
             'aprovados' => Tab::make('Aprovados')
-                ->modifyQueryUsing(fn ($query) => $query->whereNotNull('approved_at'))
-                ->badge(fn () => User::whereNotNull('approved_at')
+                ->modifyQueryUsing(fn ($query) => $query->where('is_approved', true))
+                ->badge(fn () => User::where('is_approved', true)
                     ->withoutRole(RoleType::ADMIN->value)->count()),
 
             'aguardando' => Tab::make('Não aprovados')
-                ->modifyQueryUsing(fn ($query) => $query->whereNull('approved_at'))
-                ->badge(fn () => User::whereNull('approved_at')
+                ->modifyQueryUsing(fn ($query) => $query->where('is_approved', false))
+                ->badge(fn () => User::where('is_approved', false)
                     ->withoutRole(RoleType::ADMIN->value)->count())
                 ->badgeColor('danger'),
         ];

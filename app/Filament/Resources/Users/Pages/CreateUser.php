@@ -57,7 +57,7 @@ class CreateUser extends CreateRecord
 
         $currentUser = Filament::auth()->user();
         if ($currentUser instanceof User && $currentUser->hasRole(RoleType::ADMIN->value)) {
-            $data['approved_at'] = now();
+            $data['is_approved'] = true;
             $data['approved_by'] = $currentUser->id;
         }
 

@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
                 'name' => 'Administrador',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
-                'approved_at' => now(),
+                'is_approved' => true,
                 'approved_by' => null, // Admin se auto-aprova
             ],
         );
@@ -63,7 +63,7 @@ class UserSeeder extends Seeder
                 'name' => 'Sicrano',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
-                'approved_at' => now(),
+                'is_approved' => true,
                 'approved_by' => $admin->id,
             ],
         );
@@ -74,7 +74,7 @@ class UserSeeder extends Seeder
                 'name' => 'Beltrano',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
-                'approved_at' => now(),
+                'is_approved' => true,
                 'approved_by' => $admin->id,
             ],
         );

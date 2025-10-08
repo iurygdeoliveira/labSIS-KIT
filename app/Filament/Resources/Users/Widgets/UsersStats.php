@@ -48,7 +48,7 @@ class UsersStats extends BaseWidget
     {
         return (clone $this->baseQuery)
             ->where('is_suspended', false)
-            ->whereNull('approved_at')
+            ->where('is_approved', false)
             ->count();
     }
 

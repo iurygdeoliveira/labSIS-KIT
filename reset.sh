@@ -11,7 +11,10 @@ echo "🚀 Iniciando reset de desenvolvimento..."
 echo "🧹 Limpando cache e assets do sistema..."
 ./vendor/bin/sail artisan optimize:clear || true
 ./vendor/bin/sail artisan filament:optimize-clear || true
-rm -rf public/build
+
+# Remover assets de build usando Docker para evitar problemas de permissão
+echo "🗑️ Removendo assets de build..."
+./vendor/bin/sail exec laravel.test rm -rf /var/www/html/public/build || true
 
 # Remover caches que podem referenciar providers antigos
 rm -f bootstrap/cache/packages.php bootstrap/cache/services.php || true
@@ -35,7 +38,7 @@ npm update
 
 # Build para desenvolvimento
 echo "🔨 Executando build para desenvolvimento..."
-npm run build
+./vendor/bin/sail exec laravel.test npm run build
 
 # Executando migrations e seeders
 ./vendor/bin/sail artisan migrate:fresh --seed

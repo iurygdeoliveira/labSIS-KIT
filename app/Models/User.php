@@ -38,6 +38,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $password
  * @property bool $is_suspended
  * @property \Carbon\CarbonImmutable|null $suspended_at
+ * @property bool $is_approved
+ * @property int|null $approved_by
  * @property string|null $suspension_reason
  * @property string|null $app_authentication_secret
  * @property array<array-key, mixed>|null $app_authentication_recovery_codes
@@ -105,7 +107,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         'is_suspended',
         'suspended_at',
         'suspension_reason',
-        'approved_at',
+        'is_approved',
         'approved_by',
         'remember_token',
     ];
@@ -122,11 +124,11 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         return [
             'password' => 'hashed',
             'is_suspended' => 'boolean',
+            'is_approved' => 'boolean',
             'created_at' => 'datetime:d/m/Y H:i',
             'updated_at' => 'datetime:d/m/Y H:i',
             'email_verified_at' => 'datetime:d/m/Y H:i',
             'suspended_at' => 'datetime:d/m/Y H:i',
-            'approved_at' => 'datetime:d/m/Y H:i',
             'app_authentication_secret' => 'encrypted',
             'app_authentication_recovery_codes' => 'encrypted:array',
         ];
@@ -144,7 +146,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function isApproved(): bool
     {
-        return ! is_null($this->approved_at);
+        return (bool) $this->is_approved;
     }
 
     public function approvedByUser(): BelongsTo

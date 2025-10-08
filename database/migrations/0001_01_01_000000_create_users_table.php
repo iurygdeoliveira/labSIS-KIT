@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('is_suspended')->default(false);
             $table->timestamp('suspended_at')->nullable();
+            $table->boolean('is_approved')->default(false);
+            $table->foreignId('approved_by')->nullable()->constrained('users');
             $table->text('suspension_reason')->nullable();
             $table->text('app_authentication_secret')->nullable();
             $table->text('app_authentication_recovery_codes')->nullable();
@@ -26,8 +28,6 @@ return new class extends Migration
             $table->string(config('filament-edit-profile.theme_color_column', 'theme_color'))->nullable();
             $table->string(config('filament-edit-profile.locale_column', 'locale'))->nullable();
             $table->json('custom_fields')->nullable();
-            $table->timestamp('approved_at')->nullable();
-            $table->foreignId('approved_by')->nullable()->constrained('users');
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();

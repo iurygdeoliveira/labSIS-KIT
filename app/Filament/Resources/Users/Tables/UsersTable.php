@@ -9,8 +9,8 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Facades\Filament;
-use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class UsersTable
@@ -40,59 +40,23 @@ class UsersTable
         return $table
             ->query($query)
             ->columns([
-                TextColumn::make('name')
-                    ->searchable(isIndividual: true, isGlobal: false)
-                    ->sortable(),
-                TextColumn::make('email')
-                    ->label('Email address'),
-                // Coluna de Tenants - apenas para Admin
-                ...($isAdmin ? [
-                    TextColumn::make('tenants.name')
-                        ->label('Tenants')
-                        ->listWithLineBreaks()
-                        ->bulleted(),
-                ] : []),
-                // Coluna de Funções - adaptada ao contexto
-                TextColumn::make('tenant_roles')
-                    ->label($isAdmin ? 'Funções' : 'Função')
-                    ->state(fn (User $record): array|string => self::getTenantRolesForUser($record, $isAdmin))
-                    ->listWithLineBreaks()
-                    ->when($isAdmin, fn ($column) => $column->bulleted()),
-                TextColumn::make('is_suspended')
-                    ->label('Status')
-                    ->sortable()
-                    ->formatStateUsing(fn (User $record): string => $record->is_suspended ? __('Suspenso') : __('Autorizado'))
-                    ->badge()
-                    ->color(fn (User $record): string => $record->is_suspended ? 'danger' : 'primary')
-                    ->icon(fn (User $record): string => $record->is_suspended ? 'heroicon-c-no-symbol' : 'heroicon-c-check')
-                    ->alignCenter(),
-
-                // Coluna de aprovação - apenas na tab "Aguardando Aprovação"
-                CheckboxColumn::make('approved_at')
-                    ->label('Aprovar')
-                    ->visible(fn () => request()->query('activeTab') === 'aguardando')
-                    ->updateStateUsing(function (User $record) {
-                        if ($record->approved_at) {
-                            // Desaprovar usuário
-                            $record->approved_at = null;
-                            $record->approved_by = null;
-                        } else {
-                            // Aprovar usuário
-                            $record->approved_at = now();
-                            $record->approved_by = Filament::auth()->id();
-
-                        }
-                        $record->save();
-                    }),
-
+                self::getNameColumn(),
+                self::getEmailColumn(),
+                ...self::getTenantsColumn($isAdmin),
+                self::getRolesColumn($isAdmin),
+                self::getStatusColumn(),
+                self::getApprovalColumn(),
             ])
             ->filters([
                 //
             ])
-
             ->recordActions([
                 ViewAction::make()->icon('heroicon-s-eye')->label('')->tooltip('Visualizar'),
-                EditAction::make()->icon('heroicon-s-pencil')->label('')->tooltip('Editar'),
+                EditAction::make()
+                    ->icon('heroicon-s-pencil')
+                    ->label('')
+                    ->tooltip('Editar')
+                    ->visible(fn (User $record): bool => $record->isApproved()),
                 DeleteUserAction::make()->icon('heroicon-s-trash')->label('')->tooltip('Excluir'),
             ])
             ->toolbarActions([
@@ -101,6 +65,80 @@ class UsersTable
                 ]),
             ])
             ->defaultSort('name', 'desc');
+    }
+
+    /**
+     * Coluna do nome do usuário
+     */
+    private static function getNameColumn()
+    {
+        return TextColumn::make('name')
+            ->searchable(isIndividual: true, isGlobal: false)
+            ->sortable();
+    }
+
+    /**
+     * Coluna do email do usuário
+     */
+    private static function getEmailColumn()
+    {
+        return TextColumn::make('email')
+            ->label('Email address');
+    }
+
+    /**
+     * Coluna de tenants (apenas para Admin)
+     */
+    private static function getTenantsColumn(bool $isAdmin)
+    {
+        if (! $isAdmin) {
+            return [];
+        }
+
+        return [
+            TextColumn::make('tenants.name')
+                ->label('Tenants')
+                ->listWithLineBreaks(fn (?User $record): bool => $record && $record->isApproved())
+                ->bulleted(fn (?User $record): bool => $record && $record->isApproved()),
+        ];
+    }
+
+    /**
+     * Coluna de funções/roles do usuário
+     */
+    private static function getRolesColumn(bool $isAdmin)
+    {
+        return TextColumn::make('tenant_roles')
+            ->label($isAdmin ? 'Funções' : 'Função')
+            ->state(fn (User $record): array|string => self::getTenantRolesForUser($record, $isAdmin))
+            ->listWithLineBreaks(fn (?User $record): bool => $record && $record->isApproved())
+            ->when($isAdmin, fn ($column) => $column->bulleted(fn (?User $record): bool => $record && $record->isApproved()));
+    }
+
+    /**
+     * Coluna de status (suspenso/autorizado) - apenas para usuários aprovados
+     */
+    private static function getStatusColumn()
+    {
+        return TextColumn::make('is_suspended')
+            ->label('Status')
+            ->sortable()
+            ->formatStateUsing(fn (User $record): string => $record->is_suspended ? __('Suspenso') : __('Autorizado'))
+            ->badge()
+            ->color(fn (User $record): string => $record->is_suspended ? 'danger' : 'primary')
+            ->icon(fn (User $record): string => $record->is_suspended ? 'heroicon-c-no-symbol' : 'heroicon-c-check')
+            ->alignCenter()
+            ->visible(fn (?User $record): bool => $record && $record->isApproved());
+    }
+
+    /**
+     * Coluna de aprovação - apenas para usuários não aprovados e visível para Admin/Owner
+     */
+    private static function getApprovalColumn()
+    {
+        return ToggleColumn::make('is_approved')
+            ->label('Aprovar')
+            ->visible(fn (?User $record): bool => $record && ! $record->isApproved());
     }
 
     private static function getTenantRolesForUser(User $record, bool $isAdmin): array|string

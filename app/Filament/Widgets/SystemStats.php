@@ -21,33 +21,51 @@ class SystemStats extends BaseWidget
     {
         $totalTenants = Tenant::query()->count();
 
-        // Tenants ativos: is_active = true E owner aprovado
+        // Tenants aprovados: owner aprovado (independente de is_active)
+        $approvedTenants = Tenant::query()
+            ->whereHas('users', function ($query) {
+                $query->whereHas('roles', function ($roleQuery) {
+                    $roleQuery->where('name', RoleType::OWNER->value);
+                })
+                    ->where('is_approved', true);
+            })
+            ->count();
+
+        // Tenants ativos: aprovados E is_active = true
         $activeTenants = Tenant::query()
             ->where('is_active', true)
             ->whereHas('users', function ($query) {
                 $query->whereHas('roles', function ($roleQuery) {
                     $roleQuery->where('name', RoleType::OWNER->value);
                 })
-                    ->whereNotNull('approved_at');
+                    ->where('is_approved', true);
             })
             ->count();
 
-        // Tenants inativos: is_active = false
-        $inactiveTenants = Tenant::query()->where('is_active', false)->count();
+        // Tenants inativos: aprovados mas is_active = false
+        $inactiveTenants = Tenant::query()
+            ->where('is_active', false)
+            ->whereHas('users', function ($query) {
+                $query->whereHas('roles', function ($roleQuery) {
+                    $roleQuery->where('name', RoleType::OWNER->value);
+                })
+                    ->where('is_approved', true);
+            })
+            ->count();
 
-        // Tenants não aprovados: is_active = true mas owner NÃO aprovado
+        // Tenants não aprovados: owner NÃO aprovado
         $unapprovedTenants = Tenant::query()
-            ->where('is_active', true)
             ->whereDoesntHave('users', function ($query) {
                 $query->whereHas('roles', function ($roleQuery) {
                     $roleQuery->where('name', RoleType::OWNER->value);
                 })
-                    ->whereNotNull('approved_at');
+                    ->where('is_approved', true);
             })
             ->count();
 
         return [
             'total' => $totalTenants,
+            'approved' => $approvedTenants,
             'active' => $activeTenants,
             'inactive' => $inactiveTenants,
             'unapproved' => $unapprovedTenants,
@@ -65,7 +83,7 @@ class SystemStats extends BaseWidget
         // Usuários ativos: não suspensos E aprovados
         $activeUsers = (clone $baseQuery)
             ->where('is_suspended', false)
-            ->whereNotNull('approved_at')
+            ->where('is_approved', true)
             ->count();
 
         // Usuários suspensos
@@ -73,10 +91,10 @@ class SystemStats extends BaseWidget
             ->where('is_suspended', true)
             ->count();
 
-        // Usuários não aprovados: approved_at null e não suspensos
+        // Usuários não aprovados: is_approved false e não suspensos
         $unapprovedUsers = (clone $baseQuery)
             ->where('is_suspended', false)
-            ->whereNull('approved_at')
+            ->where('is_approved', false)
             ->count();
 
         return [
@@ -129,6 +147,7 @@ class SystemStats extends BaseWidget
             // Widget Tenants
             Stat::make('Tenants', number_format($s['tenants']['total']))
                 ->description(
+                    'Aprovados: '.number_format($s['tenants']['approved']).' | '.
                     'Ativos: '.number_format($s['tenants']['active']).' | '.
                     'Inativos: '.number_format($s['tenants']['inactive']).' | '.
                     'Não Aprovados: '.number_format($s['tenants']['unapproved'])

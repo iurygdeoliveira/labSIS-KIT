@@ -128,11 +128,33 @@ class Register extends BaseRegister
     }
 
     /**
-     * Associa o usuário ao tenant
+     * Associa o usuário ao tenant e atribui role Owner
      */
     protected function associateUserWithTenant(User $user, Tenant $tenant): void
     {
         $user->tenants()->attach($tenant->id);
+
+        // Atribuir role Owner para o usuário no tenant criado
+        $this->assignOwnerRoleToUser($user, $tenant);
+    }
+
+    /**
+     * Atribui a role Owner para o usuário no tenant
+     */
+    protected function assignOwnerRoleToUser(User $user, Tenant $tenant): void
+    {
+        // Buscar ou criar a role Owner para o tenant
+        $ownerRole = \Spatie\Permission\Models\Role::firstOrCreate([
+            'name' => 'Owner',
+            'team_id' => $tenant->id,
+        ], [
+            'guard_name' => 'web',
+        ]);
+
+        // Atribuir a role ao usuário
+        $user->rolesWithTeams()->syncWithoutDetaching([
+            $ownerRole->id => ['team_id' => $tenant->id],
+        ]);
     }
 
     /**
