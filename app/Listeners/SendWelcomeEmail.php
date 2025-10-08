@@ -17,6 +17,9 @@ class SendWelcomeEmail implements ShouldQueue
 
     public function handle(UserRegistered $event): void
     {
-        $this->emailService->sendWelcomeEmail($event->user, $event->password);
+        // Buscar o nome do tenant do usuário (primeiro tenant)
+        $tenantName = $event->user->tenants()->first()?->name;
+
+        $this->emailService->sendWelcomeEmail($event->user, $event->password, $tenantName);
     }
 }

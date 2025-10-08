@@ -22,6 +22,11 @@ class LoginResponse implements FilamentLoginResponse
         }
 
         if ($user->canAccessPanel(Filament::getPanel('user'))) {
+            $firstTenant = $user->tenants()->first();
+            if ($firstTenant) {
+                return redirect()->to('/user/'.$firstTenant->uuid.'/dashboard');
+            }
+
             return redirect()->to('/user');
         }
 

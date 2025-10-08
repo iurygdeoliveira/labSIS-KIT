@@ -9,6 +9,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Facades\Filament;
+use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -65,6 +66,25 @@ class UsersTable
                     ->color(fn (User $record): string => $record->is_suspended ? 'danger' : 'primary')
                     ->icon(fn (User $record): string => $record->is_suspended ? 'heroicon-c-no-symbol' : 'heroicon-c-check')
                     ->alignCenter(),
+
+                // Coluna de aprovação - apenas na tab "Aguardando Aprovação"
+                CheckboxColumn::make('approved_at')
+                    ->label('Aprovar')
+                    ->visible(fn () => request()->query('activeTab') === 'aguardando')
+                    ->updateStateUsing(function (User $record) {
+                        if ($record->approved_at) {
+                            // Desaprovar usuário
+                            $record->approved_at = null;
+                            $record->approved_by = null;
+                        } else {
+                            // Aprovar usuário
+                            $record->approved_at = now();
+                            $record->approved_by = Filament::auth()->id();
+
+                        }
+                        $record->save();
+                    }),
+
             ])
             ->filters([
                 //

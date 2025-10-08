@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Enums\RoleType;
+use App\Events\UserRegistered;
 use App\Filament\Resources\Users\UserResource;
 use App\Models\Tenant;
 use App\Models\User;
@@ -53,6 +54,12 @@ class CreateUser extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['email_verified_at'] = now();
+
+        $currentUser = Filament::auth()->user();
+        if ($currentUser instanceof User && $currentUser->hasRole(RoleType::ADMIN->value)) {
+            $data['approved_at'] = now();
+            $data['approved_by'] = $currentUser->id;
+        }
 
         return $data;
     }

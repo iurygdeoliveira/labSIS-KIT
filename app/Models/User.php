@@ -15,9 +15,11 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -83,7 +85,7 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasAvatar, HasMedia, HasTenants
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasAvatar, HasMedia, HasTenants, MustVerifyEmail
 {
     use AppAuthenticationRecoveryCodes;
     use AppAuthenticationSecret;
@@ -103,6 +105,8 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         'is_suspended',
         'suspended_at',
         'suspension_reason',
+        'approved_at',
+        'approved_by',
         'remember_token',
     ];
 
@@ -122,6 +126,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             'updated_at' => 'datetime:d/m/Y H:i',
             'email_verified_at' => 'datetime:d/m/Y H:i',
             'suspended_at' => 'datetime:d/m/Y H:i',
+            'approved_at' => 'datetime:d/m/Y H:i',
             'app_authentication_secret' => 'encrypted',
             'app_authentication_recovery_codes' => 'encrypted:array',
         ];
@@ -134,7 +139,25 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function isSuspended(): bool
     {
-        return $this->is_suspended;
+        return (bool) $this->is_suspended;
+    }
+
+    public function isApproved(): bool
+    {
+        return ! is_null($this->approved_at);
+    }
+
+    public function approvedByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    /**
+     * Send the email verification notification.
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new \App\Notifications\VerifyEmailNotification);
     }
 
     public function canAccessPanel(Panel $panel): bool

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Enums\RoleType;
 use App\Filament\Resources\Media\MediaResource;
 use App\Filament\Resources\Tenants\TenantResource;
 use App\Filament\Resources\Users\UserResource;
@@ -16,22 +17,79 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 class SystemStats extends BaseWidget
 {
     #[Computed]
-    protected function summary(): array
+    protected function tenantsData(): array
     {
-        // Tenants
         $totalTenants = Tenant::query()->count();
-        $activeTenants = Tenant::query()->where('is_active', true)->count();
-        $inactiveTenants = max($totalTenants - $activeTenants, 0);
-        $activeTenantsPct = $totalTenants > 0 ? round(($activeTenants / $totalTenants) * 100, 1) : 0;
-        $inactiveTenantsPct = $totalTenants > 0 ? round(($inactiveTenants / $totalTenants) * 100, 1) : 0;
 
-        // Usuários
-        $totalUsers = User::query()->count();
-        $suspendedUsers = User::query()->where('is_suspended', true)->count();
-        $activeUsers = max($totalUsers - $suspendedUsers, 0);
-        $activeUsersPct = $totalUsers > 0 ? round(($activeUsers / $totalUsers) * 100, 1) : 0;
-        $suspendedUsersPct = $totalUsers > 0 ? round(($suspendedUsers / $totalUsers) * 100, 1) : 0;
+        // Tenants ativos: is_active = true E owner aprovado
+        $activeTenants = Tenant::query()
+            ->where('is_active', true)
+            ->whereHas('users', function ($query) {
+                $query->whereHas('roles', function ($roleQuery) {
+                    $roleQuery->where('name', RoleType::OWNER->value);
+                })
+                    ->whereNotNull('approved_at');
+            })
+            ->count();
 
+        // Tenants inativos: is_active = false
+        $inactiveTenants = Tenant::query()->where('is_active', false)->count();
+
+        // Tenants não aprovados: is_active = true mas owner NÃO aprovado
+        $unapprovedTenants = Tenant::query()
+            ->where('is_active', true)
+            ->whereDoesntHave('users', function ($query) {
+                $query->whereHas('roles', function ($roleQuery) {
+                    $roleQuery->where('name', RoleType::OWNER->value);
+                })
+                    ->whereNotNull('approved_at');
+            })
+            ->count();
+
+        return [
+            'total' => $totalTenants,
+            'active' => $activeTenants,
+            'inactive' => $inactiveTenants,
+            'unapproved' => $unapprovedTenants,
+        ];
+    }
+
+    #[Computed]
+    protected function usersData(): array
+    {
+        $baseQuery = User::query()
+            ->whereDoesntHave('roles', fn ($q) => $q->where('name', RoleType::ADMIN->value));
+
+        $totalUsers = $baseQuery->count();
+
+        // Usuários ativos: não suspensos E aprovados
+        $activeUsers = (clone $baseQuery)
+            ->where('is_suspended', false)
+            ->whereNotNull('approved_at')
+            ->count();
+
+        // Usuários suspensos
+        $suspendedUsers = (clone $baseQuery)
+            ->where('is_suspended', true)
+            ->count();
+
+        // Usuários não aprovados: approved_at null e não suspensos
+        $unapprovedUsers = (clone $baseQuery)
+            ->where('is_suspended', false)
+            ->whereNull('approved_at')
+            ->count();
+
+        return [
+            'total' => $totalUsers,
+            'active' => $activeUsers,
+            'suspended' => $suspendedUsers,
+            'unapproved' => $unapprovedUsers,
+        ];
+    }
+
+    #[Computed]
+    protected function mediaData(): array
+    {
         // Mídia (Spatie) + Vídeos (externos)
         $images = SpatieMedia::query()
             ->where('mime_type', 'like', 'image/%')
@@ -46,27 +104,20 @@ class SystemStats extends BaseWidget
             ->where('mime_type', 'not like', 'video/%')
             ->where('collection_name', '!=', 'avatar')
             ->sum('size');
-        $totalSizeHuman = $this->humanSize($totalSizeBytes);
 
         return [
-            'tenants' => [
-                'total' => $totalTenants,
-                'active' => $activeTenants,
-                'inactive' => $inactiveTenants,
-                'activePct' => $activeTenantsPct,
-                'inactivePct' => $inactiveTenantsPct,
-            ],
-            'users' => [
-                'total' => $totalUsers,
-                'active' => $activeUsers,
-                'suspended' => $suspendedUsers,
-                'activePct' => $activeUsersPct,
-                'suspendedPct' => $suspendedUsersPct,
-            ],
-            'media' => [
-                'total' => $totalMedia,
-                'size' => $totalSizeHuman,
-            ],
+            'total' => $totalMedia,
+            'size' => $this->humanSize($totalSizeBytes),
+        ];
+    }
+
+    #[Computed]
+    protected function summary(): array
+    {
+        return [
+            'tenants' => $this->tenantsData,
+            'users' => $this->usersData,
+            'media' => $this->mediaData,
         ];
     }
 
@@ -75,37 +126,29 @@ class SystemStats extends BaseWidget
         $s = $this->summary;
 
         return [
-            // Tenants
-            Stat::make('Tenants Ativos', number_format($s['tenants']['active']))
-                ->description($s['tenants']['activePct'].'% do total')
-                ->icon('heroicon-c-check-badge')
-                ->color('primary')
+            // Widget Tenants
+            Stat::make('Tenants', number_format($s['tenants']['total']))
+                ->description(
+                    'Ativos: '.number_format($s['tenants']['active']).' | '.
+                    'Inativos: '.number_format($s['tenants']['inactive']).' | '.
+                    'Não Aprovados: '.number_format($s['tenants']['unapproved'])
+                )
+                ->icon('heroicon-c-building-office')
                 ->url(TenantResource::getUrl()),
 
-            Stat::make('Tenants Inativos', number_format($s['tenants']['inactive']))
-                ->description($s['tenants']['inactivePct'].'% do total')
-                ->icon('heroicon-c-no-symbol')
-                ->color('danger')
-                ->url(TenantResource::getUrl()),
-
-            // Usuários
-            Stat::make('Usuários Ativos', number_format($s['users']['active']))
-                ->description($s['users']['activePct'].'% do total')
+            // Widget Usuários
+            Stat::make('Usuários', number_format($s['users']['total']))
+                ->description(
+                    'Ativos: '.number_format($s['users']['active']).' | '.
+                    'Suspensos: '.number_format($s['users']['suspended']).' | '.
+                    'Não Aprovados: '.number_format($s['users']['unapproved'])
+                )
                 ->icon('heroicon-c-user-group')
-                ->color('primary')
                 ->url(UserResource::getUrl()),
 
-            Stat::make('Usuários Suspensos', number_format($s['users']['suspended']))
-                ->description($s['users']['suspendedPct'].'% do total')
-                ->icon('heroicon-c-no-symbol')
-                ->color('danger')
-                ->url(UserResource::getUrl()),
-
-            // Mídia
+            // Widget Mídia
             Stat::make('Mídias', number_format($s['media']['total']))
                 ->description('Tamanho total: '.$s['media']['size'])
-                ->icon('heroicon-c-photo')
-                ->color('success')
                 ->url(MediaResource::getUrl()),
         ];
     }
@@ -113,9 +156,9 @@ class SystemStats extends BaseWidget
     protected function getColumns(): int|array
     {
         return [
-            'sm' => 2,
-            'md' => 3,
-            'xl' => 5,
+            'sm' => 1,
+            'md' => 2,
+            'xl' => 3,
         ];
     }
 

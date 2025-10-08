@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Mail;
 
 class EmailService
 {
-    public function sendWelcomeEmail(User $user, ?string $password = null): void
+    public function sendWelcomeEmail(User $user, ?string $password = null, ?string $tenantName = null): void
     {
-        Mail::to($user->email)->send(new WelcomeEmail($user, $password));
+        Mail::to($user->email)->send(new WelcomeEmail($user, $password, $tenantName));
     }
 
     public function sendEmailVerification(User $user): void

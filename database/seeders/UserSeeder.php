@@ -39,6 +39,8 @@ class UserSeeder extends Seeder
                 'name' => 'Administrador',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
+                'approved_at' => now(),
+                'approved_by' => null, // Admin se auto-aprova
             ],
         );
         // Global (sem tenant): fixar team_id = 0 para atribuições globais
@@ -61,6 +63,8 @@ class UserSeeder extends Seeder
                 'name' => 'Sicrano',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
+                'approved_at' => now(),
+                'approved_by' => $admin->id,
             ],
         );
 
@@ -70,6 +74,8 @@ class UserSeeder extends Seeder
                 'name' => 'Beltrano',
                 'email_verified_at' => now(),
                 'password' => Hash::make('mudar123'),
+                'approved_at' => now(),
+                'approved_by' => $admin->id,
             ],
         );
         // Não atribui roles no escopo global. Roles de usuário serão atribuídas por tenant abaixo.

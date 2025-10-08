@@ -37,7 +37,7 @@ class EmailVerificationMail extends Mailable
 
     private function getVerificationUrl(): string
     {
-        return route('verification.verify', [
+        return route('filament.auth.auth.email-verification.verify', [
             'id' => $this->user->id,
             'hash' => sha1($this->user->email),
         ]);

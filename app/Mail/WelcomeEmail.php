@@ -15,7 +15,8 @@ class WelcomeEmail extends Mailable
 
     public function __construct(
         public User $user,
-        public ?string $password = null
+        public ?string $password = null,
+        public ?string $tenantName = null
     ) {}
 
     public function envelope(): Envelope
@@ -32,6 +33,7 @@ class WelcomeEmail extends Mailable
             with: [
                 'user' => $this->user,
                 'password' => $this->password,
+                'tenantName' => $this->tenantName,
                 'loginUrl' => route('filament.auth.auth.login'),
             ]
         );

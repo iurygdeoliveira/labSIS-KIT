@@ -13,36 +13,65 @@ class UsersStats extends BaseWidget
     protected static ?string $color = 'primary';
 
     #[Computed]
-    protected function summary(): array
+    protected function baseQuery()
     {
-        $baseQuery = User::query()
+        return User::query()
             ->whereDoesntHave('roles', function ($query) {
                 $query->where('name', RoleType::ADMIN->value);
             });
+    }
 
-        $totalUsers = $baseQuery->count();
-        $suspendedUsers = $baseQuery->where('is_suspended', true)->count();
-        $verifiedUsers = $baseQuery->whereNotNull('email_verified_at')->count();
+    #[Computed]
+    protected function totalUsers(): int
+    {
+        return $this->baseQuery->count();
+    }
 
+    #[Computed]
+    protected function suspendedUsers(): int
+    {
+        return (clone $this->baseQuery)
+            ->where('is_suspended', true)
+            ->count();
+    }
+
+    #[Computed]
+    protected function verifiedUsers(): int
+    {
+        return (clone $this->baseQuery)
+            ->whereNotNull('email_verified_at')
+            ->count();
+    }
+
+    #[Computed]
+    protected function unapprovedUsers(): int
+    {
+        return (clone $this->baseQuery)
+            ->where('is_suspended', false)
+            ->whereNull('approved_at')
+            ->count();
+    }
+
+    #[Computed]
+    protected function summary(): array
+    {
         return [
-            'total' => $totalUsers,
-            'suspended' => $suspendedUsers,
-            'verified' => $verifiedUsers,
+            'total' => $this->totalUsers,
+            'suspended' => $this->suspendedUsers,
+            'verified' => $this->verifiedUsers,
+            'unapproved' => $this->unapprovedUsers,
         ];
     }
 
     #[Computed]
     protected function percentages(): array
     {
-        $summary = $this->summary;
+        $total = $this->totalUsers;
 
         return [
-            'verified' => $summary['total'] > 0
-                ? round(($summary['verified'] / $summary['total']) * 100, 1)
-                : 0,
-            'suspended' => $summary['total'] > 0
-                ? round(($summary['suspended'] / $summary['total']) * 100, 1)
-                : 0,
+            'verified' => $total > 0 ? round(($this->verifiedUsers / $total) * 100, 1) : 0,
+            'suspended' => $total > 0 ? round(($this->suspendedUsers / $total) * 100, 1) : 0,
+            'unapproved' => $total > 0 ? round(($this->unapprovedUsers / $total) * 100, 1) : 0,
         ];
     }
 
@@ -53,7 +82,7 @@ class UsersStats extends BaseWidget
 
         return [
             Stat::make('Total de Usuários', number_format($summary['total']))
-                ->description('Usuários Cadastrados no sistema')
+                ->description('Cadastrados no sistema')
                 ->icon('heroicon-c-user-group')
                 ->color('secondary'),
 
@@ -65,6 +94,11 @@ class UsersStats extends BaseWidget
             Stat::make('Usuários Suspensos', number_format($summary['suspended']))
                 ->description("{$percentages['suspended']}% do total")
                 ->icon('heroicon-c-no-symbol')
+                ->color('danger'),
+
+            Stat::make('Usuários Não Aprovados', number_format($summary['unapproved']))
+                ->description("{$percentages['unapproved']}% do total")
+                ->icon('heroicon-c-clock')
                 ->color('danger'),
         ];
     }

@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string(config('filament-edit-profile.theme_color_column', 'theme_color'))->nullable();
             $table->string(config('filament-edit-profile.locale_column', 'locale'))->nullable();
             $table->json('custom_fields')->nullable();
+            $table->timestamp('approved_at')->nullable();
+            $table->foreignId('approved_by')->nullable()->constrained('users');
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();

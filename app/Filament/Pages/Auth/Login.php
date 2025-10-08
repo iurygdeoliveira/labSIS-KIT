@@ -37,6 +37,29 @@ class Login extends AuthLogin
             return null;
         }
 
+        // Verifica se o email não foi verificado
+        if ($user instanceof User && ! $user->hasVerifiedEmail()) {
+            $this->notifyDanger(
+                'Email não verificado',
+                'Você precisa verificar seu email antes de acessar o painel. Verifique sua caixa de entrada e clique no link de verificação.',
+                15,
+                true // Notificação persistente
+            );
+
+            return null;
+        }
+
+        // Verifica se o usuário foi aprovado pelo admin
+        if ($user instanceof User && ! $user->isApproved()) {
+            // Fazer login do usuário para que o middleware possa redirecionar
+            $authGuard->login($user);
+
+            // Redirecionar para página de verificação pendente
+            $this->redirect(route('filament.auth.verification-pending'));
+
+            return null;
+        }
+
         // Continua com a autenticação padrão do Filament
         return parent::authenticate();
     }
