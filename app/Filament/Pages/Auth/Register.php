@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Filament\Pages\Auth;
 
-use App\Events\TenantCreated;
-use App\Events\UserRegistered;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Traits\Filament\NotificationsTrait;
+use Exception;
 use Filament\Auth\Pages\Register as BaseRegister;
-use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
@@ -25,131 +22,163 @@ class Register extends BaseRegister
     public function form(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                Section::make('Dados de Acesso')
-                    ->components([
-                        TextInput::make('name')
-                            ->label('Nome completo')
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('email')
-                            ->label('E-mail')
-                            ->email()
-                            ->required()
-                            ->maxLength(255)
-                            ->unique(User::class),
-                        TextInput::make('password')
-                            ->label('Senha')
-                            ->password()
-                            ->required()
-                            ->minLength(8)
-                            ->confirmed()
-                            ->revealable()
-                            ->dehydrateStateUsing(fn (string $state): string => Hash::make($state)),
-                        TextInput::make('password_confirmation')
-                            ->label('Confirmar senha')
-                            ->password()
-                            ->required()
-                            ->revealable()
-                            ->dehydrated(false),
-                        TextInput::make('tenant_name')
-                            ->label('Nome do Tenant')
-                            ->required()
-                            ->maxLength(255)
-                            ->unique(Tenant::class, 'name'),
-                    ])
-                    ->columns(1),
-            ]);
+            ->schema([
+                TextInput::make('name')
+                    ->label('Nome completo')
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('email')
+                    ->label('E-mail')
+                    ->email()
+                    ->required()
+                    ->maxLength(255)
+                    ->unique(User::class),
+                TextInput::make('password')
+                    ->label('Senha')
+                    ->password()
+                    ->required()
+                    ->minLength(8)
+                    ->confirmed()
+                    ->revealable()
+                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state)),
+                TextInput::make('password_confirmation')
+                    ->label('Confirmar senha')
+                    ->password()
+                    ->required()
+                    ->revealable()
+                    ->dehydrated(false),
+                TextInput::make('tenant_name')
+                    ->label('Nome do Tenant')
+                    ->required()
+                    ->maxLength(255)
+                    ->unique(Tenant::class, 'name'),
+            ])
+            ->columns(1);
+    }
+
+    /**
+     * Sobrescreve o método para não enviar verificação de email
+     * já que desabilitamos a verificação de email no AuthPanelProvider
+     */
+    protected function sendEmailVerificationNotification($user): void
+    {
+        // Não faz nada - verificação de email desabilitada
     }
 
     protected function handleRegistration(array $data): Model
     {
         try {
-            // Separar dados do usuário e do tenant
-            $userData = [
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => $data['password'],
-                // email_verified_at será null - usuário precisa verificar email
-                // approved_at será null - usuário precisa ser aprovado pelo admin
-            ];
+            $userData = $this->prepareUserData($data);
+            $tenantData = $this->prepareTenantData($data);
 
-            $tenantData = [
-                'name' => $data['tenant_name'],
-                'is_active' => true,
-            ];
+            $user = $this->createUser($userData);
+            $tenant = $this->createTenant($tenantData);
 
-            // Criar usuário
-            $user = User::create($userData);
-
-            // Criar tenant
-            $tenant = Tenant::create($tenantData);
-
-            // Associar usuário ao tenant
-            $user->tenants()->attach($tenant->id);
-
-            // Disparar eventos (temporariamente desabilitado para teste)
-            // event(new UserRegistered($user, $data['password']));
-            // event(new TenantCreated($user, $tenant));
-
-            // Notificação de sucesso
-            $this->notifySuccess(
-                'Cadastro realizado com sucesso!',
-                'Sua conta foi criada e está aguardando aprovação. Você receberá um email quando for aprovado.'
-            );
+            $this->associateUserWithTenant($user, $tenant);
+            $this->showSuccessNotification();
 
             return $user;
 
         } catch (QueryException $e) {
-            // Verificar se é erro de email duplicado
-            if ($e->getCode() === '23505' && str_contains($e->getMessage(), 'users_email_unique')) {
-                $this->notifyDanger(
-                    'Email já cadastrado',
-                    'O email informado já está sendo usado por outro usuário. Por favor, use um email diferente.'
-                );
-            }
-            // Verificar se é erro de nome de tenant duplicado
-            elseif ($e->getCode() === '23505' && str_contains($e->getMessage(), 'tenants_name_unique')) {
-                $this->notifyDanger(
-                    'Nome do tenant já existe',
-                    'O nome da organização informado já está sendo usado. Por favor, escolha um nome diferente.'
-                );
-            }
-            // Outros erros de banco de dados
-            else {
-                $this->notifyDanger(
-                    'Erro no cadastro',
-                    'Ocorreu um erro inesperado durante o cadastro. Tente novamente em alguns instantes.'
-                );
-            }
-
-            // Re-lançar a exceção para que o Filament trate adequadamente
+            $this->handleDatabaseException($e);
             throw $e;
-        } catch (\Exception $e) {
-            // Capturar outras exceções não relacionadas ao banco
-            $this->notifyDanger(
-                'Erro no cadastro',
-                'Ocorreu um erro inesperado durante o cadastro. Tente novamente em alguns instantes.',
-                10,
-                true
-            );
-
-            // Re-lançar a exceção
+        } catch (Exception $e) {
+            $this->handleGenericException($e);
             throw $e;
         }
     }
 
-    protected function afterRegister(): void
+    /**
+     * Prepara os dados do usuário para criação
+     */
+    protected function prepareUserData(array $data): array
     {
-        // Fazer logout do usuário para evitar login automático
-        Filament::auth()->logout();
-
-        // Redirecionar para login com notificação
-        $this->redirect('/login');
+        return [
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+        ];
     }
 
-    protected function getRedirectUrl(): string
+    /**
+     * Prepara os dados do tenant para criação
+     */
+    protected function prepareTenantData(array $data): array
     {
-        return '/login';
+        return [
+            'name' => $data['tenant_name'],
+            'is_active' => true,
+        ];
+    }
+
+    /**
+     * Cria o usuário no banco de dados
+     */
+    protected function createUser(array $userData): User
+    {
+        return User::create($userData);
+    }
+
+    /**
+     * Cria o tenant no banco de dados
+     */
+    protected function createTenant(array $tenantData): Tenant
+    {
+        return Tenant::create($tenantData);
+    }
+
+    /**
+     * Associa o usuário ao tenant
+     */
+    protected function associateUserWithTenant(User $user, Tenant $tenant): void
+    {
+        $user->tenants()->attach($tenant->id);
+    }
+
+    /**
+     * Exibe a notificação de sucesso
+     */
+    protected function showSuccessNotification(): void
+    {
+        $this->notifySuccess(
+            'Cadastro realizado com sucesso!',
+            'Sua conta foi criada e está aguardando aprovação.'
+        );
+    }
+
+    /**
+     * Trata exceções específicas do banco de dados
+     */
+    protected function handleDatabaseException(QueryException $e): void
+    {
+        if ($e->getCode() === '23505' && str_contains($e->getMessage(), 'users_email_unique')) {
+            $this->notifyDanger(
+                'Email já cadastrado',
+                'O email informado já está sendo usado por outro usuário. Por favor, use um email diferente.'
+            );
+        } elseif ($e->getCode() === '23505' && str_contains($e->getMessage(), 'tenants_name_unique')) {
+            $this->notifyDanger(
+                'Nome do tenant já existe',
+                'O nome da organização informado já está sendo usado. Por favor, escolha um nome diferente.'
+            );
+        } else {
+            $this->notifyDanger(
+                'Erro no cadastro',
+                'Ocorreu um erro inesperado durante o cadastro. Tente novamente em alguns instantes.'
+            );
+        }
+    }
+
+    /**
+     * Trata exceções genéricas
+     */
+    protected function handleGenericException(Exception $e): void
+    {
+        $this->notifyDanger(
+            'Erro no cadastro',
+            'Ocorreu um erro inesperado durante o cadastro. Tente novamente em alguns instantes.',
+            10,
+            true
+        );
     }
 }

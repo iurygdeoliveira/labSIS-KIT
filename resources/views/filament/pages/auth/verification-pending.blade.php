@@ -22,8 +22,8 @@
             Você receberá um email quando sua conta for aprovada.
         </p>
         
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
-            <p class="text-sm text-blue-800">
+        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 max-w-md mx-auto">
+            <p class="text-sm text-amber-800">
                 <strong>Dica:</strong> Verifique sua caixa de entrada e spam para atualizações sobre o status da sua conta.
             </p>
         </div>

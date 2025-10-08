@@ -32,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(FilamentLoginResponse::class, LoginResponse::class);
         $this->app->bind(LogoutResponseContract::class, LogoutResponse::class);
+        $this->app->bind(\Filament\Auth\Http\Responses\Contracts\RegistrationResponse::class, \App\Http\Responses\RegistrationResponse::class);
         $this->app->bind(SpatiePermissionsTeamResolver::class, AppSpatieTeamResolver::class);
     }
 

@@ -23,16 +23,16 @@ class VerificationPending extends SimplePage
             $parameters['tenant'] ??= ($tenant ?? Filament::getTenant());
         }
 
-        return route(static::getRouteName($panelInstance), $parameters, $isAbsolute);
+        return route(static::getRouteName($panel), $parameters, $isAbsolute);
     }
 
     public static function getRouteName(?string $panel = null): string
     {
-        $panel = $panel ? Filament::getPanel($panel) : Filament::getCurrentOrDefaultPanel();
+        $panelInstance = $panel ? Filament::getPanel($panel) : Filament::getCurrentOrDefaultPanel();
 
-        $routeName = static::getRelativeRouteName($panel);
+        $routeName = static::getRelativeRouteName($panelInstance);
 
-        return $panel->generateRouteName($routeName);
+        return $panelInstance->generateRouteName($routeName);
     }
 
     public static function registerNavigationItems(): void {}

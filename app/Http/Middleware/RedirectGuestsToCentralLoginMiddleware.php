@@ -23,17 +23,12 @@ class RedirectGuestsToCentralLoginMiddleware
         $path = $request->path();
 
         $isPublicAuthRoute = $path === 'login'
-            || $path === 'register'
-            || str_starts_with($path, 'password-reset')
-            || str_starts_with($path, 'email/verify')
-            || str_starts_with($path, 'email/change');
+            || $path === 'register';
 
         if ($isPublicAuthRoute) {
             return $next($request);
         }
 
-        $authPanel = Filament::getPanel('auth');
-
-        return redirect()->to($authPanel->getLoginUrl());
+        return redirect()->to('/login');
     }
 }

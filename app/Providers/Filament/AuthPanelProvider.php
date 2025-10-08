@@ -4,7 +4,6 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Auth\Register;
-use App\Http\Middleware\ApprovedUserMiddleware;
 use App\Http\Middleware\RedirectGuestsToCentralLoginMiddleware;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Enums\ThemeMode;
@@ -38,7 +37,6 @@ class AuthPanelProvider extends PanelProvider
             ->login(Login::class)
             ->registration(Register::class)
             ->passwordReset()
-            ->emailVerification()
             ->multiFactorAuthentication(
                 AppAuthentication::make()
                     ->recoverable()
@@ -54,7 +52,6 @@ class AuthPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
                 RedirectGuestsToCentralLoginMiddleware::class,
-                ApprovedUserMiddleware::class,
             ]);
     }
 }

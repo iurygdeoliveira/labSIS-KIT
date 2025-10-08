@@ -6,6 +6,7 @@ namespace App\Filament\Pages\Auth;
 
 use App\Models\User;
 use App\Traits\Filament\NotificationsTrait;
+use Filament\Auth\Http\Responses\Contracts\LoginResponse;
 use Filament\Auth\Pages\Login as AuthLogin;
 use Filament\Facades\Filament;
 use Illuminate\Auth\SessionGuard;
@@ -14,7 +15,7 @@ class Login extends AuthLogin
 {
     use NotificationsTrait;
 
-    public function authenticate(): ?\Filament\Auth\Http\Responses\Contracts\LoginResponse
+    public function authenticate(): ?LoginResponse
     {
         $data = $this->form->getState();
 
@@ -33,18 +34,6 @@ class Login extends AuthLogin
         // Bloqueia login de usuários suspensos com notificação amigável
         if ($user instanceof User && $user->isSuspended()) {
             $this->notifyDanger('Conta suspensa', 'Sua conta está suspensa. Entre em contato com o suporte para mais informações.');
-
-            return null;
-        }
-
-        // Verifica se o email não foi verificado
-        if ($user instanceof User && ! $user->hasVerifiedEmail()) {
-            $this->notifyDanger(
-                'Email não verificado',
-                'Você precisa verificar seu email antes de acessar o painel. Verifique sua caixa de entrada e clique no link de verificação.',
-                15,
-                true // Notificação persistente
-            );
 
             return null;
         }
