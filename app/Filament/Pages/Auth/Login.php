@@ -31,9 +31,13 @@ class Login extends AuthLogin
             $this->throwFailureValidationException();
         }
 
-        // Bloqueia login de usuários suspensos com notificação amigável
+        // Bloqueia login de usuários suspensos
         if ($user instanceof User && $user->isSuspended()) {
-            $this->notifyDanger('Conta suspensa', 'Sua conta está suspensa. Entre em contato com o suporte para mais informações.');
+            // Fazer login do usuário para que o middleware possa redirecionar
+            $authGuard->login($user);
+
+            // Redirecionar para página de conta suspensa
+            $this->redirect(route('filament.auth.account-suspended'));
 
             return null;
         }

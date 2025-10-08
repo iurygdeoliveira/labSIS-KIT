@@ -2,8 +2,10 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\AccountSuspended;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Auth\Register;
+use App\Filament\Pages\Auth\VerificationPending;
 use App\Http\Middleware\RedirectGuestsToCentralLoginMiddleware;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Enums\ThemeMode;
@@ -32,7 +34,8 @@ class AuthPanelProvider extends PanelProvider
             ->authGuard('web')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                \App\Filament\Pages\Auth\VerificationPending::class,
+                VerificationPending::class,
+                AccountSuspended::class,
             ])
             ->login(Login::class)
             ->registration(Register::class)
