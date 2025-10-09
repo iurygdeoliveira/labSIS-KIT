@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 
 <head>
-    @include('partials.head.head')
+    @include('website.partials.head.head')
 
     @vite(['resources/css/app.css'])
     @livewireStyles
@@ -14,7 +14,7 @@
     class="min-h-screen font-sans antialiased text-gray-900 transition-colors duration-700 bg-white dark:bg-gray-900 dark:text-white">
     {{-- Header --}}
     <header>
-        @include('partials.header.header')
+        @include('website.partials.header.header')
     </header>
 
     {{-- Conteúdo principal --}}
@@ -30,7 +30,7 @@
     @fluxScripts
 
     <footer>
-        @include('partials.footer.footer')
+        @include('website.partials.footer.footer')
     </footer>
 </body>
 
