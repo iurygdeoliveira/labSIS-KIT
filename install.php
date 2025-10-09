@@ -12,6 +12,7 @@ declare(strict_types=1);
  * - Orienta instalação manual de: Node.js e Docker
  * - Configura permissões Docker automaticamente
  * - Cria .env a partir de .env.example (se necessário)
+ * - Executa composer install para gerar vendor/bin/sail
  * - Inicia containers Sail
  * - Executa migrations e seeders
  * - Instala dependências NPM e build dos assets
@@ -104,7 +105,7 @@ function checkPhpExtensions(): array
         // XML/DOM
         'dom', 'xmlwriter', 'xmlreader', 'simplexml',
         // Bancos de dados
-        'pdo_mysql', 'pdo_pgsql', 'pdo_sqlite', 'mysql',
+        'pgsql', 'sqlite3',
         // Recomendadas
         'tidy', 'intl',
     ];
@@ -364,11 +365,15 @@ function runSailInstallation(string $basePath): void
     // 1. Criar .env
     createEnvFile($basePath);
 
-    // 2. Iniciar containers Sail
+    // 2. Instalar dependências Composer primeiro (necessário para gerar vendor/bin/sail)
+    echo "📦 Instalando dependências Composer...\n";
+    run('composer install --no-interaction --prefer-dist');
+
+    // 3. Iniciar containers Sail
     echo "🚀 Iniciando containers Sail...\n";
     run('./vendor/bin/sail up -d');
 
-    // 3. Aguardar containers iniciarem
+    // 4. Aguardar containers iniciarem
     echo "⏳ Aguardando containers iniciarem...\n";
     sleep(10); // Aguardar 10 segundos para containers iniciarem
 
@@ -381,7 +386,7 @@ function runSailInstallation(string $basePath): void
 
     echo "✅ Containers Sail iniciados com sucesso!\n";
 
-    // 4. Gerar APP_KEY se não existir
+    // 5. Gerar APP_KEY se não existir
     $envContent = file_exists('.env') ? file_get_contents('.env') : '';
     $hasKey = (bool) preg_match('/^APP_KEY=.+/m', $envContent);
 
@@ -390,23 +395,23 @@ function runSailInstallation(string $basePath): void
         run('./vendor/bin/sail artisan key:generate');
     }
 
-    // 5. Criar link de storage
+    // 6. Criar link de storage
     echo "🔗 Criando link de storage...\n";
     run('./vendor/bin/sail artisan storage:link');
 
-    // 6. Executar migrations
+    // 7. Executar migrations
     echo "🗄️  Executando migrations...\n";
     run('./vendor/bin/sail artisan migrate --force');
 
-    // 7. Executar seeders
+    // 8. Executar seeders
     echo "🌱 Executando seeders...\n";
     run('./vendor/bin/sail artisan db:seed --force');
 
-    // 8. Instalar dependências NPM
+    // 9. Instalar dependências NPM
     echo "📦 Instalando dependências NPM...\n";
     run('./vendor/bin/sail npm install');
 
-    // 9. Build dos assets
+    // 10. Build dos assets
     echo "🏗️  Fazendo build dos assets...\n";
     run('./vendor/bin/sail npm run build');
 
