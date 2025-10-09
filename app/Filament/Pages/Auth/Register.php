@@ -97,6 +97,9 @@ class Register extends BaseRegister
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
+            'is_suspended' => true, // Usuário fica suspenso até aprovação
+            'is_approved' => false, // Usuário não aprovado por padrão
+            'email_verified_at' => null, // Email não verificado por padrão
         ];
     }
 
@@ -164,7 +167,7 @@ class Register extends BaseRegister
     {
         $this->notifySuccess(
             'Cadastro realizado com sucesso!',
-            'Sua conta foi criada e está aguardando aprovação.'
+            'Sua conta foi criada e está suspensa até aprovação. Você receberá um email quando for aprovado.'
         );
     }
 

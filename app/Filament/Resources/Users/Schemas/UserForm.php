@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Enums\RoleType;
 use App\Models\Tenant;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -48,7 +50,7 @@ class UserForm
                     ->requiredWith('password')
                     ->dehydrated(false),
                 Toggle::make('is_suspended')
-                    ->label(fn (Get $get): string => $get('is_suspended') ? 'Usuário não autorizado' : 'Usuário autorizado')
+                    ->label(fn (Get $get): string => $get('is_suspended') ? 'Usuário suspenso' : 'Usuário com acesso liberado')
                     ->onColor('danger')
                     ->offColor('primary')
                     ->onIcon('heroicon-c-no-symbol')
@@ -71,11 +73,11 @@ class UserForm
             return false;
         }
 
-        $user = \Filament\Facades\Filament::auth()->user();
+        $user = Filament::auth()->user();
         if (! ($user instanceof User) || ! method_exists($user, 'hasRole')) {
             return false;
         }
 
-        return (bool) $user->hasRole(\App\Enums\RoleType::ADMIN->value);
+        return (bool) $user->hasRole(RoleType::ADMIN->value);
     }
 }

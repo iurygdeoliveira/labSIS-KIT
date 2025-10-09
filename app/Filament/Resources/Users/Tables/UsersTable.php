@@ -121,14 +121,13 @@ class UsersTable
     private static function getStatusColumn()
     {
         return TextColumn::make('is_suspended')
-            ->label('Status')
+            ->label('Acesso')
             ->sortable()
-            ->formatStateUsing(fn (User $record): string => $record->is_suspended ? __('Suspenso') : __('Autorizado'))
+            ->formatStateUsing(fn (User $record): string => $record->is_suspended ? __('Suspenso') : __('Liberado'))
             ->badge()
             ->color(fn (User $record): string => $record->is_suspended ? 'danger' : 'primary')
             ->icon(fn (User $record): string => $record->is_suspended ? 'heroicon-c-no-symbol' : 'heroicon-c-check')
-            ->alignCenter()
-            ->visible(fn (?User $record): bool => $record && $record->isApproved());
+            ->alignCenter();
     }
 
     /**
@@ -137,8 +136,25 @@ class UsersTable
     private static function getApprovalColumn()
     {
         return ToggleColumn::make('is_approved')
+            ->onColor('primary')
+            ->offColor('danger')
+            ->onIcon('heroicon-c-check')
+            ->offIcon('heroicon-c-x-mark')
             ->label('Aprovar')
-            ->visible(fn (?User $record): bool => $record && ! $record->isApproved());
+            ->afterStateUpdated(function (User $record, $state) {
+                // Se o usuário foi aprovado
+                if ($state) {
+                    // Remover suspensão
+                    $record->is_suspended = false;
+
+                    // Se o email não está verificado, verificar automaticamente
+                    if (! $record->hasVerifiedEmail()) {
+                        $record->markEmailAsVerified();
+                    }
+
+                    $record->save();
+                }
+            });
     }
 
     private static function getTenantRolesForUser(User $record, bool $isAdmin): array|string
