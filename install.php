@@ -254,22 +254,42 @@ function checkApache2(): bool
 }
 
 /**
+ * Verifica se Apache2 está ativo e rodando.
+ */
+function checkApache2Running(): bool
+{
+    if (! checkApache2()) {
+        return false;
+    }
+
+    $output = shell_exec('systemctl is-active apache2 2>/dev/null');
+
+    return is_string($output) && trim($output) === 'active';
+}
+
+/**
  * Remove Apache2 automaticamente.
  */
 function removeApache2(): void
 {
     echo "⚠️  Removendo Apache2 (conflita com Nginx usado pelo Sail)...\n";
 
-    // Parar o serviço
-    run('sudo systemctl stop apache2');
+    // Se estiver rodando, parar primeiro
+    if (checkApache2Running()) {
+        echo "🛑 Parando serviço Apache2...\n";
+        run('sudo systemctl stop apache2');
+    }
 
     // Desabilitar o serviço
+    echo "🚫 Desabilitando serviço Apache2...\n";
     run('sudo systemctl disable apache2');
 
     // Remover completamente
+    echo "🗑️  Removendo pacotes Apache2...\n";
     run('sudo apt remove --purge apache2 apache2-utils apache2-bin -y');
 
     // Limpar dependências
+    echo "🧹 Limpando dependências...\n";
     run('sudo apt autoremove -y');
 
     echo "✅ Apache2 removido com sucesso!\n";
@@ -539,6 +559,11 @@ if (! checkDockerCompose()) {
 // 7. Verificação e remoção do Apache2
 echo "\n🔍 Verificando Apache2...\n";
 if (checkApache2()) {
+    if (checkApache2Running()) {
+        echo "⚠️  Apache2 está instalado e rodando (conflita com Nginx do Sail)\n";
+    } else {
+        echo "⚠️  Apache2 está instalado mas não está rodando (conflita com Nginx do Sail)\n";
+    }
     removeApache2();
 } else {
     echo "✅ Apache2 não está instalado.\n";
