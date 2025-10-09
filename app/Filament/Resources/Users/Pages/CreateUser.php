@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Enums\RoleType;
-use App\Events\UserRegistered;
 use App\Filament\Resources\Users\UserResource;
 use App\Models\Tenant;
 use App\Models\User;
@@ -45,8 +44,7 @@ class CreateUser extends CreateRecord
             }
         }
 
-        // Disparar evento de usuário registrado
-        event(new UserRegistered($this->record, $this->data['password'] ?? null));
+        // Usuário criado pelo admin - não precisa notificar
 
         $this->notifySuccess('Usuário criado com sucesso.');
     }

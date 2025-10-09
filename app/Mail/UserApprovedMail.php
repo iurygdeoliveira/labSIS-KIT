@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail;
 
 use App\Models\User;
@@ -9,31 +11,27 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeEmail extends Mailable
+class UserApprovedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public function __construct(
-        public User $user,
-        public ?string $password = null,
-        public ?string $tenantName = null
+        public User $user
     ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Bem-vindo ao '.config('app.name'),
+            subject: 'Sua conta foi aprovada - '.config('app.name'),
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            view: 'emails.welcome',
+            view: 'emails.user-approved',
             with: [
                 'user' => $this->user,
-                'password' => $this->password,
-                'tenantName' => $this->tenantName,
                 'loginUrl' => route('filament.auth.auth.login'),
             ]
         );

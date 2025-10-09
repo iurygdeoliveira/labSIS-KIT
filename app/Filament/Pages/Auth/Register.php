@@ -75,6 +75,10 @@ class Register extends BaseRegister
             $tenant = $this->createTenant($tenantData);
 
             $this->associateUserWithTenant($user, $tenant);
+
+            // Disparar evento de usuário registrado
+            event(new \App\Events\UserRegistered($user));
+
             $this->showSuccessNotification();
 
             return $user;

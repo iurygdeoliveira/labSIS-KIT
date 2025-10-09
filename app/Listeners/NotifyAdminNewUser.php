@@ -1,27 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Events\UserRegistered;
+use App\Mail\NewUserNotificationMail;
 use App\Models\User;
-use App\Services\EmailService;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Mail;
 
-class NotifyAdminNewUser implements ShouldQueue
+class NotifyAdminNewUser
 {
-    use InteractsWithQueue;
-
-    public function __construct(
-        private EmailService $emailService
-    ) {}
-
     public function handle(UserRegistered $event): void
     {
-        $admins = User::role('admin')->get();
+        // Buscar apenas o admin específico
+        $admin = User::where('email', 'admin@labsis.dev.br')->first();
 
-        foreach ($admins as $admin) {
-            $this->emailService->sendNewUserNotification($admin, $event->user);
+        if ($admin) {
+            Mail::to($admin->email)->send(new NewUserNotificationMail($admin, $event->user));
         }
     }
 }

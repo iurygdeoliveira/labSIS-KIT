@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Events\UserApproved;
+use App\Events\UserRegistered;
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\LogoutResponse;
+use App\Listeners\NotifyAdminNewUser;
+use App\Listeners\SendUserApprovedEmail;
 use App\Tenancy\SpatieTeamResolver as AppSpatieTeamResolver;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
@@ -47,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
         $this->configDate();
         $this->configFilamentColors();
         $this->configStorage();
+        $this->configEvents();
     }
 
     private function configModels(): void
@@ -115,5 +120,12 @@ class AppServiceProvider extends ServiceProvider
             // Silenciosamente ignora erros de configuração do S3/MinIO
             // Útil para ambientes de produção onde o S3 não está configurado
         }
+    }
+
+    private function configEvents(): void
+    {
+        // Registrar listeners manualmente para evitar duplicação
+        $this->app['events']->listen(UserRegistered::class, NotifyAdminNewUser::class);
+        $this->app['events']->listen(UserApproved::class, SendUserApprovedEmail::class);
     }
 }

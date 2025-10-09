@@ -26,7 +26,7 @@
             <div class="user-info">
                 <p><strong>Nome:</strong> {{ $newUser->name }}</p>
                 <p><strong>Email:</strong> {{ $newUser->email }}</p>
-                <p><strong>Data de Cadastro:</strong> {{ $newUser->created_at->format('d/m/Y H:i') }}</p>
+                <p><strong>Data de Cadastro:</strong> {{ $newUser->created_at ? $newUser->created_at->format('d/m/Y H:i') : 'Agora' }}</p>
                 <p><strong>Email Verificado:</strong> {{ $newUser->hasVerifiedEmail() ? 'Sim' : 'Não' }}</p>
             </div>
             

@@ -32,7 +32,7 @@ class NewUserNotificationMail extends Mailable
             with: [
                 'admin' => $this->admin,
                 'newUser' => $this->newUser,
-                'userUrl' => route('filament.admin.resources.users.edit', $this->newUser),
+                'userUrl' => $this->newUser->id ? route('filament.admin.resources.users.edit', $this->newUser) : '#',
             ]
         );
     }

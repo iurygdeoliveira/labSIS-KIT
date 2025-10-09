@@ -153,6 +153,9 @@ class UsersTable
                     }
 
                     $record->save();
+
+                    // Disparar evento de aprovação
+                    event(new \App\Events\UserApproved($record));
                 }
             });
     }

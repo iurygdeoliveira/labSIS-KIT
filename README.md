@@ -34,6 +34,7 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 - [**Customização da Aparência do Painel**](/docs/customizando-layout.md)
 - [**Edição de Perfil no Filament**](/docs/edicao-perfil.md)
 - [**Entendendo o AppServiceProvider**](/docs/app-service-provider.md)
+- [**Fluxo de Registro de Novos Usuários**](/docs/fluxo-de-registro-de-novos-usuarios.md)
 - [**Gestão de mídias**](/docs/gestao-de-midia.md)
 - [**Otimização com #[Computed]**](/docs/livewire-computed.md)
 - [**Login Unificado**](/docs/login-unificado.md)
