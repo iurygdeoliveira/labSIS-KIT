@@ -103,8 +103,7 @@ O trabalho de vocês contribui significativamente para o avanço e a qualidade d
 
 ## Recurso em desenvolvimento
 
-- [ x ] Implementar o recurso de envio de emails.
-- [ ] Implementar gestão de logotipo.
+- [ X ] Implementar gestão de logotipo.
 - [ ] Implementar o recurso de gerenciamento de cache.
 
 ## 🚀 Recursos Atuais
