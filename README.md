@@ -32,6 +32,7 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 - [**Autenticação de Dois Fatores (2FA) no Filament**](/docs/autenticacao-2fa.md)
 - [**Cores no Filament**](/docs/cores-filament.md)
 - [**Customização da Aparência do Painel**](/docs/customizando-layout.md)
+- [**Customização de Logotipo no Filament**](/docs/customizando-logo.md)
 - [**Edição de Perfil no Filament**](/docs/edicao-perfil.md)
 - [**Entendendo o AppServiceProvider**](/docs/app-service-provider.md)
 - [**Fluxo de Registro de Novos Usuários**](/docs/fluxo-de-registro-de-novos-usuarios.md)
