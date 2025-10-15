@@ -31,6 +31,8 @@ class AuthPanelProvider extends PanelProvider
             ->path('')
             ->darkMode(false)
             ->defaultThemeMode(ThemeMode::Light)
+            ->brandLogo(fn () => view('filament.auth.logo_auth'))
+            ->brandLogoHeight('8rem')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->authGuard('web')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

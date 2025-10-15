@@ -37,6 +37,8 @@ abstract class BasePanelProvider extends PanelProvider
             ->databaseTransactions()
             ->darkMode(false)
             ->defaultThemeMode(ThemeMode::Light)
+            ->brandLogo(fn () => view('filament.auth.logo_base'))
+            ->brandLogoHeight('2rem')
             ->multiFactorAuthentication(
                 AppAuthentication::make()
                     ->recoverable()
@@ -85,10 +87,13 @@ abstract class BasePanelProvider extends PanelProvider
                     ->footerEnabled()
                     ->withFooterPosition('footer')
                     ->withGithub(showLogo: true, showUrl: true)
+                    ->withLogo(
+                        asset('images/LabSIS_painel.png'),
+                        'https://www.labsis.dev.br'
+                    )
                     ->withLinks([
                         ['title' => 'Precisa de Software ?', 'url' => 'https://www.labsis.dev.br'],
-                        ['title' => 'LabSIS', 'url' => 'https://www.labsis.dev.br'],
-                    ]),
+                    ])
             );
     }
 
