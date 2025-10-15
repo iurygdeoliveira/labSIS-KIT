@@ -104,7 +104,6 @@ O trabalho de vocês contribui significativamente para o avanço e a qualidade d
 
 ## Recurso em desenvolvimento
 
-- [ X ] Implementar gestão de logotipo.
 - [ ] Implementar o recurso de gerenciamento de cache.
 
 ## 🚀 Recursos Atuais
@@ -119,9 +118,12 @@ O Kit oferece uma base sólida com os seguintes recursos já implementados:
 
 - **Gestão de Usuários:** CRUD completo para usuários (Criação, Leitura, Atualização e Exclusão). Sistema de Suspensão de Usuários, Organização em Abas com informações detalhadas (Informações Pessoais, Datas, Suspensão).
 
+- **Customização de Logotipo:** Logotipo customizado para o painel de autenticação e para o rodapé do painel.
+
 - **Edição de Perfil:** Avatar, Configurações Personalizáveis e Autenticação de Dois Fatores (2FA).
 
-- **Login Unificado para diferentes painéis:** Login com Email e Senha.
+- **Login Unificado para diferentes painéis:** Login com Email e Senha, recuperação de senha.
+
 - **Exibição de Widgets:** Widgets personalizados para exibição de métricas e informações relevantes.
 
 - **Website / Landing Page**: Página Inicial Completa, Seções Pré-definidas (Hero, Benefícios, Como Funciona, Depoimentos, Tabela de Preços, FAQ, Navegação Integrada).
