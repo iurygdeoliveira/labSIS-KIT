@@ -264,7 +264,15 @@ function checkApache2Running(): bool
 
     $output = shell_exec('systemctl is-active apache2 2>/dev/null');
 
-    return is_string($output) && trim($output) === 'active';
+    // Se o comando falhar ou retornar erro, considerar como não rodando
+    if (! is_string($output)) {
+        return false;
+    }
+
+    $status = trim($output);
+
+    // Considerar como rodando apenas se o status for 'active'
+    return $status === 'active';
 }
 
 /**
@@ -277,20 +285,20 @@ function removeApache2(): void
     // Se estiver rodando, parar primeiro
     if (checkApache2Running()) {
         echo "🛑 Parando serviço Apache2...\n";
-        run('sudo systemctl stop apache2');
+        shell_exec('sudo systemctl stop apache2 2>/dev/null');
     }
 
-    // Desabilitar o serviço
+    // Desabilitar o serviço (ignorar erro se não existir)
     echo "🚫 Desabilitando serviço Apache2...\n";
-    run('sudo systemctl disable apache2');
+    shell_exec('sudo systemctl disable apache2 2>/dev/null');
 
     // Remover completamente
     echo "🗑️  Removendo pacotes Apache2...\n";
-    run('sudo apt remove --purge apache2 apache2-utils apache2-bin -y');
+    shell_exec('sudo apt remove --purge apache2 apache2-utils apache2-bin -y 2>/dev/null');
 
     // Limpar dependências
     echo "🧹 Limpando dependências...\n";
-    run('sudo apt autoremove -y');
+    shell_exec('sudo apt autoremove -y 2>/dev/null');
 
     echo "✅ Apache2 removido com sucesso!\n";
 }
@@ -419,21 +427,9 @@ function runSailInstallation(string $basePath): void
     echo "🔗 Criando link de storage...\n";
     run('./vendor/bin/sail artisan storage:link');
 
-    // 7. Executar migrations
-    echo "🗄️  Executando migrations...\n";
-    run('./vendor/bin/sail artisan migrate --force');
-
-    // 8. Executar seeders
-    echo "🌱 Executando seeders...\n";
-    run('./vendor/bin/sail artisan db:seed --force');
-
-    // 9. Instalar dependências NPM
-    echo "📦 Instalando dependências NPM...\n";
-    run('./vendor/bin/sail npm install');
-
-    // 10. Build dos assets
-    echo "🏗️  Fazendo build dos assets...\n";
-    run('./vendor/bin/sail npm run build');
+    // 7. Executar reset.sh para finalizar a instalação
+    echo "🔄 Executando script de reset para finalizar instalação...\n";
+    run('./reset.sh --install');
 
     echo "✅ Instalação via Sail concluída com sucesso!\n";
 }

@@ -154,14 +154,6 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         return $this->belongsTo(User::class, 'approved_by');
     }
 
-    /**
-     * Send the email verification notification.
-     */
-    public function sendEmailVerificationNotification(): void
-    {
-        $this->notify(new \App\Notifications\VerifyEmailNotification);
-    }
-
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() === 'auth') {
