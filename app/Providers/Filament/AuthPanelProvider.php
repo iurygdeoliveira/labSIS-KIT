@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\Auth\AccountSuspended;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Auth\Register;
+use App\Filament\Pages\Auth\RequestPasswordReset;
 use App\Filament\Pages\Auth\VerificationPending;
 use App\Http\Middleware\RedirectGuestsToCentralLoginMiddleware;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
@@ -39,7 +40,9 @@ class AuthPanelProvider extends PanelProvider
             ])
             ->login(Login::class)
             ->registration(Register::class)
-            ->passwordReset()
+            ->passwordReset(
+                RequestPasswordReset::class,
+            )
             ->multiFactorAuthentication(
                 AppAuthentication::make()
                     ->recoverable()
