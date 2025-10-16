@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Image\Enums\Fit;
 use Spatie\Image\Image;
@@ -44,6 +45,9 @@ class AvatarService
             $this->cleanupTemporaryFile($tmpPath);
             $this->deleteOriginalFile($disk, $path);
 
+            // Invalida a URL temporária cacheada
+            Cache::store('redis')->forget('user:'.$user->id.':avatar:temp-url');
+
             return true;
         } catch (\Throwable) {
             $this->cleanupTemporaryFile($tmpPath);
@@ -69,11 +73,16 @@ class AvatarService
             return null;
         }
 
-        try {
-            return $this->getTemporaryUrl($user->$avatarColumn);
-        } catch (\Throwable) {
-            return $this->getPublicUrl($user->$avatarColumn);
-        }
+        $path = (string) $user->$avatarColumn;
+        $cacheKey = 'user:'.$user->id.':avatar:temp-url';
+
+        return Cache::store('redis')->remember($cacheKey, 4 * 60, function () use ($path) {
+            try {
+                return $this->getTemporaryUrl($path);
+            } catch (\Throwable) {
+                return $this->getPublicUrl($path);
+            }
+        });
     }
 
     private function getTemporaryUrl(string $path): ?string

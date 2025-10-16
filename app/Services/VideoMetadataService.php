@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Cache;
+
 class VideoMetadataService
 {
     public function __construct(
@@ -12,49 +14,57 @@ class VideoMetadataService
 
     public function getYoutubeTitle(string $videoUrl): string
     {
-        $title = $this->fetchTitleFromOEmbed($videoUrl);
-        if ($title !== '') {
-            return $title;
-        }
+        $cacheKey = 'video:title:'.sha1($videoUrl);
 
-        $html = $this->httpClient->get($videoUrl);
-        if ($html === '') {
-            return '';
-        }
+        return Cache::store('redis')->remember($cacheKey, 6 * 3600, function () use ($videoUrl): string {
+            $title = $this->fetchTitleFromOEmbed($videoUrl);
+            if ($title !== '') {
+                return $title;
+            }
 
-        $ogTitle = $this->extractOgMeta($html, 'og:title');
-        if ($ogTitle !== null) {
-            return $ogTitle;
-        }
+            $html = $this->httpClient->get($videoUrl);
+            if ($html === '') {
+                return '';
+            }
 
-        $fallback = $this->extractHtmlTitle($html);
+            $ogTitle = $this->extractOgMeta($html, 'og:title');
+            if ($ogTitle !== null) {
+                return $ogTitle;
+            }
 
-        return $fallback ?? '';
+            $fallback = $this->extractHtmlTitle($html);
+
+            return $fallback ?? '';
+        });
     }
 
     public function getYoutubeMetadata(string $videoUrl): array
     {
-        $title = $this->getYoutubeTitle($videoUrl);
+        $cacheKey = 'video:meta:'.sha1($videoUrl);
 
-        $html = $this->httpClient->get($videoUrl);
-        $durationSeconds = null;
-        $durationIso8601 = null;
+        return Cache::store('redis')->remember($cacheKey, 6 * 3600, function () use ($videoUrl): array {
+            $title = $this->getYoutubeTitle($videoUrl);
 
-        if ($html !== '') {
-            $durationSeconds = $this->extractLengthSecondsFromPlayerJson($html);
-            if ($durationSeconds === null) {
-                $durationIso8601 = $this->extractIso8601FromHtml($html);
-                if ($durationIso8601 !== null) {
-                    $durationSeconds = $this->iso8601ToSeconds($durationIso8601);
+            $html = $this->httpClient->get($videoUrl);
+            $durationSeconds = null;
+            $durationIso8601 = null;
+
+            if ($html !== '') {
+                $durationSeconds = $this->extractLengthSecondsFromPlayerJson($html);
+                if ($durationSeconds === null) {
+                    $durationIso8601 = $this->extractIso8601FromHtml($html);
+                    if ($durationIso8601 !== null) {
+                        $durationSeconds = $this->iso8601ToSeconds($durationIso8601);
+                    }
                 }
             }
-        }
 
-        return [
-            'title' => $title,
-            'durationSeconds' => $durationSeconds,
-            'durationIso8601' => $durationIso8601,
-        ];
+            return [
+                'title' => $title,
+                'durationSeconds' => $durationSeconds,
+                'durationIso8601' => $durationIso8601,
+            ];
+        });
     }
 
     private function fetchTitleFromOEmbed(string $videoUrl): string

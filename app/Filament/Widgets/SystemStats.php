@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Video;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Computed;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
@@ -19,114 +20,112 @@ class SystemStats extends BaseWidget
     #[Computed]
     protected function tenantsData(): array
     {
-        $totalTenants = Tenant::query()->count();
+        return Cache::store('redis')->remember('stats:tenants', 60, function (): array {
+            $totalTenants = Tenant::query()->count();
 
-        // Tenants aprovados: owner aprovado (independente de is_active)
-        $approvedTenants = Tenant::query()
-            ->whereHas('users', function ($query) {
-                $query->whereHas('roles', function ($roleQuery) {
-                    $roleQuery->where('name', RoleType::OWNER->value);
+            $approvedTenants = Tenant::query()
+                ->whereHas('users', function ($query) {
+                    $query->whereHas('roles', function ($roleQuery) {
+                        $roleQuery->where('name', RoleType::OWNER->value);
+                    })
+                        ->where('is_approved', true);
                 })
-                    ->where('is_approved', true);
-            })
-            ->count();
+                ->count();
 
-        // Tenants ativos: aprovados E is_active = true
-        $activeTenants = Tenant::query()
-            ->where('is_active', true)
-            ->whereHas('users', function ($query) {
-                $query->whereHas('roles', function ($roleQuery) {
-                    $roleQuery->where('name', RoleType::OWNER->value);
+            $activeTenants = Tenant::query()
+                ->where('is_active', true)
+                ->whereHas('users', function ($query) {
+                    $query->whereHas('roles', function ($roleQuery) {
+                        $roleQuery->where('name', RoleType::OWNER->value);
+                    })
+                        ->where('is_approved', true);
                 })
-                    ->where('is_approved', true);
-            })
-            ->count();
+                ->count();
 
-        // Tenants inativos: aprovados mas is_active = false
-        $inactiveTenants = Tenant::query()
-            ->where('is_active', false)
-            ->whereHas('users', function ($query) {
-                $query->whereHas('roles', function ($roleQuery) {
-                    $roleQuery->where('name', RoleType::OWNER->value);
+            $inactiveTenants = Tenant::query()
+                ->where('is_active', false)
+                ->whereHas('users', function ($query) {
+                    $query->whereHas('roles', function ($roleQuery) {
+                        $roleQuery->where('name', RoleType::OWNER->value);
+                    })
+                        ->where('is_approved', true);
                 })
-                    ->where('is_approved', true);
-            })
-            ->count();
+                ->count();
 
-        // Tenants não aprovados: owner NÃO aprovado
-        $unapprovedTenants = Tenant::query()
-            ->whereDoesntHave('users', function ($query) {
-                $query->whereHas('roles', function ($roleQuery) {
-                    $roleQuery->where('name', RoleType::OWNER->value);
+            $unapprovedTenants = Tenant::query()
+                ->whereDoesntHave('users', function ($query) {
+                    $query->whereHas('roles', function ($roleQuery) {
+                        $roleQuery->where('name', RoleType::OWNER->value);
+                    })
+                        ->where('is_approved', true);
                 })
-                    ->where('is_approved', true);
-            })
-            ->count();
+                ->count();
 
-        return [
-            'total' => $totalTenants,
-            'approved' => $approvedTenants,
-            'active' => $activeTenants,
-            'inactive' => $inactiveTenants,
-            'unapproved' => $unapprovedTenants,
-        ];
+            return [
+                'total' => $totalTenants,
+                'approved' => $approvedTenants,
+                'active' => $activeTenants,
+                'inactive' => $inactiveTenants,
+                'unapproved' => $unapprovedTenants,
+            ];
+        });
     }
 
     #[Computed]
     protected function usersData(): array
     {
-        $baseQuery = User::query()
-            ->whereDoesntHave('roles', fn ($q) => $q->where('name', RoleType::ADMIN->value));
+        return Cache::store('redis')->remember('stats:users', 60, function (): array {
+            $baseQuery = User::query()
+                ->whereDoesntHave('roles', fn ($q) => $q->where('name', RoleType::ADMIN->value));
 
-        $totalUsers = $baseQuery->count();
+            $totalUsers = $baseQuery->count();
 
-        // Usuários ativos: não suspensos E aprovados
-        $activeUsers = (clone $baseQuery)
-            ->where('is_suspended', false)
-            ->where('is_approved', true)
-            ->count();
+            $activeUsers = (clone $baseQuery)
+                ->where('is_suspended', false)
+                ->where('is_approved', true)
+                ->count();
 
-        // Usuários suspensos
-        $suspendedUsers = (clone $baseQuery)
-            ->where('is_suspended', true)
-            ->count();
+            $suspendedUsers = (clone $baseQuery)
+                ->where('is_suspended', true)
+                ->count();
 
-        // Usuários não aprovados: is_approved false e não suspensos
-        $unapprovedUsers = (clone $baseQuery)
-            ->where('is_suspended', false)
-            ->where('is_approved', false)
-            ->count();
+            $unapprovedUsers = (clone $baseQuery)
+                ->where('is_suspended', false)
+                ->where('is_approved', false)
+                ->count();
 
-        return [
-            'total' => $totalUsers,
-            'active' => $activeUsers,
-            'suspended' => $suspendedUsers,
-            'unapproved' => $unapprovedUsers,
-        ];
+            return [
+                'total' => $totalUsers,
+                'active' => $activeUsers,
+                'suspended' => $suspendedUsers,
+                'unapproved' => $unapprovedUsers,
+            ];
+        });
     }
 
     #[Computed]
     protected function mediaData(): array
     {
-        // Mídia (Spatie) + Vídeos (externos)
-        $images = SpatieMedia::query()
-            ->where('mime_type', 'like', 'image/%')
-            ->where('collection_name', '!=', 'avatar')
-            ->count();
-        $videos = Video::query()->count();
-        $audios = SpatieMedia::query()->where('mime_type', 'like', 'audio/%')->count();
-        $documents = SpatieMedia::query()->where('mime_type', 'like', 'application/%')->count();
-        $totalMedia = $images + $videos + $audios + $documents;
+        return Cache::store('redis')->remember('stats:media', 60, function (): array {
+            $images = SpatieMedia::query()
+                ->where('mime_type', 'like', 'image/%')
+                ->where('collection_name', '!=', 'avatar')
+                ->count();
+            $videos = Video::query()->count();
+            $audios = SpatieMedia::query()->where('mime_type', 'like', 'audio/%')->count();
+            $documents = SpatieMedia::query()->where('mime_type', 'like', 'application/%')->count();
+            $totalMedia = $images + $videos + $audios + $documents;
 
-        $totalSizeBytes = (int) SpatieMedia::query()
-            ->where('mime_type', 'not like', 'video/%')
-            ->where('collection_name', '!=', 'avatar')
-            ->sum('size');
+            $totalSizeBytes = (int) SpatieMedia::query()
+                ->where('mime_type', 'not like', 'video/%')
+                ->where('collection_name', '!=', 'avatar')
+                ->sum('size');
 
-        return [
-            'total' => $totalMedia,
-            'size' => $this->humanSize($totalSizeBytes),
-        ];
+            return [
+                'total' => $totalMedia,
+                'size' => $this->humanSize($totalSizeBytes),
+            ];
+        });
     }
 
     #[Computed]

@@ -24,7 +24,7 @@ class MediaTable
                     ->label('Nome do Arquivo')
                     ->state(function ($record) {
                         if ((bool) ($record->video ?? false)) {
-                            return $record->video()->value('title') ?? 'Vídeo (URL)';
+                            return $record->video?->title ?? 'Vídeo (URL)';
                         }
 
                         return $record->getFirstMedia('media')?->name ?? '—';
@@ -39,7 +39,7 @@ class MediaTable
                                     ->where('media.collection_name', '=', 'media');
                             })
                             ->orderByRaw(
-                                'CASE WHEN media_items.video THEN COALESCE(videos.title, \'\') ELSE COALESCE(media.name, \'\') END '.($direction === 'desc' ? 'desc' : 'asc')
+                                'CASE WHEN media_items.video THEN COALESCE(videos.title, \"\") ELSE COALESCE(media.name, \"\") END '.($direction === 'desc' ? 'desc' : 'asc')
                             )
                             ->select('media_items.*');
 
@@ -64,7 +64,7 @@ class MediaTable
                     ->label('Criado em')
                     ->state(function ($record) {
                         if ((bool) ($record->video ?? false)) {
-                            $createdAt = $record->video()->value('created_at');
+                            $createdAt = $record->video?->created_at;
 
                             return $createdAt ? Carbon::parse($createdAt)->format('d/m/Y H:i') : '—';
                         }

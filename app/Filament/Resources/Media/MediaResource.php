@@ -55,7 +55,10 @@ class MediaResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return MediaTable::configure($table);
+        return MediaTable::configure($table)
+            ->modifyQueryUsing(function ($query) {
+                return $query->with('video');
+            });
     }
 
     public static function getRelations(): array
@@ -83,7 +86,7 @@ class MediaResource extends Resource
         }
 
         if ((bool) $record->video) {
-            $title = $record->video()->value('title');
+            $title = $record->video?->title;
 
             return $title ?: 'Vídeo (URL)';
         }

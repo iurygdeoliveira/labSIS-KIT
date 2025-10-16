@@ -10,6 +10,10 @@ use App\Http\Responses\LoginResponse;
 use App\Http\Responses\LogoutResponse;
 use App\Listeners\NotifyAdminNewUser;
 use App\Listeners\SendUserApprovedEmail;
+use App\Models\User as AppUser;
+use App\Models\Video;
+use App\Observers\UserObserver;
+use App\Observers\VideoObserver;
 use App\Tenancy\SpatieTeamResolver as AppSpatieTeamResolver;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
@@ -52,6 +56,7 @@ class AppServiceProvider extends ServiceProvider
         $this->configFilamentColors();
         $this->configStorage();
         $this->configEvents();
+        $this->configObservers();
     }
 
     private function configModels(): void
@@ -127,5 +132,11 @@ class AppServiceProvider extends ServiceProvider
         // Registrar listeners manualmente para evitar duplicação
         $this->app['events']->listen(UserRegistered::class, NotifyAdminNewUser::class);
         $this->app['events']->listen(UserApproved::class, SendUserApprovedEmail::class);
+    }
+
+    private function configObservers(): void
+    {
+        Video::observe(VideoObserver::class);
+        AppUser::observe(UserObserver::class);
     }
 }
