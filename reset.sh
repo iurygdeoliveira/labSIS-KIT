@@ -15,10 +15,28 @@ else
     echo "🚀 Iniciando reset de desenvolvimento..."
 fi
 
-# Limpar cache do Laravel
-echo "🧹 Limpando cache e assets do sistema..."
-./vendor/bin/sail artisan optimize:clear || true
-./vendor/bin/sail artisan filament:optimize-clear || true
+# Função para executar comando com tratamento de erro
+safe_artisan() {
+    local cmd="$1"
+    local description="$2"
+    
+    echo "⏳ $description..."
+    
+    if ./vendor/bin/sail artisan "$cmd" 2>/dev/null; then
+        echo "✅ $description concluído"
+        return 0
+    else
+        echo "⚠️  $description falhou (ignorando - pode ser esperado durante instalação)"
+        return 0
+    fi
+}
+
+# Se NÃO for modo instalação, limpar cache normalmente
+if [[ "$INSTALL_MODE" != "true" ]]; then
+    echo "🧹 Limpando cache e assets do sistema..."
+    safe_artisan "optimize:clear" "Limpando cache otimizado"
+    safe_artisan "filament:optimize-clear" "Limpando cache do Filament"
+fi
 
 # Remover assets de build usando Docker para evitar problemas de permissão
 echo "🗑️ Removendo assets de build..."
@@ -34,15 +52,25 @@ composer update --no-scripts --optimize-autoloader
 # Regenerar autoload sem scripts
 composer dump-autoload -o --no-scripts
 
-# Redescobrir pacotes e limpar caches com vendor atualizado
-echo "🔎 Redescobrindo pacotes e limpando caches..."
-./vendor/bin/sail artisan package:discover
-./vendor/bin/sail artisan config:clear
-./vendor/bin/sail artisan clear-compiled
+# Executar migrations PRIMEIRO
+if [[ "$INSTALL_MODE" == "true" ]]; then
+    echo "🗄️ Executando migrations e seeders (modo instalação)..."
+    ./vendor/bin/sail artisan migrate:fresh --seed
+else
+    echo "🔄 Executando reset de banco de dados..."
+    ./vendor/bin/sail artisan migrate:fresh --seed
+fi
+
+# AGORA podemos limpar cache com segurança
+echo "🧹 Limpando cache após migrations..."
+safe_artisan "config:clear" "Limpando cache de configuração"
+safe_artisan "clear-compiled" "Limpando arquivos compilados"
+safe_artisan "optimize:clear" "Limpando cache otimizado"
+safe_artisan "package:discover" "Redescobrindo pacotes"
 
 # Atualizar dependências do Node
 echo "📦 Atualizando dependências do NPM..."
-npm update
+npm update || true
 
 # Build para desenvolvimento
 echo "🔨 Executando build para desenvolvimento..."
@@ -97,11 +125,4 @@ else
     echo "✅ Todas as permissões já estão corretas!"
 fi
 
-# Executando migrations e seeders
-if [[ "$INSTALL_MODE" == "true" ]]; then
-    echo "🗄️ Executando migrations e seeders (modo instalação)..."
-    ./vendor/bin/sail artisan migrate:fresh --seed
-else
-    echo "🔄 Executando reset de banco de dados..."
-    ./vendor/bin/sail artisan migrate:fresh --seed
-fi
+echo "✅ Script de reset concluído com sucesso!"
