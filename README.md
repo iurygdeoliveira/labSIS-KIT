@@ -102,9 +102,9 @@ Em especial, agradecemos a:
 
 O trabalho de vocês contribui significativamente para o avanço e a qualidade deste projeto.
 
-## Recurso em desenvolvimento
+## Próximos recursos a serem implementados
 
-- [ ] Implementar o recurso de gerenciamento de cache.
+- [ ] Impersonação de usuários.
 
 ## 🚀 Recursos Atuais
 

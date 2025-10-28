@@ -29,6 +29,7 @@ class AuthPanelProvider extends PanelProvider
         return $panel
             ->id('auth')
             ->path('')
+            ->default()
             ->darkMode(false)
             ->defaultThemeMode(ThemeMode::Light)
             ->brandLogo(fn () => view('filament.auth.logo_auth'))
@@ -61,5 +62,6 @@ class AuthPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
                 RedirectGuestsToCentralLoginMiddleware::class,
             ]);
+
     }
 }

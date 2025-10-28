@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 12.29.0.
+ * Generated for Laravel 12.34.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -3869,7 +3869,6 @@ namespace Illuminate\Support\Facades {
         /**
          * Attempt to find the batch with the given ID.
          *
-         * @param string $batchId
          * @return \Illuminate\Bus\Batch|null
          * @static
          */
@@ -3962,7 +3961,6 @@ namespace Illuminate\Support\Facades {
         /**
          * Set the pipes through which commands should be piped before dispatching.
          *
-         * @param array $pipes
          * @return \Illuminate\Bus\Dispatcher
          * @static
          */
@@ -3975,7 +3973,6 @@ namespace Illuminate\Support\Facades {
         /**
          * Map a command to a handler.
          *
-         * @param array $map
          * @return \Illuminate\Bus\Dispatcher
          * @static
          */
@@ -5177,7 +5174,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function lock($name, $seconds = 0, $owner = null)
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             return $instance->lock($name, $seconds, $owner);
         }
 
@@ -5191,21 +5188,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function restoreLock($name, $owner)
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             return $instance->restoreLock($name, $owner);
-        }
-
-        /**
-         * Remove an item from the cache if it is expired.
-         *
-         * @param string $key
-         * @return bool
-         * @static
-         */
-        public static function forgetIfExpired($key)
-        {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
-            return $instance->forgetIfExpired($key);
         }
 
         /**
@@ -5216,58 +5200,82 @@ namespace Illuminate\Support\Facades {
          */
         public static function flush()
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             return $instance->flush();
         }
 
         /**
-         * Get the underlying database connection.
+         * Remove all expired tag set entries.
          *
-         * @return \Illuminate\Database\PostgresConnection
+         * @return void
          * @static
          */
-        public static function getConnection()
+        public static function flushStaleTags()
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
-            return $instance->getConnection();
+            /** @var \Illuminate\Cache\RedisStore $instance */
+            $instance->flushStaleTags();
         }
 
         /**
-         * Set the underlying database connection.
+         * Get the Redis connection instance.
          *
-         * @param \Illuminate\Database\ConnectionInterface $connection
-         * @return \Illuminate\Cache\DatabaseStore
+         * @return \Illuminate\Redis\Connections\Connection
+         * @static
+         */
+        public static function connection()
+        {
+            /** @var \Illuminate\Cache\RedisStore $instance */
+            return $instance->connection();
+        }
+
+        /**
+         * Get the Redis connection instance that should be used to manage locks.
+         *
+         * @return \Illuminate\Redis\Connections\Connection
+         * @static
+         */
+        public static function lockConnection()
+        {
+            /** @var \Illuminate\Cache\RedisStore $instance */
+            return $instance->lockConnection();
+        }
+
+        /**
+         * Specify the name of the connection that should be used to store data.
+         *
+         * @param string $connection
+         * @return void
          * @static
          */
         public static function setConnection($connection)
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
-            return $instance->setConnection($connection);
+            /** @var \Illuminate\Cache\RedisStore $instance */
+            $instance->setConnection($connection);
         }
 
         /**
-         * Get the connection used to manage locks.
+         * Specify the name of the connection that should be used to manage locks.
          *
-         * @return \Illuminate\Database\PostgresConnection
-         * @static
-         */
-        public static function getLockConnection()
-        {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
-            return $instance->getLockConnection();
-        }
-
-        /**
-         * Specify the connection that should be used to manage locks.
-         *
-         * @param \Illuminate\Database\ConnectionInterface $connection
-         * @return \Illuminate\Cache\DatabaseStore
+         * @param string $connection
+         * @return \Illuminate\Cache\RedisStore
          * @static
          */
         public static function setLockConnection($connection)
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             return $instance->setLockConnection($connection);
+        }
+
+        /**
+         * Get the Redis database instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory
+         * @static
+         */
+        public static function getRedis()
+        {
+            /** @var \Illuminate\Cache\RedisStore $instance */
+            return $instance->getRedis();
         }
 
         /**
@@ -5278,7 +5286,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function getPrefix()
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             return $instance->getPrefix();
         }
 
@@ -5291,7 +5299,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function setPrefix($prefix)
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             $instance->setPrefix($prefix);
         }
 
@@ -8346,6 +8354,21 @@ namespace Illuminate\Support\Facades {
             $instance->afterCommit($callback);
         }
 
+        /**
+         * Execute the callback after a transaction rolls back.
+         *
+         * @param callable $callback
+         * @return void
+         * @throws \RuntimeException
+         * @static
+         */
+        public static function afterRollBack($callback)
+        {
+            //Method inherited from \Illuminate\Database\Connection 
+            /** @var \Illuminate\Database\PostgresConnection $instance */
+            $instance->afterRollBack($callback);
+        }
+
             }
     /**
      * @see \Illuminate\Events\Dispatcher
@@ -10129,6 +10152,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Http\Client\Response put(string $url, array|\JsonSerializable|\Illuminate\Contracts\Support\Arrayable $data = [])
      * @method static \Illuminate\Http\Client\Response delete(string $url, array|\JsonSerializable|\Illuminate\Contracts\Support\Arrayable $data = [])
      * @method static array pool(callable $callback)
+     * @method static \Illuminate\Http\Client\Batch batch(callable $callback)
      * @method static \Illuminate\Http\Client\Response send(string $method, string $url, array $options = [])
      * @method static \GuzzleHttp\Client buildClient()
      * @method static \GuzzleHttp\Client createClient(\GuzzleHttp\HandlerStack $handlerStack)
@@ -13360,6 +13384,33 @@ namespace Illuminate\Support\Facades {
         {
             //Method inherited from \Illuminate\Queue\Queue 
             \Laravel\Horizon\RedisQueue::createPayloadUsing($callback);
+        }
+
+        /**
+         * Get the queue configuration array.
+         *
+         * @return array
+         * @static
+         */
+        public static function getConfig()
+        {
+            //Method inherited from \Illuminate\Queue\Queue 
+            /** @var \Laravel\Horizon\RedisQueue $instance */
+            return $instance->getConfig();
+        }
+
+        /**
+         * Set the queue configuration array.
+         *
+         * @param array $config
+         * @return \Laravel\Horizon\RedisQueue
+         * @static
+         */
+        public static function setConfig($config)
+        {
+            //Method inherited from \Illuminate\Queue\Queue 
+            /** @var \Laravel\Horizon\RedisQueue $instance */
+            return $instance->setConfig($config);
         }
 
         /**
@@ -18034,7 +18085,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Specify the cache store that should be used to store mutexes.
          *
-         * @param string $store
+         * @param \UnitEnum|string $store
          * @return \Illuminate\Console\Scheduling\Schedule
          * @static
          */
@@ -23565,65 +23616,6 @@ namespace Jenssegers\Agent\Facades {
             }
     }
 
-namespace Laravel\Mcp\Server\Facades {
-    /**
-     * @see \Laravel\Mcp\Server\Registrar
-     */
-    class Mcp {
-        /**
-         * Register an web-based MCP server running over HTTP.
-         *
-         * @static
-         */
-        public static function web($handle, $serverClass)
-        {
-            /** @var \Laravel\Mcp\Server\Registrar $instance */
-            return $instance->web($handle, $serverClass);
-        }
-
-        /**
-         * Register a local MCP server running over STDIO.
-         *
-         * @static
-         */
-        public static function local($handle, $serverClass)
-        {
-            /** @var \Laravel\Mcp\Server\Registrar $instance */
-            return $instance->local($handle, $serverClass);
-        }
-
-        /**
-         * Get the server class for a local MCP.
-         *
-         * @static
-         */
-        public static function getLocalServer($handle)
-        {
-            /** @var \Laravel\Mcp\Server\Registrar $instance */
-            return $instance->getLocalServer($handle);
-        }
-
-        /**
-         * @static
-         */
-        public static function getWebServer($handle)
-        {
-            /** @var \Laravel\Mcp\Server\Registrar $instance */
-            return $instance->getWebServer($handle);
-        }
-
-        /**
-         * @static
-         */
-        public static function oauthRoutes($oauthPrefix = 'oauth')
-        {
-            /** @var \Laravel\Mcp\Server\Registrar $instance */
-            return $instance->oauthRoutes($oauthPrefix);
-        }
-
-            }
-    }
-
 namespace Laravel\Pulse\Facades {
     /**
      * @method static void store(\Illuminate\Support\Collection $items)
@@ -25250,6 +25242,48 @@ namespace Livewire\Features\SupportTesting {
         }
 
         /**
+         * @see \Filament\Actions\Testing\TestsActions::assertMountedActionModalSee()
+         * @param array|string $values
+         * @param mixed $escape
+         * @static
+         */
+        public static function assertMountedActionModalSee($values, $escape = true)
+        {
+            return \Livewire\Features\SupportTesting\Testable::assertMountedActionModalSee($values, $escape);
+        }
+
+        /**
+         * @see \Filament\Actions\Testing\TestsActions::assertMountedActionModalDontSee()
+         * @param array|string $values
+         * @param bool $escape
+         * @static
+         */
+        public static function assertMountedActionModalDontSee($values, $escape = true)
+        {
+            return \Livewire\Features\SupportTesting\Testable::assertMountedActionModalDontSee($values, $escape);
+        }
+
+        /**
+         * @see \Filament\Actions\Testing\TestsActions::assertMountedActionModalSeeHtml()
+         * @param array|string $values
+         * @static
+         */
+        public static function assertMountedActionModalSeeHtml($values)
+        {
+            return \Livewire\Features\SupportTesting\Testable::assertMountedActionModalSeeHtml($values);
+        }
+
+        /**
+         * @see \Filament\Actions\Testing\TestsActions::assertMountedActionModalDontSeeHtml()
+         * @param array|string $values
+         * @static
+         */
+        public static function assertMountedActionModalDontSeeHtml($values)
+        {
+            return \Livewire\Features\SupportTesting\Testable::assertMountedActionModalDontSeeHtml($values);
+        }
+
+        /**
          * @see \Filament\Actions\Testing\TestsActions::assertActionMounted()
          * @param \Filament\Actions\Testing\TestAction|array|string $actions
          * @return static
@@ -25318,6 +25352,16 @@ namespace Livewire\Features\SupportTesting {
         public static function parseNestedActions($actions, $arguments = [], $areRelativeToMountedActions = true)
         {
             return \Livewire\Features\SupportTesting\Testable::parseNestedActions($actions, $arguments, $areRelativeToMountedActions);
+        }
+
+        /**
+         * @see \Filament\Actions\Testing\TestsActions::getMountedActionModalHtml()
+         * @return string
+         * @static
+         */
+        public static function getMountedActionModalHtml()
+        {
+            return \Livewire\Features\SupportTesting\Testable::getMountedActionModalHtml();
         }
 
         /**
@@ -27364,6 +27408,17 @@ namespace Livewire\Features\SupportTesting {
         }
 
         /**
+         * @see \Filament\Tables\Testing\TestsColumns::toggleAllTableColumns()
+         * @param bool $condition
+         * @return static
+         * @static
+         */
+        public static function toggleAllTableColumns($condition = true)
+        {
+            return \Livewire\Features\SupportTesting\Testable::toggleAllTableColumns($condition);
+        }
+
+        /**
          * @see \Filament\Tables\Testing\TestsFilters::filterTable()
          * @param string $name
          * @param mixed $data
@@ -27565,6 +27620,83 @@ namespace Illuminate\Routing {
             }
     }
 
+namespace App\Filament\Pages\Auth {
+    /**
+     */
+    class AccountSuspended extends \Filament\Pages\SimplePage {
+            }
+    /**
+     */
+    class Login extends \Filament\Auth\Pages\Login {
+            }
+    /**
+     */
+    class Register extends \Filament\Auth\Pages\Register {
+            }
+    /**
+     */
+    class RequestPasswordReset extends \Filament\Auth\Pages\PasswordReset\RequestPasswordReset {
+            }
+    /**
+     */
+    class VerificationPending extends \Filament\Pages\SimplePage {
+            }
+    }
+
+namespace Filament\Pages {
+    /**
+     */
+    class SimplePage extends \Filament\Pages\BasePage {
+            }
+    /**
+     */
+    class BasePage extends \Livewire\Component {
+            }
+    /**
+     */
+    class Page extends \Filament\Pages\BasePage {
+            }
+    /**
+     */
+    class Dashboard extends \Filament\Pages\Page {
+            }
+    }
+
+namespace Filament\Auth\Pages {
+    /**
+     * @property-read Action $registerAction
+     * @property-read Schema $form
+     * @property-read Schema $multiFactorChallengeForm
+     */
+    class Login extends \Filament\Pages\SimplePage {
+            }
+    /**
+     * @property-read Action $loginAction
+     * @property-read Schema $form
+     */
+    class Register extends \Filament\Pages\SimplePage {
+            }
+    /**
+     * @property-read Schema $form
+     */
+    class EditProfile extends \Filament\Pages\Page {
+            }
+    }
+
+namespace Filament\Auth\Pages\PasswordReset {
+    /**
+     * @property-read Action $loginAction
+     * @property-read Schema $form
+     */
+    class RequestPasswordReset extends \Filament\Pages\SimplePage {
+            }
+    /**
+     * @property-read Schema $form
+     */
+    class ResetPassword extends \Filament\Pages\SimplePage {
+            }
+    }
+
 namespace Filament\Livewire {
     /**
      */
@@ -27600,75 +27732,6 @@ namespace Filament\Notifications\Livewire {
     /**
      */
     class Notifications extends \Livewire\Component {
-            }
-    }
-
-namespace Filament\Auth\Pages {
-    /**
-     * @property-read Schema $form
-     */
-    class EditProfile extends \Filament\Pages\Page {
-            }
-    /**
-     * @property-read Action $registerAction
-     * @property-read Schema $form
-     * @property-read Schema $multiFactorChallengeForm
-     */
-    class Login extends \Filament\Pages\SimplePage {
-            }
-    /**
-     * @property-read Action $loginAction
-     * @property-read Schema $form
-     */
-    class Register extends \Filament\Pages\SimplePage {
-            }
-    }
-
-namespace Filament\Pages {
-    /**
-     */
-    class Page extends \Filament\Pages\BasePage {
-            }
-    /**
-     */
-    class BasePage extends \Livewire\Component {
-            }
-    /**
-     */
-    class SimplePage extends \Filament\Pages\BasePage {
-            }
-    /**
-     */
-    class Dashboard extends \Filament\Pages\Page {
-            }
-    }
-
-namespace Filament\Auth\Pages\EmailVerification {
-    /**
-     * @property-read Action $resendNotificationAction
-     */
-    class EmailVerificationPrompt extends \Filament\Pages\SimplePage {
-            }
-    }
-
-namespace App\Filament\Pages\Auth {
-    /**
-     */
-    class Login extends \Filament\Auth\Pages\Login {
-            }
-    }
-
-namespace Filament\Auth\Pages\PasswordReset {
-    /**
-     * @property-read Action $loginAction
-     * @property-read Schema $form
-     */
-    class RequestPasswordReset extends \Filament\Pages\SimplePage {
-            }
-    /**
-     * @property-read Schema $form
-     */
-    class ResetPassword extends \Filament\Pages\SimplePage {
             }
     }
 
@@ -27713,11 +27776,13 @@ namespace Filament\Resources\Pages {
     class Page extends \Filament\Pages\Page {
             }
     /**
+     * @template TModel of Model = Model
      * @property-read Schema $form
      */
     class ViewRecord extends \Filament\Resources\Pages\Page {
             }
     /**
+     * @template TModel of Model = Model
      * @property-read Schema $form
      */
     class EditRecord extends \Filament\Resources\Pages\Page {
@@ -27754,6 +27819,36 @@ namespace Filament\Widgets {
             }
     }
 
+namespace App\Filament\Resources\Tenants\Pages {
+    /**
+     */
+    class CreateTenant extends \Filament\Resources\Pages\CreateRecord {
+            }
+    /**
+     */
+    class DeleteTenant extends \Filament\Resources\Pages\ViewRecord {
+            }
+    /**
+     */
+    class EditTenant extends \Filament\Resources\Pages\EditRecord {
+            }
+    /**
+     */
+    class ListTenants extends \Filament\Resources\Pages\ListRecords {
+            }
+    /**
+     */
+    class ViewTenant extends \Filament\Resources\Pages\ViewRecord {
+            }
+    }
+
+namespace App\Filament\Resources\Tenants\Widgets {
+    /**
+     */
+    class TenantStats extends \Filament\Widgets\StatsOverviewWidget {
+            }
+    }
+
 namespace App\Filament\Resources\Users\Pages {
     /**
      */
@@ -27784,25 +27879,25 @@ namespace App\Filament\Resources\Users\Widgets {
             }
     }
 
-namespace App\Filament\Clusters\PermissionRole\Pages {
+namespace App\Filament\Clusters\Permissions\Pages {
     /**
      */
-    class BasePermissionsPage extends \Filament\Pages\Page {
+    class BasePermissionPage extends \Filament\Pages\Page {
             }
     /**
      */
-    class MediaPermissions extends \App\Filament\Clusters\PermissionRole\Pages\BasePermissionsPage {
+    class MediaPermissions extends \App\Filament\Clusters\Permissions\Pages\BasePermissionPage {
             }
     /**
      */
-    class UserPermissions extends \App\Filament\Clusters\PermissionRole\Pages\BasePermissionsPage {
+    class UsersPermissions extends \App\Filament\Clusters\Permissions\Pages\BasePermissionPage {
             }
     }
 
-namespace App\Filament\Clusters\PermissionRole {
+namespace App\Filament\Clusters\Permissions {
     /**
      */
-    class PermissionRoleCluster extends \Filament\Clusters\Cluster {
+    class PermissionsCluster extends \Filament\Clusters\Cluster {
             }
     }
 
@@ -27816,7 +27911,15 @@ namespace Filament\Clusters {
 namespace App\Filament\Clusters\UserRole\Pages {
     /**
      */
-    class AssignRoles extends \Filament\Pages\Page {
+    class AssignRoleOwner extends \App\Filament\Clusters\UserRole\Pages\BaseAssignRolePage {
+            }
+    /**
+     */
+    class BaseAssignRolePage extends \Filament\Pages\Page {
+            }
+    /**
+     */
+    class AssignRoleUser extends \App\Filament\Clusters\UserRole\Pages\BaseAssignRolePage {
             }
     }
 
@@ -27824,6 +27927,13 @@ namespace App\Filament\Clusters\UserRole {
     /**
      */
     class UserRoleCluster extends \Filament\Clusters\Cluster {
+            }
+    }
+
+namespace App\Filament\Widgets {
+    /**
+     */
+    class SystemStats extends \Filament\Widgets\StatsOverviewWidget {
             }
     }
 
@@ -33284,7 +33394,6 @@ namespace  {
     class FilamentMediaAction extends \Hugomyb\FilamentMediaAction\Facades\FilamentMediaAction {}
     class Agent extends \Jenssegers\Agent\Facades\Agent {}
     class Horizon extends \Laravel\Horizon\Horizon {}
-    class Mcp extends \Laravel\Mcp\Server\Facades\Mcp {}
     class Pulse extends \Laravel\Pulse\Facades\Pulse {}
     class Flux extends \Flux\Flux {}
     class Livewire extends \Livewire\Livewire {}
