@@ -12,6 +12,6 @@
         "concurrently": "^3.5.1",
         "laravel-vite-plugin": "^2.0.0",
         "tailwindcss": "^4.1.11",
-        "vite": "^7.0.4"
+        "vite": "^7.1.12"
     }
 }
