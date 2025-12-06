@@ -9,7 +9,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.4",
+        "php": "^8.5",
         "blade-ui-kit/blade-heroicons": "^2.6",
         "devonab/filament-easy-footer": "^2.1.0",
         "filafly/brisk": "^1.0",

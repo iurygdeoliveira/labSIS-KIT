@@ -1,0 +1,16 @@
+{
+    "agents": [
+        "copilot",
+        "cursor",
+        "gemini"
+    ],
+    "editors": [
+        "cursor",
+        "gemini",
+        "vscode"
+    ],
+    "guidelines": [
+        "filament/filament"
+    ],
+    "sail": true
+}
