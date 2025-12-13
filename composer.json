@@ -24,7 +24,6 @@
         "laravel/sanctum": "^4.0",
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/flux": "^2.2",
-        "mwguerra/filemanager": "^0.1.4",
         "nesbot/carbon": "^3.10",
         "resend/resend-laravel": "^0.21.0",
         "spatie/laravel-permission": "^6.21"

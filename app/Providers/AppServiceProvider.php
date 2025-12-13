@@ -57,6 +57,7 @@ class AppServiceProvider extends ServiceProvider
         $this->configStorage();
         $this->configEvents();
         $this->configObservers();
+
     }
 
     private function configModels(): void
