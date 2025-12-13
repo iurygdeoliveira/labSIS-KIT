@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Resources\Media\MediaResource;
 use App\Filament\Resources\Users\UserResource;
+use App\Filament\Widgets\CustomStats;
 use App\Http\Middleware\TeamSyncMiddleware;
 use App\Models\Tenant;
 use Filament\Pages\Dashboard;
@@ -32,8 +33,9 @@ class UserPanelProvider extends BasePanelProvider
                 Dashboard::class,
             ])
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                // AccountWidget::class,
+                // FilamentInfoWidget::class,
+                CustomStats::class,
             ])
             ->middleware([
                 TeamSyncMiddleware::class,

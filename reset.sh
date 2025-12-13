@@ -47,10 +47,10 @@ rm -f bootstrap/cache/packages.php bootstrap/cache/services.php || true
 
 # Atualizar dependências do sistema (Composer) sem scripts para evitar Artisan durante estado inconsistente
 echo "📦 Atualizando dependências do Composer (sem scripts)..."
-composer update --no-scripts --optimize-autoloader
+./vendor/bin/sail composer update --no-scripts --optimize-autoloader
 
 # Regenerar autoload sem scripts
-composer dump-autoload -o --no-scripts
+./vendor/bin/sail composer dump-autoload -o --no-scripts
 
 # Executar migrations PRIMEIRO
 if [[ "$INSTALL_MODE" == "true" ]]; then
@@ -68,9 +68,40 @@ safe_artisan "clear-compiled" "Limpando arquivos compilados"
 safe_artisan "optimize:clear" "Limpando cache otimizado"
 safe_artisan "package:discover" "Redescobrindo pacotes"
 
+# Função para verificar e atualizar o NPM
+check_and_update_npm() {
+    echo "🔍 Verificando versão do NPM..."
+    
+    # Obter versão atual e remover possíveis quebras de linha/espaços em branco
+    local current_version
+    current_version=$(./vendor/bin/sail exec laravel.test npm -v 2>/dev/null | tr -d '[:space:]')
+    
+    # Obter versão mais recente
+    local latest_version
+    latest_version=$(./vendor/bin/sail exec laravel.test npm show npm version 2>/dev/null | tr -d '[:space:]')
+
+    if [ -z "$current_version" ] || [ -z "$latest_version" ]; then
+        echo "⚠️  Não foi possível verificar a versão do NPM. (Serviço rodando?)"
+        return
+    fi
+
+    echo "ℹ️  Versão atual: $current_version | Versão mais recente: $latest_version"
+
+    if [ "$current_version" != "$latest_version" ]; then
+        echo "🆙 Atualizando NPM para a versão mais recente..."
+        ./vendor/bin/sail exec laravel.test npm install -g npm@latest
+        echo "✅ NPM atualizado com sucesso!"
+    else
+        echo "✅ NPM já está na versão mais recente."
+    fi
+}
+
+# Verificar e atualizar NPM antes das dependências
+check_and_update_npm
+
 # Atualizar dependências do Node
 echo "📦 Atualizando dependências do NPM..."
-npm update || true
+./vendor/bin/sail npm update || true
 
 # Build para desenvolvimento
 echo "🔨 Executando build para desenvolvimento..."

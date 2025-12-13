@@ -1,11 +1,24 @@
 {
-    "mcpServers": {
-        "laravel-boost": {
-            "command": "vendor/bin/sail",
-            "args": [
-                "artisan",
-                "boost:mcp"
-            ]
-        }
+  "mcpServers": {
+    "laravel-boost": {
+      "command": "docker",
+      "args": [
+        "exec",
+        "-i",
+        "labsis-kit-laravel.test-1",
+        "php",
+        "/var/www/html/artisan",
+        "boost:mcp"
+      ],
+      "disabledTools": []
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "chrome-devtools-mcp@latest",
+        "--browser-url=http://localhost:9222",
+        "-y"
+      ]
     }
+  }
 }

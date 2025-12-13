@@ -3,11 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Configurators\FilamentComponentsConfigurator;
-use App\Filament\Widgets\SystemStats;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 
 class AdminPanelProvider extends BasePanelProvider
 {
@@ -28,11 +25,6 @@ class AdminPanelProvider extends BasePanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->pages([
                 Dashboard::class,
-            ])
-            ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
-                SystemStats::class,
             ])
             ->tenant(null, false);
 

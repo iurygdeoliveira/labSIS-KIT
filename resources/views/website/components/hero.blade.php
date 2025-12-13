@@ -42,7 +42,7 @@
                 x-transition:enter="transition ease-[cubic-bezier(0.23,1,0.32,1)] duration-1000 delay-600"
                 x-transition:enter-start="opacity-0 scale-90 translate-y-6"
                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                src="{{ asset('images/Capa.png') }}" alt="Ilustração"
+                src="{{ asset('images/Capa.png') }}" alt="Ilustração" fetchpriority="high"
                 class="rounded-2xl shadow-lg w-full max-w-md h-auto object-contain dark:bg-white/5 bg-white">
         </div>
     </div>

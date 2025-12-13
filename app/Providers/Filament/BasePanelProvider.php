@@ -24,6 +24,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use MWGuerra\FileManager\FileManagerPlugin;
 
 abstract class BasePanelProvider extends PanelProvider
 {
@@ -67,6 +68,7 @@ abstract class BasePanelProvider extends PanelProvider
     protected function applySharedPlugins(Panel $panel): Panel
     {
         return $panel
+            ->plugin(FileManagerPlugin::make())
             ->plugin(BriskTheme::make()->withoutSuggestedFont())
             ->plugin(
                 FilamentEditProfilePlugin::make()
