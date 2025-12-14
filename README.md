@@ -97,7 +97,6 @@ Em especial, agradecemos a:
 -   **Leandro Costa** ([@leandrocfe](https://github.com/leandrocfe)): Por suas valiosas contribuições e por compartilhar conhecimento de alta qualidade sobre Filament em seu canal [Filament Brasil no YouTube](https://www.youtube.com/@filamentbr), que foi fundamental para a implementação de diversas features neste projeto.
 -   **Nanderson Castro** ([@NandoKstroNet](https://github.com/NandoKstroNet)): Pelo excelente trabalho no canal [Code Experts](https://www.youtube.com/@codeexperts), que tem sido uma fonte valiosa de conhecimento técnico e boas práticas de desenvolvimento.
 -   **João Paulo Leite Nascimento** ([@joaopaulolndev](https://github.com/joaopaulolndev)): Pelo desenvolvimento do pacote [filament-edit-profile](https://github.com/joaopaulolndev/filament-edit-profile), que revolucionou a experiência de edição de perfil de usuários no Filament. Este pacote oferece uma solução completa e elegante para gerenciamento de perfis de usuário.
--   **Wallace Martins** ([@wallacemartinss](https://github.com/wallacemartinss)): Pela disponibilização do [website_template](https://github.com/wallacemartinss/website_template), que forneceu uma base excelente e moderna para a construção do portal público deste projeto.
 -   **Jeferson Gonçalves** ([@jeffersongoncalves](https://github.com/jeffersongoncalves)): Pelo desenvolvimento de diversos pacotes, que agregam grande valor a comunidade filament + laravel.
 
 O trabalho de vocês contribui significativamente para o avanço e a qualidade deste projeto.
@@ -130,19 +129,28 @@ O Kit oferece uma base sólida com os seguintes recursos já implementados:
 
 -   **Registro Histórico de Autenticações:** Monitoramento completo de acessos de usuários, com registros de login, logout e endereços IP, incluindo visualização detalhada no painel administrativo.
 
+## 🧩 Plugins Utilizados
+
+Este projeto integra diversos plugins e pacotes robustos para expandir suas funcionalidades. Abaixo, destacamos os componentes utilizados:
+
+-   **[Filament Easy Footer](https://github.com/devonab/filament-easy-footer):** Adiciona um rodapé customizável ao painel administrativo, permitindo fácil inclusão de links e informações de copyright.
+-   **[Filament Brisk Theme](https://github.com/filafly/brisk):** Um tema moderno e minimalista para o Filament, oferecendo uma estética visual aprimorada com suporte a modos claro e escuro.
+-   **[Filament Spatie Media Library](https://github.com/filamentphp/spatie-laravel-media-library-plugin):** Plugin oficial para integrar a poderosa biblioteca Spatie Media Library ao Filament, facilitando o upload e gestão de arquivos.
+-   **[Filament Media Action](https://github.com/hugomyb/filament-media-action):** Fornece ações adicionais para manipulação de mídias dentro do Filament, melhorando a experiência de gerenciamento de arquivos.
+-   **[Filament Edit Profile](https://github.com/joaopaulolndev/filament-edit-profile):** Solução completa para edição de perfil de usuário no painel, incluindo suporte para autenticação de dois fatores (2FA).
+-   **[Laravel Authentication Log](https://github.com/TappNetwork/filament-authentication-log):** Pacote backend que rastreia e registra atividades de autenticação dos usuários, como logins, logouts e dispositivos utilizados.
+
 ## 🛠️ Recomendação de Ferramentas de Desenvolvimento
 
 Este projeto utiliza um conjunto de ferramentas para garantir a qualidade, padronização e agilidade no desenvolvimento. Abaixo estão os pacotes incluídos no ambiente de desenvolvimento (`require-dev`):
 
 -   **[barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar):** Adiciona uma barra de depuração com informações úteis sobre a aplicação.
--   **[egyjs/dbml-to-laravel](https://github.com/egyjs/dbml-to-laravel):** Ferramenta para gerar migrações do Laravel a partir de um esquema DBML.
 -   **[fakerphp/faker](https://github.com/fakerphp/faker):** Gera dados falsos para popular o banco de dados em testes e seeders.
 -   **[larastan/larastan](https://github.com/larastan/larastan):** Realiza análise estática de código para encontrar bugs sem executar o código.
 -   **[laravel/boost](https://packagist.org/packages/laravel/boost):** Otimiza o desempenho de Agentes de IA para o desenvolvimento do sistema em ambiente de desenvolvimento.
 -   **[laravel/pint](https://github.com/laravel/pint):** Formata o código PHP para seguir um padrão de estilo consistente (PSR-12).
 -   **[laravel/sail](https://github.com/laravel/sail):** Ambiente de desenvolvimento local completo baseado em Docker.
 -   **[laravel/tinker](https://github.com/laravel/tinker):** Console interativo (REPL) para executar código no contexto da aplicação.
--   **[leonardolima/laravel-security-check](https://github.com/leonardolima/laravel-security-check):** Verifica dependências do Composer em busca de vulnerabilidades de segurança.
 -   **[lucascudo/laravel-pt-br-localization](https://github.com/lucascudo/laravel-pt-br-localization):** Fornece traduções e configurações para a localização em português do Brasil.
 -   **[pestphp/pest](https://github.com/pestphp/pest):** Framework de testes elegante e focado no desenvolvedor para PHP.
 
