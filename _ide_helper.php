@@ -24751,44 +24751,6 @@ namespace Livewire {
             }
     }
 
-namespace Tapp\FilamentLibrary\Facades {
-    /**
-     * @see \Tapp\FilamentLibrary\FilamentLibrary
-     */
-    class FilamentLibrary {
-        /**
-         * Get the plugin version.
-         *
-         * @static
-         */
-        public static function version()
-        {
-            return \Tapp\FilamentLibrary\FilamentLibrary::version();
-        }
-
-        /**
-         * Get the plugin name.
-         *
-         * @static
-         */
-        public static function name()
-        {
-            return \Tapp\FilamentLibrary\FilamentLibrary::name();
-        }
-
-        /**
-         * Get the plugin description.
-         *
-         * @static
-         */
-        public static function description()
-        {
-            return \Tapp\FilamentLibrary\FilamentLibrary::description();
-        }
-
-            }
-    }
-
 namespace Illuminate\Support {
     /**
      */
@@ -28132,6 +28094,13 @@ namespace App\Filament\Widgets {
     /**
      */
     class SystemStats extends \Filament\Widgets\StatsOverviewWidget {
+            }
+    }
+
+namespace Tapp\FilamentAuthenticationLog\Resources\AuthenticationLogResource\Pages {
+    /**
+     */
+    class ListAuthenticationLogs extends \Filament\Resources\Pages\ListRecords {
             }
     }
 
@@ -33595,7 +33564,6 @@ namespace  {
     class Pulse extends \Laravel\Pulse\Facades\Pulse {}
     class Flux extends \Flux\Flux {}
     class Livewire extends \Livewire\Livewire {}
-    class FilamentLibrary extends \Tapp\FilamentLibrary\Facades\FilamentLibrary {}
 }
 
 

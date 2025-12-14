@@ -25,8 +25,10 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/flux": "^2.2",
         "nesbot/carbon": "^3.10",
+        "rappasoft/laravel-authentication-log": "^5.0",
         "resend/resend-laravel": "^0.21.0",
-        "spatie/laravel-permission": "^6.21"
+        "spatie/laravel-permission": "^6.21",
+        "tapp/filament-authentication-log": "^5.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.6",

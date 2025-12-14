@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
+use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -91,6 +92,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 {
     use AppAuthenticationRecoveryCodes;
     use AppAuthenticationSecret;
+    use AuthenticationLoggable;
     use HasFactory;
     use HasRoles;
     use InteractsWithMedia;
