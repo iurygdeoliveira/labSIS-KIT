@@ -9,15 +9,6 @@
         "php",
         "/var/www/html/artisan",
         "boost:mcp"
-      ],
-      "disabledTools": []
-    },
-    "chrome-devtools": {
-      "command": "npx",
-      "args": [
-        "chrome-devtools-mcp@latest",
-        "--browser-url=http://localhost:9222",
-        "-y"
       ]
     }
   }

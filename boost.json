@@ -1,13 +1,9 @@
 {
     "agents": [
-        "copilot",
-        "cursor",
         "gemini"
     ],
     "editors": [
-        "cursor",
-        "gemini",
-        "vscode"
+        "gemini"
     ],
     "guidelines": [
         "filament/filament"
