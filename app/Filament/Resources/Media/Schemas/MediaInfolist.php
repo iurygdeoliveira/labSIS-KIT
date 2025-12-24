@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Media\Schemas;
 
+use App\Support\AppDateTime;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -32,18 +33,7 @@ class MediaInfolist
                         TextEntry::make('video_duration')
                             ->label('Duração do Vídeo')
                             ->state(fn ($record): ?int => $record->video()->value('duration_seconds'))
-                            ->formatStateUsing(function ($state): string {
-                                if (! is_numeric($state)) {
-                                    return '-';
-                                }
-
-                                $total = (int) $state;
-                                $hours = intdiv($total, 3600);
-                                $minutes = intdiv($total % 3600, 60);
-                                $seconds = $total % 60;
-
-                                return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
-                            })
+                            ->formatStateUsing(fn ($state) => self::formatVideoDuration($state))
                             ->visible(fn ($record): bool => (bool) $record->video),
 
                         MediaAction::make('open')
@@ -75,17 +65,7 @@ class MediaInfolist
 
                         TextEntry::make('created_at_display')
                             ->label('Data de Criação')
-                            ->state(function ($record): ?string {
-                                if ((bool) $record->video) {
-                                    $createdAt = $record->video()->value('created_at');
-
-                                    return $createdAt ? \Illuminate\Support\Carbon::parse($createdAt)->format('d/m/Y H:i') : null;
-                                }
-
-                                $media = $record->getFirstMedia('media');
-
-                                return $media?->created_at?->format('d/m/Y H:i');
-                            }),
+                            ->state(fn ($record) => self::resolveCreatedAt($record)),
                     ])
                     ->columns(2),
             ]);
@@ -123,5 +103,32 @@ class MediaInfolist
             'icon' => $icon,
             'media' => $url ?: null,
         ];
+    }
+
+    private static function formatVideoDuration($state): string
+    {
+        if (! is_numeric($state)) {
+            return '-';
+        }
+
+        $total = (int) $state;
+        $hours = intdiv($total, 3600);
+        $minutes = intdiv($total % 3600, 60);
+        $seconds = $total % 60;
+
+        return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
+    }
+
+    private static function resolveCreatedAt($record): ?string
+    {
+        if ((bool) $record->video) {
+            $createdAt = $record->video()->value('created_at');
+
+            return $createdAt ? AppDateTime::parse($createdAt)->format('d/m/Y H:i') : null;
+        }
+
+        $media = $record->getFirstMedia('media');
+
+        return $media?->created_at?->format('d/m/Y H:i');
     }
 }

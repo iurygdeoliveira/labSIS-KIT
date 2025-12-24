@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\Tenants\Schemas;
 
+use App\Support\AppDateTime;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Carbon;
 
 class TenantInfolist
 {
@@ -27,11 +27,11 @@ class TenantInfolist
 
                         TextEntry::make('created_at')
                             ->label('Criado em')
-                            ->formatStateUsing(fn ($state): ?string => $state ? Carbon::parse($state)->format('d/m/Y H:i') : null),
+                            ->formatStateUsing(fn ($state): ?string => $state ? AppDateTime::parse($state)->format('d/m/Y H:i') : null),
 
                         TextEntry::make('updated_at')
                             ->label('Atualizado em')
-                            ->formatStateUsing(fn ($state): ?string => $state ? Carbon::parse($state)->format('d/m/Y H:i') : null),
+                            ->formatStateUsing(fn ($state): ?string => $state ? AppDateTime::parse($state)->format('d/m/Y H:i') : null),
                     ])
                     ->columns(2),
 

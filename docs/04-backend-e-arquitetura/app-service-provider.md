@@ -2,11 +2,11 @@
 
 ## 📋 Índice
 
-- [Introdução: O Papel de um Service Provider](#introdução-o-papel-de-um-service-provider)
-- [O Método `register()`](#o-método-register)
-- [O Método `boot()`](#o-método-boot)
-- [Análise das Configurações no `boot()`](#análise-das-configurações-no-boot)
-- [Conclusão](#conclusão)
+-   [Introdução: O Papel de um Service Provider](#introdução-o-papel-de-um-service-provider)
+-   [O Método `register()`](#o-método-register)
+-   [O Método `boot()`](#o-método-boot)
+-   [Análise das Configurações no `boot()`](#análise-das-configurações-no-boot)
+-   [Conclusão](#conclusão)
 
 ## Introdução: O Papel de um Service Provider
 
@@ -27,23 +27,21 @@ Dentro deste método, você deve apenas fazer "bindings" (ligações). Você nun
 ```php
 // app/Providers/AppServiceProvider.php
 
-use App\Http\Responses\LogoutResponse;
-use Filament\Auth\Http\Responses\Contracts\LogoutResponse as LogoutResponseContract;
-
 public function register(): void
 {
+    $this->app->bind(FilamentLoginResponse::class, LoginResponse::class);
     $this->app->bind(LogoutResponseContract::class, LogoutResponse::class);
+    $this->app->bind(\Filament\Auth\Http\Responses\Contracts\RegistrationResponse::class, \App\Http\Responses\RegistrationResponse::class);
+    $this->app->bind(SpatiePermissionsTeamResolver::class, AppSpatieTeamResolver::class);
 }
 ```
 
 **Propósito:**
 
-Esta linha de código está utilizando o padrão de Inversão de Controle para sobrescrever um comportamento padrão do Filament.
+O método `register` está sendo utilizado para sobrescrever implementações padrão de interfaces do Filament e do Spatie Permission, utilizando o Container de Serviço de Inversão de Controle (IoC) do Laravel.
 
-1.  **`LogoutResponseContract::class`**: Esta é uma interface (um "contrato") que o Filament usa para definir como uma resposta de logout deve se comportar.
-2.  **`LogoutResponse::class`**: Esta é a nossa implementação customizada, localizada em `app/Http/Responses/LogoutResponse.php`.
-
-Ao fazer o `bind`, estamos dizendo ao Laravel: "Sempre que alguma parte do código (neste caso, o Filament) pedir uma instância do `LogoutResponseContract`, não entregue a implementação padrão. Em vez disso, entregue uma instância da nossa classe `LogoutResponse`.". Isso nos permite controlar para qual página o usuário é redirecionado após fazer logout do painel administrativo, por exemplo.
+1.  **Respostas de Autenticação (`LoginResponse`, `LogoutResponse`, `RegistrationResponse`):** Sobrescrevemos as classes de resposta padrão do Filament para redirecionar os usuários para locais específicos após login, logout ou registro, personalizando o fluxo de navegação.
+2.  **`SpatiePermissionsTeamResolver`**: Vincula nossa implementação customizada (`AppSpatieTeamResolver`) para resolver o time/tenant atual para a verificação de permissões, essencial para o funcionamento correto do multi-tenancy.
 
 ## O Método `boot()`
 
@@ -107,8 +105,89 @@ private function configDate(): void
 
 **Propósito:**
 
+// ... (código anterior)
+Carbon::setLocale('pt_BR');
+}
+
+````
+
+**Propósito:**
+
 1.  **`Date::use(CarbonImmutable::class)`**: Define que, por padrão, o Laravel deve usar a classe `CarbonImmutable` em vez da `Carbon` padrão para manipulação de datas. Objetos imutáveis são mais seguros, pois qualquer modificação (ex: `->addDay()`) retorna uma *nova* instância da data, em vez de alterar a original. Isso evita bugs difíceis de rastrear causados por modificações inesperadas em objetos de data.
 2.  **`Carbon::setLocale('pt_BR')`**: Configura o idioma padrão da biblioteca Carbon para português do Brasil. Isso afeta a formatação de datas em funções como `diffForHumans()`, que passará a retornar valores como "há 2 minutos" em vez de "2 minutes ago".
+
+#### `configFilamentColors()` - Paleta de Cores do Painel
+
+Define as cores globais utilizadas pelos painéis do Filament.
+
+```php
+private function configFilamentColors(): void
+{
+    FilamentColor::register([
+        'danger' => Color::hex('#D93223'),
+        'warning' => Color::hex('#F28907'),
+        'success' => Color::hex('#52a0fa'),
+        'primary' => Color::hex('#014029'),
+        'secondary' => Color::Gray,
+    ]);
+}
+````
+
+**Propósito:** Centraliza a definição da paleta de cores, garantindo consistência visual em todos os componentes do Filament (botões, badges, notificações, etc.).
+
+#### `configStorage()` - Configuração de Armazenamento (MinIO/S3)
+
+Esta configuração garante que a estrutura de diretórios necessária exista no serviço de armazenamento (como MinIO ou AWS S3).
+
+```php
+private function configStorage(): void
+{
+    // ...
+    Storage::disk('s3')->makeDirectory($directory);
+    Storage::disk('s3')->put("{$directory}/.keep", '', ['visibility' => 'private']);
+    // ...
+}
+```
+
+**Propósito:** Automatiza a criação de pastas essenciais (`audios`, `images`, `documents`, `avatar`) no bucket S3 ao iniciar a aplicação, prevenindo erros de upload por falta de diretório.
+
+#### `configEvents()` e `configObservers()` - Eventos e Observadores
+
+Registra ouvintes de eventos e observadores de modelos.
+
+```php
+private function configEvents(): void
+{
+    $this->app['events']->listen(UserRegistered::class, NotifyAdminNewUser::class);
+    $this->app['events']->listen(UserApproved::class, SendUserApprovedEmail::class);
+}
+
+private function configObservers(): void
+{
+    Video::observe(VideoObserver::class);
+    AppUser::observe(UserObserver::class);
+}
+```
+
+**Propósito:** Centraliza o registro de lógica reativa.
+
+-   **Listeners:** Reagem a eventos como "Usuário Registrado" ou "Usuário Aprovado" para enviar notificações ou emails.
+-   **Observers:** Observam mudanças nos modelos `Video` e `User` para executar ações automáticas (como limpar cache ou criar logs) quando registros são criados, atualizados ou excluídos.
+
+#### `configGates()` - Portões de Autorização
+
+Define regras de autorização globais que não estão atreladas a um modelo específico (Policies).
+
+```php
+private function configGates(): void
+{
+    Gate::define('viewPulse', function (AppUser $user) {
+        return $user->hasRole('admin');
+    });
+}
+```
+
+**Propósito:** Define o Gate `viewPulse`, que protege o acesso ao dashboard do **Laravel Pulse**, garantindo que apenas usuários com o papel de `admin` possam visualizar as métricas de performance do sistema.
 
 ## Conclusão
 

@@ -13296,30 +13296,17 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
-         * Get the number of queue jobs that are ready to process.
-         *
-         * @param string|null $queue
-         * @return int
-         * @static
-         */
-        public static function readyNow($queue = null)
-        {
-            /** @var \Laravel\Horizon\RedisQueue $instance */
-            return $instance->readyNow($queue);
-        }
-
-        /**
          * Migrate the delayed jobs that are ready to the regular queue.
          *
          * @param string $from
          * @param string $to
-         * @return void
+         * @return array
          * @static
          */
         public static function migrateExpiredJobs($from, $to)
         {
-            /** @var \Laravel\Horizon\RedisQueue $instance */
-            $instance->migrateExpiredJobs($from, $to);
+            /** @var \Illuminate\Queue\RedisQueue $instance */
+            return $instance->migrateExpiredJobs($from, $to);
         }
 
         /**
@@ -13332,7 +13319,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function deleteReserved($queue, $job)
         {
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             $instance->deleteReserved($queue, $job);
         }
 
@@ -13347,7 +13334,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function deleteAndRelease($queue, $job, $delay)
         {
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             $instance->deleteAndRelease($queue, $job, $delay);
         }
 
@@ -13360,8 +13347,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function clear($queue)
         {
-            //Method inherited from \Illuminate\Queue\RedisQueue 
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             return $instance->clear($queue);
         }
 
@@ -13374,8 +13360,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function getQueue($queue)
         {
-            //Method inherited from \Illuminate\Queue\RedisQueue 
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             return $instance->getQueue($queue);
         }
 
@@ -13387,8 +13372,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function getConnection()
         {
-            //Method inherited from \Illuminate\Queue\RedisQueue 
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             return $instance->getConnection();
         }
 
@@ -13400,8 +13384,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function getRedis()
         {
-            //Method inherited from \Illuminate\Queue\RedisQueue 
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             return $instance->getRedis();
         }
 
@@ -13415,7 +13398,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobTries($job)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             return $instance->getJobTries($job);
         }
 
@@ -13429,7 +13412,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobBackoff($job)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             return $instance->getJobBackoff($job);
         }
 
@@ -13443,7 +13426,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobExpiration($job)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             return $instance->getJobExpiration($job);
         }
 
@@ -13457,7 +13440,7 @@ namespace Illuminate\Support\Facades {
         public static function createPayloadUsing($callback)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            \Laravel\Horizon\RedisQueue::createPayloadUsing($callback);
+            \Illuminate\Queue\RedisQueue::createPayloadUsing($callback);
         }
 
         /**
@@ -13469,7 +13452,7 @@ namespace Illuminate\Support\Facades {
         public static function getConfig()
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             return $instance->getConfig();
         }
 
@@ -13477,13 +13460,13 @@ namespace Illuminate\Support\Facades {
          * Set the queue configuration array.
          *
          * @param array $config
-         * @return \Laravel\Horizon\RedisQueue
+         * @return \Illuminate\Queue\RedisQueue
          * @static
          */
         public static function setConfig($config)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             return $instance->setConfig($config);
         }
 
@@ -13496,7 +13479,7 @@ namespace Illuminate\Support\Facades {
         public static function getContainer()
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             return $instance->getContainer();
         }
 
@@ -13510,7 +13493,7 @@ namespace Illuminate\Support\Facades {
         public static function setContainer($container)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Laravel\Horizon\RedisQueue $instance */
+            /** @var \Illuminate\Queue\RedisQueue $instance */
             $instance->setContainer($container);
         }
 
@@ -27781,6 +27764,16 @@ namespace Illuminate\Routing {
             return \Illuminate\Routing\Route::permission($permissions);
         }
 
+        /**
+         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
+         * @param mixed $rolesOrPermissions
+         * @static
+         */
+        public static function roleOrPermission($rolesOrPermissions = [])
+        {
+            return \Illuminate\Routing\Route::roleOrPermission($rolesOrPermissions);
+        }
+
             }
     }
 
@@ -33560,13 +33553,17 @@ namespace  {
     class FilamentEasyFooter extends \Devonab\FilamentEasyFooter\Facades\EasyFooter {}
     class FilamentMediaAction extends \Hugomyb\FilamentMediaAction\Facades\FilamentMediaAction {}
     class Agent extends \Jenssegers\Agent\Facades\Agent {}
-    class Horizon extends \Laravel\Horizon\Horizon {}
     class Pulse extends \Laravel\Pulse\Facades\Pulse {}
     class Flux extends \Flux\Flux {}
     class Livewire extends \Livewire\Livewire {}
 }
 
 
+namespace Facades\Livewire\Features\SupportFileUploads {
+    /**
+     * @mixin \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl     */
+    class GenerateSignedUploadUrl extends \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl {}
+}
 
 
 

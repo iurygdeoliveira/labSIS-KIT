@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Media\Tables;
 use App\Filament\Resources\Media\Actions\DeleteMediaAction;
 use App\Models\MediaItem as MediaItemModel;
 use App\Models\Tenant;
+use App\Support\AppDateTime;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -12,7 +13,6 @@ use Filament\Actions\ViewAction;
 use Filament\Facades\Filament;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Support\Carbon;
 
 class MediaTable
 {
@@ -30,21 +30,7 @@ class MediaTable
                         return $record->getFirstMedia('media')?->name ?? '—';
                     })
                     ->searchable(isIndividual: true, isGlobal: false)
-                    ->sortable(true, function ($query, $direction) {
-                        $query
-                            ->leftJoin('videos', 'videos.media_item_id', '=', 'media_items.id')
-                            ->leftJoin('media', function ($join) {
-                                $join->on('media.model_id', '=', 'media_items.id')
-                                    ->where('media.model_type', '=', MediaItemModel::class)
-                                    ->where('media.collection_name', '=', 'media');
-                            })
-                            ->orderByRaw(
-                                'CASE WHEN media_items.video THEN COALESCE(videos.title, \"\") ELSE COALESCE(media.name, \"\") END '.($direction === 'desc' ? 'desc' : 'asc')
-                            )
-                            ->select('media_items.*');
-
-                        return $query;
-                    }),
+                    ->sortable(true, fn ($query, $direction) => self::sortAttachmentName($query, $direction)),
                 TextColumn::make('file_type')
                     ->label('Tipo')
                     ->badge()
@@ -62,27 +48,10 @@ class MediaTable
                     }),
                 TextColumn::make('created_at_display')
                     ->label('Criado em')
-                    ->state(function ($record) {
-                        if ((bool) ($record->video ?? false)) {
-                            $createdAt = $record->video?->created_at;
-
-                            return $createdAt ? Carbon::parse($createdAt)->format('d/m/Y H:i') : '—';
-                        }
-
-                        $media = $record->getFirstMedia('media');
-
-                        return $media?->created_at?->format('d/m/Y H:i') ?? '—';
-                    }),
+                    ->state(fn ($record) => self::resolveCreatedAt($record)),
                 TextColumn::make('tenant.name')
                     ->label('Tenant')
-                    ->state(function ($record) {
-                        $tenantId = $record->tenant_id ?? null;
-                        if (! $tenantId) {
-                            return Filament::hasTenancy() ? '—' : 'Global';
-                        }
-
-                        return Tenant::query()->whereKey($tenantId)->value('name') ?? '—';
-                    })
+                    ->state(fn ($record) => self::resolveTenantName($record))
                     ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
@@ -99,5 +68,45 @@ class MediaTable
                 ]),
             ])
             ->defaultSort('id', 'desc');
+    }
+
+    private static function sortAttachmentName($query, $direction)
+    {
+        $query
+            ->leftJoin('videos', 'videos.media_item_id', '=', 'media_items.id')
+            ->leftJoin('media', function ($join) {
+                $join->on('media.model_id', '=', 'media_items.id')
+                    ->where('media.model_type', '=', MediaItemModel::class)
+                    ->where('media.collection_name', '=', 'media');
+            })
+            ->orderByRaw(
+                'CASE WHEN media_items.video THEN COALESCE(videos.title, "") ELSE COALESCE(media.name, "") END '.($direction === 'desc' ? 'desc' : 'asc')
+            )
+            ->select('media_items.*');
+
+        return $query;
+    }
+
+    private static function resolveCreatedAt($record): string
+    {
+        if ((bool) ($record->video ?? false)) {
+            $createdAt = $record->video?->created_at;
+
+            return $createdAt ? AppDateTime::parse($createdAt)->format('d/m/Y H:i') : '—';
+        }
+
+        $media = $record->getFirstMedia('media');
+
+        return $media?->created_at?->format('d/m/Y H:i') ?? '—';
+    }
+
+    private static function resolveTenantName($record): string
+    {
+        $tenantId = $record->tenant_id ?? null;
+        if (! $tenantId) {
+            return Filament::hasTenancy() ? '—' : 'Global';
+        }
+
+        return Tenant::query()->whereKey($tenantId)->value('name') ?? '—';
     }
 }

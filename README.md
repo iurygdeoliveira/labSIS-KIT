@@ -29,22 +29,38 @@ Toda a documentação sobre como utilizar os recursos, padrões e arquitetura de
 
 Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](https://deepwiki.com/iurygdeoliveira/labSIS-SaaS-KIT-V4) e [Context7](https://context7.com/iurygdeoliveira/labsis-saas-kit-v4), que auxiliam o leitor a explorar o código e compreender as implementações por meio de buscas contextuais e respostas explicativas.
 
--   [**Autenticação de Dois Fatores (2FA) no Filament**](/docs/autenticacao-2fa.md)
--   [**Cores no Filament**](/docs/cores-filament.md)
--   [**Customização da Aparência do Painel**](/docs/customizando-layout.md)
--   [**Customização de Logotipo**](/docs/customizando-logo.md)
--   [**Edição de Perfil no Filament**](/docs/edicao-perfil.md)
--   [**Entendendo o AppServiceProvider**](/docs/app-service-provider.md)
--   [**Fluxo de Registro de Novos Usuários**](/docs/fluxo-de-registro-de-novos-usuarios.md)
--   [**Gestão de mídias**](/docs/gestao-de-midia.md)
--   [**Otimização com #[Computed]**](/docs/livewire-computed.md)
--   [**Login Unificado**](/docs/login-unificado.md)
--   [**Notificações**](/docs/notifications-trait.md)
--   [**Roles/Permissions**](/docs/roles-e-permissions.md)
--   [**Suspensão de Usuários**](/docs/suspensao-usuarios.md)
--   [**Gestão de Tenants**](/docs/tenancy-e-teams.md)
--   [**Utilizando Enumerações (Enums) com Filament**](/docs/enums.md)
--   [**Widgets no Filament**](/docs/widgets-filament.md)
+### Autenticação e Segurança
+
+-   [**Autenticação de Dois Fatores (2FA) no Filament**](/docs/02-autenticacao-e-seguranca/autenticacao-2fa.md)
+-   [**Checklist de Segurança**](/docs/02-autenticacao-e-seguranca/checklist-de-seguranca.md)
+-   [**Edição de Perfil no Filament**](/docs/02-autenticacao-e-seguranca/edicao-perfil.md)
+-   [**Fluxo de Registro de Novos Usuários**](/docs/02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.md)
+-   [**Login Unificado**](/docs/02-autenticacao-e-seguranca/login-unificado.md)
+-   [**Roles/Permissions**](/docs/02-autenticacao-e-seguranca/roles-e-permissions.md)
+-   [**Suspensão de Usuários**](/docs/02-autenticacao-e-seguranca/suspensao-usuarios.md)
+-   [**Gestão de Tenants**](/docs/02-autenticacao-e-seguranca/tenancy-e-teams.md)
+
+### UI e Customização
+
+-   [**Cores no Filament**](/docs/03-ui-e-customizacao/cores-filament.md)
+-   [**Customização da Aparência do Painel**](/docs/03-ui-e-customizacao/customizando-layout.md)
+-   [**Customização de Logotipo**](/docs/03-ui-e-customizacao/customizando-logo.md)
+-   [**Widgets no Filament**](/docs/03-ui-e-customizacao/widgets-filament.md)
+
+### Backend e Arquitetura
+
+-   [**Entendendo o AppServiceProvider**](/docs/04-backend-e-arquitetura/app-service-provider.md)
+-   [**Gestão de mídias**](/docs/04-backend-e-arquitetura/gestao-de-midia.md)
+-   [**Notificações**](/docs/04-backend-e-arquitetura/notifications-trait.md)
+-   [**Utilizando Enumerações (Enums) com Filament**](/docs/04-backend-e-arquitetura/enums.md)
+-   [**Padronização de Data e Hora**](/docs/04-backend-e-arquitetura/padrao-datetime.md)
+
+### Otimizações
+
+-   [**Otimização com #[Computed]**](/docs/05-otimizacoes/livewire-computed.md)
+-   [**Cache e Redis**](/docs/05-otimizacoes/cache-e-redis.md)
+-   [**Otimização de Cache de Página com Cloudflare**](/docs/05-otimizacoes/cloudflare-page-cache.md)
+-   [**Laravel Pulse**](/docs/05-otimizacoes/laravel-pulse.md)
 
 ## Pré-requisitos
 
@@ -58,8 +74,8 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 
 ## Como realizar a instalação
 
--   [Instalação via Laravel Installer](/docs/instalacao-via-laravel-installer.md)
--   [Instalação manual (clonando o repositório)](/docs/instalacao-manual.md)
+-   [Instalação via Laravel Installer](/docs/01-instalacao-e-setup/instalacao-via-laravel-installer.md)
+-   [Instalação manual (clonando o repositório)](/docs/01-instalacao-e-setup/instalacao-manual.md)
 
 ## Primeiro acesso
 

@@ -24,6 +24,7 @@ use Filament\Support\Facades\FilamentColor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -57,7 +58,15 @@ class AppServiceProvider extends ServiceProvider
         $this->configStorage();
         $this->configEvents();
         $this->configObservers();
+        $this->configGates();
 
+    }
+
+    private function configGates(): void
+    {
+        Gate::define('viewPulse', function (AppUser $user) {
+            return $user->hasRole('admin');
+        });
     }
 
     private function configModels(): void
