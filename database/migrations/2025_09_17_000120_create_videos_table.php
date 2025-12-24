@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
 
             $table->foreignId('tenant_id')->nullable()->after('id')->constrained('tenants')->nullOnDelete();
 

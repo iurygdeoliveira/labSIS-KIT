@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-
 /**
  * @property int $id
  * @property \Carbon\CarbonImmutable|null $created_at
@@ -33,15 +32,18 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  *
  * @mixin \Eloquent
  */
+use Spatie\MediaLibrary\InteractsWithMedia;
+
 class MediaItem extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, UuidTrait;
 
     protected $table = 'media_items';
 
     public $timestamps = false;
 
     protected $fillable = [
+        'uuid',
         'name',
         'video',
         'mime_type',

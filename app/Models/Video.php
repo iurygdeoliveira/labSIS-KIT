@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 /**
  * @property int $id
  * @property int $media_item_id
@@ -35,11 +34,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @mixin \Eloquent
  */
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class Video extends Model
 {
-    use HasFactory;
+    use HasFactory, UuidTrait;
 
     protected $fillable = [
+        'uuid',
         'media_item_id',
         'provider',
         'provider_video_id',
