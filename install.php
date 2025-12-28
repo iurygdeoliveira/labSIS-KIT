@@ -239,8 +239,12 @@ function checkDockerCompose(): bool
         return false;
     }
 
-    // Verificar se é versão 2+
-    return str_contains($output, 'v2') || str_contains($output, '2.');
+    // Verificar se é versão 2 ou superior
+    if (preg_match('/version v?(\d+)/i', $output, $matches)) {
+        return (int) $matches[1] >= 2;
+    }
+
+    return false;
 }
 
 /**
