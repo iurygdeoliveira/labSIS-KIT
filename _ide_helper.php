@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 12.42.0.
+ * Generated for Laravel 12.44.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -4194,7 +4194,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Create a new assertion about a chained batch.
          *
-         * @param \Closure $callback
+         * @param \Closure(\Illuminate\Bus\PendingBatch):  bool  $callback
          * @return \Illuminate\Support\Testing\Fakes\ChainedBatchTruthTest
          * @static
          */
@@ -4207,7 +4207,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Assert if a batch was dispatched based on a truth-test callback.
          *
-         * @param callable $callback
+         * @param callable(\Illuminate\Bus\PendingBatch):  bool  $callback
          * @return void
          * @static
          */
@@ -4299,8 +4299,8 @@ namespace Illuminate\Support\Facades {
         /**
          * Get all of the pending batches matching a truth-test callback.
          *
-         * @param callable $callback
-         * @return \Illuminate\Support\Collection
+         * @param callable(\Illuminate\Bus\PendingBatch):  bool  $callback
+         * @return \Illuminate\Support\Collection<int, \Illuminate\Bus\PendingBatch>
          * @static
          */
         public static function batched($callback)
@@ -9121,7 +9121,7 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
-         * Guess the file extension from the mime-type of a given file.
+         * Guess the file extension from the MIME type of a given file.
          *
          * @param string $path
          * @return string|null
@@ -9148,7 +9148,7 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
-         * Get the mime-type of a given file.
+         * Get the MIME type of a given file.
          *
          * @param string $path
          * @return string|false
@@ -10143,6 +10143,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Http\Client\PendingRequest withResponseMiddleware(callable $middleware)
      * @method static \Illuminate\Http\Client\PendingRequest withAttributes(array $attributes)
      * @method static \Illuminate\Http\Client\PendingRequest beforeSending(callable $callback)
+     * @method static \Illuminate\Http\Client\PendingRequest afterResponse(callable|null $callback)
      * @method static \Illuminate\Http\Client\PendingRequest throw(callable|null $callback = null)
      * @method static \Illuminate\Http\Client\PendingRequest throwIf(callable|bool $condition)
      * @method static \Illuminate\Http\Client\PendingRequest throwUnless(callable|bool $condition)
@@ -10164,7 +10165,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Closure buildBeforeSendingHandler()
      * @method static \Closure buildRecorderHandler()
      * @method static \Closure buildStubHandler()
-     * @method static \GuzzleHttp\Psr7\RequestInterface runBeforeSendingCallbacks(\GuzzleHttp\Psr7\RequestInterface $request, array $options)
+     * @method static \Psr\Http\Message\RequestInterface runBeforeSendingCallbacks(\Psr\Http\Message\RequestInterface $request, array $options)
      * @method static array mergeOptions(array ...$options)
      * @method static \Illuminate\Http\Client\PendingRequest stub(callable $callback)
      * @method static bool isAllowedRequestUrl(string $url)
@@ -11485,6 +11486,20 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
             $instance->assertSent($mailable, $callback);
+        }
+
+        /**
+         * Assert if a mailable was sent a number of times.
+         *
+         * @param string $mailable
+         * @param int $times
+         * @return void
+         * @static
+         */
+        public static function assertSentTimes($mailable, $times = 1)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
+            $instance->assertSentTimes($mailable, $times);
         }
 
         /**
@@ -23784,6 +23799,669 @@ namespace Jenssegers\Agent\Facades {
             }
     }
 
+namespace Laravel\Nightwatch\Facades {
+    /**
+     * @see \Laravel\Nightwatch\Core
+     */
+    class Nightwatch {
+        /**
+         * @api
+         * @static
+         */
+        public static function user($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->user($callback);
+        }
+
+        /**
+         * @api
+         * @static
+         */
+        public static function guzzleMiddleware()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->guzzleMiddleware();
+        }
+
+        /**
+         * @internal
+         * @return \Laravel\Nightwatch\Core
+         * @static
+         */
+        public static function finishExecution()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->finishExecution();
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function enabled()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->enabled();
+        }
+
+        /**
+         * @api
+         * @static
+         */
+        public static function sample($rate = 1.0)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->sample($rate);
+        }
+
+        /**
+         * @api
+         * @static
+         */
+        public static function dontSample()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->dontSample();
+        }
+
+        /**
+         * @api
+         * @static
+         */
+        public static function sampling()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->sampling();
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function configureRequestSampling()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->configureRequestSampling();
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function configureCommandSampling($command)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->configureCommandSampling($command);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function configureScheduledTaskSampling($event)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->configureScheduledTaskSampling($event);
+        }
+
+        /**
+         * @api
+         * @static
+         */
+        public static function captureDefaultVendorCommands($capture = true)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->captureDefaultVendorCommands($capture);
+        }
+
+        /**
+         * @api
+         * @return list<string>
+         * @static
+         */
+        public static function defaultVendorCommands()
+        {
+            return \Laravel\Nightwatch\Core::defaultVendorCommands();
+        }
+
+        /**
+         * @api
+         * @static
+         */
+        public static function ignore($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->ignore($callback);
+        }
+
+        /**
+         * @api
+         * @static
+         */
+        public static function resume()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->resume();
+        }
+
+        /**
+         * @api
+         * @static
+         */
+        public static function pause()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->pause();
+        }
+
+        /**
+         * @api
+         * @static
+         */
+        public static function paused()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->paused();
+        }
+
+        /**
+         * @api
+         * @static
+         */
+        public static function report($e, $handled = null)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->report($e, $handled);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function log($log)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->log($log);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function outgoingRequest($startMicrotime, $endMicrotime, $request, $response)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->outgoingRequest($startMicrotime, $endMicrotime, $request, $response);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function query($event)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->query($event);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function queuedJob($event)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->queuedJob($event);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function notification($event)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->notification($event);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function mail($event)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->mail($event);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function cacheEvent($event)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->cacheEvent($event);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function stage($stage)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->stage($stage);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function executionStageIs($stage)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->executionStageIs($stage);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function remember($user)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->remember($user);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function captureUser()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->captureUser();
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function request($request, $response)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->request($request, $response);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function jobAttempt($event)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->jobAttempt($event);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function captureRequestPreview($request)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->captureRequestPreview($request);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function captureRequestRouteAction($routeAction)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->captureRequestRouteAction($routeAction);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function attachMiddlewareToRoute($route)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->attachMiddlewareToRoute($route);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function waitForExecution()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->waitForExecution();
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function configureForJobs()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->configureForJobs();
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function prepareForNextJob()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->prepareForNextJob();
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function prepareForJob($job)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->prepareForJob($job);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function captureArtisan($artisan)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->captureArtisan($artisan);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function prepareForCommand($name)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->prepareForCommand($name);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function capturingCommandNamed($name)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->capturingCommandNamed($name);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function command($input, $status)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->command($input, $status);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function configureForScheduledTasks()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->configureForScheduledTasks();
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function prepareForNextScheduledTask($event)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->prepareForNextScheduledTask($event);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function scheduledTask($event)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->scheduledTask($event);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function prepareForNextRequest()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->prepareForNextRequest();
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function shouldCaptureLogs()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->shouldCaptureLogs();
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function sampleScheduledTask($event, $rate)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->sampleScheduledTask($event, $rate);
+        }
+
+        /**
+         * @internal
+         * @static
+         */
+        public static function flush()
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->flush();
+        }
+
+        /**
+         * @api
+         * @param callable(Exception):  bool  $callback
+         * @static
+         */
+        public static function redactExceptions($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->redactExceptions($callback);
+        }
+
+        /**
+         * @api
+         * @param callable(CacheEvent):  bool  $callback
+         * @static
+         */
+        public static function redactCacheEvents($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->redactCacheEvents($callback);
+        }
+
+        /**
+         * @api
+         * @param callable(Command):  bool  $callback
+         * @static
+         */
+        public static function redactCommands($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->redactCommands($callback);
+        }
+
+        /**
+         * @api
+         * @param callable(Mail):  bool  $callback
+         * @static
+         */
+        public static function redactMail($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->redactMail($callback);
+        }
+
+        /**
+         * @api
+         * @param callable(OutgoingRequest):  bool  $callback
+         * @static
+         */
+        public static function redactOutgoingRequests($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->redactOutgoingRequests($callback);
+        }
+
+        /**
+         * @api
+         * @param callable(Query):  bool  $callback
+         * @static
+         */
+        public static function redactQueries($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->redactQueries($callback);
+        }
+
+        /**
+         * @api
+         * @param callable(Request):  bool  $callback
+         * @static
+         */
+        public static function redactRequests($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->redactRequests($callback);
+        }
+
+        /**
+         * @api
+         * @param callable(CacheEvent):  bool  $callback
+         * @static
+         */
+        public static function rejectCacheEvents($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->rejectCacheEvents($callback);
+        }
+
+        /**
+         * @api
+         * @param list<string> $keys
+         * @static
+         */
+        public static function rejectCacheKeys($keys)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->rejectCacheKeys($keys);
+        }
+
+        /**
+         * @api
+         * @static
+         */
+        public static function captureDefaultVendorCacheKeys($capture = true)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->captureDefaultVendorCacheKeys($capture);
+        }
+
+        /**
+         * @api
+         * @return list<string>
+         * @static
+         */
+        public static function defaultVendorCacheKeys()
+        {
+            return \Laravel\Nightwatch\Core::defaultVendorCacheKeys();
+        }
+
+        /**
+         * @api
+         * @param callable(Mail):  bool  $callback
+         * @static
+         */
+        public static function rejectMail($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->rejectMail($callback);
+        }
+
+        /**
+         * @api
+         * @param callable(Notification):  bool  $callback
+         * @static
+         */
+        public static function rejectNotifications($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->rejectNotifications($callback);
+        }
+
+        /**
+         * @api
+         * @param callable(OutgoingRequest):  bool  $callback
+         * @static
+         */
+        public static function rejectOutgoingRequests($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->rejectOutgoingRequests($callback);
+        }
+
+        /**
+         * @api
+         * @param callable(Query):  bool  $callback
+         * @static
+         */
+        public static function rejectQueries($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->rejectQueries($callback);
+        }
+
+        /**
+         * @api
+         * @param callable(QueuedJob):  bool  $callback
+         * @static
+         */
+        public static function rejectQueuedJobs($callback)
+        {
+            /** @var \Laravel\Nightwatch\Core $instance */
+            return $instance->rejectQueuedJobs($callback);
+        }
+
+            }
+    }
+
 namespace Laravel\Pulse\Facades {
     /**
      * @method static void store(\Illuminate\Support\Collection $items)
@@ -33553,17 +34231,13 @@ namespace  {
     class FilamentEasyFooter extends \Devonab\FilamentEasyFooter\Facades\EasyFooter {}
     class FilamentMediaAction extends \Hugomyb\FilamentMediaAction\Facades\FilamentMediaAction {}
     class Agent extends \Jenssegers\Agent\Facades\Agent {}
+    class Nightwatch extends \Laravel\Nightwatch\Facades\Nightwatch {}
     class Pulse extends \Laravel\Pulse\Facades\Pulse {}
     class Flux extends \Flux\Flux {}
     class Livewire extends \Livewire\Livewire {}
 }
 
 
-namespace Facades\Livewire\Features\SupportFileUploads {
-    /**
-     * @mixin \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl     */
-    class GenerateSignedUploadUrl extends \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl {}
-}
 
 
 

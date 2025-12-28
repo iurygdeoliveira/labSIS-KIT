@@ -36,6 +36,7 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 -   [**Edição de Perfil no Filament**](/docs/02-autenticacao-e-seguranca/edicao-perfil.md)
 -   [**Fluxo de Registro de Novos Usuários**](/docs/02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.md)
 -   [**Login Unificado**](/docs/02-autenticacao-e-seguranca/login-unificado.md)
+-   [**Prevenção Contra IDOR**](/docs/02-autenticacao-e-seguranca/prevencao-idor.md)
 -   [**Roles/Permissions**](/docs/02-autenticacao-e-seguranca/roles-e-permissions.md)
 -   [**Suspensão de Usuários**](/docs/02-autenticacao-e-seguranca/suspensao-usuarios.md)
 -   [**Gestão de Tenants**](/docs/02-autenticacao-e-seguranca/tenancy-e-teams.md)

@@ -14,9 +14,9 @@ use App\Models\User as AppUser;
 use App\Models\Video;
 use App\Observers\UserObserver;
 use App\Observers\VideoObserver;
+use App\Support\AppDateTime;
 use App\Tenancy\SpatieTeamResolver as AppSpatieTeamResolver;
 use Carbon\Carbon;
-use Carbon\CarbonImmutable;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
 use Filament\Auth\Http\Responses\Contracts\LogoutResponse as LogoutResponseContract;
 use Filament\Support\Colors\Color;
@@ -94,7 +94,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function configDate(): void
     {
-        Date::use(CarbonImmutable::class);
+        Date::use(AppDateTime::class);
         Carbon::setLocale('pt_BR');
     }
 
