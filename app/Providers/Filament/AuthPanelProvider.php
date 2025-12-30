@@ -44,9 +44,7 @@ class AuthPanelProvider extends PanelProvider
             ])
             ->login(Login::class)
             ->registration(Register::class)
-            ->passwordReset(
-                RequestPasswordReset::class,
-            )
+            ->passwordReset(RequestPasswordReset::class)
             ->multiFactorAuthentication(
                 AppAuthentication::make()
                     ->recoverable()

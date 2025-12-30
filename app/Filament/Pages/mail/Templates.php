@@ -45,10 +45,12 @@ class Templates extends Page implements HasTable
 
         return collect([
             [
-                'name' => 'Template de E-mail',
-                'description' => 'Template padrão utilizado para todos os e-mails do sistema',
+                'id' => 'password-reset',
+                'name' => 'Redefinição de Senha',
+                'description' => 'Notificação enviada quando um usuário solicita reset de senha',
                 'size' => number_format($file->getSize() / 1024, 2).' KB',
                 'last_modified' => date('Y-m-d H:i:s', $file->getMTime()),
+                'path' => $path,
             ],
         ]);
     }
@@ -60,15 +62,13 @@ class Templates extends Page implements HasTable
             ->columns([
                 TextColumn::make('name')->label('Nome')->sortable(),
                 TextColumn::make('description')->label('Descrição'),
-                TextColumn::make('size')->label('Tamanho')->sortable(),
-                TextColumn::make('last_modified')->label('Modificado em')->dateTime('Y-m-d H:i:s')->sortable(),
             ])
             ->recordActions([
                 Action::make('preview')
                     ->label('Preview')
                     ->icon('heroicon-o-eye')
                     ->color('primary')
-                    ->url(PreviewTemplate::getUrl()),
+                    ->url(fn (array $record) => PreviewTemplate::getUrl(['type' => $record['id']])),
             ]);
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Pages\Mail;
 
 use Filament\Pages\Page;
-use Illuminate\Mail\Markdown;
+use Livewire\Attributes\Url;
 
 class PreviewTemplate extends Page
 {
@@ -13,35 +13,37 @@ class PreviewTemplate extends Page
 
     protected string $view = 'filament.pages.mail.preview-template';
 
-    protected static ?string $title = 'Preview do Template';
-
     protected static bool $shouldRegisterNavigation = false;
+
+    public function getTitle(): string
+    {
+        return match ($this->type) {
+            'password-reset' => 'Preview: Redefinição de Senha',
+            default => 'Preview do Template',
+        };
+    }
+
+    #[Url]
+    public ?string $type = 'default';
 
     public string $previewHtml = '';
 
     public function mount(): void
     {
-        $markdown = app(Markdown::class);
+        if ($this->type === 'password-reset') {
+            $this->renderPasswordReset();
+        }
+    }
 
-        $content = <<<'MARKDOWN'
-# Olá!
+    protected function renderPasswordReset(): void
+    {
+        $user = \Filament\Facades\Filament::auth()->user();
 
-Esta é uma visualização de exemplo do seu template de email.
-
-Aqui você pode verificar se as cores, fontes e estrutura estão de acordo com o desejado.
-
-@component('mail::button', ['url' => '#'])
-Botão de Ação
-@endcomponent
-
-Atenciosamente,
-Equipe LabSIS
-MARKDOWN;
-
-        $this->previewHtml = $markdown->render('mail::message', [
-            'slot' => $content,
-            'subcopy' => 'Se você tiver problemas com o botão acima, copie e cole a URL no seu navegador.',
-        ])->toHtml();
+        $this->previewHtml = view('vendor.mail.html.password-reset', [
+            'user' => $user,
+            'token' => 'sample-token',
+            'url' => '#',
+        ])->render();
     }
 
     use \App\Traits\Filament\HasBackButtonAction;

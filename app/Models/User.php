@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\RoleType;
+use App\Notifications\Auth\ResetPasswordNotification;
 use App\Services\AvatarService;
 use App\Traits\Filament\AppAuthenticationRecoveryCodes;
 use App\Traits\Filament\AppAuthenticationSecret;
@@ -139,6 +140,11 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     public function getFilamentAvatarUrl(): ?string
     {
         return app(AvatarService::class)->getAvatarUrl($this);
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 
     public function isSuspended(): bool

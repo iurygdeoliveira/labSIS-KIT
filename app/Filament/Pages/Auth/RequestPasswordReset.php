@@ -32,4 +32,54 @@ class RequestPasswordReset extends BaseRequestPasswordReset
             seconds: 8
         );
     }
+
+    public function request(): void
+    {
+        try {
+            $this->rateLimit(2);
+        } catch (\DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException $exception) {
+            $this->getRateLimitedNotification($exception)?->send();
+
+            return;
+        }
+
+        $data = $this->form->getState();
+
+        $status = \Illuminate\Support\Facades\Password::broker(\Filament\Facades\Filament::getAuthPasswordBroker())->sendResetLink(
+            $this->getCredentialsFromFormData($data),
+            function (\Illuminate\Contracts\Auth\CanResetPassword $user, string $token): void {
+                if (
+                    ($user instanceof \Filament\Models\Contracts\FilamentUser) &&
+                    (! $user->canAccessPanel(\Filament\Facades\Filament::getCurrentOrDefaultPanel()))
+                ) {
+                    return;
+                }
+
+                if (! method_exists($user, 'notify')) {
+                    $userClass = $user::class;
+
+                    throw new \LogicException("Model [{$userClass}] does not have a [notify()] method.");
+                }
+
+                $notification = new \App\Notifications\Auth\ResetPasswordNotification($token);
+                $notification->url = \Filament\Facades\Filament::getResetPasswordUrl($token, $user);
+
+                $user->notify($notification);
+
+                if (class_exists(\Illuminate\Auth\Events\PasswordResetLinkSent::class)) {
+                    event(new \Illuminate\Auth\Events\PasswordResetLinkSent($user));
+                }
+            },
+        );
+
+        if ($status !== \Illuminate\Support\Facades\Password::RESET_LINK_SENT) {
+            $this->getFailureNotification($status)?->send();
+
+            return;
+        }
+
+        $this->getSentNotification($status)?->send();
+
+        $this->form->fill();
+    }
 }
