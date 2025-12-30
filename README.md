@@ -40,6 +40,7 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 -   [**Roles/Permissions**](/docs/02-autenticacao-e-seguranca/roles-e-permissions.md)
 -   [**Suspensão de Usuários**](/docs/02-autenticacao-e-seguranca/suspensao-usuarios.md)
 -   [**Gestão de Tenants**](/docs/02-autenticacao-e-seguranca/tenancy-e-teams.md)
+-   [**Customização de E-mails e Reset de Senha**](/docs/02-autenticacao-e-seguranca/customizacao-emails.md)
 
 ### UI e Customização
 
@@ -145,6 +146,8 @@ O Kit oferece uma base sólida com os seguintes recursos já implementados:
 -   **Website / Landing Page**: Página Inicial, Seções Pré-definidas (Hero e Sobre).
 
 -   **Registro Histórico de Autenticações:** Monitoramento completo de acessos de usuários, com registros de login, logout e endereços IP, incluindo visualização detalhada no painel administrativo.
+
+-   **Gestão de Templates de E-mail:** Funcionalidade para visualizar e testar templates de e-mail diretamente pelo painel administrativo, com suporte a templates customizados e dados reais de preview.
 
 ## 🧩 Plugins Utilizados
 
