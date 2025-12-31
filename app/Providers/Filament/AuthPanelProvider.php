@@ -6,6 +6,7 @@ use App\Filament\Pages\Auth\AccountSuspended;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Auth\Register;
 use App\Filament\Pages\Auth\RequestPasswordReset;
+use App\Filament\Pages\Auth\ResetPassword;
 use App\Filament\Pages\Auth\VerificationPending;
 use App\Http\Middleware\EnsureSecurityHeaders;
 use App\Http\Middleware\RedirectGuestsToCentralLoginMiddleware;
@@ -44,7 +45,7 @@ class AuthPanelProvider extends PanelProvider
             ])
             ->login(Login::class)
             ->registration(Register::class)
-            ->passwordReset(RequestPasswordReset::class)
+            ->passwordReset(RequestPasswordReset::class, ResetPassword::class)
             ->multiFactorAuthentication(
                 AppAuthentication::make()
                     ->recoverable()
