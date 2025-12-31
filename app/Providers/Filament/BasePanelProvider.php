@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Providers\Filament;
 
 use App\Http\Middleware\EnsureSecurityHeaders;
-use App\Http\Middleware\RedirectGuestsToCentralLoginMiddleware;
 use App\Http\Middleware\RedirectToProperPanelMiddleware;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use Filafly\Themes\Brisk\BriskTheme;
@@ -58,7 +57,6 @@ abstract class BasePanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                RedirectGuestsToCentralLoginMiddleware::class,
                 RedirectToProperPanelMiddleware::class,
                 EnsureSecurityHeaders::class,
             ])

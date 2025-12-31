@@ -9,7 +9,7 @@ use App\Filament\Pages\Auth\RequestPasswordReset;
 use App\Filament\Pages\Auth\ResetPassword;
 use App\Filament\Pages\Auth\VerificationPending;
 use App\Http\Middleware\EnsureSecurityHeaders;
-use App\Http\Middleware\RedirectGuestsToCentralLoginMiddleware;
+use App\Http\Middleware\RedirectToProperPanelMiddleware;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -60,7 +60,7 @@ class AuthPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                RedirectGuestsToCentralLoginMiddleware::class,
+                RedirectToProperPanelMiddleware::class,
                 EnsureSecurityHeaders::class,
             ]);
 

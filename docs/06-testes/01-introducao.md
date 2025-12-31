@@ -58,11 +58,9 @@ describe('Fluxo de Autenticação', function () {
 });
 ```
 
-## 🔒 Cobertura Atual
+## 📚 Documentação Detalhada
 
-Atualmente, temos testes de feature cobrindo:
+Para detalhes específicos sobre cada conjunto de testes, consulte os documentos abaixo:
 
--   Renderização das páginas de Login, Registro e Reset de Senha.
--   Login com sucesso e falha.
--   Registro de novos usuários com Tenant.
--   Fluxo completo de redefinição de senha (solicitação e mudança efetiva).
+-   **[02 - Testes de Autenticação](./02-autenticacao.md)**: Login, registro e redefinição de senha.
+-   **[03 - Controle de Acesso](./03-acesso-paineis.md)**: Regras de permissão por painel, tenants e redirecionamentos.

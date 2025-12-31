@@ -6,8 +6,10 @@ namespace App\Http\Middleware;
 
 use App\Enums\RoleType;
 use App\Filament\Pages\Auth\VerificationPending;
+use App\Models\User;
 use Closure;
 use Filament\Facades\Filament;
+use Filament\Panel;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,9 +25,8 @@ class RedirectToProperPanelMiddleware
         /** @var User|null $user */
         $user = Filament::auth()->user();
 
-        // Se não há usuário logado, permite o acesso (páginas de login, register, reset)
         if (! $user) {
-            return $next($request);
+            return $this->handleGuestAccess($request, $next);
         }
 
         // Se é rota de logout, permite acesso
@@ -35,54 +36,96 @@ class RedirectToProperPanelMiddleware
 
         $panel = Filament::getCurrentPanel();
 
-        // Verificar aprovação do usuário (exceto administradores)
-        if (method_exists($user, 'hasRole') && ! $user->hasRole(RoleType::ADMIN->value)) {
-            // Se usuário não está aprovado e não está acessando página de verificação pendente
-            if (method_exists($user, 'isApproved') && ! $user->isApproved() && ! $request->routeIs('*.verification-pending')) {
-                // Permitir acesso a rotas de autenticação (login, registro, etc.)
-                if ($request->routeIs('filament.auth.*')) {
-                    return $next($request);
-                }
-
-                // Redirecionar para página de verificação pendente
-                return redirect()->to(VerificationPending::getUrl());
-            }
+        // 1. Verificar aprovação do usuário
+        if ($response = $this->handlePendingVerification($user, $request, $next)) {
+            return $response;
         }
 
-        // Se o usuário estiver autenticado e tentar acessar o painel de autenticação,
-        // redireciona imediatamente para o painel apropriado conforme suas permissões
-        if ($panel && $panel->getId() === 'auth') {
-            if ($user->canAccessPanel(Filament::getPanel('admin'))) {
-                return redirect()->to('/admin');
-            }
-
-            if ($user->canAccessPanel(Filament::getPanel('user'))) {
-                $firstTenant = $user->getTenants(Filament::getPanel('user'))->first();
-                if ($firstTenant) {
-                    return redirect()->to('/user/'.$firstTenant->uuid);
-                }
-
-                return redirect()->to('/user');
-            }
+        // 2. Se estiver no painel de auth, redirecionar para o painel correto
+        if ($response = $this->handleAuthPanelRedirect($user, $panel)) {
+            return $response;
         }
 
-        // Se o usuário não pode acessar o painel atual, redireciona para o correto
-        if (! $user->canAccessPanel($panel)) {
-            // Determina para qual painel redirecionar baseado no role
-            if ($user->canAccessPanel(Filament::getPanel('admin'))) {
-                return redirect()->to('/admin');
-            }
-
-            if ($user->canAccessPanel(Filament::getPanel('user'))) {
-                $firstTenant = $user->getTenants(Filament::getPanel('user'))->first();
-                if ($firstTenant) {
-                    return redirect()->to('/user/'.$firstTenant->uuid);
-                }
-
-                return redirect()->to('/user');
-            }
+        // 3. Se não puder acessar o painel atual, redirecionar para o correto
+        if ($response = $this->handleUnauthorizedPanelAccess($user, $panel)) {
+            return $response;
         }
 
         return $next($request);
+    }
+
+    private function handleGuestAccess(Request $request, Closure $next): Response
+    {
+        $path = $request->path();
+
+        // Verifica se é uma rota pública de autenticação
+        $isPublicAuthRoute = $path === 'login'
+            || $path === 'register'
+            || str_starts_with($path, 'password-reset/');
+
+        // Se for rota pública, permite acesso
+        if ($isPublicAuthRoute) {
+            return $next($request);
+        }
+
+        // Se for rota protegida, redireciona para o login central
+        return redirect()->to('/login');
+    }
+
+    private function handlePendingVerification(User $user, Request $request, Closure $next): ?Response
+    {
+        // Administradores ignoram verificação
+        if (method_exists($user, 'hasRole') && $user->hasRole(RoleType::ADMIN->value)) {
+            return null;
+        }
+
+        if (method_exists($user, 'isApproved') && ! $user->isApproved() && ! $request->routeIs('*.verification-pending')) {
+            // Permitir acesso a rotas de autenticação (login, registro, etc.)
+            if ($request->routeIs('filament.auth.*')) {
+                return $next($request);
+            }
+
+            // Redirecionar para página de verificação pendente
+            return redirect()->to(VerificationPending::getUrl());
+        }
+
+        return null;
+    }
+
+    private function handleAuthPanelRedirect(User $user, ?Panel $panel): ?Response
+    {
+        if ($panel && $panel->getId() === 'auth') {
+            return redirect()->to($this->resolveRedirectUrl($user));
+        }
+
+        return null;
+    }
+
+    private function handleUnauthorizedPanelAccess(User $user, ?Panel $panel): ?Response
+    {
+        if (! $user->canAccessPanel($panel)) {
+            return redirect()->to($this->resolveRedirectUrl($user));
+        }
+
+        return null;
+    }
+
+    private function resolveRedirectUrl(User $user): string
+    {
+        if ($user->canAccessPanel(Filament::getPanel('admin'))) {
+            return '/admin';
+        }
+
+        if ($user->canAccessPanel(Filament::getPanel('user'))) {
+            $firstTenant = $user->getTenants(Filament::getPanel('user'))->first();
+            if ($firstTenant) {
+                return '/user/'.$firstTenant->uuid;
+            }
+
+            return '/user';
+        }
+
+        // Fallback para home ou login se não tiver acesso a nada
+        return '/login';
     }
 }
