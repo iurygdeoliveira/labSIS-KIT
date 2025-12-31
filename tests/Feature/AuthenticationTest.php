@@ -5,8 +5,10 @@ declare(strict_types=1);
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Auth\Register;
 use App\Filament\Pages\Auth\RequestPasswordReset;
+use App\Filament\Pages\Auth\ResetPassword;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Livewire\Livewire;
 
 describe('Fluxo de Login', function () {
@@ -117,5 +119,21 @@ describe('Fluxo de Recuperação de Senha', function () {
             ])
             ->call('request')
             ->assertHasNoFormErrors(); // Verifica se a solicitação foi enviada sem erros
+    });
+
+    it('pode redefinir a senha com sucesso', function () {
+        $user = User::factory()->create();
+        $token = Password::createToken($user);
+        $newPassword = 'NewPassword123!';
+
+        Livewire::test(ResetPassword::class, ['token' => $token, 'email' => $user->email])
+            ->fillForm([
+                'password' => $newPassword,
+                'passwordConfirmation' => $newPassword,
+            ])
+            ->call('resetPassword')
+            ->assertHasNoFormErrors(); // Verifica se a solicitação foi enviada sem erros
+
+        expect(Hash::check($newPassword, $user->fresh()->password))->toBeTrue();
     });
 });

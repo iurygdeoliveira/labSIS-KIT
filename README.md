@@ -64,6 +64,10 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 -   [**Otimização de Cache de Página com Cloudflare**](/docs/05-otimizacoes/cloudflare-page-cache.md)
 -   [**Laravel Pulse**](/docs/05-otimizacoes/laravel-pulse.md)
 
+### Testes e Qualidade
+
+-   [**Introdução aos Testes Automatizados**](/docs/06-testes/01-introducao.md)
+
 ## Pré-requisitos
 
 Antes de começar, certifique-se de ter instalado em sua máquina:
@@ -122,6 +126,7 @@ O trabalho de vocês contribui significativamente para o avanço e a qualidade d
 ## Próximos recursos a serem implementados
 
 -   [ ] Impersonação de usuários.
+-   [ ] Ajustar para edição de mails por tenant.
 
 ## 🚀 Recursos Atuais
 

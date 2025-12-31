@@ -64,6 +64,7 @@ class RequestPasswordReset extends BaseRequestPasswordReset
                 $notification = new \App\Notifications\Auth\ResetPasswordNotification($token);
                 $notification->url = \Filament\Facades\Filament::getResetPasswordUrl($token, $user);
 
+                /** @var \App\Models\User $user */
                 $user->notify($notification);
 
                 if (class_exists(\Illuminate\Auth\Events\PasswordResetLinkSent::class)) {
