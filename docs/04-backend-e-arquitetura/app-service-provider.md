@@ -135,21 +135,9 @@ private function configFilamentColors(): void
 
 **Propósito:** Centraliza a definição da paleta de cores, garantindo consistência visual em todos os componentes do Filament (botões, badges, notificações, etc.).
 
-#### `configStorage()` - Configuração de Armazenamento (MinIO/S3)
+#### `configStorage()` - REMOVIDO (Movido para `storage:init`)
 
-Esta configuração garante que a estrutura de diretórios necessária exista no serviço de armazenamento (como MinIO ou AWS S3).
-
-```php
-private function configStorage(): void
-{
-    // ...
-    Storage::disk('s3')->makeDirectory($directory);
-    Storage::disk('s3')->put("{$directory}/.keep", '', ['visibility' => 'private']);
-    // ...
-}
-```
-
-**Propósito:** Automatiza a criação de pastas essenciais (`audios`, `images`, `documents`, `avatar`) no bucket S3 ao iniciar a aplicação, prevenindo erros de upload por falta de diretório.
+A inicialização de diretórios de armazenamento (S3/MinIO) foi movida para o comando Artisan `storage:init` para otimizar a performance. Consulte [Scripts Composer](./scripts-composer.md) para mais detalhes.
 
 #### `configEvents()` e `configObservers()` - Eventos e Observadores
 

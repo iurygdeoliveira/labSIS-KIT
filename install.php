@@ -418,22 +418,17 @@ function runSailInstallation(string $basePath): void
 
     echo "✅ Containers Sail iniciados com sucesso!\n";
 
-    // 5. Gerar APP_KEY se não existir
-    $envContent = file_exists('.env') ? file_get_contents('.env') : '';
-    $hasKey = (bool) preg_match('/^APP_KEY=.+/m', $envContent);
+    // 5. Executar setup automatizado (inclui key:generate, migrate, storage:init, npm install/build)
+    echo "📦 Executando setup do projeto...\n";
+    run('composer run setup');
 
-    if (! $hasKey) {
-        echo "🔑 Gerando APP_KEY...\n";
-        run('./vendor/bin/sail artisan key:generate');
-    }
+    // 6. Popular banco de dados
+    echo "🌱 Populando banco de dados...\n";
+    run('./vendor/bin/sail artisan db:seed');
 
-    // 6. Criar link de storage
+    // 7. Criar link de storage
     echo "🔗 Criando link de storage...\n";
     run('./vendor/bin/sail artisan storage:link');
-
-    // 7. Executar reset.sh para finalizar a instalação
-    echo "🔄 Executando script de reset para finalizar instalação...\n";
-    run('./reset.sh --install');
 
     echo "✅ Instalação via Sail concluída com sucesso!\n";
 }

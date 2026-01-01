@@ -25,7 +25,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Override;
@@ -55,7 +54,6 @@ class AppServiceProvider extends ServiceProvider
         $this->configUrls();
         $this->configDate();
         $this->configFilamentColors();
-        $this->configStorage();
         $this->configEvents();
         $this->configObservers();
         $this->configGates();
@@ -107,34 +105,6 @@ class AppServiceProvider extends ServiceProvider
             'primary' => Color::hex('#014029'),
             'secondary' => Color::Gray,
         ]);
-    }
-
-    private function configStorage(): void
-    {
-        if (app()->runningInConsole()) {
-            return;
-        }
-
-        // Garante as pastas de mídia no MinIO (disco s3) apenas se estiver configurado
-        try {
-            if (config('filesystems.disks.s3.key') && config('filesystems.disks.s3.secret')) {
-                $directories = ['audios', 'images', 'documents', 'avatar'];
-
-                foreach ($directories as $directory) {
-                    Storage::disk('s3')->makeDirectory($directory);
-                    Storage::disk('s3')->put(
-                        "{$directory}/.keep",
-                        '',
-                        [
-                            'visibility' => 'private',
-                        ]
-                    );
-                }
-            }
-        } catch (\Exception $e) {
-            // Silenciosamente ignora erros de configuração do S3/MinIO
-            // Útil para ambientes de produção onde o S3 não está configurado
-        }
     }
 
     private function configEvents(): void

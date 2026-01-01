@@ -60,6 +60,38 @@
         }
     },
     "scripts": {
+        "setup": [
+            "composer install",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "vendor/bin/sail artisan key:generate --ansi",
+            "vendor/bin/sail artisan migrate --graceful --ansi",
+            "vendor/bin/sail artisan storage:init",
+            "vendor/bin/sail artisan filament:optimize",
+            "vendor/bin/sail npm install",
+            "vendor/bin/sail npm run build"
+        ],
+        "reset": [
+            "vendor/bin/sail artisan optimize:clear",
+            "vendor/bin/sail artisan filament:optimize-clear",
+            "vendor/bin/sail artisan package:discover --ansi",
+            "vendor/bin/sail artisan migrate:fresh --seed",
+            "vendor/bin/sail artisan storage:init",
+            "vendor/bin/sail artisan filament:optimize",
+            "vendor/bin/sail npm run build",
+            "vendor/bin/sail artisan test"
+        ],
+        "deploy": [
+            "composer install --no-dev --optimize-autoloader",
+            "@php artisan migrate --force",
+            "@php artisan storage:init",
+            "@php artisan config:cache",
+            "@php artisan event:cache",
+            "@php artisan route:cache",
+            "@php artisan view:cache",
+            "@php artisan filament:optimize",
+            "npm install",
+            "npm run build"
+        ],
         "post-autoload-dump": [
             "@php artisan config:clear",
             "@php artisan clear-compiled",

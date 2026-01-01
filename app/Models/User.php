@@ -100,6 +100,8 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     use Notifiable;
     use UuidTrait;
 
+    private ?Collection $cachedTenants = null;
+
     protected $fillable = [
         'uuid',
         'name',
@@ -221,9 +223,13 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         )->withPivot('team_id');
     }
 
-    public function getTenants(Panel $panel): array|\Illuminate\Support\Collection
+    public function getTenants(Panel $panel): array|Collection
     {
-        return $this->tenants()->where('is_active', true)->get();
+        if ($this->cachedTenants !== null) {
+            return $this->cachedTenants;
+        }
+
+        return $this->cachedTenants = $this->tenants()->where('is_active', true)->get();
     }
 
     public function canAccessTenant(Model $tenant): bool

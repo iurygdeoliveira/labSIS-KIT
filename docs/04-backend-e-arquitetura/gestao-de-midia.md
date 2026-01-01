@@ -2,34 +2,36 @@
 
 ## 📋 Índice
 
-- [Gestão de mídias privadas e URLs temporárias assinadas](#gestão-de-mídias-privadas-e-urls-temporárias-assinadas)
-- [Por que buckets privados e URLs pré-assinadas?](#por-que-buckets-privados-e-urls-pré-assinadas)
-- [Proposta adotada neste projeto](#proposta-adotada-neste-projeto)
-- [Configurações essenciais](#configurações-essenciais)
-  - [1) Disco S3 privado e sem reescrita de host](#1-disco-s3-privado-e-sem-reescrita-de-host)
-  - [2) Configuração do Pacote Spatie Media Library](#2-configuração-do-pacote-spatie-media-library)
-  - [3) AppServiceProvider](#3-appserviceprovider)
-  - [4) Modelo Media e MediaItem](#4-modelo-media-e-mediaitem)
-  - [5) Modelo Video](#5-modelo-video)
-  - [6) Serviço MediaService](#6-serviço-mediaservice)
-  - [7) Serviço VideoMetadataService](#7-serviço-videometadataservice)
-  - [8) UI no Filament](#8-ui-no-filament)
-    - [Formulário de upload](#formulário-de-upload)
-    - [Infolist e abrir mídia](#infolist-e-abrir-mídia)
-    - [Tabela](#tabela)
-- [MinIO: bucket privado](#minio-bucket-privado)
-- [Referências](#referências)
+-   [Gestão de mídias privadas e URLs temporárias assinadas](#gestão-de-mídias-privadas-e-urls-temporárias-assinadas)
+-   [Por que buckets privados e URLs pré-assinadas?](#por-que-buckets-privados-e-urls-pré-assinadas)
+-   [Proposta adotada neste projeto](#proposta-adotada-neste-projeto)
+-   [Configurações essenciais](#configurações-essenciais)
+    -   [1) Disco S3 privado e sem reescrita de host](#1-disco-s3-privado-e-sem-reescrita-de-host)
+    -   [2) Configuração do Pacote Spatie Media Library](#2-configuração-do-pacote-spatie-media-library)
+    -   [3) AppServiceProvider](#3-appserviceprovider)
+    -   [4) Modelo Media e MediaItem](#4-modelo-media-e-mediaitem)
+    -   [5) Modelo Video](#5-modelo-video)
+    -   [6) Serviço MediaService](#6-serviço-mediaservice)
+    -   [7) Serviço VideoMetadataService](#7-serviço-videometadataservice)
+    -   [8) UI no Filament](#8-ui-no-filament)
+        -   [Formulário de upload](#formulário-de-upload)
+        -   [Infolist e abrir mídia](#infolist-e-abrir-mídia)
+        -   [Tabela](#tabela)
+-   [MinIO: bucket privado](#minio-bucket-privado)
+-   [Referências](#referências)
 
 ### Por que buckets privados e URLs pré-assinadas?
+
 Manter buckets privados segue o princípio do menor privilégio e evita exposição acidental. Em vez de objetos públicos, usamos URLs pré‑assinadas e temporárias para liberar somente o arquivo necessário, pelo tempo necessário, sem expor credenciais. É possível restringir método (GET/PUT), tipo e tamanho do arquivo; qualquer alteração na URL invalida o acesso (assinatura SigV4). Isso reduz riscos como indexação, hotlink e brute force, diminui a superfície de ataque e favorece a conformidade (ex.: LGPD).
 
 ### Proposta adotada neste projeto
-Neste projeto, o bucket MinIO `labsis` permanece privado e sem acesso anônimo. A assinatura de URLs é automática por meio de um gerador customizado do Spatie que sobrescreve `getUrl()` para sempre retornar `temporaryUrl` com SigV4. Os uploads realizados via Filament são gravados no disco `s3` com visibilidade privada. Evitamos qualquer reescrita do host das URLs após a assinatura para impedir erros de `SignatureDoesNotMatch`. Na interface, a abertura de mídia é exibida somente para tipos suportados (imagem, áudio, vídeo e PDF), enquanto os demais fluxos permanecem via download ou visualização externa.
 
+Neste projeto, o bucket MinIO `labsis` permanece privado e sem acesso anônimo. A assinatura de URLs é automática por meio de um gerador customizado do Spatie que sobrescreve `getUrl()` para sempre retornar `temporaryUrl` com SigV4. Os uploads realizados via Filament são gravados no disco `s3` com visibilidade privada. Evitamos qualquer reescrita do host das URLs após a assinatura para impedir erros de `SignatureDoesNotMatch`. Na interface, a abertura de mídia é exibida somente para tipos suportados (imagem, áudio, vídeo e PDF), enquanto os demais fluxos permanecem via download ou visualização externa.
 
 ### Configurações essenciais
 
 #### 1) Disco S3 privado e sem reescrita de host
+
 O arquivo `config/filesystems.php` centraliza a definição dos discos de armazenamento usados pelo Laravel (Storage) e, por consequência, pelo Spatie Media Library. No contexto deste projeto, o bloco do disco `s3` aponta o SDK para o MinIO e controla parâmetros críticos: credenciais, bucket, endpoint e modo path‑style, além da visibilidade padrão e das opções de assinatura. Ao manter `visibility` como `private`, garantimos que todos os objetos são privados por padrão; ao não definir `temporary_url`, evitamos reescrever o host após a assinatura, preservando a integridade da assinatura SigV4; e, com `use_path_style_endpoint = true`, asseguramos compatibilidade com o MinIO. A chave `url` continua disponível como base para `Storage::url()` (URLs não assinadas), mas não é utilizada na construção de `temporaryUrl()`, portanto não interfere nas URLs temporárias assinadas.
 
 Arquivo: `config/filesystems.php`
@@ -58,6 +60,7 @@ Arquivo: `config/filesystems.php`
 Observação importante: a assinatura SigV4 inclui o header `host`. Para evitar o erro de `SignatureDoesNotMatch`, o host de URLs temporárias após assinar deve ser o mesmo host do `AWS_ENDPOINT`.
 
 #### 2) Configuração do Pacote Spatie Media Library
+
 O arquivo `config/media-library.php` centraliza a configuração do pacote Spatie Media Library no projeto. Nele definimos o gerador de URLs (`url_generator`) — que aqui foi substituído por `App\Support\MediaLibrary\SignedUrlGenerator` para que toda chamada a `getUrl()` retorne uma URL temporária assinada —, além de pontos como `path_generator` (organização de pastas), `file_namer`, drivers e otimizadores de imagem, filas de conversões, tempo padrão de expiração das URLs temporárias (`temporary_url_default_lifetime`) e caminhos para FFMPEG/FFProbe. Em resumo, é o local único onde ajustamos o comportamento de armazenamento, geração e entrega das mídias.
 
 Arquivo: `config/media-library.php`
@@ -66,7 +69,7 @@ Arquivo: `config/media-library.php`
 'url_generator' => App\Support\MediaLibrary\SignedUrlGenerator::class,
 ```
 
-Além do gerador de URLs, este projeto também personaliza outros pontos relevantes do `config/media-library.php`. O `path_generator` foi definido como `App\Support\MediaLibrary\MediaPathGenerator` para organizar pastas de forma previsível por coleção e modelo. 
+Além do gerador de URLs, este projeto também personaliza outros pontos relevantes do `config/media-library.php`. O `path_generator` foi definido como `App\Support\MediaLibrary\MediaPathGenerator` para organizar pastas de forma previsível por coleção e modelo.
 
 ```php
 'path_generator' => App\Support\MediaLibrary\MediaPathGenerator::class,
@@ -79,18 +82,18 @@ E, em `config/media-library.php`, o TTL pode ser ajustado via env:
 ```
 
 #### 3) AppServiceProvider
-O arquivo `app/Providers/AppServiceProvider.php` não executa o upload nem assina URLs, mas participa preparando o ambiente de armazenamento. Durante o `boot()`, a rotina `configStorage()` assegura que os diretórios lógicos `audios`, `images` e `documents` existam no disco `s3` (MinIO), criando-os quando necessário e gravando um arquivo `.keep` com visibilidade privada. Isso garante que a estrutura esperada pelo `App\Support\MediaLibrary\MediaPathGenerator` esteja disponível com permissões corretas, reduzindo falhas de permissão ou 404 na primeira escrita. A execução é ignorada quando a aplicação roda em console (`runningInConsole()`), evitando interferências em comandos e migrações, e é protegida por `try/catch` para não interromper a aplicação se o S3/MinIO não estiver configurado. A responsabilidade por organizar paths e gerar URLs assinadas permanece, respectivamente, no `MediaPathGenerator` e no `SignedUrlGenerator` configurados no `config/media-library.php`.
+
+O arquivo `app/Providers/AppServiceProvider.php` não executa mais a rotina de verificação de armazenamento em cada boot. Anteriormente, a rotina `configStorage()` causava latência na requisição. Agora, a responsabilidade de assegurar que os diretórios lógicos `audios`, `images` e `documents` existam no disco `s3` (MinIO) foi delegada ao comando Artisan `storage:init`. Este comando é executado automaticamente pelos scripts de setup, reset e deploy configurados no `composer.json` (veja [Scripts Composer](./scripts-composer.md)), garantindo a estrutura correta sem onerar a performance da aplicação em tempo de execução. A organização de paths e geração de URLs assinadas continuam, respectivamente, no `MediaPathGenerator` e `SignedUrlGenerator`.
 
 #### 4) Modelo Media e MediaItem
+
 O pacote Spatie Media Library define o modelo Eloquent `Spatie\MediaLibrary\MediaCollections\Models\Media` (tabela `media`), responsável por persistir metadados dos arquivos anexados: coleção, disco, nome, nome do arquivo, MIME type, tamanho, conversões, imagens responsivas e propriedades customizadas. Cada registro de `media` pertence morficamente a um modelo de domínio (neste projeto, `App\Models\MediaItem`). Esse modelo expõe operações de alto nível, como `getUrl()` e `getTemporaryUrl()` (neste projeto, configuradas para sempre retornarem URL temporária assinada), além de integrações com conversões, thumbnails e imagens responsivas quando aplicável. Em suma, ele orquestra o vínculo entre Eloquent e o armazenamento (S3/MinIO), sem conhecer regras de negócio do domínio.
 
 No domínio da aplicação, `App\Models\MediaItem` funciona como o agregado que representa uma mídia cadastrada. Ele não substitui o modelo `media` da Spatie; em vez disso, o utiliza via `InteractsWithMedia` para anexar exatamente um arquivo à coleção `media` no disco `s3` (`singleFile()`). O `MediaItem` também oferece atributos derivados úteis à UI, como `file_type` (que unifica `text/*` como Documento) e `human_size`, além de `name` (que prioriza o nome do anexo) e `image_url` (URL assinada para pré-visualizações quando houver imagem). Quando a mídia não é um arquivo, mas uma referência externa de vídeo, o relacionamento `video()` (hasOne) provê os metadados do vídeo vinculados ao mesmo registro de `MediaItem`.
 
-
 #### 5) Modelo Video
 
 O modelo `App\Models\Video` guarda os metadados sobre os vídeos externos (provedor, ID do provedor, URL, título e duração em segundos) e pertence a um `MediaItem`. Essa separação reflete a decisão de produto de não armazenar binários de vídeo no MinIO, mantendo apenas links e metadados de Vídeos no Youtube. A UI do Filament usa essas informações para exibir e abrir o conteúdo de forma adequada quando o item é um vídeo.
-
 
 #### 6) Serviço MediaService
 
@@ -100,13 +103,14 @@ O `App\Services\MediaService` encapsula a lógica de criação e atualização d
 
 O `App\Services\VideoMetadataService` enriquece registros de vídeo externo (YouTube) com título e duração. Primeiro tenta obter o título via oEmbed oficial; se indisponível, efetua leitura do HTML com cURL e extrai `og:title` ou o `<title>` normalizado. Para a duração, tenta `lengthSeconds` no JSON do player e, alternativamente, interpreta um valor ISO‑8601 encontrado no HTML, convertendo para segundos. Com esses dados, o projeto persiste metadados suficientes em `Video` para rotular e exibir vídeos no painel sem armazenar arquivos de mídia pesados e chaves de API de YouTube.
 
-
 #### 8) UI no Filament
 
 ##### Formulário de upload
+
 Arquivo: `app/Filament/Resources/Media/Schemas/MediaForm.php`
-- Upload privado no S3 (`->disk('s3')->visibility('private')`).
-- Possui input para mídia e URL de vídeo.
+
+-   Upload privado no S3 (`->disk('s3')->visibility('private')`).
+-   Possui input para mídia e URL de vídeo.
 
 Trecho relevante do uploader:
 
@@ -133,9 +137,11 @@ SpatieMediaLibraryFileUpload::make('media')
 ```
 
 ##### Infolist e abrir mídia
+
 Arquivo: `app/Filament/Resources/Media/Schemas/MediaInfolist.php`
-- Ação `MediaAction::make('open')` abre somente tipos suportados pelo pacote.
-- A URL vem assinada automaticamente (via gerador custom).
+
+-   Ação `MediaAction::make('open')` abre somente tipos suportados pelo pacote.
+-   A URL vem assinada automaticamente (via gerador custom).
 
 ```php
 MediaAction::make('open')
@@ -146,15 +152,18 @@ MediaAction::make('open')
 ```
 
 ##### Tabela
+
 Arquivo: `app/Filament/Resources/Media/Tables/MediaTable.php`
-- Exibe nome, tipo (badge), criado em.
-- Usa `file_type` já unificado (evita casos não tratados).
+
+-   Exibe nome, tipo (badge), criado em.
+-   Usa `file_type` já unificado (evita casos não tratados).
 
 ---
 
 ### MinIO: bucket privado
-- Bucket `labsis` criado previamente.
-- Política privada aplicada:
+
+-   Bucket `labsis` criado previamente.
+-   Política privada aplicada:
 
 ```bash
 mc alias set local http://minio:9000 sail password
@@ -163,7 +172,6 @@ mc anonymous set none local/labsis
 
 Observação sobre host: a URL assinada usa o host do `AWS_ENDPOINT`. Use o mesmo host no navegador (ex.: resolvendo `minio` no etc/hosts adicionando a entrada `127.0.0.1 minio`) para evitar erro de assinatura.
 
-
 ### Referências
 
-- [URL pré‑assinada: manipule arquivos no AWS S3 de forma segura e eficiente](https://medium.com/geekieeducacao/url-pr%C3%A9-assinada-manipule-arquivos-no-aws-s3-de-forma-segura-e-eficiente-62f93b66bc9b)
+-   [URL pré‑assinada: manipule arquivos no AWS S3 de forma segura e eficiente](https://medium.com/geekieeducacao/url-pr%C3%A9-assinada-manipule-arquivos-no-aws-s3-de-forma-segura-e-eficiente-62f93b66bc9b)
