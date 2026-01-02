@@ -27,7 +27,7 @@ services:
             - minio
             - mailpit
     pgsql:
-        image: "postgres:17-alpine"
+        image: "postgres:18-alpine"
         ports:
             - "${FORWARD_DB_PORT:-5432}:5432"
         environment:
