@@ -12,13 +12,19 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
 /**
  * @property int $id
+ * @property string $uuid
+ * @property string $name
+ * @property bool $video
+ * @property string|null $mime_type
+ * @property int|null $size
+ * @property string|null $tenant_id
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- * @property \App\Models\Video|null $video
  * @property-read string $file_type
  * @property-read string $human_size
  * @property-read string|null $image_url
- * @property-read string $name
+ * @property-read string|null $collection_name
+ * @property-read \App\Models\Video|null $videoRelation
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read int|null $media_count
  *
@@ -63,26 +69,26 @@ class MediaItem extends Model implements HasMedia
             ->singleFile();
     }
 
-    public function getHumanSizeAttribute(): string
+    protected function getHumanSizeAttribute(): string
     {
-        $size = (int) ($this->getFirstMedia('media')?->size ?? 0);
+        $size = (int) ($this->getFirstMedia('media')->size ?? 0);
 
         return formatBytes($size);
     }
 
-    public function getFileTypeAttribute(): string
+    protected function getFileTypeAttribute(): string
     {
         if ($this->video) {
             return 'Vídeo';
         }
 
-        $mime = (string) ($this->getFirstMedia('media')?->mime_type ?? '');
+        $mime = (string) ($this->getFirstMedia('media')->mime_type ?? '');
 
         if ($mime === '') {
             return 'Desconhecido';
         }
 
-        $main = explode('/', $mime)[0] ?? '';
+        $main = explode('/', $mime)[0];
 
         return match ($main) {
             'image' => 'Imagem',
@@ -97,11 +103,11 @@ class MediaItem extends Model implements HasMedia
 
     // Removido accessor de name: passamos a usar a coluna em banco
 
-    public function getImageUrlAttribute(): ?string
+    protected function getImageUrlAttribute(): ?string
     {
         $media = $this->getFirstMedia('media');
 
-        if (! $media) {
+        if (! $media instanceof \Spatie\MediaLibrary\MediaCollections\Models\Media) {
             return null;
         }
 
@@ -112,11 +118,32 @@ class MediaItem extends Model implements HasMedia
         }
     }
 
+    protected function getMimeTypeAttribute(): ?string
+    {
+        return $this->getFirstMedia('media')?->mime_type;
+    }
+
+    protected function getSizeAttribute(): ?int
+    {
+        return $this->getFirstMedia('media')?->size;
+    }
+
+    protected function getCollectionNameAttribute(): ?string
+    {
+        return $this->getFirstMedia('media')?->collection_name;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Video, $this>
+     */
     public function video(): HasOne
     {
         return $this->hasOne(Video::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Tenant, $this>
+     */
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);

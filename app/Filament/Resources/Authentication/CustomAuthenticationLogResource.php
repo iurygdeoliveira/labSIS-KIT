@@ -15,6 +15,7 @@ class CustomAuthenticationLogResource extends BaseAuthenticationLogResource
 {
     protected static ?string $slug = 'authentication-logs';
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -26,9 +27,7 @@ class CustomAuthenticationLogResource extends BaseAuthenticationLogResource
             ->columns([
                 TextColumn::make('authenticatable')
                     ->label(trans('filament-authentication-log::filament-authentication-log.column.authenticatable'))
-                    ->formatStateUsing(function (?string $state, Model $record) {
-                        return $record->authenticatable?->name ?? new HtmlString('&mdash;');
-                    })
+                    ->formatStateUsing(fn (?string $state, Model $record) => $record->authenticatable->name ?? new HtmlString('&mdash;'))
                     ->sortable(['authenticatable_id']),
                 TextColumn::make('ip_address')
                     ->label(trans('filament-authentication-log::filament-authentication-log.column.ip_address'))
@@ -69,17 +68,15 @@ class CustomAuthenticationLogResource extends BaseAuthenticationLogResource
                         DatePicker::make('login_from'),
                         DatePicker::make('login_until'),
                     ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['login_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('login_at', '>=', $date),
-                            )
-                            ->when(
-                                $data['login_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('login_at', '<=', $date),
-                            );
-                    }),
+                    ->query(fn (Builder $query, array $data): Builder => $query
+                        ->when(
+                            $data['login_from'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('login_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['login_until'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('login_at', '<=', $date),
+                        )),
                 Filter::make('cleared_by_user')
                     ->toggle()
                     ->query(fn (Builder $query): Builder => $query->where('cleared_by_user', true)),

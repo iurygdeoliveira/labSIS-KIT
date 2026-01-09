@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create(config('authentication-log.table_name'), function (Blueprint $table) {
+        Schema::create(config('authentication-log.table_name'), function (Blueprint $table): void {
             $table->id();
             $table->morphs('authenticatable');
             $table->string('ip_address', 45)->nullable();

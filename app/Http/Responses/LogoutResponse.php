@@ -12,6 +12,6 @@ class LogoutResponse implements FilamentLogoutResponse
     public function toResponse($request): RedirectResponse
     {
         // Redireciona para a rota raiz (página home)
-        return redirect()->route('home');
+        return to_route('home');
     }
 }

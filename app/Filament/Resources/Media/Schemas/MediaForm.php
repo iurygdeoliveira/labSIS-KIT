@@ -99,7 +99,7 @@ class MediaForm
 
             if ($file && method_exists($file, 'getClientOriginalName')) {
                 $fileName = $file->getClientOriginalName();
-                $nameWithoutExtension = pathinfo($fileName, PATHINFO_FILENAME);
+                $nameWithoutExtension = pathinfo((string) $fileName, PATHINFO_FILENAME);
 
                 // Converte para slug
                 $slug = \Illuminate\Support\Str::slug($nameWithoutExtension);
@@ -129,7 +129,7 @@ class MediaForm
             ->components([
                 Section::make('Upload de Arquivos')
                     ->description('Faça upload de imagens, áudios e documentos (até 5MB)')
-                    ->visible(fn ($record): bool => $record === null || ! (bool) ($record?->video ?? false))
+                    ->visible(fn ($record): bool => $record === null || ! (bool) ($record->video ?? false))
                     ->components([
                         SpatieMediaLibraryFileUpload::make('media')
                             ->hiddenLabel()
@@ -148,7 +148,7 @@ class MediaForm
                             ->maxSize(5120) // 5MB
                             ->collection('media')
                             ->required(fn (Get $get): bool => empty($get('video.url')))
-                            ->disabled(fn ($get) => ! empty($get('video.url')))
+                            ->disabled(fn ($get): bool => ! empty($get('video.url')))
                             ->responsiveImages()
                             ->customProperties([
                                 'uploaded_at' => now(),
@@ -171,14 +171,14 @@ class MediaForm
                                     $set('attachment_name', (string) $existing);
                                 }
                             })
-                            ->visible(fn ($record): bool => ! (bool) ($record?->video ?? false))
+                            ->visible(fn ($record): bool => ! (bool) ($record->video ?? false))
                             ->dehydrated(false)
                             ->columnSpanFull(),
                     ]),
 
                 Section::make('URL de Vídeo')
                     ->description('Informe a URL do vídeo (YouTube, Vimeo, etc.)')
-                    ->visible(fn ($record): bool => $record === null || (bool) ($record?->video ?? false))
+                    ->visible(fn ($record): bool => $record === null || (bool) ($record->video ?? false))
                     ->components([
                         TextInput::make('video.url')
                             ->label('URL do Vídeo')
@@ -208,8 +208,8 @@ class MediaForm
                                     $set('video.url', $clean);
                                 }
                             })
-                            ->disabled(fn ($get) => ! empty($get('media')))
-                            ->hint(fn (Get $get): ?string => ! empty($get('media')) ? 'Um arquivo foi selecionado. Remova-o para informar uma URL de vídeo.' : null)
+                            ->disabled(fn ($get): bool => ! empty($get('media')))
+                            ->hint(fn (Get $get): ?string => empty($get('media')) ? null : 'Um arquivo foi selecionado. Remova-o para informar uma URL de vídeo.')
                             ->hintColor('danger')
                             ->afterStateUpdatedJs(self::jsOnVideoUrlUpdated())
                             ->extraInputAttributes([
@@ -231,9 +231,9 @@ class MediaForm
                                     $set('video_title', (string) $existing);
                                 }
                             })
-                            ->visible(fn ($record): bool => $record === null || (bool) ($record?->video ?? false))
-                            ->disabled(fn ($get) => ! empty($get('media')))
-                            ->hint(fn (Get $get): ?string => ! empty($get('media')) ? 'Um arquivo foi selecionado. Remova-o para editar o título do vídeo.' : null)
+                            ->visible(fn ($record): bool => $record === null || (bool) ($record->video ?? false))
+                            ->disabled(fn ($get): bool => ! empty($get('media')))
+                            ->hint(fn (Get $get): ?string => empty($get('media')) ? null : 'Um arquivo foi selecionado. Remova-o para editar o título do vídeo.')
                             ->hintColor('danger')
                             ->extraInputAttributes([
                                 'x-data' => '{ isDisabled: false }',

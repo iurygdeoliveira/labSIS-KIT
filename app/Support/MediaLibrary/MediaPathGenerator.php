@@ -56,11 +56,6 @@ class MediaPathGenerator implements PathGenerator
             return 'audios';
         }
 
-        // Vídeos não são armazenados no MinIO, apenas URLs no banco
-        if (str_starts_with($mimeType, 'document/')) {
-            return 'documents';
-        }
-
         return 'documents';
     }
 }

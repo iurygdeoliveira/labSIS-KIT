@@ -17,7 +17,7 @@ class AvatarService
     {
         $media = $user->getFirstMedia('avatar');
 
-        if ($media) {
+        if ($media instanceof \Spatie\MediaLibrary\MediaCollections\Models\Media) {
             return $this->getMediaUrl($media);
         }
 
@@ -76,7 +76,7 @@ class AvatarService
         $path = (string) $user->$avatarColumn;
         $cacheKey = 'user:'.$user->id.':avatar:temp-url';
 
-        return Cache::store('redis')->remember($cacheKey, 4 * 60, function () use ($path) {
+        return Cache::store('redis')->remember($cacheKey, 4 * 60, function () use ($path): ?string {
             try {
                 return $this->getTemporaryUrl($path);
             } catch (\Throwable) {

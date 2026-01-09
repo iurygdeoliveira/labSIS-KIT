@@ -14,6 +14,7 @@ use Filament\Widgets\FilamentInfoWidget;
 
 class UserPanelProvider extends BasePanelProvider
 {
+    #[\Override]
     public function panel(Panel $panel): Panel
     {
         // Configurações compartilhadas (Base define id/path via getPanelId/getPanelPath)

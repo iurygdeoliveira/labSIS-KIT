@@ -98,7 +98,7 @@ class VideoMetadataService
     private function extractHtmlTitle(string $html): ?string
     {
         if (preg_match('/<title>(.*?)<\/title>/is', $html, $m) === 1) {
-            $title = trim((string) $m[1]);
+            $title = trim($m[1]);
             $title = html_entity_decode($title, ENT_QUOTES | ENT_HTML5);
             $title = preg_replace('/\s*-\s*YouTube$/i', '', $title);
 
@@ -120,7 +120,7 @@ class VideoMetadataService
     private function extractIso8601FromHtml(string $html): ?string
     {
         if (preg_match('/itemprop=\"duration\"[^>]*content=\"([^\"]+)\"/i', $html, $m) === 1) {
-            return (string) $m[1];
+            return $m[1];
         }
 
         return null;
@@ -130,7 +130,7 @@ class VideoMetadataService
     {
         try {
             $interval = new \DateInterval($iso8601);
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
             return 0;
         }
 

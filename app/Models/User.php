@@ -59,6 +59,10 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
+ * @property \Carbon\CarbonImmutable|null $last_login_at
+ * @property string|null $last_login_ip
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog> $authentications
+ * @property-read int|null $authentications_count
  *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
@@ -86,6 +90,17 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
+ * @method bool isOwnerOfTenant(Tenant $tenant)
+ * @method bool isUserOfTenant(Tenant $tenant)
+ * @method \Illuminate\Support\Collection getRolesForTenant(Tenant $tenant)
+ * @method bool hasAnyRoleInTenant(Tenant $tenant)
+ * @method bool hasOwnerRoleInAnyTenant()
+ * @method void assignRoleInTenant(Role $role, Tenant $tenant)
+ * @method void removeRoleFromTenant(string $roleName, Tenant $tenant)
+ * @method void removeAllUserRolesFromTenant(Tenant $tenant)
+ * @method void removeAllOwnerRolesFromTenant(Tenant $tenant)
+ * @method \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Tenant, \App\Models\User> tenants()
+ * @method \Illuminate\Database\Eloquent\Relations\MorphToMany<\Spatie\Permission\Models\Role, \App\Models\User> rolesWithTeams()
  *
  * @mixin \Eloquent
  */
@@ -159,6 +174,9 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         return (bool) $this->is_approved;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, $this>
+     */
     public function approvedByUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'approved_by');
@@ -206,12 +224,18 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function registerMediaConversions(?Media $media = null): void {}
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Tenant, $this, \Illuminate\Database\Eloquent\Relations\Pivot>
+     */
     public function tenants(): BelongsToMany
     {
         return $this->belongsToMany(Tenant::class, 'tenant_user')
             ->withTimestamps();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany<\App\Models\Role, $this, \Illuminate\Database\Eloquent\Relations\MorphPivot>
+     */
     public function rolesWithTeams(): MorphToMany
     {
         return $this->morphToMany(
@@ -225,7 +249,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function getTenants(Panel $panel): array|Collection
     {
-        if ($this->cachedTenants !== null) {
+        if ($this->cachedTenants instanceof \Illuminate\Support\Collection) {
             return $this->cachedTenants;
         }
 
@@ -287,7 +311,8 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             ->where('mhr.team_id', $tenant->id);
     }
 
-    public function scopeWithRolesForTenant($query, Tenant $tenant): void
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function withRolesForTenant($query, Tenant $tenant): void
     {
         $query->with([
             'rolesWithTeams' => fn ($q) => $q->where('team_id', $tenant->id),
@@ -349,7 +374,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             ->detach($roleIds->toArray());
     }
 
-    public function setAvatarUrlAttribute(?string $value): void
+    protected function setAvatarUrlAttribute(?string $value): void
     {
         if ($value === null || $value === '') {
             $this->attributes['avatar_url'] = null;
@@ -359,10 +384,6 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
         $avatarService = app(\App\Services\AvatarService::class);
 
-        if ($avatarService->processAndSaveAvatar($this, $value)) {
-            $this->attributes['avatar_url'] = null;
-        } else {
-            $this->attributes['avatar_url'] = $value;
-        }
+        $this->attributes['avatar_url'] = $avatarService->processAndSaveAvatar($this, $value) ? null : $value;
     }
 }

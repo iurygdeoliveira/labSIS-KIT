@@ -40,16 +40,19 @@ class TenantResource extends Resource
         return __('Tenant');
     }
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return TenantForm::configure($schema);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return TenantsTable::configure($table);
     }
 
+    #[\Override]
     public static function infolist(Schema $schema): Schema
     {
         return TenantInfolist::configure($schema);

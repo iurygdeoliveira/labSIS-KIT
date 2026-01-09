@@ -28,9 +28,7 @@ class AssignRoleOwner extends BaseAssignRolePage
                 ->offColor('danger')
                 ->onIcon('heroicon-c-check')
                 ->offIcon('heroicon-c-x-mark')
-                ->getStateUsing(static function (TenantUser $record): bool {
-                    return $record->user->isOwnerOfTenant($record->tenant);
-                })
+                ->getStateUsing(static fn (TenantUser $record): bool => $record->user->isOwnerOfTenant($record->tenant))
                 ->disabled(fn (TenantUser $record): bool => $record->user_id === Filament::auth()->id())
                 ->tooltip(fn (TenantUser $record): ?string => $record->user_id === Filament::auth()->id()
                         ? 'Você não pode alterar a própria role'

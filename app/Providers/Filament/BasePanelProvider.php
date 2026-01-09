@@ -38,7 +38,7 @@ abstract class BasePanelProvider extends PanelProvider
             ->databaseTransactions()
             ->darkMode(false)
             ->defaultThemeMode(ThemeMode::Light)
-            ->brandLogo(fn () => view('filament.auth.logo_base'))
+            ->brandLogo(fn (): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View => view('filament.auth.logo_base'))
             ->brandLogoHeight('2rem')
             ->multiFactorAuthentication(
                 AppAuthentication::make()

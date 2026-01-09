@@ -10,6 +10,13 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Computed;
 
+/**
+ * @property \App\Models\Tenant|null $record
+ * @property-read bool $canDelete
+ * @property-read bool $canEditUsers
+ * @property-read int $userCount
+ * @property-read array $tenantStats
+ */
 class EditTenant extends EditRecord
 {
     use HasBackButtonAction;
@@ -17,22 +24,24 @@ class EditTenant extends EditRecord
 
     protected static string $resource = TenantResource::class;
 
-    #[Computed]
     public function canDelete(): bool
     {
-        return $this->record?->users()->count() === 0;
+        $record = $this->getRecord();
+
+        return $record instanceof \App\Models\Tenant && $record->users()->count() === 0;
     }
 
     #[Computed]
     public function canEditUsers(): bool
     {
-        return $this->record?->is_active === true;
+        return $this->record->is_active === true;
     }
 
-    #[Computed]
     public function userCount(): int
     {
-        return $this->record?->users()->count() ?? 0;
+        $record = $this->getRecord();
+
+        return $record instanceof \App\Models\Tenant ? $record->users()->count() : 0;
     }
 
     #[Computed]
@@ -57,8 +66,13 @@ class EditTenant extends EditRecord
         ];
     }
 
+    #[\Override]
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
+        if (! $record instanceof \App\Models\Tenant) {
+            return $record;
+        }
+
         $users = (array) ($data['usersIds'] ?? []);
         unset($data['usersIds']);
 
@@ -70,20 +84,20 @@ class EditTenant extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        $actions = [
+        return [
             $this->getBackButtonAction(),
             $this->getSaveFormAction()->formId('form'),
             $this->getCancelFormAction(),
         ];
-
-        return $actions;
     }
 
+    #[\Override]
     protected function getFormActions(): array
     {
         return [];
     }
 
+    #[\Override]
     protected function getSavedNotification(): ?Notification
     {
         return null;

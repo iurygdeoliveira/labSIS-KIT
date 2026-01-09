@@ -14,7 +14,7 @@ return new class extends Migration
 
         // roles: adicionar coluna de team e ajustar unique
         if (! Schema::hasColumn($tableNames['roles'], $teamKey)) {
-            Schema::table($tableNames['roles'], function (Blueprint $table) use ($teamKey) {
+            Schema::table($tableNames['roles'], function (Blueprint $table) use ($teamKey): void {
                 $table->unsignedBigInteger($teamKey)->nullable()->after('id');
                 $table->index($teamKey, 'roles_'.$teamKey.'_index');
             });
@@ -22,12 +22,12 @@ return new class extends Migration
             // Remover unique antigo (name, guard_name)
             try {
                 DB::statement('ALTER TABLE '.$tableNames['roles'].' DROP CONSTRAINT IF EXISTS roles_name_guard_name_unique');
-            } catch (Throwable $e) {
+            } catch (Throwable) {
                 // ignora se já não existir
             }
 
             // Adicionar unique novo (team_id, name, guard_name)
-            Schema::table($tableNames['roles'], function (Blueprint $table) use ($teamKey) {
+            Schema::table($tableNames['roles'], function (Blueprint $table) use ($teamKey): void {
                 $table->unique([$teamKey, 'name', 'guard_name'], 'roles_team_name_guard_unique');
             });
         }
@@ -35,7 +35,7 @@ return new class extends Migration
         // model_has_roles: adicionar team e redefinir PK
         if (! Schema::hasColumn($tableNames['model_has_roles'], $teamKey)) {
             // Adicionar como NOT NULL com default 0 para não violar dados existentes (global)
-            Schema::table($tableNames['model_has_roles'], function (Blueprint $table) use ($teamKey) {
+            Schema::table($tableNames['model_has_roles'], function (Blueprint $table) use ($teamKey): void {
                 $table->unsignedBigInteger($teamKey)->default(0)->after('model_id');
                 $table->index($teamKey, 'model_has_roles_'.$teamKey.'_index');
             });
@@ -50,14 +50,14 @@ return new class extends Migration
             }
             try {
                 DB::statement('ALTER TABLE '.$tableNames['model_has_roles'].' DROP CONSTRAINT IF EXISTS '.$tableNames['model_has_roles'].'_pkey');
-            } catch (Throwable $e) {
+            } catch (Throwable) {
             }
             DB::statement('ALTER TABLE '.$tableNames['model_has_roles'].' ADD PRIMARY KEY ("'.$teamKey.'", "role_id", "model_id", "model_type")');
         }
 
         // model_has_permissions: adicionar team e redefinir PK
         if (! Schema::hasColumn($tableNames['model_has_permissions'], $teamKey)) {
-            Schema::table($tableNames['model_has_permissions'], function (Blueprint $table) use ($teamKey) {
+            Schema::table($tableNames['model_has_permissions'], function (Blueprint $table) use ($teamKey): void {
                 $table->unsignedBigInteger($teamKey)->default(0)->after('model_id');
                 $table->index($teamKey, 'model_has_permissions_'.$teamKey.'_index');
             });
@@ -70,7 +70,7 @@ return new class extends Migration
             }
             try {
                 DB::statement('ALTER TABLE '.$tableNames['model_has_permissions'].' DROP CONSTRAINT IF EXISTS '.$tableNames['model_has_permissions'].'_pkey');
-            } catch (Throwable $e) {
+            } catch (Throwable) {
             }
             DB::statement('ALTER TABLE '.$tableNames['model_has_permissions'].' ADD PRIMARY KEY ("'.$teamKey.'", "permission_id", "model_id", "model_type")');
         }

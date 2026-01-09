@@ -11,14 +11,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Livewire\Livewire;
 
-describe('Fluxo de Login', function () {
-    it('página de login está renderizando', function () {
+describe('Fluxo de Login', function (): void {
+    it('página de login está renderizando', function (): void {
         /** @var \Tests\TestCase $this */
         // Verifica se a página de login carrega com sucesso
         $this->get('/login')->assertSuccessful();
     });
 
-    it('usuário aprovado pode fazer login com credenciais corretas', function () {
+    it('usuário aprovado pode fazer login com credenciais corretas', function (): void {
         /** @var \Tests\TestCase $this */
         $password = 'password';
         // Garantir que o usuário esteja aprovado e não suspenso
@@ -41,7 +41,7 @@ describe('Fluxo de Login', function () {
         $this->assertAuthenticatedAs($user);
     });
 
-    it('usuário não pode fazer login com credenciais incorretas', function () {
+    it('usuário não pode fazer login com credenciais incorretas', function (): void {
         /** @var \Tests\TestCase $this */
         $user = User::factory()->create([
             'password' => Hash::make('password'),
@@ -62,14 +62,14 @@ describe('Fluxo de Login', function () {
     });
 });
 
-describe('Fluxo de Registro', function () {
-    it('página de registro está renderizando', function () {
+describe('Fluxo de Registro', function (): void {
+    it('página de registro está renderizando', function (): void {
         /** @var \Tests\TestCase $this */
         // Verifica se a página de registro carrega com sucesso
         $this->get('/register')->assertSuccessful();
     });
 
-    it('pode criar uma nova conta com tenant', function () {
+    it('pode criar uma nova conta com tenant', function (): void {
         /** @var \Tests\TestCase $this */
         $newData = User::factory()->make();
         $tenantName = 'Novo Tenant Teste';
@@ -103,14 +103,14 @@ describe('Fluxo de Registro', function () {
     });
 });
 
-describe('Fluxo de Recuperação de Senha', function () {
-    it('pode renderizar a página de recuperação de senha', function () {
+describe('Fluxo de Recuperação de Senha', function (): void {
+    it('pode renderizar a página de recuperação de senha', function (): void {
         /** @var \Tests\TestCase $this */
         // Verifica se a página de recuperação de senha carrega com sucesso
         $this->get('/password-reset/request')->assertSuccessful();
     });
 
-    it('pode solicitar link de redefinição de senha', function () {
+    it('pode solicitar link de redefinição de senha', function (): void {
         $user = User::factory()->create();
 
         Livewire::test(RequestPasswordReset::class)
@@ -121,7 +121,7 @@ describe('Fluxo de Recuperação de Senha', function () {
             ->assertHasNoFormErrors(); // Verifica se a solicitação foi enviada sem erros
     });
 
-    it('pode redefinir a senha com sucesso', function () {
+    it('pode redefinir a senha com sucesso', function (): void {
         $user = User::factory()->create();
         $token = Password::createToken($user);
         $newPassword = 'NewPassword123!';

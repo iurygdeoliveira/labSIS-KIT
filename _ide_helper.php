@@ -28474,6 +28474,10 @@ namespace App\Filament\Pages\Auth {
             }
     /**
      */
+    class ResetPassword extends \Filament\Auth\Pages\PasswordReset\ResetPassword {
+            }
+    /**
+     */
     class VerificationPending extends \Filament\Pages\SimplePage {
             }
     }
@@ -28532,6 +28536,17 @@ namespace Filament\Auth\Pages\PasswordReset {
             }
     }
 
+namespace App\Filament\Pages\Mail {
+    /**
+     */
+    class PreviewTemplate extends \Filament\Pages\Page {
+            }
+    /**
+     */
+    class Templates extends \Filament\Pages\Page {
+            }
+    }
+
 namespace Filament\Livewire {
     /**
      */
@@ -28579,14 +28594,20 @@ namespace Joaopaulolndev\FilamentEditProfile\Pages {
 
 namespace App\Filament\Resources\Media\Pages {
     /**
+     * @property \App\Models\MediaItem $record
      */
     class CreateMedia extends \Filament\Resources\Pages\CreateRecord {
             }
     /**
+     * @property \App\Models\MediaItem $record
      */
     class DeleteMedia extends \Filament\Resources\Pages\ViewRecord {
             }
     /**
+     * @property-read \App\Models\MediaItem|null $record
+     * @property-read bool $canDelete
+     * @property-read string $fileSizeHuman
+     * @property-read array $mediaInfo
      */
     class EditMedia extends \Filament\Resources\Pages\EditRecord {
             }
@@ -28595,6 +28616,7 @@ namespace App\Filament\Resources\Media\Pages {
     class ListMedia extends \Filament\Resources\Pages\ListRecords {
             }
     /**
+     * @property \App\Models\MediaItem $record
      */
     class ViewMedia extends \Filament\Resources\Pages\ViewRecord {
             }
@@ -28630,6 +28652,8 @@ namespace Filament\Resources\Pages {
 
 namespace App\Filament\Resources\Media\Widgets {
     /**
+     * @property-read array $summary
+     * @property-read array $percentages
      */
     class MediaStats extends \Filament\Widgets\StatsOverviewWidget {
             }
@@ -28656,6 +28680,11 @@ namespace App\Filament\Resources\Tenants\Pages {
     class DeleteTenant extends \Filament\Resources\Pages\ViewRecord {
             }
     /**
+     * @property \App\Models\Tenant|null $record
+     * @property-read bool $canDelete
+     * @property-read bool $canEditUsers
+     * @property-read int $userCount
+     * @property-read array $tenantStats
      */
     class EditTenant extends \Filament\Resources\Pages\EditRecord {
             }
@@ -28664,6 +28693,11 @@ namespace App\Filament\Resources\Tenants\Pages {
     class ListTenants extends \Filament\Resources\Pages\ListRecords {
             }
     /**
+     * @property \App\Models\Tenant|null $record
+     * @property-read array $tenantStats
+     * @property-read bool $canDelete
+     * @property-read bool $canEdit
+     * @property-read array $tenantPermissions
      */
     class ViewTenant extends \Filament\Resources\Pages\ViewRecord {
             }
@@ -28671,6 +28705,7 @@ namespace App\Filament\Resources\Tenants\Pages {
 
 namespace App\Filament\Resources\Tenants\Widgets {
     /**
+     * @property-read array $summary
      */
     class TenantStats extends \Filament\Widgets\StatsOverviewWidget {
             }
@@ -28686,6 +28721,7 @@ namespace App\Filament\Resources\Users\Pages {
     class DeleteUser extends \Filament\Resources\Pages\ViewRecord {
             }
     /**
+     * @property-read \App\Models\User|null $record
      */
     class EditUser extends \Filament\Resources\Pages\EditRecord {
             }
@@ -28694,6 +28730,12 @@ namespace App\Filament\Resources\Users\Pages {
     class ListUsers extends \Filament\Resources\Pages\ListRecords {
             }
     /**
+     * @property-read \App\Models\User|null $record
+     * @property-read array $userStats
+     * @property-read bool $canSuspend
+     * @property-read bool $canUnsuspend
+     * @property-read bool $canDelete
+     * @property-read array $userPermissions
      */
     class ViewUser extends \Filament\Resources\Pages\ViewRecord {
             }
@@ -28701,6 +28743,13 @@ namespace App\Filament\Resources\Users\Pages {
 
 namespace App\Filament\Resources\Users\Widgets {
     /**
+     * @property-read \Illuminate\Database\Eloquent\Builder $baseQuery
+     * @property-read int $totalUsers
+     * @property-read int $suspendedUsers
+     * @property-read int $verifiedUsers
+     * @property-read int $unapprovedUsers
+     * @property-read array $summary
+     * @property-read array $percentages
      */
     class UsersStats extends \Filament\Widgets\StatsOverviewWidget {
             }
@@ -28763,6 +28812,10 @@ namespace App\Filament\Widgets {
     class CustomStats extends \Filament\Widgets\StatsOverviewWidget {
             }
     /**
+     * @property-read array $tenantsData
+     * @property-read array $usersData
+     * @property-read array $mediaData
+     * @property-read array $summary
      */
     class SystemStats extends \Filament\Widgets\StatsOverviewWidget {
             }
@@ -34238,6 +34291,11 @@ namespace  {
 }
 
 
+namespace Facades\Livewire\Features\SupportFileUploads {
+    /**
+     * @mixin \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl     */
+    class GenerateSignedUploadUrl extends \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl {}
+}
 
 
 

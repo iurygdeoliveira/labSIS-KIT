@@ -15,6 +15,7 @@ class PreviewTemplate extends Page
 
     protected static bool $shouldRegisterNavigation = false;
 
+    #[\Override]
     public function getTitle(): string
     {
         return match ($this->type) {

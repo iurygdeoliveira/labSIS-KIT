@@ -22,6 +22,7 @@ class LoginResponse implements FilamentLoginResponse
         }
 
         if ($user->canAccessPanel(Filament::getPanel('user'))) {
+            /** @var \App\Models\Tenant|null $firstTenant */
             $firstTenant = $user->tenants()->first();
             if ($firstTenant) {
                 return redirect()->to('/user/'.$firstTenant->uuid);
@@ -31,6 +32,6 @@ class LoginResponse implements FilamentLoginResponse
         }
 
         // Fallback para a rota home se nenhum role for encontrado
-        return redirect()->route('home');
+        return to_route('home');
     }
 }

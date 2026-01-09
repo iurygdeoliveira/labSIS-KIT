@@ -31,6 +31,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.6",
+        "driftingly/rector-laravel": "^2.1",
         "fakerphp/faker": "^1.23",
         "larastan/larastan": "^3.0",
         "laravel/boost": "^1.0",
@@ -65,32 +66,23 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "vendor/bin/sail artisan key:generate --ansi",
             "vendor/bin/sail artisan migrate --graceful --ansi",
+            "vendor/bin/sail artisan storage:link",
             "vendor/bin/sail artisan storage:init",
             "vendor/bin/sail artisan filament:optimize",
             "vendor/bin/sail npm install",
             "vendor/bin/sail npm run build"
         ],
         "reset": [
+            "vendor/bin/sail composer update",
             "vendor/bin/sail artisan optimize:clear",
             "vendor/bin/sail artisan filament:optimize-clear",
-            "vendor/bin/sail artisan package:discover --ansi",
             "vendor/bin/sail artisan migrate:fresh --seed",
             "vendor/bin/sail artisan storage:init",
             "vendor/bin/sail artisan filament:optimize",
+            "docker compose exec -u root laravel.test rm -rf public/build",
+            "docker compose exec -u root laravel.test chown -R sail:sail node_modules",
             "vendor/bin/sail npm run build",
             "vendor/bin/sail artisan test"
-        ],
-        "deploy": [
-            "composer install --no-dev --optimize-autoloader",
-            "@php artisan migrate --force",
-            "@php artisan storage:init",
-            "@php artisan config:cache",
-            "@php artisan event:cache",
-            "@php artisan route:cache",
-            "@php artisan view:cache",
-            "@php artisan filament:optimize",
-            "npm install",
-            "npm run build"
         ],
         "post-autoload-dump": [
             "@php artisan config:clear",

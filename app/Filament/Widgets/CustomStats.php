@@ -10,6 +10,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class CustomStats extends BaseWidget
 {
+    #[\Override]
     protected function getStats(): array
     {
         return [
@@ -24,7 +25,7 @@ class CustomStats extends BaseWidget
     {
         try {
             $version = InstalledVersions::getPrettyVersion($package) ?? 'Unknown';
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
             $version = 'Not installed';
         }
 

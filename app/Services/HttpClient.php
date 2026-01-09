@@ -58,7 +58,7 @@ class HttpClient
             return '';
         }
 
-        $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
         if ($status >= 200 && $status < 300) {
@@ -89,6 +89,6 @@ class HttpClient
 
         $response = @file_get_contents($url, false, $context);
 
-        return $response === false ? '' : (string) $response;
+        return $response === false ? '' : $response;
     }
 }

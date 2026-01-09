@@ -105,7 +105,7 @@ class UserInfolist
 
     private static function getTenantsRolesState(?User $record): array
     {
-        if (! $record) {
+        if (! $record instanceof \App\Models\User) {
             return [];
         }
 
@@ -132,7 +132,7 @@ class UserInfolist
 
             $items[] = [
                 'tenant' => (string) $tenant->name,
-                'roles' => empty($labels) ? 'sem função' : implode(', ', $labels),
+                'roles' => $labels === [] ? 'sem função' : implode(', ', $labels),
             ];
         }
 

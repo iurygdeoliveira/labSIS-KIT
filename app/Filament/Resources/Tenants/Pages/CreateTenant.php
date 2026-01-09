@@ -14,11 +14,13 @@ class CreateTenant extends CreateRecord
 
     protected static string $resource = TenantResource::class;
 
+    #[\Override]
     protected function getCreatedNotification(): ?Notification
     {
         return null;
     }
 
+    #[\Override]
     protected function handleRecordCreation(array $data): Model
     {
         $users = (array) ($data['usersIds'] ?? []);
@@ -27,7 +29,12 @@ class CreateTenant extends CreateRecord
         $data['is_active'] = true;
 
         $tenant = static::getModel()::create($data);
-        if (! empty($users)) {
+
+        if (! $tenant instanceof \App\Models\Tenant) {
+            return $tenant;
+        }
+
+        if ($users !== []) {
             $tenant->users()->sync($users);
         }
 

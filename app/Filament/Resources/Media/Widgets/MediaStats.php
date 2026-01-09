@@ -8,6 +8,10 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 use Livewire\Attributes\Computed;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
+/**
+ * @property-read array $summary
+ * @property-read array $percentages
+ */
 class MediaStats extends BaseWidget
 {
     #[Computed]
@@ -63,6 +67,7 @@ class MediaStats extends BaseWidget
         ];
     }
 
+    #[\Override]
     protected function getStats(): array
     {
         $stats = $this->summary;
@@ -96,6 +101,7 @@ class MediaStats extends BaseWidget
         ];
     }
 
+    #[\Override]
     protected function getColumns(): int|array
     {
         return [

@@ -19,6 +19,7 @@ class CreateUser extends CreateRecord
 
     // Removido onboarding; seleção de tenant acontece no form (UserForm)
 
+    #[\Override]
     protected function getCreatedNotification(): ?Notification
     {
         return null;
@@ -26,21 +27,24 @@ class CreateUser extends CreateRecord
 
     protected function afterCreate(): void
     {
+        $record = $this->record;
+        if (! $record instanceof \App\Models\User) {
+            return;
+        }
+
         $currentUser = Filament::auth()->user();
 
-        $isAdmin = $currentUser instanceof User && method_exists($currentUser, 'hasRole')
-            ? (bool) $currentUser->hasRole(RoleType::ADMIN->value)
-            : false;
+        $isAdmin = $currentUser instanceof User && $currentUser->hasRole(RoleType::ADMIN->value);
 
         if ($isAdmin) {
             $tenantId = (int) ($this->data['tenant_id'] ?? 0);
             if ($tenantId > 0) {
-                $this->record->tenants()->syncWithoutDetaching([$tenantId]);
+                $record->tenants()->syncWithoutDetaching([$tenantId]);
             }
         } else {
             $currentTenant = Filament::getTenant();
             if ($currentTenant instanceof Tenant) {
-                $this->record->tenants()->syncWithoutDetaching([$currentTenant->id]);
+                $record->tenants()->syncWithoutDetaching([$currentTenant->id]);
             }
         }
 
@@ -49,6 +53,7 @@ class CreateUser extends CreateRecord
         $this->notifySuccess('Usuário criado com sucesso.');
     }
 
+    #[\Override]
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['email_verified_at'] = now();
@@ -62,6 +67,7 @@ class CreateUser extends CreateRecord
         return $data;
     }
 
+    #[\Override]
     protected function getRedirectUrl(): string
     {
         return static::getResource()::getUrl('index');

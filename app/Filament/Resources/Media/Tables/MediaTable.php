@@ -24,10 +24,10 @@ class MediaTable
                     ->label('Nome do Arquivo')
                     ->state(function ($record) {
                         if ((bool) ($record->video ?? false)) {
-                            return $record->video?->title ?? 'Vídeo (URL)';
+                            return $record->video->title ?? 'Vídeo (URL)';
                         }
 
-                        return $record->getFirstMedia('media')?->name ?? '—';
+                        return $record->getFirstMedia('media')->name ?? '—';
                     })
                     ->searchable(isIndividual: true, isGlobal: false)
                     ->sortable(true, fn ($query, $direction) => self::sortAttachmentName($query, $direction)),
@@ -38,20 +38,22 @@ class MediaTable
                         'Imagem' => 'primary',
                         'Vídeo' => 'warning',
                         'Documento' => 'success',
-                        'Áudio' => 'danger'
+                        'Áudio' => 'danger',
+                        default => 'secondary',
                     })
                     ->icon(fn (string $state): string => match ($state) {
                         'Imagem' => 'heroicon-c-photo',
                         'Vídeo' => 'heroicon-c-video-camera',
                         'Documento' => 'heroicon-c-document',
                         'Áudio' => 'heroicon-c-musical-note',
+                        default => 'heroicon-c-question-mark-circle',
                     }),
                 TextColumn::make('created_at_display')
                     ->label('Criado em')
-                    ->state(fn ($record) => self::resolveCreatedAt($record)),
+                    ->state(fn ($record): string => self::resolveCreatedAt($record)),
                 TextColumn::make('tenant.name')
                     ->label('Tenant')
-                    ->state(fn ($record) => self::resolveTenantName($record))
+                    ->state(fn ($record): string => self::resolveTenantName($record))
                     ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
@@ -74,7 +76,7 @@ class MediaTable
     {
         $query
             ->leftJoin('videos', 'videos.media_item_id', '=', 'media_items.id')
-            ->leftJoin('media', function ($join) {
+            ->leftJoin('media', function ($join): void {
                 $join->on('media.model_id', '=', 'media_items.id')
                     ->where('media.model_type', '=', MediaItemModel::class)
                     ->where('media.collection_name', '=', 'media');
@@ -90,7 +92,7 @@ class MediaTable
     private static function resolveCreatedAt($record): string
     {
         if ((bool) ($record->video ?? false)) {
-            $createdAt = $record->video?->created_at;
+            $createdAt = $record->video->created_at;
 
             return $createdAt ? AppDateTime::parse($createdAt)->format('d/m/Y H:i') : '—';
         }

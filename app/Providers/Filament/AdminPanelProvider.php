@@ -8,6 +8,7 @@ use Filament\Panel;
 
 class AdminPanelProvider extends BasePanelProvider
 {
+    #[\Override]
     public function panel(Panel $panel): Panel
     {
         // Configurações compartilhadas (Base define id/path via getPanelId/getPanelPath)
@@ -26,7 +27,7 @@ class AdminPanelProvider extends BasePanelProvider
             ->pages([
                 Dashboard::class,
             ])
-            ->tenant(null, false);
+            ->tenant(null);
 
         return $panel;
     }

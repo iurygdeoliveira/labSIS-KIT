@@ -15,6 +15,7 @@ class Login extends AuthLogin
 {
     use NotificationsTrait;
 
+    #[\Override]
     public function authenticate(): ?LoginResponse
     {
         $data = $this->form->getState();

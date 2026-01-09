@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Computed;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
+/**
+ * @property-read array $tenantsData
+ * @property-read array $usersData
+ * @property-read array $mediaData
+ * @property-read array $summary
+ */
 class SystemStats extends BaseWidget
 {
     #[Computed]
@@ -24,8 +30,8 @@ class SystemStats extends BaseWidget
             $totalTenants = Tenant::query()->count();
 
             $approvedTenants = Tenant::query()
-                ->whereHas('users', function ($query) {
-                    $query->whereHas('roles', function ($roleQuery) {
+                ->whereHas('users', function (\Illuminate\Contracts\Database\Query\Builder $query): void {
+                    $query->whereHas('roles', function (\Illuminate\Contracts\Database\Query\Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
                         ->where('is_approved', true);
@@ -34,8 +40,8 @@ class SystemStats extends BaseWidget
 
             $activeTenants = Tenant::query()
                 ->where('is_active', true)
-                ->whereHas('users', function ($query) {
-                    $query->whereHas('roles', function ($roleQuery) {
+                ->whereHas('users', function (\Illuminate\Contracts\Database\Query\Builder $query): void {
+                    $query->whereHas('roles', function (\Illuminate\Contracts\Database\Query\Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
                         ->where('is_approved', true);
@@ -44,8 +50,8 @@ class SystemStats extends BaseWidget
 
             $inactiveTenants = Tenant::query()
                 ->where('is_active', false)
-                ->whereHas('users', function ($query) {
-                    $query->whereHas('roles', function ($roleQuery) {
+                ->whereHas('users', function (\Illuminate\Contracts\Database\Query\Builder $query): void {
+                    $query->whereHas('roles', function (\Illuminate\Contracts\Database\Query\Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
                         ->where('is_approved', true);
@@ -53,8 +59,8 @@ class SystemStats extends BaseWidget
                 ->count();
 
             $unapprovedTenants = Tenant::query()
-                ->whereDoesntHave('users', function ($query) {
-                    $query->whereHas('roles', function ($roleQuery) {
+                ->whereDoesntHave('users', function (\Illuminate\Contracts\Database\Query\Builder $query): void {
+                    $query->whereHas('roles', function (\Illuminate\Contracts\Database\Query\Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
                         ->where('is_approved', true);
@@ -138,6 +144,7 @@ class SystemStats extends BaseWidget
         ];
     }
 
+    #[\Override]
     protected function getStats(): array
     {
         $s = $this->summary;
@@ -171,6 +178,7 @@ class SystemStats extends BaseWidget
         ];
     }
 
+    #[\Override]
     protected function getColumns(): int|array
     {
         return [
@@ -180,6 +188,7 @@ class SystemStats extends BaseWidget
         ];
     }
 
+    #[\Override]
     public function getColumnSpan(): int|string|array
     {
         return [

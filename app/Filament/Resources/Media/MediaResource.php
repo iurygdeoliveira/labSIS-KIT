@@ -43,24 +43,26 @@ class MediaResource extends Resource
         return __('Media');
     }
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return MediaForm::configure($schema);
     }
 
+    #[\Override]
     public static function infolist(Schema $schema): Schema
     {
         return MediaInfolist::configure($schema);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return MediaTable::configure($table)
-            ->modifyQueryUsing(function ($query) {
-                return $query->with('video');
-            });
+            ->modifyQueryUsing(fn ($query) => $query->with('video'));
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [
@@ -81,16 +83,17 @@ class MediaResource extends Resource
 
     public static function getRecordTitle(?Model $record): string|Htmlable|null
     {
-        if (! $record) {
+        /** @var \App\Models\MediaItem|null $record */
+        if (! $record instanceof \App\Models\MediaItem) {
             return null;
         }
 
         if ((bool) $record->video) {
-            $title = $record->video?->title;
+            $title = $record->video()->first()?->title;
 
             return $title ?: 'Vídeo (URL)';
         }
 
-        return $record->getFirstMedia('media')?->name ?? 'Sem nome';
+        return $record->getFirstMedia('media')->name ?? 'Sem nome';
     }
 }

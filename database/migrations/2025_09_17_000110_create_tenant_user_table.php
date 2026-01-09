@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('tenant_user', function (Blueprint $table) {
+        Schema::create('tenant_user', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->foreignId('tenant_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
@@ -18,7 +18,7 @@ return new class extends Migration
         });
 
         // Relacionamento de domínio: media_items pertence a um tenant
-        Schema::table('media_items', function (Blueprint $table) {
+        Schema::table('media_items', function (Blueprint $table): void {
             $table->foreignId('tenant_id')->nullable()->after('id')->constrained('tenants')->nullOnDelete();
         });
     }

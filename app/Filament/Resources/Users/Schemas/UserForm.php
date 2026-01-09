@@ -74,10 +74,10 @@ class UserForm
         }
 
         $user = Filament::auth()->user();
-        if (! ($user instanceof User) || ! method_exists($user, 'hasRole')) {
+        if (! ($user instanceof User)) {
             return false;
         }
 
-        return (bool) $user->hasRole(RoleType::ADMIN->value);
+        return $user->hasRole(RoleType::ADMIN->value);
     }
 }

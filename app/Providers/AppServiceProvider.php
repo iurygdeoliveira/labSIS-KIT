@@ -16,7 +16,6 @@ use App\Observers\UserObserver;
 use App\Observers\VideoObserver;
 use App\Support\AppDateTime;
 use App\Tenancy\SpatieTeamResolver as AppSpatieTeamResolver;
-use Carbon\Carbon;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
 use Filament\Auth\Http\Responses\Contracts\LogoutResponse as LogoutResponseContract;
 use Filament\Support\Colors\Color;
@@ -62,9 +61,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function configGates(): void
     {
-        Gate::define('viewPulse', function (AppUser $user) {
-            return $user->hasRole('admin');
-        });
+        Gate::define('viewPulse', fn (AppUser $user): bool => $user->hasRole('admin'));
     }
 
     private function configModels(): void
@@ -93,7 +90,7 @@ class AppServiceProvider extends ServiceProvider
     private function configDate(): void
     {
         Date::use(AppDateTime::class);
-        Carbon::setLocale('pt_BR');
+        \Illuminate\Support\Facades\Date::setLocale('pt_BR');
     }
 
     private function configFilamentColors(): void

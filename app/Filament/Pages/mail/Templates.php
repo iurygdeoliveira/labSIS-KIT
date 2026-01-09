@@ -58,7 +58,7 @@ class Templates extends Page implements HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->records(fn () => $this->getTemplates())
+            ->records(fn (): \Illuminate\Support\Collection => $this->getTemplates())
             ->columns([
                 TextColumn::make('name')->label('Nome')->sortable(),
                 TextColumn::make('description')->label('Descrição'),
@@ -68,7 +68,7 @@ class Templates extends Page implements HasTable
                     ->label('Preview')
                     ->icon('heroicon-o-eye')
                     ->color('primary')
-                    ->url(fn (array $record) => PreviewTemplate::getUrl(['type' => $record['id']])),
+                    ->url(fn (array $record): string => PreviewTemplate::getUrl(['type' => $record['id']])),
             ]);
     }
 }

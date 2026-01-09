@@ -64,8 +64,11 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 -   [**Otimização de Cache de Página com Cloudflare**](/docs/05-otimizacoes/cloudflare-page-cache.md)
 -   [**Laravel Pulse**](/docs/05-otimizacoes/laravel-pulse.md)
 
-### Testes e Qualidade
+### Qualidade e Testes
 
+-   [**Larastan (Análise Estática)**](/docs/07-qualidade-de-codigo/01-larastan.md)
+-   [**Rector (Refatoração Automática)**](/docs/07-qualidade-de-codigo/02-rector.md)
+-   [**IDE Helper (Inteligência na IDE)**](/docs/07-qualidade-de-codigo/03-ide-helper.md)
 -   [**Introdução aos Testes Automatizados**](/docs/06-testes/01-introducao.md)
 
 ## Pré-requisitos

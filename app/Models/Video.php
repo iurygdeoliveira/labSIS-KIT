@@ -57,6 +57,9 @@ class Video extends Model
         ];
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\MediaItem, $this>
+     */
     public function mediaItem(): BelongsTo
     {
         return $this->belongsTo(MediaItem::class);

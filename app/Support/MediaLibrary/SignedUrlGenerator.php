@@ -9,6 +9,7 @@ use Spatie\MediaLibrary\Support\UrlGenerator\DefaultUrlGenerator;
 
 class SignedUrlGenerator extends DefaultUrlGenerator
 {
+    #[\Override]
     public function getUrl(): string
     {
         $minutes = (int) config('media-library.temporary_url_default_lifetime', 5);
@@ -16,6 +17,7 @@ class SignedUrlGenerator extends DefaultUrlGenerator
         return $this->getTemporaryUrl(now()->addMinutes($minutes));
     }
 
+    #[\Override]
     public function getTemporaryUrl(DateTimeInterface $expiration, array $options = []): string
     {
         return parent::getTemporaryUrl($expiration, $options);

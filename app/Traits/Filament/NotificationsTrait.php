@@ -46,6 +46,8 @@ trait NotificationsTrait
                 ->icon('heroicon-s-exclamation-triangle')
                 ->iconColor('warning')
                 ->color('warning'),
+
+            default => $notification->info(),
         };
 
         if ($persistent) {

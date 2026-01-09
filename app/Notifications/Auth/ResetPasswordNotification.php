@@ -22,6 +22,7 @@ class ResetPasswordNotification extends ResetPassword
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
+    #[\Override]
     public function toMail($notifiable)
     {
         return (new MailMessage)

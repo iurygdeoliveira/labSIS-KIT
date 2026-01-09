@@ -22,6 +22,7 @@ class ListMedia extends ListRecords
         ];
     }
 
+    #[\Override]
     protected function getHeaderWidgets(): array
     {
         return [
@@ -62,7 +63,7 @@ class ListMedia extends ListRecords
             ->modalIcon('heroicon-o-exclamation-triangle')
             ->modalIconColor('warning')
             ->modalSubmitAction(false)
-            ->modalCancelAction(fn (Action $action) => $action
+            ->modalCancelAction(fn (Action $action): \Filament\Actions\Action => $action
                 ->label('Entendi')
                 ->color('warning')
             )

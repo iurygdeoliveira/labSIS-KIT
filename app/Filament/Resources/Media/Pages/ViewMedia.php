@@ -8,6 +8,9 @@ use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;
 
+/**
+ * @property \App\Models\MediaItem $record
+ */
 class ViewMedia extends ViewRecord
 {
     use HasBackButtonAction;
@@ -26,20 +29,26 @@ class ViewMedia extends ViewRecord
     {
         $record = $this->getRecord();
 
+        if (! $record instanceof \App\Models\MediaItem) {
+            return 'Visualizar Mídia';
+        }
+
         if ((bool) $record->video) {
             $title = $record->video()->value('title');
 
             return $title ?: 'Vídeo (URL)';
         }
 
-        return $record->getFirstMedia('media')?->name ?? 'Sem nome';
+        return $record->getFirstMedia('media')->name ?? 'Sem nome';
     }
 
+    #[\Override]
     public function getTitle(): string|Htmlable
     {
         return $this->resolveDynamicTitle();
     }
 
+    #[\Override]
     public function getHeading(): string|Htmlable
     {
         return $this->resolveDynamicTitle();

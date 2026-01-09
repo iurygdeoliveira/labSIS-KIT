@@ -49,21 +49,25 @@ class UserResource extends Resource
         return 'uuid';
     }
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return UserForm::configure($schema);
     }
 
+    #[\Override]
     public static function infolist(Schema $schema): Schema
     {
         return UserInfolist::configure($schema);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return UsersTable::configure($table);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [

@@ -7,6 +7,13 @@ use App\Traits\Filament\HasBackButtonAction;
 use Filament\Resources\Pages\ViewRecord;
 use Livewire\Attributes\Computed;
 
+/**
+ * @property \App\Models\Tenant|null $record
+ * @property-read array $tenantStats
+ * @property-read bool $canDelete
+ * @property-read bool $canEdit
+ * @property-read array $tenantPermissions
+ */
 class ViewTenant extends ViewRecord
 {
     use HasBackButtonAction;
@@ -29,9 +36,7 @@ class ViewTenant extends ViewRecord
         }
 
         $users = $record->users;
-        $ownerCount = $users->filter(function ($user) use ($record) {
-            return $user->isOwnerOfTenant($record);
-        })->count();
+        $ownerCount = $users->filter(fn ($user) => $user->isOwnerOfTenant($record))->count();
 
         return [
             'user_count' => $users->count(),
@@ -42,16 +47,15 @@ class ViewTenant extends ViewRecord
         ];
     }
 
-    #[Computed]
     public function canDelete(): bool
     {
-        return $this->record?->users()->count() === 0;
+        return $this->record->users()->count() === 0;
     }
 
     #[Computed]
     public function canEdit(): bool
     {
-        return $this->record?->is_active === true;
+        return $this->record->is_active === true;
     }
 
     #[Computed]
@@ -60,7 +64,7 @@ class ViewTenant extends ViewRecord
         return [
             'can_delete' => $this->canDelete,
             'can_edit' => $this->canEdit,
-            'is_active' => $this->record?->is_active ?? false,
+            'is_active' => $this->record->is_active ?? false,
         ];
     }
 

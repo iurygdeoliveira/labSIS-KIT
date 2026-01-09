@@ -16,6 +16,7 @@ class DeleteTenant extends ViewRecord
 
     protected static string $resource = TenantResource::class;
 
+    #[\Override]
     public function getView(): string
     {
         return 'filament.resources.tenants.pages.delete-tenant';
@@ -37,6 +38,10 @@ class DeleteTenant extends ViewRecord
                 ->action(function (): void {
                     $tenant = $this->getRecord();
 
+                    if (! $tenant instanceof \App\Models\Tenant) {
+                        return;
+                    }
+
                     if ($tenant->users()->exists()) {
                         $this->notifyDanger(
                             'Não é possível excluir o tenant',
@@ -54,6 +59,7 @@ class DeleteTenant extends ViewRecord
         ];
     }
 
+    #[\Override]
     public function getTitle(): string|Htmlable
     {
         return $this->resolveDynamicTitle();
@@ -63,10 +69,10 @@ class DeleteTenant extends ViewRecord
     {
         $record = $this->getRecord();
 
-        if (! $record) {
+        if (! $record instanceof \App\Models\Tenant) {
             return 'Excluir Tenant';
         }
 
-        return 'Excluir: '.($record->name ?? 'Tenant sem nome');
+        return 'Excluir: '.($record->name ?: 'Tenant sem nome');
     }
 }

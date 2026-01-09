@@ -20,10 +20,8 @@ class RegistrationResponse implements FilamentRegistrationResponse
         $user = Filament::auth()->user();
 
         // Se usuário não está aprovado (exceto administradores), redirecionar para verificação pendente
-        if (method_exists($user, 'hasRole') && ! $user->hasRole(RoleType::ADMIN->value)) {
-            if (method_exists($user, 'isApproved') && ! $user->isApproved()) {
-                return redirect()->to(VerificationPending::getUrl());
-            }
+        if (! $user->hasRole(RoleType::ADMIN->value) && ! $user->isApproved()) {
+            return redirect()->to(VerificationPending::getUrl());
         }
 
         // Se usuário está aprovado, redirecionar para painel apropriado
@@ -32,6 +30,7 @@ class RegistrationResponse implements FilamentRegistrationResponse
         }
 
         if ($user->canAccessPanel(Filament::getPanel('user'))) {
+            /** @var \App\Models\Tenant|null $firstTenant */
             $firstTenant = $user->tenants()->first();
             if ($firstTenant) {
                 return redirect()->to('/user/'.$firstTenant->uuid.'/dashboard');
@@ -41,6 +40,6 @@ class RegistrationResponse implements FilamentRegistrationResponse
         }
 
         // Fallback para a rota home se nenhum role for encontrado
-        return redirect()->route('home');
+        return to_route('home');
     }
 }

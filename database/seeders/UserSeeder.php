@@ -119,8 +119,8 @@ class UserSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Atribuir permissões às roles por tenant
-        $this->assignPermissionsToRolesByTenant($roleOwnerA, $roleUserA, $tenantA->id, $guard);
-        $this->assignPermissionsToRolesByTenant($roleOwnerB, $roleUserB, $tenantB->id, $guard);
+        $this->assignPermissionsToRolesByTenant($roleOwnerA, $tenantA->id, $guard);
+        $this->assignPermissionsToRolesByTenant($roleOwnerB, $tenantB->id, $guard);
 
         // Atribuições explícitas com team_id na tabela model_has_roles
         // Tenant A
@@ -138,7 +138,7 @@ class UserSeeder extends Seeder
     /**
      * Atribui permissões às roles Owner e User para um tenant específico
      */
-    private function assignPermissionsToRolesByTenant(Role $ownerRole, Role $userRole, int $tenantId, string $guard): void
+    private function assignPermissionsToRolesByTenant(Role $ownerRole, int $tenantId, string $guard): void
     {
         $resources = ['media', 'users'];
 

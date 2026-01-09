@@ -7,6 +7,9 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Livewire\Attributes\Computed;
 
+/**
+ * @property-read array $summary
+ */
 class TenantStats extends BaseWidget
 {
     #[Computed]
@@ -33,6 +36,7 @@ class TenantStats extends BaseWidget
         ];
     }
 
+    #[\Override]
     protected function getStats(): array
     {
         $summary = $this->summary;
@@ -62,6 +66,7 @@ class TenantStats extends BaseWidget
         ];
     }
 
+    #[\Override]
     protected function getColumns(): int|array
     {
         return [
@@ -71,6 +76,7 @@ class TenantStats extends BaseWidget
         ];
     }
 
+    #[\Override]
     public function getColumnSpan(): int|string|array
     {
         return 'full';

@@ -20,7 +20,7 @@ class UsersTable
         $currentUser = Filament::auth()->user();
         $isAdmin = false;
 
-        if ($currentUser instanceof User && method_exists($currentUser, 'hasRole')) {
+        if ($currentUser instanceof User) {
             $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
         }
 
@@ -28,9 +28,10 @@ class UsersTable
         $currentTenant = Filament::getTenant();
 
         if (! $isAdmin) {
-            if ($currentTenant) {
-                $query->whereHas('tenants', function ($q) use ($currentTenant) {
-                    $q->where('tenants.id', $currentTenant->id);
+            $currentTenant = Filament::getTenant();
+            if ($currentTenant instanceof \App\Models\Tenant) {
+                $query->whereHas('tenants', function ($q) use ($currentTenant): void {
+                    $q->where('tenants.id', $currentTenant->getKey());
                 })->withRolesForTenant($currentTenant);
             }
         } else {
@@ -70,7 +71,7 @@ class UsersTable
     /**
      * Coluna do nome do usuário
      */
-    private static function getNameColumn()
+    private static function getNameColumn(): \Filament\Tables\Columns\Column
     {
         return TextColumn::make('name')
             ->searchable(isIndividual: true, isGlobal: false)
@@ -80,7 +81,7 @@ class UsersTable
     /**
      * Coluna do email do usuário
      */
-    private static function getEmailColumn()
+    private static function getEmailColumn(): \Filament\Tables\Columns\Column
     {
         return TextColumn::make('email')
             ->label('Email address');
@@ -89,7 +90,7 @@ class UsersTable
     /**
      * Coluna de tenants (apenas para Admin)
      */
-    private static function getTenantsColumn(bool $isAdmin)
+    private static function getTenantsColumn(bool $isAdmin): array
     {
         if (! $isAdmin) {
             return [];
@@ -98,8 +99,8 @@ class UsersTable
         return [
             TextColumn::make('tenants.name')
                 ->label('Tenants')
-                ->listWithLineBreaks(fn (?User $record): bool => $record && $record->isApproved())
-                ->bulleted(fn (?User $record): bool => $record && $record->isApproved()),
+                ->listWithLineBreaks(fn (?User $record): bool => $record instanceof \App\Models\User && $record->isApproved())
+                ->bulleted(fn (?User $record): bool => $record instanceof \App\Models\User && $record->isApproved()),
         ];
     }
 
@@ -111,14 +112,14 @@ class UsersTable
         return TextColumn::make('tenant_roles')
             ->label($isAdmin ? 'Funções' : 'Função')
             ->state(fn (User $record): array|string => self::getTenantRolesForUser($record, $isAdmin))
-            ->listWithLineBreaks(fn (?User $record): bool => $record && $record->isApproved())
-            ->when($isAdmin, fn ($column) => $column->bulleted(fn (?User $record): bool => $record && $record->isApproved()));
+            ->listWithLineBreaks(fn (?User $record): bool => $record instanceof \App\Models\User && $record->isApproved())
+            ->when($isAdmin, fn ($column): \Filament\Tables\Columns\TextColumn => $column->bulleted(fn (?User $record): bool => $record instanceof \App\Models\User && $record->isApproved()));
     }
 
     /**
      * Coluna de status (suspenso/autorizado) - apenas para usuários aprovados
      */
-    private static function getStatusColumn()
+    private static function getStatusColumn(): \Filament\Tables\Columns\Column
     {
         return TextColumn::make('is_suspended')
             ->label('Acesso')
@@ -133,7 +134,7 @@ class UsersTable
     /**
      * Coluna de aprovação - apenas para usuários não aprovados e visível para Admin/Owner
      */
-    private static function getApprovalColumn()
+    private static function getApprovalColumn(): \Filament\Tables\Columns\ToggleColumn
     {
         return ToggleColumn::make('is_approved')
             ->onColor('primary')
@@ -141,7 +142,7 @@ class UsersTable
             ->onIcon('heroicon-c-check')
             ->offIcon('heroicon-c-x-mark')
             ->label('Aprovar')
-            ->afterStateUpdated(function (User $record, $state) {
+            ->afterStateUpdated(function (User $record, $state): void {
                 // Se o usuário foi aprovado
                 if ($state) {
                     // Remover suspensão
@@ -162,7 +163,7 @@ class UsersTable
 
     private static function getTenantRolesForUser(User $record, bool $isAdmin): array|string
     {
-        if (method_exists($record, 'hasRole') && $record->hasRole(RoleType::ADMIN->value)) {
+        if ($record->hasRole(RoleType::ADMIN->value)) {
             return '—';
         }
 
@@ -193,7 +194,7 @@ class UsersTable
                 continue;
             }
 
-            $labels = $roles->map(fn ($role) => self::getRoleLabel($role->name))->all();
+            $labels = $roles->map(fn ($role): string => self::getRoleLabel($role->name))->all();
 
             $lines[] = implode(', ', $labels);
         }

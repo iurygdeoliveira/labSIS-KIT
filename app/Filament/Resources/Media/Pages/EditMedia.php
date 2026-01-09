@@ -9,6 +9,12 @@ use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Livewire\Attributes\Computed;
 
+/**
+ * @property-read \App\Models\MediaItem|null $record
+ * @property-read bool $canDelete
+ * @property-read string $fileSizeHuman
+ * @property-read array $mediaInfo
+ */
 class EditMedia extends EditRecord
 {
     use HasBackButtonAction;
@@ -19,13 +25,13 @@ class EditMedia extends EditRecord
     #[Computed]
     public function canDelete(): bool
     {
-        return $this->record?->collection_name !== 'avatar';
+        return $this->record->collection_name !== 'avatar';
     }
 
     #[Computed]
     public function fileSizeHuman(): string
     {
-        $bytes = $this->record?->size ?? 0;
+        $bytes = $this->record->size ?? 0;
 
         return $this->humanSize($bytes);
     }
@@ -35,7 +41,7 @@ class EditMedia extends EditRecord
     {
         $record = $this->record;
 
-        if (! $record) {
+        if (! $record instanceof \App\Models\MediaItem) {
             return [
                 'can_delete' => false,
                 'file_size_human' => '0 B',
@@ -52,6 +58,7 @@ class EditMedia extends EditRecord
         ];
     }
 
+    #[\Override]
     protected function getSavedNotificationTitle(): ?string
     {
         return null;
@@ -70,11 +77,13 @@ class EditMedia extends EditRecord
         ];
     }
 
+    #[\Override]
     protected function getFormActions(): array
     {
         return [];
     }
 
+    #[\Override]
     protected function mutateFormDataBeforeSave(array $data): array
     {
         unset($data['media'], $data['video_preview'], $data['name']);
@@ -89,13 +98,15 @@ class EditMedia extends EditRecord
     {
         $record = $this->getRecord();
 
+        if (! $record instanceof \App\Models\MediaItem) {
+            return;
+        }
+
         // Atualiza nome do arquivo (quando não for vídeo)
         $attachmentName = data_get($this->data, 'attachment_name');
-        if (! (bool) $record->video && $attachmentName !== null && $attachmentName !== '') {
-            if ($media = $record->getFirstMedia('media')) {
-                $media->name = (string) $attachmentName;
-                $media->save();
-            }
+        if (! (bool) $record->video && $attachmentName !== null && $attachmentName !== '' && $media = $record->getFirstMedia('media')) {
+            $media->name = (string) $attachmentName;
+            $media->save();
         }
 
         // Atualiza título do vídeo (quando for vídeo)

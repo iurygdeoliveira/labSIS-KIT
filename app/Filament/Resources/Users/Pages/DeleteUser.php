@@ -14,6 +14,7 @@ class DeleteUser extends ViewRecord
 
     protected static string $resource = UserResource::class;
 
+    #[\Override]
     public function getView(): string
     {
         return 'filament.resources.users.pages.delete-user';
@@ -32,7 +33,7 @@ class DeleteUser extends ViewRecord
                 ->modalDescription('Tem certeza de que deseja excluir permanentemente este usuário? Esta ação não pode ser desfeita.')
                 ->modalSubmitActionLabel('Sim, Excluir')
                 ->modalCancelActionLabel('Cancelar')
-                ->action(function () {
+                ->action(function (): void {
                     $this->getRecord()->delete();
 
                     $this->redirect($this->getResource()::getUrl('index'));
@@ -40,6 +41,7 @@ class DeleteUser extends ViewRecord
         ];
     }
 
+    #[\Override]
     public function getTitle(): string|Htmlable
     {
         return $this->resolveDynamicTitle();
@@ -49,10 +51,10 @@ class DeleteUser extends ViewRecord
     {
         $record = $this->getRecord();
 
-        if (! $record) {
+        if (! $record instanceof \App\Models\User) {
             return 'Excluir Usuário';
         }
 
-        return 'Excluir: '.($record->name ?? 'Usuário sem nome');
+        return 'Excluir: '.($record->name);
     }
 }

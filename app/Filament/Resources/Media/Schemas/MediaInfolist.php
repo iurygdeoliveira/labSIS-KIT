@@ -33,7 +33,7 @@ class MediaInfolist
                         TextEntry::make('video_duration')
                             ->label('Duração do Vídeo')
                             ->state(fn ($record): ?int => $record->video()->value('duration_seconds'))
-                            ->formatStateUsing(fn ($state) => self::formatVideoDuration($state))
+                            ->formatStateUsing(fn ($state): string => self::formatVideoDuration($state))
                             ->visible(fn ($record): bool => (bool) $record->video),
 
                         MediaAction::make('open')
@@ -61,11 +61,12 @@ class MediaInfolist
                                 'Vídeo' => 'heroicon-c-video-camera',
                                 'Documento' => 'heroicon-c-document',
                                 'Áudio' => 'heroicon-c-musical-note',
+                                default => 'heroicon-c-question-mark-circle',
                             }),
 
                         TextEntry::make('created_at_display')
                             ->label('Data de Criação')
-                            ->state(fn ($record) => self::resolveCreatedAt($record)),
+                            ->state(fn ($record): ?string => self::resolveCreatedAt($record)),
                     ])
                     ->columns(2),
             ]);

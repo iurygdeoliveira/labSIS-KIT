@@ -18,6 +18,7 @@ class ListTenants extends ListRecords
         ];
     }
 
+    #[\Override]
     protected function getHeaderWidgets(): array
     {
         return [

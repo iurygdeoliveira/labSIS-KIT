@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         // Tabela do Spatie Media Library (anexos)
-        Schema::create('media', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table): void {
             $table->id();
             $table->morphs('model');
             $table->uuid()->nullable()->unique();
@@ -29,7 +29,7 @@ return new class extends Migration
         });
 
         // Tabela de domínio pai (App\\Models\\MediaItem)
-        Schema::create('media_items', function (Blueprint $table) {
+        Schema::create('media_items', function (Blueprint $table): void {
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('name');

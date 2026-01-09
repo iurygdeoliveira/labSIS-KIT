@@ -11,6 +11,9 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Str;
 use Override;
 
+/**
+ * @property \App\Models\MediaItem $record
+ */
 class CreateMedia extends CreateRecord
 {
     use HasBackButtonAction;
@@ -50,10 +53,10 @@ class CreateMedia extends CreateRecord
             $data['video'] = true;
 
             // Define 'name' baseado no título informado ou no ID do provedor (YouTube)
-            $friendlyTitle = (string) (data_get($this->data, 'video_title') ?? '');
+            $friendlyTitle = (string) (data_get($this->data, 'video_title', ''));
             $candidate = $friendlyTitle !== ''
                 ? $friendlyTitle
-                : (string) ($this->extractYoutubeId($videoUrl) ?? 'video');
+                : $this->extractYoutubeId($videoUrl) ?? 'video';
 
             $data['name'] = Str::slug($candidate) ?: 'video';
         } else {
@@ -69,6 +72,7 @@ class CreateMedia extends CreateRecord
         return $data;
     }
 
+    #[\Override]
     protected function getCreatedNotification(): ?Notification
     {
         return null;
@@ -77,6 +81,10 @@ class CreateMedia extends CreateRecord
     protected function afterCreate(): void
     {
         $record = $this->getRecord();
+
+        if (! $record instanceof \App\Models\MediaItem) {
+            return;
+        }
         // Garante que relações e anexos salvos estejam disponíveis
         $record->refresh();
 
@@ -110,12 +118,12 @@ class CreateMedia extends CreateRecord
                     }
 
                     // Aplica título amigável informado no formulário (se houver)
-                    $friendlyTitle = (string) (data_get($this->data, 'video_title') ?? '');
+                    $friendlyTitle = (string) (data_get($this->data, 'video_title', ''));
                     if ($friendlyTitle !== '') {
                         $update['title'] = $friendlyTitle;
                     }
 
-                    if (! empty($update)) {
+                    if ($update !== []) {
                         $video->update($update);
                     }
                 }
@@ -130,18 +138,16 @@ class CreateMedia extends CreateRecord
         $this->notifySuccess('Mídia criada com sucesso.');
     }
 
-    private function afterSaveRenameAttachment($record): void
+    private function afterSaveRenameAttachment(\App\Models\MediaItem $record): void
     {
         $videoUrl = data_get($this->data, 'video.url');
 
         // Se for arquivo (não vídeo), aplica nome amigável no anexo do Spatie
         if (empty($videoUrl)) {
             $attachmentName = data_get($this->data, 'attachment_name');
-            if ($attachmentName !== null && $attachmentName !== '') {
-                if ($media = $record->getFirstMedia('media')) {
-                    $media->name = (string) $attachmentName;
-                    $media->save();
-                }
+            if ($attachmentName !== null && $attachmentName !== '' && $media = $record->getFirstMedia('media')) {
+                $media->name = (string) $attachmentName;
+                $media->save();
             }
         }
     }
@@ -172,13 +178,13 @@ class CreateMedia extends CreateRecord
 
         if ($host === 'youtube.com' || $host === 'm.youtube.com') {
             parse_str((string) (parse_url($url, PHP_URL_QUERY) ?? ''), $query);
-            if (! empty($query['v'])) {
+            if (isset($query['v']) && ($query['v'] !== [] && ($query['v'] !== '' && $query['v'] !== '0'))) {
                 return (string) $query['v'];
             }
 
             $parts = array_values(array_filter(explode('/', $path)));
             if (($parts[0] ?? '') === 'shorts' && ! empty($parts[1] ?? '')) {
-                return (string) $parts[1];
+                return $parts[1];
             }
         }
 

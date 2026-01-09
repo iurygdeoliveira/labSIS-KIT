@@ -19,6 +19,7 @@ class Register extends BaseRegister
 {
     use NotificationsTrait;
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -60,11 +61,13 @@ class Register extends BaseRegister
      * Sobrescreve o método para não enviar verificação de email
      * já que desabilitamos a verificação de email no AuthPanelProvider
      */
+    #[\Override]
     protected function sendEmailVerificationNotification($user): void
     {
         // Não faz nada - verificação de email desabilitada
     }
 
+    #[\Override]
     protected function handleRegistration(array $data): Model
     {
         try {
@@ -201,7 +204,7 @@ class Register extends BaseRegister
     /**
      * Trata exceções genéricas
      */
-    protected function handleGenericException(Exception $e): void
+    protected function handleGenericException(\Throwable $e): void
     {
         $this->notifyDanger(
             'Erro no cadastro',

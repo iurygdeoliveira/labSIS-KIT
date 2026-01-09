@@ -13,16 +13,19 @@ class RequestPasswordReset extends BaseRequestPasswordReset
 {
     use NotificationsTrait;
 
+    #[\Override]
     public function getHeading(): string|Htmlable
     {
         return 'Esqueceu sua senha?';
     }
 
+    #[\Override]
     public function getSubheading(): string|Htmlable|null
     {
         return 'Digite seu email e enviaremos um link para redefinir sua senha.';
     }
 
+    #[\Override]
     protected function getSentNotification(string $status): ?Notification
     {
         return $this->buildNotification(
@@ -33,6 +36,7 @@ class RequestPasswordReset extends BaseRequestPasswordReset
         );
     }
 
+    #[\Override]
     public function request(): void
     {
         try {
@@ -55,16 +59,14 @@ class RequestPasswordReset extends BaseRequestPasswordReset
                     return;
                 }
 
-                if (! method_exists($user, 'notify')) {
+                if (! $user instanceof \App\Models\User) {
                     $userClass = $user::class;
-
-                    throw new \LogicException("Model [{$userClass}] does not have a [notify()] method.");
+                    throw new \LogicException("User [{$userClass}] is not an instance of App\Models\User.");
                 }
 
                 $notification = new \App\Notifications\Auth\ResetPasswordNotification($token);
                 $notification->url = \Filament\Facades\Filament::getResetPasswordUrl($token, $user);
 
-                /** @var \App\Models\User $user */
                 $user->notify($notification);
 
                 if (class_exists(\Illuminate\Auth\Events\PasswordResetLinkSent::class)) {

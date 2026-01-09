@@ -29,7 +29,7 @@ abstract class BaseAssignRolePage extends Page implements HasTable
         $currentUser = Filament::auth()->user();
         $isAdmin = false;
 
-        if ($currentUser instanceof User && method_exists($currentUser, 'hasRole')) {
+        if ($currentUser instanceof User) {
             $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
         }
 
@@ -39,8 +39,8 @@ abstract class BaseAssignRolePage extends Page implements HasTable
             ->with(['user', 'tenant']);
 
         // Se não for admin, filtra apenas o tenant atual
-        if (! $isAdmin && $currentTenant) {
-            $query->where('tenant_id', $currentTenant->id);
+        if (! $isAdmin && $currentTenant instanceof \App\Models\Tenant) {
+            $query->where('tenant_id', $currentTenant->getKey());
         }
 
         $tableConfig = $table->query($query);

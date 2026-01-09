@@ -8,6 +8,15 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Livewire\Attributes\Computed;
 
+/**
+ * @property-read \Illuminate\Database\Eloquent\Builder $baseQuery
+ * @property-read int $totalUsers
+ * @property-read int $suspendedUsers
+ * @property-read int $verifiedUsers
+ * @property-read int $unapprovedUsers
+ * @property-read array $summary
+ * @property-read array $percentages
+ */
 class UsersStats extends BaseWidget
 {
     protected static ?string $color = 'primary';
@@ -16,7 +25,7 @@ class UsersStats extends BaseWidget
     protected function baseQuery()
     {
         return User::query()
-            ->whereDoesntHave('roles', function ($query) {
+            ->whereDoesntHave('roles', function ($query): void {
                 $query->where('name', RoleType::ADMIN->value);
             });
     }
@@ -75,6 +84,7 @@ class UsersStats extends BaseWidget
         ];
     }
 
+    #[\Override]
     protected function getStats(): array
     {
         $summary = $this->summary;

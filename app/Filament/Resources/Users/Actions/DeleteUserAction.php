@@ -13,7 +13,7 @@ class DeleteUserAction
             ->label('Excluir')
             ->icon('heroicon-s-trash')
             ->color('danger')
-            ->url(fn ($record) => UserResource::getUrl('delete', ['record' => $record]))
+            ->url(fn ($record): string => UserResource::getUrl('delete', ['record' => $record]))
             ->openUrlInNewTab(false);
     }
 }

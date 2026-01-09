@@ -21,6 +21,7 @@ class ListUsers extends ListRecords
         ];
     }
 
+    #[\Override]
     protected function getHeaderWidgets(): array
     {
         return [

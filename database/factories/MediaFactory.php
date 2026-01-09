@@ -33,10 +33,7 @@ class MediaFactory extends Factory
         ];
 
         $mimeType = $this->faker->randomElement($mimeTypes);
-        $isImage = str_starts_with($mimeType, 'image/');
-        $isVideo = str_starts_with($mimeType, 'video/');
-        $isPdf = $mimeType === 'application/pdf';
-        $isDocument = str_starts_with($mimeType, 'application/');
+        $isImage = str_starts_with((string) $mimeType, 'image/');
 
         $extensions = [
             'image/jpeg' => 'jpg',
@@ -85,7 +82,7 @@ class MediaFactory extends Factory
                 'large' => true,
             ] : [],
             'order_column' => $this->faker->numberBetween(1, 100),
-            'model_type' => $this->faker->randomElement(['App\Models\User', 'App\Models\Post', 'App\Models\Product']),
+            'model_type' => $this->faker->randomElement([\App\Models\User::class, 'App\Models\Post', 'App\Models\Product']),
             'model_id' => $this->faker->numberBetween(1, 100),
         ];
     }
@@ -95,7 +92,7 @@ class MediaFactory extends Factory
      */
     public function image(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'mime_type' => $this->faker->randomElement(['image/jpeg', 'image/png', 'image/gif', 'image/webp']),
             'collection_name' => 'images',
             'manipulations' => [
@@ -121,7 +118,7 @@ class MediaFactory extends Factory
      */
     public function document(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'mime_type' => $this->faker->randomElement(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']),
             'collection_name' => 'documents',
             'manipulations' => [],
@@ -135,7 +132,7 @@ class MediaFactory extends Factory
      */
     public function video(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'mime_type' => $this->faker->randomElement(['video/mp4', 'video/avi']),
             'collection_name' => 'videos',
             'manipulations' => [],
@@ -149,7 +146,7 @@ class MediaFactory extends Factory
      */
     public function avatar(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'mime_type' => $this->faker->randomElement(['image/jpeg', 'image/png']),
             'collection_name' => 'avatars',
             'size' => $this->faker->numberBetween(1024, 5 * 1024 * 1024), // 1KB a 5MB
@@ -173,7 +170,7 @@ class MediaFactory extends Factory
      */
     public function small(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'size' => $this->faker->numberBetween(1024, 100 * 1024), // 1KB a 100KB
         ]);
     }
@@ -183,7 +180,7 @@ class MediaFactory extends Factory
      */
     public function large(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'size' => $this->faker->numberBetween(10 * 1024 * 1024, 100 * 1024 * 1024), // 10MB a 100MB
         ]);
     }

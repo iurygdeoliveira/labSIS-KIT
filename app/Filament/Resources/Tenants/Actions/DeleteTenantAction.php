@@ -13,7 +13,7 @@ class DeleteTenantAction
             ->label('Excluir')
             ->icon('heroicon-s-trash')
             ->color('danger')
-            ->url(fn ($record) => TenantResource::getUrl('delete', ['record' => $record]))
+            ->url(fn ($record): string => TenantResource::getUrl('delete', ['record' => $record]))
             ->openUrlInNewTab(false);
     }
 }

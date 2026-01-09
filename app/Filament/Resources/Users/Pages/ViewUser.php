@@ -9,6 +9,14 @@ use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 
+/**
+ * @property-read \App\Models\User|null $record
+ * @property-read array $userStats
+ * @property-read bool $canSuspend
+ * @property-read bool $canUnsuspend
+ * @property-read bool $canDelete
+ * @property-read array $userPermissions
+ */
 class ViewUser extends ViewRecord
 {
     use HasBackButtonAction;
@@ -18,9 +26,9 @@ class ViewUser extends ViewRecord
     #[Computed]
     public function userStats(): array
     {
-        $record = $this->record;
+        $record = $this->getRecord();
 
-        if (! $record) {
+        if (! $record instanceof \App\Models\User) {
             return [
                 'tenant_count' => 0,
                 'role_count' => 0,
@@ -42,21 +50,29 @@ class ViewUser extends ViewRecord
     #[Computed]
     public function canSuspend(): bool
     {
-        return $this->record?->getKey() !== Auth::id() &&
-               ! $this->record?->is_suspended;
+        $record = $this->getRecord();
+
+        return $record instanceof \App\Models\User &&
+               $record->getKey() !== Auth::id() &&
+               ! $record->is_suspended;
     }
 
     #[Computed]
     public function canUnsuspend(): bool
     {
-        return $this->record?->getKey() !== Auth::id() &&
-               $this->record?->is_suspended;
+        $record = $this->getRecord();
+
+        return $record instanceof \App\Models\User &&
+               $record->getKey() !== Auth::id() &&
+               $record->is_suspended;
     }
 
     #[Computed]
     public function canDelete(): bool
     {
-        return $this->record?->getKey() !== Auth::id();
+        $record = $this->getRecord();
+
+        return $record instanceof \App\Models\User && $record->getKey() !== Auth::id();
     }
 
     #[Computed]

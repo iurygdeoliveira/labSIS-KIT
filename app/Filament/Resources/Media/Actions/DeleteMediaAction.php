@@ -13,7 +13,7 @@ class DeleteMediaAction
             ->label('Excluir')
             ->icon('heroicon-s-trash')
             ->color('danger')
-            ->url(fn ($record) => MediaResource::getUrl('delete', ['record' => $record]))
+            ->url(fn ($record): string => MediaResource::getUrl('delete', ['record' => $record]))
             ->openUrlInNewTab(false);
     }
 }

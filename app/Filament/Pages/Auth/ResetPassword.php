@@ -20,6 +20,7 @@ class ResetPassword extends BaseResetPassword
 {
     use NotificationsTrait;
 
+    #[\Override]
     public function resetPassword(): ?PasswordResetResponse
     {
         try {

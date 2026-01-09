@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('videos', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table): void {
             $table->id();
             $table->uuid('uuid')->unique();
 
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->index('url');
         });
 
-        Schema::table('media_items', function (Blueprint $table) {
+        Schema::table('media_items', function (Blueprint $table): void {
             $table->boolean('video')->default(false)->after('id');
         });
     }

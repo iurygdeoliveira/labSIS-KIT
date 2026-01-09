@@ -14,8 +14,11 @@ trait HasBackButtonAction
             ->color('secondary')
             ->icon(Heroicon::ArrowLeft);
 
+        // @phpstan-ignore function.alreadyNarrowedType
         if (method_exists(static::class, 'getResource')) {
-            $action->url(static::getResource()::getUrl('index'));
+            /** @var class-string<\Filament\Resources\Resource> $resource */
+            $resource = static::getResource();
+            $action->url($resource::getUrl('index'));
         }
 
         return $action;

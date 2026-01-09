@@ -11,6 +11,9 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 
+/**
+ * @property-read \App\Models\User|null $record
+ */
 class EditUser extends EditRecord
 {
     use HasBackButtonAction;
@@ -26,21 +29,21 @@ class EditUser extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        $actions = [
+        return [
             $this->getBackButtonAction(),
             $this->getSaveFormAction()->formId('form'),
             $this->getCancelFormAction(),
             // ViewAction::make(),
         ];
-
-        return $actions;
     }
 
+    #[\Override]
     protected function getFormActions(): array
     {
         return [];
     }
 
+    #[\Override]
     protected function getSavedNotification(): ?Notification
     {
         return null;
@@ -48,20 +51,25 @@ class EditUser extends EditRecord
 
     protected function afterSave(): void
     {
+        $record = $this->getRecord();
+        if (! $record instanceof \App\Models\User) {
+            return;
+        }
+
         // Sincroniza suspended_at com is_suspended
-        if ($this->record->is_suspended && $this->record->suspended_at === null) {
-            $this->record->suspended_at = now();
-            $this->record->save();
+        if ($record->is_suspended && $record->suspended_at === null) {
+            $record->suspended_at = now();
+            $record->save();
         }
 
-        if (! $this->record->is_suspended && $this->record->suspended_at !== null) {
-            $this->record->suspended_at = null;
-            $this->record->save();
+        if (! $record->is_suspended && $record->suspended_at !== null) {
+            $record->suspended_at = null;
+            $record->save();
         }
 
-        if ($this->record->getKey() === Auth::id() && $this->record->is_suspended) {
+        if ($record->getKey() === Auth::id() && $record->is_suspended) {
             // Evita auto-suspensão via edição direta
-            $this->record->forceFill([
+            $record->forceFill([
                 'is_suspended' => false,
                 'suspended_at' => null,
             ])->save();

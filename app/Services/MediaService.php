@@ -34,7 +34,7 @@ class MediaService
     public function updateMedia(MediaItem $mediaItem, array $data): MediaItem
     {
         if (isset($data['video']) && ! empty($data['video'])) {
-            if ($mediaItem->getFirstMedia()) {
+            if ($mediaItem->getFirstMedia() instanceof \Spatie\MediaLibrary\MediaCollections\Models\Media) {
                 $mediaItem->clearMediaCollection();
             }
 
@@ -76,7 +76,7 @@ class MediaService
 
         $spatieMedia = $media->getFirstMedia();
 
-        return $spatieMedia ? $spatieMedia->getUrl() : null;
+        return $spatieMedia instanceof \Spatie\MediaLibrary\MediaCollections\Models\Media ? $spatieMedia->getUrl() : null;
     }
 
     public function getMediaPath(MediaItem $media): ?string
@@ -89,7 +89,7 @@ class MediaService
 
         $spatieMedia = $media->getFirstMedia();
 
-        return $spatieMedia ? $spatieMedia->getPath() : null;
+        return $spatieMedia instanceof \Spatie\MediaLibrary\MediaCollections\Models\Media ? $spatieMedia->getPath() : null;
     }
 
     public function getMediaType(MediaItem $media): string
@@ -101,7 +101,7 @@ class MediaService
         }
 
         $spatieMedia = $media->getFirstMedia();
-        if (! $spatieMedia) {
+        if (! $spatieMedia instanceof \Spatie\MediaLibrary\MediaCollections\Models\Media) {
             return 'unknown';
         }
 

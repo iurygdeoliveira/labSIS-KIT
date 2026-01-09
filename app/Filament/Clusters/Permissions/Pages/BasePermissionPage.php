@@ -55,7 +55,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
         $currentUser = Filament::auth()->user();
         $isAdmin = false;
 
-        if ($currentUser instanceof User && method_exists($currentUser, 'hasRole')) {
+        if ($currentUser instanceof User) {
             $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
         }
 
@@ -100,10 +100,11 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
         $currentUser = Filament::auth()->user();
         $isAdmin = false;
 
-        if ($currentUser instanceof User && method_exists($currentUser, 'hasRole')) {
+        if ($currentUser instanceof User) {
             $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
         }
 
+        /** @var Tenant|null $currentTenant */
         $currentTenant = Filament::getTenant();
 
         $query = Tenant::query()
@@ -118,7 +119,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
         $columns = [
             TextColumn::make('name')
                 ->label('Tenant')
-                ->when($isAdmin, fn ($column) => $column->searchable(isIndividual: true, isGlobal: false)),
+                ->when($isAdmin, fn ($column): \Filament\Tables\Columns\TextColumn => $column->searchable(isIndividual: true, isGlobal: false)),
         ];
 
         // Coluna "Todas" só aparece para Admin
@@ -244,7 +245,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
         Tenant::query()
             ->where('is_active', true)
             ->pluck('id')
-            ->each(function ($tenantId) use ($slug, $state) {
+            ->each(function ($tenantId) use ($slug, $state): void {
                 foreach ([PermissionEnum::VIEW, PermissionEnum::CREATE, PermissionEnum::UPDATE, PermissionEnum::DELETE] as $action) {
                     $this->setPermission((int) $tenantId, $slug, $action, $state);
                 }
@@ -257,13 +258,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
 
     public function rowAllEnabled(int $tenantId, string $resourceSlug): bool
     {
-        foreach ([PermissionEnum::VIEW, PermissionEnum::CREATE, PermissionEnum::UPDATE, PermissionEnum::DELETE] as $action) {
-            if (! $this->hasPermission($tenantId, $resourceSlug, $action)) {
-                return false;
-            }
-        }
-
-        return true;
+        return array_all([PermissionEnum::VIEW, PermissionEnum::CREATE, PermissionEnum::UPDATE, PermissionEnum::DELETE], fn (\App\Enums\Permission $action): bool => $this->hasPermission($tenantId, $resourceSlug, $action));
     }
 
     public function setAllPermissionsForTenant(int $tenantId, string $resourceSlug, bool $enabled): void

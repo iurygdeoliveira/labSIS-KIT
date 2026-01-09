@@ -36,10 +36,7 @@ class PermissionsCluster extends Cluster
         }
 
         $currentTenant = Filament::getTenant();
-        if ($currentTenant instanceof Tenant && $user->isOwnerOfTenant($currentTenant)) {
-            return true;
-        }
 
-        return false;
+        return $currentTenant instanceof Tenant && $user->isOwnerOfTenant($currentTenant);
     }
 }

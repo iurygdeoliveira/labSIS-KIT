@@ -36,7 +36,7 @@ class TenantForm
                     Select::make('usersIds')
                         ->hiddenLabel()
                         ->options(fn (): array => User::query()
-                            ->whereDoesntHave('roles', function ($query) {
+                            ->whereDoesntHave('roles', function ($query): void {
                                 $query->where('name', RoleType::ADMIN->value);
                             })
                             ->orderBy('name')
