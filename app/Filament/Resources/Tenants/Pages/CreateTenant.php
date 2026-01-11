@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Tenants\Pages;
 
 use App\Filament\Resources\Tenants\TenantResource;
+use App\Traits\Filament\HasSaveAndCreateAnotherAction;
 use App\Traits\Filament\NotificationsTrait;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CreateTenant extends CreateRecord
 {
+    use HasSaveAndCreateAnotherAction;
     use NotificationsTrait;
 
     protected static string $resource = TenantResource::class;

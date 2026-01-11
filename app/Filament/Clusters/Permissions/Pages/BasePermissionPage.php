@@ -64,6 +64,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
                 ->label('Tipo de usuário')
                 ->options([
                     RoleType::USER->value => RoleType::USER->getLabel(),
+                    RoleType::OWNER->value => RoleType::OWNER->getLabel(),
                 ])
                 ->native(false)
                 ->required()
@@ -94,6 +95,11 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
         return $schema->schema($schemaComponents);
     }
 
+    protected function getAvailableActions(): array
+    {
+        return [PermissionEnum::VIEW, PermissionEnum::CREATE, PermissionEnum::UPDATE, PermissionEnum::DELETE];
+    }
+
     public function table(Table $table): Table
     {
         $slug = static::$resourceSlug;
@@ -122,8 +128,8 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
                 ->when($isAdmin, fn ($column): \Filament\Tables\Columns\TextColumn => $column->searchable(isIndividual: true, isGlobal: false)),
         ];
 
-        // Coluna "Todas" só aparece para Admin
-        if ($isAdmin) {
+        // Coluna "Todas" só aparece para Admin e se houver mais de uma ação
+        if ($isAdmin && count($this->getAvailableActions()) > 1) {
             $columns[] = ToggleColumn::make('all')
                 ->label('Todas')
                 ->onColor('primary')
@@ -138,60 +144,20 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
                 );
         }
 
-        // Colunas de permissões individuais
-        $columns = array_merge($columns, [
-            ToggleColumn::make('view')
-                ->label(PermissionEnum::VIEW->getLabel())
+        foreach ($this->getAvailableActions() as $action) {
+            $columns[] = ToggleColumn::make($action->value)
+                ->label($action->getLabel())
                 ->onColor('primary')
                 ->offColor('danger')
                 ->onIcon('heroicon-c-check')
                 ->offIcon('heroicon-c-x-mark')
                 ->getStateUsing(
-                    fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::VIEW)
+                    fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, $action)
                 )
-                ->afterStateUpdated(
-                    fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::VIEW, $state)
-                ),
-
-            ToggleColumn::make('create')
-                ->label(PermissionEnum::CREATE->getLabel())
-                ->onColor('primary')
-                ->offColor('danger')
-                ->onIcon('heroicon-c-check')
-                ->offIcon('heroicon-c-x-mark')
-                ->getStateUsing(
-                    fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::CREATE)
-                )
-                ->afterStateUpdated(
-                    fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::CREATE, $state)
-                ),
-
-            ToggleColumn::make('update')
-                ->label(PermissionEnum::UPDATE->getLabel())
-                ->onColor('primary')
-                ->offColor('danger')
-                ->onIcon('heroicon-c-check')
-                ->offIcon('heroicon-c-x-mark')
-                ->getStateUsing(
-                    fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::UPDATE)
-                )
-                ->afterStateUpdated(
-                    fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::UPDATE, $state)
-                ),
-
-            ToggleColumn::make('delete')
-                ->label(PermissionEnum::DELETE->getLabel())
-                ->onColor('primary')
-                ->offColor('danger')
-                ->onIcon('heroicon-c-check')
-                ->offIcon('heroicon-c-x-mark')
-                ->getStateUsing(
-                    fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, PermissionEnum::DELETE)
-                )
-                ->afterStateUpdated(
-                    fn (Tenant $record, bool $state) => $this->setPermission($record->id, $slug, PermissionEnum::DELETE, $state)
-                ),
-        ]);
+                ->updateStateUsing(
+                    fn (bool $state, Tenant $record) => $this->setPermission($record->id, $slug, $action, $state)
+                );
+        }
 
         return $table
             ->query($query)
@@ -246,7 +212,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
             ->where('is_active', true)
             ->pluck('id')
             ->each(function ($tenantId) use ($slug, $state): void {
-                foreach ([PermissionEnum::VIEW, PermissionEnum::CREATE, PermissionEnum::UPDATE, PermissionEnum::DELETE] as $action) {
+                foreach ($this->getAvailableActions() as $action) {
                     $this->setPermission((int) $tenantId, $slug, $action, $state);
                 }
             });
@@ -258,12 +224,12 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
 
     public function rowAllEnabled(int $tenantId, string $resourceSlug): bool
     {
-        return array_all([PermissionEnum::VIEW, PermissionEnum::CREATE, PermissionEnum::UPDATE, PermissionEnum::DELETE], fn (\App\Enums\Permission $action): bool => $this->hasPermission($tenantId, $resourceSlug, $action));
+        return array_all($this->getAvailableActions(), fn (\App\Enums\Permission $action): bool => $this->hasPermission($tenantId, $resourceSlug, $action));
     }
 
     public function setAllPermissionsForTenant(int $tenantId, string $resourceSlug, bool $enabled): void
     {
-        foreach ([PermissionEnum::VIEW, PermissionEnum::CREATE, PermissionEnum::UPDATE, PermissionEnum::DELETE] as $action) {
+        foreach ($this->getAvailableActions() as $action) {
             $this->setPermission($tenantId, $resourceSlug, $action, $enabled);
         }
 
@@ -272,7 +238,10 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
 
     protected function resolveRole(int $tenantId): Role
     {
-        // Nesta tela só aparece USER, então garantir a role de USER no team
+        if ($this->selectedRole === RoleType::OWNER->value) {
+            return RoleType::ensureOwnerRoleForTeam($tenantId, $this->guard);
+        }
+
         return RoleType::ensureUserRoleForTeam($tenantId, $this->guard);
     }
 }

@@ -23,7 +23,7 @@ class Templates extends Page implements HasTable
 
     protected static ?string $title = 'Templates de E-mail';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Administração';
+    protected static string|\UnitEnum|null $navigationGroup = 'Sistema';
 
     protected static ?string $slug = 'mail-templates';
 
@@ -66,7 +66,7 @@ class Templates extends Page implements HasTable
             ->recordActions([
                 Action::make('preview')
                     ->label('Preview')
-                    ->icon('heroicon-o-eye')
+                    ->icon('heroicon-s-eye')
                     ->color('primary')
                     ->url(fn (array $record): string => PreviewTemplate::getUrl(['type' => $record['id']])),
             ]);

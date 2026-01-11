@@ -3,7 +3,6 @@
 namespace App\Traits\Filament;
 
 use Filament\Actions\Action;
-use Filament\Support\Icons\Heroicon;
 
 trait HasBackButtonAction
 {
@@ -12,7 +11,7 @@ trait HasBackButtonAction
         $action = Action::make('back')
             ->label('Voltar')
             ->color('secondary')
-            ->icon(Heroicon::ArrowLeft);
+            ->icon('heroicon-s-arrow-left');
 
         // @phpstan-ignore function.alreadyNarrowedType
         if (method_exists(static::class, 'getResource')) {

@@ -21,7 +21,7 @@ class ViewMedia extends ViewRecord
     {
         return [
             $this->getBackButtonAction(),
-            EditAction::make(),
+            EditAction::make()->icon('heroicon-s-pencil'),
         ];
     }
 

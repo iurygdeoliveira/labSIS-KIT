@@ -5,7 +5,7 @@ namespace App\Filament\Resources\Media\Pages;
 use App\Filament\Resources\Media\MediaResource;
 use App\Traits\Filament\HasBackButtonAction;
 use App\Traits\Filament\NotificationsTrait;
-use Filament\Actions\DeleteAction;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\EditRecord;
 use Livewire\Attributes\Computed;
 
@@ -68,12 +68,12 @@ class EditMedia extends EditRecord
     {
         return [
             $this->getBackButtonAction(),
-            $this->getSaveFormAction()->formId('form'),
-            DeleteAction::make()
-                ->successNotificationTitle(null)
-                ->after(function (): void {
-                    $this->notifySuccess('Mídia excluída com sucesso.');
-                }),
+            $this->getSaveFormAction()->formId('form')->icon('heroicon-s-check'),
+            Action::make('delete')
+                ->label(__('filament-actions::delete.single.label'))
+                ->icon('heroicon-s-trash')
+                ->color('danger')
+                ->url(fn () => MediaResource::getUrl('delete', ['record' => $this->getRecord()])),
         ];
     }
 

@@ -4,7 +4,8 @@ namespace App\Filament\Resources\Media\Pages;
 
 use App\Filament\Resources\Media\MediaResource;
 use App\Services\VideoMetadataService;
-use App\Traits\Filament\HasBackButtonAction;
+use App\Traits\Filament\HasStandardCreateFooterActions;
+use App\Traits\Filament\HasStandardCreateHeaderActions;
 use App\Traits\Filament\NotificationsTrait;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
@@ -16,31 +17,11 @@ use Override;
  */
 class CreateMedia extends CreateRecord
 {
-    use HasBackButtonAction;
+    use HasStandardCreateFooterActions;
+    use HasStandardCreateHeaderActions;
     use NotificationsTrait;
 
     protected static string $resource = MediaResource::class;
-
-    #[Override]
-    protected function getHeaderActions(): array
-    {
-        return [
-            $this->getBackButtonAction(),
-            $this->getCreateFormAction()
-                ->label('Salvar')
-                ->formId('form'),
-            $this->getCreateAnotherFormAction()
-                ->formId('form'),
-            $this->getCancelFormAction()
-                ->color('danger'),
-        ];
-    }
-
-    #[Override]
-    protected function getFormActions(): array
-    {
-        return [];
-    }
 
     #[Override]
     protected function mutateFormDataBeforeCreate(array $data): array

@@ -28187,6 +28187,10 @@ namespace App\Filament\Resources\Users\Widgets {
 namespace App\Filament\Clusters\Permissions\Pages {
     /**
      */
+    class AuthenticationPermissions extends \App\Filament\Clusters\Permissions\Pages\BasePermissionPage {
+            }
+    /**
+     */
     class BasePermissionPage extends \Filament\Pages\Page {
             }
     /**
@@ -33762,11 +33766,6 @@ namespace  {
 }
 
 
-namespace Facades\Livewire\Features\SupportFileUploads {
-    /**
-     * @mixin \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl     */
-    class GenerateSignedUploadUrl extends \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl {}
-}
 
 
 

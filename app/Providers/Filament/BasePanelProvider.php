@@ -39,7 +39,7 @@ abstract class BasePanelProvider extends PanelProvider
             ->profile()
             ->topbar(false)
             ->brandLogo(fn (): Factory|View => view('filament.auth.logo_base'))
-            ->brandLogoHeight('2rem')
+            ->brandLogoHeight('2.5rem')
             ->multiFactorAuthentication(
                 AppAuthentication::make()
                     ->recoverable()

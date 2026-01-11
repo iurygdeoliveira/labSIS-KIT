@@ -9569,16 +9569,16 @@
         },
         {
             "name": "ueberdosis/tiptap-php",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ueberdosis/tiptap-php.git",
-                "reference": "458194ad0f8b0cf616fecdf451a84f9a6c1f3056"
+                "reference": "6ea321fa665080e1a72ac5f52dfab19f6a292e2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ueberdosis/tiptap-php/zipball/458194ad0f8b0cf616fecdf451a84f9a6c1f3056",
-                "reference": "458194ad0f8b0cf616fecdf451a84f9a6c1f3056",
+                "url": "https://api.github.com/repos/ueberdosis/tiptap-php/zipball/6ea321fa665080e1a72ac5f52dfab19f6a292e2d",
+                "reference": "6ea321fa665080e1a72ac5f52dfab19f6a292e2d",
                 "shasum": ""
             },
             "require": {
@@ -9618,7 +9618,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ueberdosis/tiptap-php/issues",
-                "source": "https://github.com/ueberdosis/tiptap-php/tree/2.0.0"
+                "source": "https://github.com/ueberdosis/tiptap-php/tree/2.1.0"
             },
             "funding": [
                 {
@@ -9634,7 +9634,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-06-26T14:11:46+00:00"
+            "time": "2026-01-10T16:40:02+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

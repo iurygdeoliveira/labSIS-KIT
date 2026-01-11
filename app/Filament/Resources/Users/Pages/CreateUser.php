@@ -6,6 +6,8 @@ use App\Enums\RoleType;
 use App\Filament\Resources\Users\UserResource;
 use App\Models\Tenant;
 use App\Models\User;
+use App\Traits\Filament\HasStandardCreateFooterActions;
+use App\Traits\Filament\HasStandardCreateHeaderActions;
 use App\Traits\Filament\NotificationsTrait;
 use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
@@ -13,6 +15,8 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateUser extends CreateRecord
 {
+    use HasStandardCreateFooterActions;
+    use HasStandardCreateHeaderActions;
     use NotificationsTrait;
 
     protected static string $resource = UserResource::class;

@@ -58,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function configGates(): void
     {
+        Gate::policy(\Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog::class, \App\Policies\AuthenticationLogPolicy::class);
         Gate::define('viewPulse', fn (AppUser $user): bool => $user->hasRole('admin'));
     }
 

@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Enums\Permission as PermissionEnum;
 use App\Enums\RoleType;
+use App\Models\Role;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Tenancy\SpatieTeamResolver;
@@ -13,14 +14,13 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission as PermissionModel;
-use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
         $guard = config('auth.defaults.guard', 'web');
-        $resources = ['media', 'users'];
+        $resources = ['media', 'users', 'authentication-log'];
 
         foreach ($resources as $resource) {
             foreach (PermissionEnum::cases() as $permission) {
@@ -111,9 +111,9 @@ class UserSeeder extends Seeder
         // Define roles por tenant
         // Garantir existência das roles por tenant
         $roleOwnerA = RoleType::ensureOwnerRoleForTeam($tenantA->id, $guard);
-        $roleUserA = RoleType::ensureUserRoleForTeam($tenantA->id, $guard);
+        $roleUserA = Role::firstOrCreate(['name' => RoleType::USER->value, 'team_id' => $tenantA->id]);
         $roleOwnerB = RoleType::ensureOwnerRoleForTeam($tenantB->id, $guard);
-        $roleUserB = RoleType::ensureUserRoleForTeam($tenantB->id, $guard);
+        $roleUserB = Role::firstOrCreate(['name' => RoleType::USER->value, 'team_id' => $tenantB->id]);
 
         // Limpar cache antes de atribuir permissões
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
@@ -140,7 +140,7 @@ class UserSeeder extends Seeder
      */
     private function assignPermissionsToRolesByTenant(Role $ownerRole, int $tenantId, string $guard): void
     {
-        $resources = ['media', 'users'];
+        $resources = ['media', 'users', 'authentication-log'];
 
         // Configurar o contexto de team para o tenant
         $teamResolver = app(SpatieTeamResolver::class);

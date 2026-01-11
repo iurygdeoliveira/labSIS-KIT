@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Users\Pages;
 use App\Filament\Resources\Users\UserResource;
 use App\Traits\Filament\HasBackButtonAction;
 use App\Traits\Filament\NotificationsTrait;
+use Filament\Actions\Action;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
@@ -31,8 +32,12 @@ class EditUser extends EditRecord
     {
         return [
             $this->getBackButtonAction(),
-            $this->getSaveFormAction()->formId('form'),
-            $this->getCancelFormAction(),
+            $this->getSaveFormAction()->formId('form')->icon('heroicon-s-check'),
+            Action::make('delete')
+                ->label(__('filament-actions::delete.single.label'))
+                ->icon('heroicon-s-trash')
+                ->color('danger')
+                ->url(fn () => UserResource::getUrl('delete', ['record' => $this->getRecord()])),
             // ViewAction::make(),
         ];
     }

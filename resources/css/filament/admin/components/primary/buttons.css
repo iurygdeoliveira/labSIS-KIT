@@ -46,3 +46,55 @@ button.fi-color-primary[disabled] {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+/* Forçar ícone branco no Primary */
+.fi-btn.fi-color-primary .fi-icon,
+.fi-btn.fi-color-primary svg,
+button.fi-color-primary .fi-icon,
+button.fi-color-primary svg,
+a.fi-btn.fi-color-primary .fi-icon,
+a.fi-btn.fi-color-primary svg {
+    color: white !important;
+}
+
+/*
+ * Botão Customizado - Salvar e Criar Outro
+ * Cor: save-another (Verde Claro Customizado) - Variação do Primary
+ */
+
+:root {
+    --color-save-another-500: #1f8c4e; /* Custom Green - Base */
+    --color-save-another-600: #197541; /* Custom Green - Hover */
+    --color-save-another-700: #145e34; /* Custom Green - Active */
+}
+
+.fi-btn.fi-color-save-another,
+button.fi-color-save-another,
+a.fi-btn.fi-color-save-another {
+    background-color: var(--color-save-another-500) !important;
+    border-color: var(--color-save-another-600) !important;
+    color: white !important;
+}
+
+.fi-btn.fi-color-save-another:hover,
+button.fi-color-save-another:hover,
+a.fi-btn.fi-color-save-another:hover {
+    background-color: var(--color-save-another-600) !important;
+    border-color: var(--color-save-another-700) !important;
+}
+
+.fi-btn.fi-color-save-another:focus,
+button.fi-color-save-another:focus,
+a.fi-btn.fi-color-save-another:focus {
+    outline-color: var(--color-save-another-500) !important;
+}
+
+/* Forçar ícone branco */
+.fi-btn.fi-color-save-another .fi-icon,
+.fi-btn.fi-color-save-another svg,
+button.fi-color-save-another .fi-icon,
+button.fi-color-save-another svg,
+a.fi-btn.fi-color-save-another .fi-icon,
+a.fi-btn.fi-color-save-another svg {
+    color: white !important;
+}

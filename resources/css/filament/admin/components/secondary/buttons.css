@@ -46,3 +46,13 @@ button.fi-color-secondary[disabled] {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+/* Forçar ícone branco */
+.fi-btn.fi-color-secondary .fi-icon,
+.fi-btn.fi-color-secondary svg,
+button.fi-color-secondary .fi-icon,
+button.fi-color-secondary svg,
+a.fi-btn.fi-color-secondary .fi-icon,
+a.fi-btn.fi-color-secondary svg {
+    color: white !important;
+}

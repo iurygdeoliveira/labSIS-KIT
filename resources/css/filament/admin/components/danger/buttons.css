@@ -46,3 +46,13 @@ button.fi-color-danger[disabled] {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+/* Forçar ícone branco */
+.fi-btn.fi-color-danger .fi-icon,
+.fi-btn.fi-color-danger svg,
+button.fi-color-danger .fi-icon,
+button.fi-color-danger svg,
+a.fi-btn.fi-color-danger .fi-icon,
+a.fi-btn.fi-color-danger svg {
+    color: white !important;
+}
