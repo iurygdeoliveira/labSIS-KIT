@@ -1,0 +1,48 @@
+/*
+ * Buttons - DANGER (Vermelho)
+ * Estilos de botões usando a paleta danger (#D93223)
+ */
+
+.fi-btn.fi-color-danger,
+button.fi-color-danger,
+a.fi-btn.fi-color-danger {
+    background-color: var(--color-danger-500) !important;
+    border-color: var(--color-danger-600) !important;
+    color: white !important;
+}
+
+.fi-btn.fi-color-danger:hover,
+button.fi-color-danger:hover,
+a.fi-btn.fi-color-danger:hover {
+    background-color: var(--color-danger-600) !important;
+    border-color: var(--color-danger-700) !important;
+}
+
+.fi-btn.fi-color-danger:focus,
+.fi-btn.fi-color-danger:focus-visible,
+button.fi-color-danger:focus,
+button.fi-color-danger:focus-visible,
+a.fi-btn.fi-color-danger:focus,
+a.fi-btn.fi-color-danger:focus-visible {
+    background-color: var(--color-danger-600) !important;
+    border-color: var(--color-danger-700) !important;
+    outline: 2px solid var(--color-danger-400) !important;
+    outline-offset: 2px;
+}
+
+.fi-btn.fi-color-danger:active,
+button.fi-color-danger:active,
+a.fi-btn.fi-color-danger:active {
+    background-color: var(--color-danger-700) !important;
+    border-color: var(--color-danger-800) !important;
+}
+
+.fi-btn.fi-color-danger:disabled,
+.fi-btn.fi-color-danger[disabled],
+button.fi-color-danger:disabled,
+button.fi-color-danger[disabled] {
+    background-color: var(--color-danger-300) !important;
+    border-color: var(--color-danger-400) !important;
+    opacity: 0.6;
+    cursor: not-allowed;
+}

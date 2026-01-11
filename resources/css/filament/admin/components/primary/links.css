@@ -1,0 +1,21 @@
+/*
+ * Links - PRIMARY (Verde Floresta)
+ * Estilos de links usando a paleta primary (#014029)
+ */
+
+.fi-link.fi-color-primary,
+a.fi-color-primary:not(.fi-btn) {
+    color: var(--color-primary-700) !important;
+}
+
+.fi-link.fi-color-primary:hover,
+a.fi-color-primary:not(.fi-btn):hover {
+    color: var(--color-primary-800) !important;
+}
+
+.fi-link.fi-color-primary:focus,
+a.fi-color-primary:not(.fi-btn):focus {
+    color: var(--color-primary-800) !important;
+    outline: 2px solid var(--color-primary-400);
+    outline-offset: 2px;
+}

@@ -1,0 +1,21 @@
+/*
+ * Links - DANGER (Vermelho)
+ * Estilos de links usando a paleta danger (#D93223)
+ */
+
+.fi-link.fi-color-danger,
+a.fi-color-danger:not(.fi-btn) {
+    color: var(--color-danger-700) !important;
+}
+
+.fi-link.fi-color-danger:hover,
+a.fi-color-danger:not(.fi-btn):hover {
+    color: var(--color-danger-800) !important;
+}
+
+.fi-link.fi-color-danger:focus,
+a.fi-color-danger:not(.fi-btn):focus {
+    color: var(--color-danger-800) !important;
+    outline: 2px solid var(--color-danger-400);
+    outline-offset: 2px;
+}

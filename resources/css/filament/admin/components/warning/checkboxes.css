@@ -1,0 +1,32 @@
+/*
+ * Checkboxes & Radio Buttons - WARNING (Laranja)
+ * Estilos de checkboxes e radios usando a paleta warning (#F28907)
+ */
+
+input[type="checkbox"].fi-color-warning:checked,
+.fi-checkbox.fi-color-warning input:checked {
+    background-color: var(--color-warning-500) !important;
+    border-color: var(--color-warning-600) !important;
+}
+
+input[type="checkbox"].fi-color-warning:checked:hover,
+.fi-checkbox.fi-color-warning input:checked:hover {
+    background-color: var(--color-warning-600) !important;
+}
+
+input[type="checkbox"].fi-color-warning:focus,
+.fi-checkbox.fi-color-warning input:focus {
+    outline: 2px solid var(--color-warning-400);
+    outline-offset: 2px;
+}
+
+/* Radio buttons WARNING */
+input[type="radio"].fi-color-warning:checked,
+.fi-radio.fi-color-warning input:checked {
+    border-color: var(--color-warning-500) !important;
+}
+
+input[type="radio"].fi-color-warning:checked::before,
+.fi-radio.fi-color-warning input:checked::before {
+    background-color: var(--color-warning-500) !important;
+}

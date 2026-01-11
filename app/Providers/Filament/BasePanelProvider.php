@@ -9,7 +9,6 @@ use App\Http\Middleware\RedirectToProperPanelMiddleware;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use Filafly\Themes\Brisk\BriskTheme;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
-use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -17,13 +16,14 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Enums\Width;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Tapp\FilamentAuthenticationLog\FilamentAuthenticationLogPlugin;
 
 abstract class BasePanelProvider extends PanelProvider
@@ -36,9 +36,9 @@ abstract class BasePanelProvider extends PanelProvider
             ->spa()
             ->globalSearch(false)
             ->databaseTransactions()
-            ->darkMode(false)
-            ->defaultThemeMode(ThemeMode::Light)
-            ->brandLogo(fn (): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View => view('filament.auth.logo_base'))
+            ->profile()
+            ->topbar(false)
+            ->brandLogo(fn (): Factory|View => view('filament.auth.logo_base'))
             ->brandLogoHeight('2rem')
             ->multiFactorAuthentication(
                 AppAuthentication::make()
@@ -72,20 +72,6 @@ abstract class BasePanelProvider extends PanelProvider
                 FilamentAuthenticationLogPlugin::make()
             )
             ->plugin(BriskTheme::make()->withoutSuggestedFont())
-            ->plugin(
-                FilamentEditProfilePlugin::make()
-                    ->setNavigationLabel('Editar Perfil')
-                    ->setNavigationGroup('')
-                    ->setIcon('heroicon-s-adjustments-horizontal')
-                    ->shouldShowAvatarForm(
-                        value: true,
-                        directory: 'avatar',
-                        rules: 'mimes:png,jpg,jpeg|max:1024'
-                    )
-                    ->shouldShowEmailForm()
-                    ->shouldShowDeleteAccountForm(false)
-                    ->shouldShowMultiFactorAuthentication()
-            )
             ->plugin(
                 EasyFooterPlugin::make()
                     ->footerEnabled()

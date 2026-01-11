@@ -1,0 +1,36 @@
+/*
+ * Stats Widgets - DANGER (Vermelho)
+ * Estilos de widgets de estatísticas usando a paleta danger (#D93223)
+ */
+
+/* Card do stat quando a descrição tem a classe danger */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-danger) {
+    background-color: var(--color-danger-50) !important;
+    border-color: var(--color-danger-200) !important;
+}
+
+/* Ícone do stat (SVG dentro do label container) */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-danger) .fi-wi-stats-overview-stat-label-ctn svg {
+    color: var(--color-danger-600) !important;
+}
+
+/* Valor (número) quando descrição é danger */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-danger) .fi-wi-stats-overview-stat-value {
+    color: var(--color-danger-900) !important;
+}
+
+/* Label quando descrição é danger */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-danger) .fi-wi-stats-overview-stat-label {
+    color: var(--color-danger-700) !important;
+}
+
+/* Descrição */
+.fi-wi-stats-overview-stat-description.fi-color-danger {
+    color: var(--color-danger-600) !important;
+    font-weight: 600;
+}
+
+/* Chart/gráfico se houver */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-danger) .fi-wi-stats-overview-stat-chart {
+    color: var(--color-danger-500) !important;
+}

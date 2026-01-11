@@ -1,0 +1,11 @@
+/*
+ * Inputs - INFO (Azul)
+ * Estilos de inputs (focus states) usando a paleta info (#3b82f6)
+ */
+
+.fi-input.fi-color-info:focus,
+.fi-input-wrapper.fi-color-info:focus-within,
+.fi-fo-field-wrp.fi-color-info:focus-within {
+    border-color: var(--color-info-500) !important;
+    --tw-ring-color: var(--color-info-500) !important;
+}

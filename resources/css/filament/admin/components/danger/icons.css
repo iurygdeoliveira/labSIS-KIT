@@ -1,0 +1,16 @@
+/*
+ * Icons - DANGER (Vermelho)
+ * Estilos de ícones usando a paleta danger (#D93223)
+ */
+
+.fi-icon.fi-color-danger,
+.fi-color-danger .fi-icon,
+svg.fi-color-danger {
+    color: var(--color-danger-700) !important;
+}
+
+.fi-icon.fi-color-danger:hover,
+.fi-color-danger:hover .fi-icon,
+svg.fi-color-danger:hover {
+    color: var(--color-danger-800) !important;
+}

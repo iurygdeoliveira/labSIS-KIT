@@ -1,0 +1,21 @@
+/*
+ * Links - WARNING (Laranja)
+ * Estilos de links usando a paleta warning (#F28907)
+ */
+
+.fi-link.fi-color-warning,
+a.fi-color-warning:not(.fi-btn) {
+    color: var(--color-warning-700) !important;
+}
+
+.fi-link.fi-color-warning:hover,
+a.fi-color-warning:not(.fi-btn):hover {
+    color: var(--color-warning-800) !important;
+}
+
+.fi-link.fi-color-warning:focus,
+a.fi-color-warning:not(.fi-btn):focus {
+    color: var(--color-warning-800) !important;
+    outline: 2px solid var(--color-warning-400);
+    outline-offset: 2px;
+}

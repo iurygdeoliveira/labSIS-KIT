@@ -1,0 +1,21 @@
+/*
+ * Links - SECONDARY (Cinza)
+ * Estilos de links usando a paleta secondary (#71717a)
+ */
+
+.fi-link.fi-color-secondary,
+a.fi-color-secondary:not(.fi-btn) {
+    color: var(--color-secondary-700) !important;
+}
+
+.fi-link.fi-color-secondary:hover,
+a.fi-color-secondary:not(.fi-btn):hover {
+    color: var(--color-secondary-800) !important;
+}
+
+.fi-link.fi-color-secondary:focus,
+a.fi-color-secondary:not(.fi-btn):focus {
+    color: var(--color-secondary-800) !important;
+    outline: 2px solid var(--color-secondary-400);
+    outline-offset: 2px;
+}

@@ -1,20 +1,69 @@
-@import '../../../../vendor/filament/filament/resources/css/base.css';
-@import '../../../../vendor/filafly/brisk/resources/css/theme.css';
+@import "tailwindcss";
+@import "../../../../vendor/filament/filament/resources/css/theme.css";
 
-:root {
-    --primary-50: oklch(0.969 0.015 142.422);
-    --primary-100: oklch(0.941 0.03 142.58);
-    --primary-200: oklch(0.892 0.058 142.001);
-    --primary-300: oklch(0.81 0.117 142.638);
-    --primary-400: oklch(0.712 0.194 142.428);
-    --primary-500: oklch(0.645 0.246 142.439); 
-    --primary-600: oklch(0.586 0.253 142.585);
-    --primary-700: oklch(0.514 0.222 142.935);
-    --primary-800: oklch(0.455 0.188 142.697);
-    --primary-900: oklch(0.41 0.159 142.272);
-    --primary-950: oklch(0.271 0.105 142.094);
-}
+/* Definições de cores base */
+@import "./components/colors.css";
 
-@source '../../../../vendor/devonab/filament-easy-footer/resources/views/**/*';
+/* Componentes - PRIMARY (Verde Floresta) */
+@import "./components/primary/buttons.css";
+@import "./components/primary/links.css";
+@import "./components/primary/toggles.css";
+@import "./components/primary/checkboxes.css";
+@import "./components/primary/inputs.css";
+@import "./components/primary/icons.css";
+@import "./components/primary/tabs.css";
+@import "./components/primary/badges.css";
+@import "./components/primary/stats.css";
+
+/* Componentes - DANGER (Vermelho) */
+@import "./components/danger/buttons.css";
+@import "./components/danger/links.css";
+@import "./components/danger/toggles.css";
+@import "./components/danger/checkboxes.css";
+@import "./components/danger/inputs.css";
+@import "./components/danger/icons.css";
+@import "./components/danger/tabs.css";
+@import "./components/danger/badges.css";
+@import "./components/danger/stats.css";
+
+/* Componentes - WARNING (Laranja) */
+@import "./components/warning/buttons.css";
+@import "./components/warning/links.css";
+@import "./components/warning/toggles.css";
+@import "./components/warning/checkboxes.css";
+@import "./components/warning/inputs.css";
+@import "./components/warning/icons.css";
+@import "./components/warning/tabs.css";
+@import "./components/warning/badges.css";
+@import "./components/warning/stats.css";
+
+/* Componentes - INFO (Azul) */
+@import "./components/info/buttons.css";
+@import "./components/info/links.css";
+@import "./components/info/toggles.css";
+@import "./components/info/checkboxes.css";
+@import "./components/info/inputs.css";
+@import "./components/info/icons.css";
+@import "./components/info/tabs.css";
+@import "./components/info/badges.css";
+@import "./components/info/stats.css";
+
+/* Componentes - SECONDARY (Cinza) */
+@import "./components/secondary/buttons.css";
+@import "./components/secondary/links.css";
+@import "./components/secondary/toggles.css";
+@import "./components/secondary/checkboxes.css";
+@import "./components/secondary/inputs.css";
+@import "./components/secondary/icons.css";
+@import "./components/secondary/tabs.css";
+@import "./components/secondary/badges.css";
+@import "./components/secondary/stats.css";
+
+/* Componentes específicos */
+@import "./components/sidebar.css";
+@import "./components/login.css";
+
 @source '../../../../app/Filament/';
 @source '../../../../resources/views/';
+
+@source '../../../../vendor/devonab/filament-easy-footer/resources/views/**/*';

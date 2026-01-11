@@ -1,0 +1,16 @@
+/*
+ * Icons - SECONDARY (Cinza)
+ * Estilos de ícones usando a paleta secondary (#71717a)
+ */
+
+.fi-icon.fi-color-secondary,
+.fi-color-secondary .fi-icon,
+svg.fi-color-secondary {
+    color: var(--color-secondary-700) !important;
+}
+
+.fi-icon.fi-color-secondary:hover,
+.fi-color-secondary:hover .fi-icon,
+svg.fi-color-secondary:hover {
+    color: var(--color-secondary-800) !important;
+}

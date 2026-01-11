@@ -1,0 +1,10 @@
+/*
+ * Badges - INFO (Azul)
+ * Estilos de badges usando a paleta info (#3b82f6)
+ */
+
+.fi-badge.fi-color-info {
+    background-color: var(--color-info-100) !important;
+    color: var(--color-info-800) !important;
+    border-color: var(--color-info-300) !important;
+}

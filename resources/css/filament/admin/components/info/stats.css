@@ -1,0 +1,36 @@
+/*
+ * Stats Widgets - INFO (Azul)
+ * Estilos de widgets de estatísticas usando a paleta info (#3b82f6)
+ */
+
+/* Card do stat quando a descrição tem a classe info */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-info) {
+    background-color: var(--color-info-50) !important;
+    border-color: var(--color-info-200) !important;
+}
+
+/* Ícone do stat (SVG dentro do label container) */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-info) .fi-wi-stats-overview-stat-label-ctn svg {
+    color: var(--color-info-600) !important;
+}
+
+/* Valor (número) quando descrição é info */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-info) .fi-wi-stats-overview-stat-value {
+    color: var(--color-info-900) !important;
+}
+
+/* Label quando descrição é info */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-info) .fi-wi-stats-overview-stat-label {
+    color: var(--color-info-700) !important;
+}
+
+/* Descrição */
+.fi-wi-stats-overview-stat-description.fi-color-info {
+    color: var(--color-info-600) !important;
+    font-weight: 600;
+}
+
+/* Chart/gráfico se houver */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-info) .fi-wi-stats-overview-stat-chart {
+    color: var(--color-info-500) !important;
+}

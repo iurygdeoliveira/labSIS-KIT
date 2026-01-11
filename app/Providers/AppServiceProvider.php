@@ -18,8 +18,6 @@ use App\Support\AppDateTime;
 use App\Tenancy\SpatieTeamResolver as AppSpatieTeamResolver;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
 use Filament\Auth\Http\Responses\Contracts\LogoutResponse as LogoutResponseContract;
-use Filament\Support\Colors\Color;
-use Filament\Support\Facades\FilamentColor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +50,6 @@ class AppServiceProvider extends ServiceProvider
         $this->configCommands();
         $this->configUrls();
         $this->configDate();
-        $this->configFilamentColors();
         $this->configEvents();
         $this->configObservers();
         $this->configGates();
@@ -90,18 +87,7 @@ class AppServiceProvider extends ServiceProvider
     private function configDate(): void
     {
         Date::use(AppDateTime::class);
-        \Illuminate\Support\Facades\Date::setLocale('pt_BR');
-    }
-
-    private function configFilamentColors(): void
-    {
-        FilamentColor::register([
-            'danger' => Color::hex('#D93223'),
-            'warning' => Color::hex('#F28907'),
-            'success' => Color::hex('#52a0fa'),
-            'primary' => Color::hex('#014029'),
-            'secondary' => Color::Gray,
-        ]);
+        Date::setLocale('pt_BR');
     }
 
     private function configEvents(): void

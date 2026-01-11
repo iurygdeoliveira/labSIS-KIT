@@ -1,0 +1,36 @@
+/*
+ * Stats Widgets - WARNING (Laranja)
+ * Estilos de widgets de estatísticas usando a paleta warning (#F28907)
+ */
+
+/* Card do stat quando a descrição tem a classe warning */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-warning) {
+    background-color: var(--color-warning-50) !important;
+    border-color: var(--color-warning-200) !important;
+}
+
+/* Ícone do stat (SVG dentro do label container) */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-warning) .fi-wi-stats-overview-stat-label-ctn svg {
+    color: var(--color-warning-600) !important;
+}
+
+/* Valor (número) quando descrição é warning */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-warning) .fi-wi-stats-overview-stat-value {
+    color: var(--color-warning-900) !important;
+}
+
+/* Label quando descrição é warning */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-warning) .fi-wi-stats-overview-stat-label {
+    color: var(--color-warning-700) !important;
+}
+
+/* Descrição */
+.fi-wi-stats-overview-stat-description.fi-color-warning {
+    color: var(--color-warning-600) !important;
+    font-weight: 600;
+}
+
+/* Chart/gráfico se houver */
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-warning) .fi-wi-stats-overview-stat-chart {
+    color: var(--color-warning-500) !important;
+}

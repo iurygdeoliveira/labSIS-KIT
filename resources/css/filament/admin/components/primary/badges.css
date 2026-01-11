@@ -1,0 +1,10 @@
+/*
+ * Badges - PRIMARY (Verde Floresta)
+ * Estilos de badges usando a paleta primary (#014029)
+ */
+
+.fi-badge.fi-color-primary {
+    background-color: var(--color-primary-100) !important;
+    color: var(--color-primary-800) !important;
+    border-color: var(--color-primary-300) !important;
+}

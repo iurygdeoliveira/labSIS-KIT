@@ -1,0 +1,18 @@
+/*
+ * Tabs - PRIMARY (Verde Floresta)
+ * Estilos de tabs usando a paleta primary (#014029)
+ */
+
+.fi-tabs-item.fi-active.fi-color-primary {
+    color: var(--color-primary-700) !important;
+    border-color: var(--color-primary-500) !important;
+}
+
+.fi-tabs-item.fi-active.fi-color-primary:hover {
+    color: var(--color-primary-800) !important;
+}
+
+.fi-tabs-item .fi-badge.fi-color-primary {
+    background-color: var(--color-primary-100) !important;
+    color: var(--color-primary-800) !important;
+}

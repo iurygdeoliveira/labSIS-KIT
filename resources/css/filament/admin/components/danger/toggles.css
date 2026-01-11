@@ -1,0 +1,27 @@
+/*
+ * Toggles/Switches - DANGER (Vermelho)
+ * Estilos de toggles usando a paleta danger (#D93223)
+ */
+
+.fi-toggle.fi-color-danger input:checked + span,
+.fi-toggle.fi-color-danger[checked] span,
+.fi-toggle-on.fi-color-danger,
+.fi-toggle.fi-color-danger .fi-toggle-on {
+    background-color: var(--color-danger-500) !important;
+}
+
+.fi-toggle.fi-color-danger input:checked:hover + span,
+.fi-toggle.fi-color-danger[checked]:hover span,
+.fi-toggle-on.fi-color-danger:hover,
+.fi-toggle.fi-color-danger .fi-toggle-on:hover {
+    background-color: var(--color-danger-600) !important;
+}
+
+.fi-toggle.fi-color-danger input:checked:focus + span,
+.fi-toggle.fi-color-danger[checked]:focus span,
+.fi-toggle-on.fi-color-danger:focus,
+.fi-toggle.fi-color-danger .fi-toggle-on:focus {
+    background-color: var(--color-danger-600) !important;
+    outline: 2px solid var(--color-danger-400);
+    outline-offset: 2px;
+}

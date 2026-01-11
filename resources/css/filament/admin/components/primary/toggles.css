@@ -1,0 +1,27 @@
+/*
+ * Toggles/Switches - PRIMARY (Verde Floresta)
+ * Estilos de toggles usando a paleta primary (#014029)
+ */
+
+.fi-toggle.fi-color-primary input:checked + span,
+.fi-toggle.fi-color-primary[checked] span,
+.fi-toggle-on.fi-color-primary,
+.fi-toggle.fi-color-primary .fi-toggle-on {
+    background-color: var(--color-primary-500) !important;
+}
+
+.fi-toggle.fi-color-primary input:checked:hover + span,
+.fi-toggle.fi-color-primary[checked]:hover span,
+.fi-toggle-on.fi-color-primary:hover,
+.fi-toggle.fi-color-primary .fi-toggle-on:hover {
+    background-color: var(--color-primary-600) !important;
+}
+
+.fi-toggle.fi-color-primary input:checked:focus + span,
+.fi-toggle.fi-color-primary[checked]:focus span,
+.fi-toggle-on.fi-color-primary:focus,
+.fi-toggle.fi-color-primary .fi-toggle-on:focus {
+    background-color: var(--color-primary-600) !important;
+    outline: 2px solid var(--color-primary-400);
+    outline-offset: 2px;
+}

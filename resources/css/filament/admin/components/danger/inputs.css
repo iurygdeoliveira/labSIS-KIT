@@ -1,0 +1,11 @@
+/*
+ * Inputs - DANGER (Vermelho)
+ * Estilos de inputs (focus states) usando a paleta danger (#D93223)
+ */
+
+.fi-input.fi-color-danger:focus,
+.fi-input-wrapper.fi-color-danger:focus-within,
+.fi-fo-field-wrp.fi-color-danger:focus-within {
+    border-color: var(--color-danger-500) !important;
+    --tw-ring-color: var(--color-danger-500) !important;
+}

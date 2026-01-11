@@ -1,0 +1,27 @@
+/*
+ * Toggles/Switches - WARNING (Laranja)
+ * Estilos de toggles usando a paleta warning (#F28907)
+ */
+
+.fi-toggle.fi-color-warning input:checked + span,
+.fi-toggle.fi-color-warning[checked] span,
+.fi-toggle-on.fi-color-warning,
+.fi-toggle.fi-color-warning .fi-toggle-on {
+    background-color: var(--color-warning-500) !important;
+}
+
+.fi-toggle.fi-color-warning input:checked:hover + span,
+.fi-toggle.fi-color-warning[checked]:hover span,
+.fi-toggle-on.fi-color-warning:hover,
+.fi-toggle.fi-color-warning .fi-toggle-on:hover {
+    background-color: var(--color-warning-600) !important;
+}
+
+.fi-toggle.fi-color-warning input:checked:focus + span,
+.fi-toggle.fi-color-warning[checked]:focus span,
+.fi-toggle-on.fi-color-warning:focus,
+.fi-toggle.fi-color-warning .fi-toggle-on:focus {
+    background-color: var(--color-warning-600) !important;
+    outline: 2px solid var(--color-warning-400);
+    outline-offset: 2px;
+}

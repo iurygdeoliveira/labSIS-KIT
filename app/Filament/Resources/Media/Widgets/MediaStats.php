@@ -87,7 +87,7 @@ class MediaStats extends BaseWidget
             Stat::make('Documentos', number_format($stats['documents']))
                 ->description("{$percentages['documents']}% do total")
                 ->icon('heroicon-c-document')
-                ->color('success'),
+                ->color('info'),
 
             Stat::make('Áudios', number_format($stats['audios']))
                 ->description("{$percentages['audios']}% do total")

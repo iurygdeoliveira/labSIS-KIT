@@ -1,0 +1,32 @@
+/*
+ * Checkboxes & Radio Buttons - PRIMARY (Verde Floresta)
+ * Estilos de checkboxes e radios usando a paleta primary (#014029)
+ */
+
+input[type="checkbox"].fi-color-primary:checked,
+.fi-checkbox.fi-color-primary input:checked {
+    background-color: var(--color-primary-500) !important;
+    border-color: var(--color-primary-600) !important;
+}
+
+input[type="checkbox"].fi-color-primary:checked:hover,
+.fi-checkbox.fi-color-primary input:checked:hover {
+    background-color: var(--color-primary-600) !important;
+}
+
+input[type="checkbox"].fi-color-primary:focus,
+.fi-checkbox.fi-color-primary input:focus {
+    outline: 2px solid var(--color-primary-400);
+    outline-offset: 2px;
+}
+
+/* Radio buttons PRIMARY */
+input[type="radio"].fi-color-primary:checked,
+.fi-radio.fi-color-primary input:checked {
+    border-color: var(--color-primary-500) !important;
+}
+
+input[type="radio"].fi-color-primary:checked::before,
+.fi-radio.fi-color-primary input:checked::before {
+    background-color: var(--color-primary-500) !important;
+}

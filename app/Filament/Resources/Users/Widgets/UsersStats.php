@@ -94,7 +94,7 @@ class UsersStats extends BaseWidget
             Stat::make('Total de Usuários', number_format($summary['total']))
                 ->description('Cadastrados no sistema')
                 ->icon('heroicon-c-user-group')
-                ->color('secondary'),
+                ->color('info'),
 
             Stat::make('Usuários Verificados', number_format($summary['verified']))
                 ->description("{$percentages['verified']}% do total")
@@ -104,7 +104,7 @@ class UsersStats extends BaseWidget
             Stat::make('Usuários Suspensos', number_format($summary['suspended']))
                 ->description("{$percentages['suspended']}% do total")
                 ->icon('heroicon-c-no-symbol')
-                ->color('danger'),
+                ->color('warning'),
 
             Stat::make('Usuários Não Aprovados', number_format($summary['unapproved']))
                 ->description("{$percentages['unapproved']}% do total")

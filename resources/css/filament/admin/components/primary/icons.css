@@ -1,0 +1,16 @@
+/*
+ * Icons - PRIMARY (Verde Floresta)
+ * Estilos de ícones usando a paleta primary (#014029)
+ */
+
+.fi-icon.fi-color-primary,
+.fi-color-primary .fi-icon,
+svg.fi-color-primary {
+    color: var(--color-primary-700) !important;
+}
+
+.fi-icon.fi-color-primary:hover,
+.fi-color-primary:hover .fi-icon,
+svg.fi-color-primary:hover {
+    color: var(--color-primary-800) !important;
+}

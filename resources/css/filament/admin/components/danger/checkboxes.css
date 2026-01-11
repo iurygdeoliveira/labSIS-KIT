@@ -1,0 +1,32 @@
+/*
+ * Checkboxes & Radio Buttons - DANGER (Vermelho)
+ * Estilos de checkboxes e radios usando a paleta danger (#D93223)
+ */
+
+input[type="checkbox"].fi-color-danger:checked,
+.fi-checkbox.fi-color-danger input:checked {
+    background-color: var(--color-danger-500) !important;
+    border-color: var(--color-danger-600) !important;
+}
+
+input[type="checkbox"].fi-color-danger:checked:hover,
+.fi-checkbox.fi-color-danger input:checked:hover {
+    background-color: var(--color-danger-600) !important;
+}
+
+input[type="checkbox"].fi-color-danger:focus,
+.fi-checkbox.fi-color-danger input:focus {
+    outline: 2px solid var(--color-danger-400);
+    outline-offset: 2px;
+}
+
+/* Radio buttons DANGER */
+input[type="radio"].fi-color-danger:checked,
+.fi-radio.fi-color-danger input:checked {
+    border-color: var(--color-danger-500) !important;
+}
+
+input[type="radio"].fi-color-danger:checked::before,
+.fi-radio.fi-color-danger input:checked::before {
+    background-color: var(--color-danger-500) !important;
+}

@@ -1,0 +1,16 @@
+/*
+ * Icons - WARNING (Laranja)
+ * Estilos de ícones usando a paleta warning (#F28907)
+ */
+
+.fi-icon.fi-color-warning,
+.fi-color-warning .fi-icon,
+svg.fi-color-warning {
+    color: var(--color-warning-700) !important;
+}
+
+.fi-icon.fi-color-warning:hover,
+.fi-color-warning:hover .fi-icon,
+svg.fi-color-warning:hover {
+    color: var(--color-warning-800) !important;
+}

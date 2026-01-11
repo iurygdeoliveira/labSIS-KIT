@@ -1,0 +1,32 @@
+/*
+ * Checkboxes & Radio Buttons - INFO (Azul)
+ * Estilos de checkboxes e radios usando a paleta info (#3b82f6)
+ */
+
+input[type="checkbox"].fi-color-info:checked,
+.fi-checkbox.fi-color-info input:checked {
+    background-color: var(--color-info-500) !important;
+    border-color: var(--color-info-600) !important;
+}
+
+input[type="checkbox"].fi-color-info:checked:hover,
+.fi-checkbox.fi-color-info input:checked:hover {
+    background-color: var(--color-info-600) !important;
+}
+
+input[type="checkbox"].fi-color-info:focus,
+.fi-checkbox.fi-color-info input:focus {
+    outline: 2px solid var(--color-info-400);
+    outline-offset: 2px;
+}
+
+/* Radio buttons INFO */
+input[type="radio"].fi-color-info:checked,
+.fi-radio.fi-color-info input:checked {
+    border-color: var(--color-info-500) !important;
+}
+
+input[type="radio"].fi-color-info:checked::before,
+.fi-radio.fi-color-info input:checked::before {
+    background-color: var(--color-info-500) !important;
+}

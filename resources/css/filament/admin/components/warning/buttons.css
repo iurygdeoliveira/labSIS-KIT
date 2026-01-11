@@ -1,0 +1,48 @@
+/*
+ * Buttons - WARNING (Laranja)
+ * Estilos de botões usando a paleta warning (#F28907)
+ */
+
+.fi-btn.fi-color-warning,
+button.fi-color-warning,
+a.fi-btn.fi-color-warning {
+    background-color: var(--color-warning-500) !important;
+    border-color: var(--color-warning-600) !important;
+    color: white !important;
+}
+
+.fi-btn.fi-color-warning:hover,
+button.fi-color-warning:hover,
+a.fi-btn.fi-color-warning:hover {
+    background-color: var(--color-warning-600) !important;
+    border-color: var(--color-warning-700) !important;
+}
+
+.fi-btn.fi-color-warning:focus,
+.fi-btn.fi-color-warning:focus-visible,
+button.fi-color-warning:focus,
+button.fi-color-warning:focus-visible,
+a.fi-btn.fi-color-warning:focus,
+a.fi-btn.fi-color-warning:focus-visible {
+    background-color: var(--color-warning-600) !important;
+    border-color: var(--color-warning-700) !important;
+    outline: 2px solid var(--color-warning-400) !important;
+    outline-offset: 2px;
+}
+
+.fi-btn.fi-color-warning:active,
+button.fi-color-warning:active,
+a.fi-btn.fi-color-warning:active {
+    background-color: var(--color-warning-700) !important;
+    border-color: var(--color-warning-800) !important;
+}
+
+.fi-btn.fi-color-warning:disabled,
+.fi-btn.fi-color-warning[disabled],
+button.fi-color-warning:disabled,
+button.fi-color-warning[disabled] {
+    background-color: var(--color-warning-300) !important;
+    border-color: var(--color-warning-400) !important;
+    opacity: 0.6;
+    cursor: not-allowed;
+}

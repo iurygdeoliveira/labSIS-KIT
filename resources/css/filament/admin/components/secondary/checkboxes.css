@@ -1,0 +1,32 @@
+/*
+ * Checkboxes & Radio Buttons - SECONDARY (Cinza)
+ * Estilos de checkboxes e radios usando a paleta secondary (#71717a)
+ */
+
+input[type="checkbox"].fi-color-secondary:checked,
+.fi-checkbox.fi-color-secondary input:checked {
+    background-color: var(--color-secondary-500) !important;
+    border-color: var(--color-secondary-600) !important;
+}
+
+input[type="checkbox"].fi-color-secondary:checked:hover,
+.fi-checkbox.fi-color-secondary input:checked:hover {
+    background-color: var(--color-secondary-600) !important;
+}
+
+input[type="checkbox"].fi-color-secondary:focus,
+.fi-checkbox.fi-color-secondary input:focus {
+    outline: 2px solid var(--color-secondary-400);
+    outline-offset: 2px;
+}
+
+/* Radio buttons SECONDARY */
+input[type="radio"].fi-color-secondary:checked,
+.fi-radio.fi-color-secondary input:checked {
+    border-color: var(--color-secondary-500) !important;
+}
+
+input[type="radio"].fi-color-secondary:checked::before,
+.fi-radio.fi-color-secondary input:checked::before {
+    background-color: var(--color-secondary-500) !important;
+}

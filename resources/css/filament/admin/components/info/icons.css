@@ -1,0 +1,16 @@
+/*
+ * Icons - INFO (Azul)
+ * Estilos de ícones usando a paleta info (#3b82f6)
+ */
+
+.fi-icon.fi-color-info,
+.fi-color-info .fi-icon,
+svg.fi-color-info {
+    color: var(--color-info-700) !important;
+}
+
+.fi-icon.fi-color-info:hover,
+.fi-color-info:hover .fi-icon,
+svg.fi-color-info:hover {
+    color: var(--color-info-800) !important;
+}

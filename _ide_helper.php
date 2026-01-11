@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 12.44.0.
+ * Generated for Laravel 12.46.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -2581,6 +2581,19 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Create a HMAC of the password hash for storage in cookies.
+         *
+         * @param string $passwordHash
+         * @return string
+         * @static
+         */
+        public static function hashPasswordForCookie($passwordHash)
+        {
+            /** @var \Illuminate\Auth\SessionGuard $instance */
+            return $instance->hashPasswordForCookie($passwordHash);
+        }
+
+        /**
          * Log the user out of the application.
          *
          * @return void
@@ -4579,7 +4592,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if an item exists in the cache.
          *
-         * @param array|string $key
+         * @param \BackedEnum|\UnitEnum|array|string $key
          * @return bool
          * @static
          */
@@ -4592,7 +4605,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if an item doesn't exist in the cache.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @return bool
          * @static
          */
@@ -4605,7 +4618,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Retrieve an item from the cache by key.
          *
-         * @param array|string $key
+         * @param \BackedEnum|\UnitEnum|array|string $key
          * @param mixed $default
          * @return mixed
          * @static
@@ -4652,7 +4665,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Retrieve an item from the cache and delete it.
          *
-         * @param array|string $key
+         * @param \BackedEnum|\UnitEnum|array|string $key
          * @param mixed $default
          * @return mixed
          * @static
@@ -4666,7 +4679,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Store an item in the cache.
          *
-         * @param array|string $key
+         * @param \BackedEnum|\UnitEnum|array|string $key
          * @param mixed $value
          * @param \DateTimeInterface|\DateInterval|int|null $ttl
          * @return bool
@@ -4679,17 +4692,12 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
-         * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
+         * Store an item in the cache.
          *
+         * @param \BackedEnum|\UnitEnum|array|string $key
+         * @param mixed $value
+         * @param \DateTimeInterface|\DateInterval|int|null $ttl
          * @return bool
-         * @param string $key The key of the item to store.
-         * @param mixed $value The value of the item to store, must be serializable.
-         * @param null|int|\DateInterval $ttl Optional. The TTL value of this item. If no value is sent and
-         *                                      the driver supports TTL then the library may set a default value
-         *                                      for it or let the driver take care of that.
-         * @return bool True on success and false on failure.
-         * @throws \Psr\SimpleCache\InvalidArgumentException
-         *   MUST be thrown if the $key string is not a legal value.
          * @static
          */
         public static function set($key, $value, $ttl = null)
@@ -4735,7 +4743,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Store an item in the cache if the key does not exist.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|array|string $key
          * @param mixed $value
          * @param \DateTimeInterface|\DateInterval|int|null $ttl
          * @return bool
@@ -4750,7 +4758,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Increment the value of an item in the cache.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param mixed $value
          * @return int|bool
          * @static
@@ -4764,7 +4772,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Decrement the value of an item in the cache.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param mixed $value
          * @return int|bool
          * @static
@@ -4778,7 +4786,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Store an item in the cache indefinitely.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param mixed $value
          * @return bool
          * @static
@@ -4793,7 +4801,7 @@ namespace Illuminate\Support\Facades {
          * Get an item from the cache, or execute the given Closure and store the result.
          *
          * @template TCacheValue
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param \Closure|\DateTimeInterface|\DateInterval|int|null $ttl
          * @param \Closure():  TCacheValue  $callback
          * @return TCacheValue
@@ -4809,7 +4817,7 @@ namespace Illuminate\Support\Facades {
          * Get an item from the cache, or execute the given Closure and store the result forever.
          *
          * @template TCacheValue
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param \Closure():  TCacheValue  $callback
          * @return TCacheValue
          * @static
@@ -4824,7 +4832,7 @@ namespace Illuminate\Support\Facades {
          * Get an item from the cache, or execute the given Closure and store the result forever.
          *
          * @template TCacheValue
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param \Closure():  TCacheValue  $callback
          * @return TCacheValue
          * @static
@@ -4856,7 +4864,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Remove an item from the cache.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|array|string $key
          * @return bool
          * @static
          */
@@ -4867,13 +4875,10 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
-         * Delete an item from the cache by its unique key.
+         * Remove an item from the cache.
          *
+         * @param \BackedEnum|\UnitEnum|array|string $key
          * @return bool
-         * @param string $key The unique cache key of the item to delete.
-         * @return bool True if the item was successfully removed. False if there was an error.
-         * @throws \Psr\SimpleCache\InvalidArgumentException
-         *   MUST be thrown if the $key string is not a legal value.
          * @static
          */
         public static function delete($key)
@@ -5041,7 +5046,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Retrieve an item from the cache by key.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @return mixed
          * @static
          */
@@ -5054,7 +5059,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Store an item in the cache for the default time.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param mixed $value
          * @return void
          * @static
@@ -6681,6 +6686,18 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Determine if the given value appears to be encrypted by this encrypter.
+         *
+         * @param mixed $value
+         * @return bool
+         * @static
+         */
+        public static function appearsEncrypted($value)
+        {
+            return \Illuminate\Encryption\Encrypter::appearsEncrypted($value);
+        }
+
+        /**
          * Get the encryption key that the encrypter is currently using.
          *
          * @return string
@@ -7855,7 +7872,7 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
-         * Get the database connection full name.
+         * Get the database connection with its read / write type.
          *
          * @return string|null
          * @static
@@ -7978,7 +7995,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the event dispatcher used by the connection.
          *
-         * @return \Illuminate\Contracts\Events\Dispatcher
+         * @return \Illuminate\Contracts\Events\Dispatcher|null
          * @static
          */
         public static function getEventDispatcher()
@@ -9529,7 +9546,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if a given ability has been defined.
          *
-         * @param string|array $ability
+         * @param \UnitEnum|array|string $ability
          * @return bool
          * @static
          */
@@ -10982,7 +10999,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Log\Logger withContext(array $context = [])
      * @method static void listen(\Closure $callback)
      * @method static \Psr\Log\LoggerInterface getLogger()
-     * @method static \Illuminate\Contracts\Events\Dispatcher getEventDispatcher()
+     * @method static \Illuminate\Contracts\Events\Dispatcher|null getEventDispatcher()
      * @method static void setEventDispatcher(\Illuminate\Contracts\Events\Dispatcher $dispatcher)
      * @method static \Illuminate\Log\Logger|mixed when(\Closure|mixed|null $value = null, callable|null $callback = null, callable|null $default = null)
      * @method static \Illuminate\Log\Logger|mixed unless(\Closure|mixed|null $value = null, callable|null $callback = null, callable|null $default = null)
@@ -19253,7 +19270,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get an item from the session.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param mixed $default
          * @return mixed
          * @static
@@ -19267,7 +19284,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the value of a given key and then forget it.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param mixed $default
          * @return mixed
          * @static
@@ -19321,7 +19338,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Put a key / value pair or array of key / value pairs in the session.
          *
-         * @param string|array $key
+         * @param \BackedEnum|\UnitEnum|string|array $key
          * @param mixed $value
          * @return void
          * @static
@@ -19335,7 +19352,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get an item from the session, or store the default value.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param \Closure $callback
          * @return mixed
          * @static
@@ -19349,7 +19366,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Push a value onto a session array.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param mixed $value
          * @return void
          * @static
@@ -19363,7 +19380,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Increment the value of an item in the session.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param int $amount
          * @return mixed
          * @static
@@ -19377,7 +19394,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Decrement the value of an item in the session.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @param int $amount
          * @return int
          * @static
@@ -19469,7 +19486,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Remove an item from the session, returning its value.
          *
-         * @param string $key
+         * @param \BackedEnum|\UnitEnum|string $key
          * @return mixed
          * @static
          */
@@ -19482,7 +19499,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Remove one or many items from the session.
          *
-         * @param string|array $keys
+         * @param \BackedEnum|\UnitEnum|string|array $keys
          * @return void
          * @static
          */
@@ -23215,587 +23232,6 @@ namespace Hugomyb\FilamentMediaAction\Facades {
      * @see \Hugomyb\FilamentMediaAction\FilamentMediaAction
      */
     class FilamentMediaAction {
-            }
-    }
-
-namespace Jenssegers\Agent\Facades {
-    /**
-     */
-    class Agent extends \Mobile_Detect {
-        /**
-         * Get all detection rules. These rules include the additional
-         * platforms and browsers and utilities.
-         *
-         * @return array
-         * @static
-         */
-        public static function getDetectionRulesExtended()
-        {
-            return \Jenssegers\Agent\Agent::getDetectionRulesExtended();
-        }
-
-        /**
-         * @static
-         */
-        public static function getRules()
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getRules();
-        }
-
-        /**
-         * @return \Jaybizzle\CrawlerDetect\CrawlerDetect
-         * @static
-         */
-        public static function getCrawlerDetect()
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getCrawlerDetect();
-        }
-
-        /**
-         * @static
-         */
-        public static function getBrowsers()
-        {
-            return \Jenssegers\Agent\Agent::getBrowsers();
-        }
-
-        /**
-         * @static
-         */
-        public static function getOperatingSystems()
-        {
-            return \Jenssegers\Agent\Agent::getOperatingSystems();
-        }
-
-        /**
-         * @static
-         */
-        public static function getPlatforms()
-        {
-            return \Jenssegers\Agent\Agent::getPlatforms();
-        }
-
-        /**
-         * @static
-         */
-        public static function getDesktopDevices()
-        {
-            return \Jenssegers\Agent\Agent::getDesktopDevices();
-        }
-
-        /**
-         * @static
-         */
-        public static function getProperties()
-        {
-            return \Jenssegers\Agent\Agent::getProperties();
-        }
-
-        /**
-         * Get accept languages.
-         *
-         * @param string $acceptLanguage
-         * @return array
-         * @static
-         */
-        public static function languages($acceptLanguage = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->languages($acceptLanguage);
-        }
-
-        /**
-         * Get the browser name.
-         *
-         * @param string|null $userAgent
-         * @return string|bool
-         * @static
-         */
-        public static function browser($userAgent = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->browser($userAgent);
-        }
-
-        /**
-         * Get the platform name.
-         *
-         * @param string|null $userAgent
-         * @return string|bool
-         * @static
-         */
-        public static function platform($userAgent = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->platform($userAgent);
-        }
-
-        /**
-         * Get the device name.
-         *
-         * @param string|null $userAgent
-         * @return string|bool
-         * @static
-         */
-        public static function device($userAgent = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->device($userAgent);
-        }
-
-        /**
-         * Check if the device is a desktop computer.
-         *
-         * @param string|null $userAgent deprecated
-         * @param array $httpHeaders deprecated
-         * @return bool
-         * @static
-         */
-        public static function isDesktop($userAgent = null, $httpHeaders = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->isDesktop($userAgent, $httpHeaders);
-        }
-
-        /**
-         * Check if the device is a mobile phone.
-         *
-         * @param string|null $userAgent deprecated
-         * @param array $httpHeaders deprecated
-         * @return bool
-         * @static
-         */
-        public static function isPhone($userAgent = null, $httpHeaders = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->isPhone($userAgent, $httpHeaders);
-        }
-
-        /**
-         * Get the robot name.
-         *
-         * @param string|null $userAgent
-         * @return string|bool
-         * @static
-         */
-        public static function robot($userAgent = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->robot($userAgent);
-        }
-
-        /**
-         * Check if device is a robot.
-         *
-         * @param string|null $userAgent
-         * @return bool
-         * @static
-         */
-        public static function isRobot($userAgent = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->isRobot($userAgent);
-        }
-
-        /**
-         * Get the device type
-         *
-         * @param null $userAgent
-         * @param null $httpHeaders
-         * @return string
-         * @static
-         */
-        public static function deviceType($userAgent = null, $httpHeaders = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->deviceType($userAgent, $httpHeaders);
-        }
-
-        /**
-         * @static
-         */
-        public static function version($propertyName, $type = 'text')
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->version($propertyName, $type);
-        }
-
-        /**
-         * Get the current script version.
-         * 
-         * This is useful for the demo.php file,
-         * so people can check on what version they are testing
-         * for mobile devices.
-         *
-         * @return string The version number in semantic version format.
-         * @static
-         */
-        public static function getScriptVersion()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getScriptVersion();
-        }
-
-        /**
-         * Set the HTTP Headers. Must be PHP-flavored. This method will reset existing headers.
-         *
-         * @param array $httpHeaders The headers to set. If null, then using PHP's _SERVER to extract
-         *                           the headers. The default null is left for backwards compatibility.
-         * @static
-         */
-        public static function setHttpHeaders($httpHeaders = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->setHttpHeaders($httpHeaders);
-        }
-
-        /**
-         * Retrieves the HTTP headers.
-         *
-         * @return array
-         * @static
-         */
-        public static function getHttpHeaders()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getHttpHeaders();
-        }
-
-        /**
-         * Retrieves a particular header. If it doesn't exist, no exception/error is caused.
-         * 
-         * Simply null is returned.
-         *
-         * @param string $header The name of the header to retrieve. Can be HTTP compliant such as
-         *                       "User-Agent" or "X-Device-User-Agent" or can be php-esque with the
-         *                       all-caps, HTTP_ prefixed, underscore separated awesomeness.
-         * @return string|null The value of the header.
-         * @static
-         */
-        public static function getHttpHeader($header)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getHttpHeader($header);
-        }
-
-        /**
-         * @static
-         */
-        public static function getMobileHeaders()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getMobileHeaders();
-        }
-
-        /**
-         * Get all possible HTTP headers that
-         * can contain the User-Agent string.
-         *
-         * @return array List of HTTP headers.
-         * @static
-         */
-        public static function getUaHttpHeaders()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getUaHttpHeaders();
-        }
-
-        /**
-         * Set CloudFront headers
-         * http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/header-caching.html#header-caching-web-device
-         *
-         * @param array $cfHeaders List of HTTP headers
-         * @return boolean If there were CloudFront headers to be set
-         * @static
-         */
-        public static function setCfHeaders($cfHeaders = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->setCfHeaders($cfHeaders);
-        }
-
-        /**
-         * Retrieves the cloudfront headers.
-         *
-         * @return array
-         * @static
-         */
-        public static function getCfHeaders()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getCfHeaders();
-        }
-
-        /**
-         * Set the User-Agent to be used.
-         *
-         * @param string $userAgent The user agent string to set.
-         * @return string|null
-         * @static
-         */
-        public static function setUserAgent($userAgent = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->setUserAgent($userAgent);
-        }
-
-        /**
-         * Retrieve the User-Agent.
-         *
-         * @return string|null The user agent if it's set.
-         * @static
-         */
-        public static function getUserAgent()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getUserAgent();
-        }
-
-        /**
-         * Set the detection type. Must be one of self::DETECTION_TYPE_MOBILE or
-         * self::DETECTION_TYPE_EXTENDED. Otherwise, nothing is set.
-         *
-         * @deprecated since version 2.6.9
-         * @param string $type The type. Must be a self::DETECTION_TYPE_* constant. The default
-         *                     parameter is null which will default to self::DETECTION_TYPE_MOBILE.
-         * @static
-         */
-        public static function setDetectionType($type = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->setDetectionType($type);
-        }
-
-        /**
-         * @static
-         */
-        public static function getMatchingRegex()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getMatchingRegex();
-        }
-
-        /**
-         * @static
-         */
-        public static function getMatchesArray()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getMatchesArray();
-        }
-
-        /**
-         * Retrieve the list of known phone devices.
-         *
-         * @return array List of phone devices.
-         * @static
-         */
-        public static function getPhoneDevices()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getPhoneDevices();
-        }
-
-        /**
-         * Retrieve the list of known tablet devices.
-         *
-         * @return array List of tablet devices.
-         * @static
-         */
-        public static function getTabletDevices()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getTabletDevices();
-        }
-
-        /**
-         * Alias for getBrowsers() method.
-         *
-         * @return array List of user agents.
-         * @static
-         */
-        public static function getUserAgents()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getUserAgents();
-        }
-
-        /**
-         * Retrieve the list of known utilities.
-         *
-         * @return array List of utilities.
-         * @static
-         */
-        public static function getUtilities()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getUtilities();
-        }
-
-        /**
-         * Method gets the mobile detection rules. This method is used for the magic methods $detect->is*().
-         *
-         * @deprecated since version 2.6.9
-         * @return array All the rules (but not extended).
-         * @static
-         */
-        public static function getMobileDetectionRules()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getMobileDetectionRules();
-        }
-
-        /**
-         * Method gets the mobile detection rules + utilities.
-         * 
-         * The reason this is separate is because utilities rules
-         * don't necessary imply mobile. This method is used inside
-         * the new $detect->is('stuff') method.
-         *
-         * @deprecated since version 2.6.9
-         * @return array All the rules + extended.
-         * @static
-         */
-        public static function getMobileDetectionRulesExtended()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getMobileDetectionRulesExtended();
-        }
-
-        /**
-         * Check the HTTP headers for signs of mobile.
-         * 
-         * This is the fastest mobile check possible; it's used
-         * inside isMobile() method.
-         *
-         * @return bool
-         * @static
-         */
-        public static function checkHttpHeadersForMobile()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->checkHttpHeadersForMobile();
-        }
-
-        /**
-         * Check if the device is mobile.
-         * 
-         * Returns true if any type of mobile device detected, including special ones
-         *
-         * @param null $userAgent deprecated
-         * @param null $httpHeaders deprecated
-         * @return bool
-         * @static
-         */
-        public static function isMobile($userAgent = null, $httpHeaders = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->isMobile($userAgent, $httpHeaders);
-        }
-
-        /**
-         * Check if the device is a tablet.
-         * 
-         * Return true if any type of tablet device is detected.
-         *
-         * @param string $userAgent deprecated
-         * @param array $httpHeaders deprecated
-         * @return bool
-         * @static
-         */
-        public static function isTablet($userAgent = null, $httpHeaders = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->isTablet($userAgent, $httpHeaders);
-        }
-
-        /**
-         * This method checks for a certain property in the
-         * userAgent.
-         *
-         * @todo : The httpHeaders part is not yet used.
-         * @param string $key
-         * @param string $userAgent deprecated
-         * @param string $httpHeaders deprecated
-         * @return bool|int|null
-         * @static
-         */
-        public static function is($key, $userAgent = null, $httpHeaders = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->is($key, $userAgent, $httpHeaders);
-        }
-
-        /**
-         * Some detection rules are relative (not standard),
-         * because of the diversity of devices, vendors and
-         * their conventions in representing the User-Agent or
-         * the HTTP headers.
-         * 
-         * This method will be used to check custom regexes against
-         * the User-Agent string.
-         *
-         * @param $regex
-         * @param string $userAgent
-         * @return bool
-         * @todo : search in the HTTP headers too.
-         * @static
-         */
-        public static function match($regex, $userAgent = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->match($regex, $userAgent);
-        }
-
-        /**
-         * Prepare the version number.
-         *
-         * @todo Remove the error supression from str_replace() call.
-         * @param string $ver The string version, like "2.6.21.2152";
-         * @return float
-         * @static
-         */
-        public static function prepareVersionNo($ver)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->prepareVersionNo($ver);
-        }
-
-        /**
-         * Retrieve the mobile grading, using self::MOBILE_GRADE_* constants.
-         *
-         * @deprecated This is no longer being maintained, it was an experiment at the time.
-         * @return string One of the self::MOBILE_GRADE_* constants.
-         * @static
-         */
-        public static function mobileGrade()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->mobileGrade();
-        }
-
             }
     }
 
@@ -28585,13 +28021,6 @@ namespace Filament\Notifications\Livewire {
             }
     }
 
-namespace Joaopaulolndev\FilamentEditProfile\Pages {
-    /**
-     */
-    class EditProfilePage extends \Filament\Pages\Page {
-            }
-    }
-
 namespace App\Filament\Resources\Media\Pages {
     /**
      * @property \App\Models\MediaItem $record
@@ -31475,7 +30904,7 @@ namespace  {
         }
 
         /**
-         * Add a raw from clause to the query.
+         * Add a raw "from" clause to the query.
          *
          * @param string $expression
          * @param mixed $bindings
@@ -31567,7 +30996,7 @@ namespace  {
         }
 
         /**
-         * Add a join clause to the query.
+         * Add a "join" clause to the query.
          *
          * @param \Illuminate\Contracts\Database\Query\Expression|string $table
          * @param \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first
@@ -31602,7 +31031,7 @@ namespace  {
         }
 
         /**
-         * Add a subquery join clause to the query.
+         * Add a "subquery join" clause to the query.
          *
          * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*>|string $query
          * @param string $as
@@ -31622,7 +31051,7 @@ namespace  {
         }
 
         /**
-         * Add a lateral join clause to the query.
+         * Add a "lateral join" clause to the query.
          *
          * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*>|string $query
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -31776,7 +31205,7 @@ namespace  {
         }
 
         /**
-         * Merge an array of where clauses and bindings.
+         * Merge an array of "where" clauses and bindings.
          *
          * @param array $wheres
          * @param array $bindings
@@ -31837,7 +31266,7 @@ namespace  {
         }
 
         /**
-         * Add a raw where clause to the query.
+         * Add a raw "where" clause to the query.
          *
          * @param \Illuminate\Contracts\Database\Query\Expression|string $sql
          * @param mixed $bindings
@@ -31852,7 +31281,7 @@ namespace  {
         }
 
         /**
-         * Add a raw or where clause to the query.
+         * Add a raw "or where" clause to the query.
          *
          * @param string $sql
          * @param mixed $bindings
@@ -32089,9 +31518,9 @@ namespace  {
         }
 
         /**
-         * Add a where between statement to the query.
+         * Add a "where between" statement to the query.
          *
-         * @param \Illuminate\Contracts\Database\Query\Expression|string $column
+         * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*>|\Illuminate\Contracts\Database\Query\Expression|string $column
          * @param string $boolean
          * @param bool $not
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -32104,7 +31533,7 @@ namespace  {
         }
 
         /**
-         * Add a where between statement using columns to the query.
+         * Add a "where between" statement using columns to the query.
          *
          * @param \Illuminate\Contracts\Database\Query\Expression|string $column
          * @param string $boolean
@@ -32119,9 +31548,9 @@ namespace  {
         }
 
         /**
-         * Add an or where between statement to the query.
+         * Add an "or where between" statement to the query.
          *
-         * @param \Illuminate\Contracts\Database\Query\Expression|string $column
+         * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*>|\Illuminate\Contracts\Database\Query\Expression|string $column
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @static
          */
@@ -32132,7 +31561,7 @@ namespace  {
         }
 
         /**
-         * Add an or where between statement using columns to the query.
+         * Add an "or where between" statement using columns to the query.
          *
          * @param \Illuminate\Contracts\Database\Query\Expression|string $column
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -32145,9 +31574,9 @@ namespace  {
         }
 
         /**
-         * Add a where not between statement to the query.
+         * Add a "where not between" statement to the query.
          *
-         * @param \Illuminate\Contracts\Database\Query\Expression|string $column
+         * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*>|\Illuminate\Contracts\Database\Query\Expression|string $column
          * @param string $boolean
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @static
@@ -32159,7 +31588,7 @@ namespace  {
         }
 
         /**
-         * Add a where not between statement using columns to the query.
+         * Add a "where not between" statement using columns to the query.
          *
          * @param \Illuminate\Contracts\Database\Query\Expression|string $column
          * @param string $boolean
@@ -32173,9 +31602,9 @@ namespace  {
         }
 
         /**
-         * Add an or where not between statement to the query.
+         * Add an "or where not between" statement to the query.
          *
-         * @param \Illuminate\Contracts\Database\Query\Expression|string $column
+         * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*>|\Illuminate\Contracts\Database\Query\Expression|string $column
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @static
          */
@@ -32186,7 +31615,7 @@ namespace  {
         }
 
         /**
-         * Add an or where not between statement using columns to the query.
+         * Add an "or where not between" statement using columns to the query.
          *
          * @param \Illuminate\Contracts\Database\Query\Expression|string $column
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -32199,7 +31628,7 @@ namespace  {
         }
 
         /**
-         * Add a where between columns statement using a value to the query.
+         * Add a "where between columns" statement using a value to the query.
          *
          * @param mixed $value
          * @param array{\Illuminate\Contracts\Database\Query\Expression|string, \Illuminate\Contracts\Database\Query\Expression|string} $columns
@@ -32215,7 +31644,7 @@ namespace  {
         }
 
         /**
-         * Add an or where between columns statement using a value to the query.
+         * Add an "or where between columns" statement using a value to the query.
          *
          * @param mixed $value
          * @param array{\Illuminate\Contracts\Database\Query\Expression|string, \Illuminate\Contracts\Database\Query\Expression|string} $columns
@@ -32229,7 +31658,7 @@ namespace  {
         }
 
         /**
-         * Add a where not between columns statement using a value to the query.
+         * Add a "where not between columns" statement using a value to the query.
          *
          * @param mixed $value
          * @param array{\Illuminate\Contracts\Database\Query\Expression|string, \Illuminate\Contracts\Database\Query\Expression|string} $columns
@@ -32244,7 +31673,7 @@ namespace  {
         }
 
         /**
-         * Add an or where not between columns statement using a value to the query.
+         * Add an "or where not between columns" statement using a value to the query.
          *
          * @param mixed $value
          * @param array{\Illuminate\Contracts\Database\Query\Expression|string, \Illuminate\Contracts\Database\Query\Expression|string} $columns
@@ -32426,7 +31855,7 @@ namespace  {
         }
 
         /**
-         * Add a nested where statement to the query.
+         * Add a nested "where" statement to the query.
          *
          * @param string $boolean
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -32465,7 +31894,7 @@ namespace  {
         }
 
         /**
-         * Add an exists clause to the query.
+         * Add an "exists" clause to the query.
          *
          * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*> $callback
          * @param string $boolean
@@ -32480,7 +31909,7 @@ namespace  {
         }
 
         /**
-         * Add an or exists clause to the query.
+         * Add an "or where exists" clause to the query.
          *
          * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*> $callback
          * @param bool $not
@@ -32494,7 +31923,7 @@ namespace  {
         }
 
         /**
-         * Add a where not exists clause to the query.
+         * Add a "where not exists" clause to the query.
          *
          * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*> $callback
          * @param string $boolean
@@ -32508,7 +31937,7 @@ namespace  {
         }
 
         /**
-         * Add a where not exists clause to the query.
+         * Add an "or where not exists" clause to the query.
          *
          * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*> $callback
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -32521,7 +31950,7 @@ namespace  {
         }
 
         /**
-         * Add an exists clause to the query.
+         * Add an "exists" clause to the query.
          *
          * @param string $boolean
          * @param bool $not
@@ -32800,7 +32229,7 @@ namespace  {
         }
 
         /**
-         * Add a "or where fulltext" clause to the query.
+         * Add an "or where fulltext" clause to the query.
          *
          * @param string|string[] $columns
          * @param string $value
@@ -32920,7 +32349,7 @@ namespace  {
         }
 
         /**
-         * Add a raw groupBy clause to the query.
+         * Add a raw "groupBy" clause to the query.
          *
          * @param string $sql
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -32964,7 +32393,7 @@ namespace  {
         }
 
         /**
-         * Add a nested having statement to the query.
+         * Add a nested "having" statement to the query.
          *
          * @param string $boolean
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -33046,7 +32475,7 @@ namespace  {
         }
 
         /**
-         * Add a "having between " clause to the query.
+         * Add a "having between" clause to the query.
          *
          * @param string $column
          * @param string $boolean
@@ -33061,7 +32490,50 @@ namespace  {
         }
 
         /**
-         * Add a raw having clause to the query.
+         * Add a "having not between" clause to the query.
+         *
+         * @param string $column
+         * @param iterable $values
+         * @param string $boolean
+         * @return \Illuminate\Database\Eloquent\Builder<static>
+         * @static
+         */
+        public static function havingNotBetween($column, $values, $boolean = 'and')
+        {
+            /** @var \Illuminate\Database\Query\Builder $instance */
+            return $instance->havingNotBetween($column, $values, $boolean);
+        }
+
+        /**
+         * Add an "or having between" clause to the query.
+         *
+         * @param string $column
+         * @param iterable $values
+         * @return \Illuminate\Database\Eloquent\Builder<static>
+         * @static
+         */
+        public static function orHavingBetween($column, $values)
+        {
+            /** @var \Illuminate\Database\Query\Builder $instance */
+            return $instance->orHavingBetween($column, $values);
+        }
+
+        /**
+         * Add an "or having not between" clause to the query.
+         *
+         * @param string $column
+         * @param iterable $values
+         * @return \Illuminate\Database\Eloquent\Builder<static>
+         * @static
+         */
+        public static function orHavingNotBetween($column, $values)
+        {
+            /** @var \Illuminate\Database\Query\Builder $instance */
+            return $instance->orHavingNotBetween($column, $values);
+        }
+
+        /**
+         * Add a raw "having" clause to the query.
          *
          * @param string $sql
          * @param string $boolean
@@ -33075,7 +32547,7 @@ namespace  {
         }
 
         /**
-         * Add a raw or having clause to the query.
+         * Add a raw "or having" clause to the query.
          *
          * @param string $sql
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -33280,7 +32752,7 @@ namespace  {
         }
 
         /**
-         * Add a union statement to the query.
+         * Add a "union" statement to the query.
          *
          * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*> $query
          * @param bool $all
@@ -33294,7 +32766,7 @@ namespace  {
         }
 
         /**
-         * Add a union all statement to the query.
+         * Add a "union all" statement to the query.
          *
          * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<*> $query
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -33702,7 +33174,7 @@ namespace  {
         }
 
         /**
-         * Run a truncate statement on the table.
+         * Run a "truncate" statement on the table.
          *
          * @return void
          * @static
@@ -34283,7 +33755,6 @@ namespace  {
     class EloquentSerialize extends \AnourValar\EloquentSerialize\Facades\EloquentSerializeFacade {}
     class FilamentEasyFooter extends \Devonab\FilamentEasyFooter\Facades\EasyFooter {}
     class FilamentMediaAction extends \Hugomyb\FilamentMediaAction\Facades\FilamentMediaAction {}
-    class Agent extends \Jenssegers\Agent\Facades\Agent {}
     class Nightwatch extends \Laravel\Nightwatch\Facades\Nightwatch {}
     class Pulse extends \Laravel\Pulse\Facades\Pulse {}
     class Flux extends \Flux\Flux {}

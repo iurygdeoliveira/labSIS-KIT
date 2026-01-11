@@ -1,0 +1,18 @@
+/*
+ * Tabs - DANGER (Vermelho)
+ * Estilos de tabs usando a paleta danger (#D93223)
+ */
+
+.fi-tabs-item.fi-active.fi-color-danger {
+    color: var(--color-danger-700) !important;
+    border-color: var(--color-danger-500) !important;
+}
+
+.fi-tabs-item.fi-active.fi-color-danger:hover {
+    color: var(--color-danger-800) !important;
+}
+
+.fi-tabs-item .fi-badge.fi-color-danger {
+    background-color: var(--color-danger-100) !important;
+    color: var(--color-danger-800) !important;
+}

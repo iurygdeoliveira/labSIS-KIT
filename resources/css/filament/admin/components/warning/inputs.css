@@ -1,0 +1,11 @@
+/*
+ * Inputs - WARNING (Laranja)
+ * Estilos de inputs (focus states) usando a paleta warning (#F28907)
+ */
+
+.fi-input.fi-color-warning:focus,
+.fi-input-wrapper.fi-color-warning:focus-within,
+.fi-fo-field-wrp.fi-color-warning:focus-within {
+    border-color: var(--color-warning-500) !important;
+    --tw-ring-color: var(--color-warning-500) !important;
+}

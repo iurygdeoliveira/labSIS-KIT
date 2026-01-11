@@ -1,0 +1,27 @@
+/*
+ * Toggles/Switches - INFO (Azul)
+ * Estilos de toggles usando a paleta info (#3b82f6)
+ */
+
+.fi-toggle.fi-color-info input:checked + span,
+.fi-toggle.fi-color-info[checked] span,
+.fi-toggle-on.fi-color-info,
+.fi-toggle.fi-color-info .fi-toggle-on {
+    background-color: var(--color-info-500) !important;
+}
+
+.fi-toggle.fi-color-info input:checked:hover + span,
+.fi-toggle.fi-color-info[checked]:hover span,
+.fi-toggle-on.fi-color-info:hover,
+.fi-toggle.fi-color-info .fi-toggle-on:hover {
+    background-color: var(--color-info-600) !important;
+}
+
+.fi-toggle.fi-color-info input:checked:focus + span,
+.fi-toggle.fi-color-info[checked]:focus span,
+.fi-toggle-on.fi-color-info:focus,
+.fi-toggle.fi-color-info .fi-toggle-on:focus {
+    background-color: var(--color-info-600) !important;
+    outline: 2px solid var(--color-info-400);
+    outline-offset: 2px;
+}

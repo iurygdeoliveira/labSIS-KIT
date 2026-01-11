@@ -1,0 +1,48 @@
+/*
+ * Buttons - PRIMARY (Verde Floresta)
+ * Estilos de botões usando a paleta primary (#014029)
+ */
+
+.fi-btn.fi-color-primary,
+button.fi-color-primary,
+a.fi-btn.fi-color-primary {
+    background-color: var(--color-primary-500) !important;
+    border-color: var(--color-primary-600) !important;
+    color: white !important;
+}
+
+.fi-btn.fi-color-primary:hover,
+button.fi-color-primary:hover,
+a.fi-btn.fi-color-primary:hover {
+    background-color: var(--color-primary-600) !important;
+    border-color: var(--color-primary-700) !important;
+}
+
+.fi-btn.fi-color-primary:focus,
+.fi-btn.fi-color-primary:focus-visible,
+button.fi-color-primary:focus,
+button.fi-color-primary:focus-visible,
+a.fi-btn.fi-color-primary:focus,
+a.fi-btn.fi-color-primary:focus-visible {
+    background-color: var(--color-primary-600) !important;
+    border-color: var(--color-primary-700) !important;
+    outline: 2px solid var(--color-primary-400) !important;
+    outline-offset: 2px;
+}
+
+.fi-btn.fi-color-primary:active,
+button.fi-color-primary:active,
+a.fi-btn.fi-color-primary:active {
+    background-color: var(--color-primary-700) !important;
+    border-color: var(--color-primary-800) !important;
+}
+
+.fi-btn.fi-color-primary:disabled,
+.fi-btn.fi-color-primary[disabled],
+button.fi-color-primary:disabled,
+button.fi-color-primary[disabled] {
+    background-color: var(--color-primary-300) !important;
+    border-color: var(--color-primary-400) !important;
+    opacity: 0.6;
+    cursor: not-allowed;
+}

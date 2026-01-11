@@ -1,0 +1,48 @@
+/*
+ * Buttons - SECONDARY (Cinza)
+ * Estilos de botões usando a paleta secondary (#71717a)
+ */
+
+.fi-btn.fi-color-secondary,
+button.fi-color-secondary,
+a.fi-btn.fi-color-secondary {
+    background-color: var(--color-secondary-500) !important;
+    border-color: var(--color-secondary-600) !important;
+    color: white !important;
+}
+
+.fi-btn.fi-color-secondary:hover,
+button.fi-color-secondary:hover,
+a.fi-btn.fi-color-secondary:hover {
+    background-color: var(--color-secondary-600) !important;
+    border-color: var(--color-secondary-700) !important;
+}
+
+.fi-btn.fi-color-secondary:focus,
+.fi-btn.fi-color-secondary:focus-visible,
+button.fi-color-secondary:focus,
+button.fi-color-secondary:focus-visible,
+a.fi-btn.fi-color-secondary:focus,
+a.fi-btn.fi-color-secondary:focus-visible {
+    background-color: var(--color-secondary-600) !important;
+    border-color: var(--color-secondary-700) !important;
+    outline: 2px solid var(--color-secondary-400) !important;
+    outline-offset: 2px;
+}
+
+.fi-btn.fi-color-secondary:active,
+button.fi-color-secondary:active,
+a.fi-btn.fi-color-secondary:active {
+    background-color: var(--color-secondary-700) !important;
+    border-color: var(--color-secondary-800) !important;
+}
+
+.fi-btn.fi-color-secondary:disabled,
+.fi-btn.fi-color-secondary[disabled],
+button.fi-color-secondary:disabled,
+button.fi-color-secondary[disabled] {
+    background-color: var(--color-secondary-300) !important;
+    border-color: var(--color-secondary-400) !important;
+    opacity: 0.6;
+    cursor: not-allowed;
+}

@@ -1,0 +1,11 @@
+/*
+ * Inputs - PRIMARY (Verde Floresta)
+ * Estilos de inputs (focus states) usando a paleta primary (#014029)
+ */
+
+.fi-input.fi-color-primary:focus,
+.fi-input-wrapper.fi-color-primary:focus-within,
+.fi-fo-field-wrp.fi-color-primary:focus-within {
+    border-color: var(--color-primary-500) !important;
+    --tw-ring-color: var(--color-primary-500) !important;
+}

@@ -1,0 +1,21 @@
+/*
+ * Links - INFO (Azul)
+ * Estilos de links usando a paleta info (#3b82f6)
+ */
+
+.fi-link.fi-color-info,
+a.fi-color-info:not(.fi-btn) {
+    color: var(--color-info-700) !important;
+}
+
+.fi-link.fi-color-info:hover,
+a.fi-color-info:not(.fi-btn):hover {
+    color: var(--color-info-800) !important;
+}
+
+.fi-link.fi-color-info:focus,
+a.fi-color-info:not(.fi-btn):focus {
+    color: var(--color-info-800) !important;
+    outline: 2px solid var(--color-info-400);
+    outline-offset: 2px;
+}

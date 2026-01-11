@@ -1,0 +1,27 @@
+/*
+ * Toggles/Switches - SECONDARY (Cinza)
+ * Estilos de toggles usando a paleta secondary (#71717a)
+ */
+
+.fi-toggle.fi-color-secondary input:checked + span,
+.fi-toggle.fi-color-secondary[checked] span,
+.fi-toggle-on.fi-color-secondary,
+.fi-toggle.fi-color-secondary .fi-toggle-on {
+    background-color: var(--color-secondary-500) !important;
+}
+
+.fi-toggle.fi-color-secondary input:checked:hover + span,
+.fi-toggle.fi-color-secondary[checked]:hover span,
+.fi-toggle-on.fi-color-secondary:hover,
+.fi-toggle.fi-color-secondary .fi-toggle-on:hover {
+    background-color: var(--color-secondary-600) !important;
+}
+
+.fi-toggle.fi-color-secondary input:checked:focus + span,
+.fi-toggle.fi-color-secondary[checked]:focus span,
+.fi-toggle-on.fi-color-secondary:focus,
+.fi-toggle.fi-color-secondary .fi-toggle-on:focus {
+    background-color: var(--color-secondary-600) !important;
+    outline: 2px solid var(--color-secondary-400);
+    outline-offset: 2px;
+}

@@ -1,0 +1,11 @@
+/*
+ * Inputs - SECONDARY (Cinza)
+ * Estilos de inputs (focus states) usando a paleta secondary (#71717a)
+ */
+
+.fi-input.fi-color-secondary:focus,
+.fi-input-wrapper.fi-color-secondary:focus-within,
+.fi-fo-field-wrp.fi-color-secondary:focus-within {
+    border-color: var(--color-secondary-500) !important;
+    --tw-ring-color: var(--color-secondary-500) !important;
+}

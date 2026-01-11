@@ -1,0 +1,76 @@
+/*
+ * Login Page Styling
+ * Sobrescreve os tons amarelados padrão do Filament com a paleta primary (Verde Floresta)
+ */
+
+/* Botão de Login - Background primary */
+.fi-simple-layout .fi-btn-primary,
+.fi-simple-layout button[type="submit"].fi-color-primary {
+    background-color: var(--color-primary-500) !important;
+    border-color: var(--color-primary-600) !important;
+    color: white !important;
+}
+
+.fi-simple-layout .fi-btn-primary:hover,
+.fi-simple-layout button[type="submit"].fi-color-primary:hover {
+    background-color: var(--color-primary-600) !important;
+    border-color: var(--color-primary-700) !important;
+}
+
+.fi-simple-layout .fi-btn-primary:focus,
+.fi-simple-layout button[type="submit"].fi-color-primary:focus {
+    background-color: var(--color-primary-600) !important;
+    border-color: var(--color-primary-700) !important;
+    outline: 2px solid var(--color-primary-400);
+    outline-offset: 2px;
+}
+
+.fi-simple-layout .fi-btn-primary:active,
+.fi-simple-layout button[type="submit"].fi-color-primary:active {
+    background-color: var(--color-primary-700) !important;
+    border-color: var(--color-primary-800) !important;
+}
+
+/* Links (crie uma conta, Esqueceu sua senha?) */
+.fi-simple-layout .fi-link.fi-color-primary,
+.fi-simple-layout a.fi-color-primary {
+    color: var(--color-primary-700) !important;
+}
+
+.fi-simple-layout .fi-link.fi-color-primary:hover,
+.fi-simple-layout a.fi-color-primary:hover {
+    color: var(--color-primary-800) !important;
+}
+
+.fi-simple-layout .fi-link.fi-color-primary:focus,
+.fi-simple-layout a.fi-color-primary:focus {
+    color: var(--color-primary-800) !important;
+    outline: 2px solid var(--color-primary-400);
+    outline-offset: 2px;
+}
+
+/* Checkbox "Lembre de mim" - já está verde mas garantindo consistência */
+.fi-simple-layout input[type="checkbox"]:checked {
+    background-color: var(--color-primary-500) !important;
+    border-color: var(--color-primary-600) !important;
+}
+
+.fi-simple-layout input[type="checkbox"]:focus {
+    outline: 2px solid var(--color-primary-400);
+    outline-offset: 2px;
+}
+
+/* Input focus - bordas primary */
+.fi-simple-layout .fi-input:focus,
+.fi-simple-layout input:focus,
+.fi-simple-layout textarea:focus {
+    border-color: var(--color-primary-500) !important;
+    outline: 2px solid var(--color-primary-400);
+    outline-offset: 0;
+}
+
+/* Ring color para elementos focados */
+.fi-simple-layout .fi-fo-field-wrp input:focus,
+.fi-simple-layout .fi-fo-field-wrp textarea:focus {
+    --tw-ring-color: var(--color-primary-500) !important;
+}

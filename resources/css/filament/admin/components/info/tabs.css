@@ -1,0 +1,18 @@
+/*
+ * Tabs - INFO (Azul)
+ * Estilos de tabs usando a paleta info (#3b82f6)
+ */
+
+.fi-tabs-item.fi-active.fi-color-info {
+    color: var(--color-info-700) !important;
+    border-color: var(--color-info-500) !important;
+}
+
+.fi-tabs-item.fi-active.fi-color-info:hover {
+    color: var(--color-info-800) !important;
+}
+
+.fi-tabs-item .fi-badge.fi-color-info {
+    background-color: var(--color-info-100) !important;
+    color: var(--color-info-800) !important;
+}
