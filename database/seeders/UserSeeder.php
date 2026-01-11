@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
             ],
         );
         // Global (sem tenant): fixar team_id = 0 para atribuições globais
-        $globalResolver = app(SpatieTeamResolver::class);
+        $globalResolver = resolve(SpatieTeamResolver::class);
         $globalResolver->setPermissionsTeamId(0);
         $admin->syncRoles([RoleType::ADMIN->value]);
         // Reset do resolver para evitar vazamento de contexto
@@ -143,7 +143,7 @@ class UserSeeder extends Seeder
         $resources = ['media', 'users', 'authentication-log'];
 
         // Configurar o contexto de team para o tenant
-        $teamResolver = app(SpatieTeamResolver::class);
+        $teamResolver = resolve(SpatieTeamResolver::class);
         $teamResolver->setPermissionsTeamId($tenantId);
 
         // Owner recebe todas as permissões

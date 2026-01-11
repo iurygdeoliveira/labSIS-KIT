@@ -156,7 +156,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return app(AvatarService::class)->getAvatarUrl($this);
+        return resolve(AvatarService::class)->getAvatarUrl($this);
     }
 
     public function sendPasswordResetNotification($token): void
@@ -382,7 +382,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             return;
         }
 
-        $avatarService = app(\App\Services\AvatarService::class);
+        $avatarService = resolve(\App\Services\AvatarService::class);
 
         $this->attributes['avatar_url'] = $avatarService->processAndSaveAvatar($this, $value) ? null : $value;
     }

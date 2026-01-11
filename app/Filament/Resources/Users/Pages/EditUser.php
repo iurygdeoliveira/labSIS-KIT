@@ -37,7 +37,7 @@ class EditUser extends EditRecord
                 ->label(__('filament-actions::delete.single.label'))
                 ->icon('heroicon-s-trash')
                 ->color('danger')
-                ->url(fn () => UserResource::getUrl('delete', ['record' => $this->getRecord()])),
+                ->url(fn (): string => UserResource::getUrl('delete', ['record' => $this->getRecord()])),
             // ViewAction::make(),
         ];
     }

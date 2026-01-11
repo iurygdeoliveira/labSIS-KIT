@@ -66,7 +66,7 @@ class ResetPassword extends BaseResetPassword
         if ($status === Password::PASSWORD_RESET) {
             $this->notifySuccess(__($status));
 
-            return app(PasswordResetResponse::class);
+            return resolve(PasswordResetResponse::class);
         }
 
         $this->notifyDanger(__($status));

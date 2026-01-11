@@ -19,41 +19,34 @@ class CustomAuthenticationLogResource extends BaseAuthenticationLogResource
     // porque fazemos a filtragem manualmente no getEloquentQuery()
     protected static bool $isScopedToTenant = false;
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         return true;
     }
 
+    #[\Override]
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();
 
-        // Remove Filament's default tenancy scope if it was applied (though overriding usually avoids it if we build query manually, but parent calls model->query())
-        // Actually, Filament applies tenancy scope via Global Scope or in the query builder?
-        // In Filament v3, checking source, tenancy is applied in `getEloquentQuery`?
-        // No, usually it's applied via `Scope` classes.
-        // But since we can't easily remove a scope we don't know the exact name of...
-        // Let's rely on the fact that the Model does NOT have the global scope by default.
-        // The Resource applies it.
-
-        // Wait, if parent::getEloquentQuery() calls Resource::getEloquentQuery(), dealing with tenancy?
-        // Resource::getEloquentQuery() -> $model::query().
-        // Then Filament adds scopes.
-
-        // Let's implement manual scoping and HOPE we can suppress the error.
-        // The error "RelationNotFound" comes from WHERE check.
-
-        // Better strategy:
-        // Filter manually.
+        // Implementação de filtragem manual por tenant
+        // O Filament normalmente aplica scope automático de tenant, mas como o modelo
+        // AuthenticationLog não tem relacionamento direto com Tenant, precisamos
+        // filtrar manualmente através do relacionamento polimórfico 'authenticatable'
+        // que aponta para o modelo User, que por sua vez tem relacionamento com Tenant.
+        //
+        // Por isso desabilitamos o scope automático (isScopedToTenant = false) e
+        // implementamos a filtragem manualmente neste método.
         $user = \Filament\Facades\Filament::auth()->user();
 
         if ($user && $user->hasRole(\App\Enums\RoleType::ADMIN->value)) {
             return $query->with('authenticatable');
         }
 
-        return $query->with('authenticatable')->whereHasMorph('authenticatable', [\App\Models\User::class], function ($q) {
+        return $query->with('authenticatable')->whereHasMorph('authenticatable', [\App\Models\User::class], function (\Illuminate\Contracts\Database\Query\Builder $q): void {
             if ($tenant = \Filament\Facades\Filament::getTenant()) {
-                $q->whereHas('tenants', fn ($t) => $t->whereKey($tenant->getKey()));
+                $q->whereHas('tenants', fn (\Illuminate\Contracts\Database\Query\Builder $t) => $t->whereKey($tenant->getKey()));
             }
         });
     }

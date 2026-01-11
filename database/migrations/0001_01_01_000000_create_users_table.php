@@ -24,10 +24,6 @@ return new class extends Migration
             $table->text('suspension_reason')->nullable();
             $table->text('app_authentication_secret')->nullable();
             $table->text('app_authentication_recovery_codes')->nullable();
-            $table->string(config('filament-edit-profile.avatar_column', 'avatar_url'))->nullable();
-            $table->string(config('filament-edit-profile.theme_color_column', 'theme_color'))->nullable();
-            $table->string(config('filament-edit-profile.locale_column', 'locale'))->nullable();
-            $table->json('custom_fields')->nullable();
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();

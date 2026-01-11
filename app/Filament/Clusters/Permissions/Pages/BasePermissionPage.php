@@ -171,7 +171,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
         }
 
         // Para USER, usar contexto de team (tenant). Proprietário não aparece; Admin não aparece nesta tela.
-        app(PermissionRegistrar::class)->setPermissionsTeamId($tenantId);
+        resolve(PermissionRegistrar::class)->setPermissionsTeamId($tenantId);
 
         $role = $this->resolveRole($tenantId);
 
@@ -184,7 +184,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
             return;
         }
 
-        app(PermissionRegistrar::class)->setPermissionsTeamId($tenantId);
+        resolve(PermissionRegistrar::class)->setPermissionsTeamId($tenantId);
 
         $role = $this->resolveRole($tenantId);
         $permissionName = "{$resourceSlug}.{$action->value}";

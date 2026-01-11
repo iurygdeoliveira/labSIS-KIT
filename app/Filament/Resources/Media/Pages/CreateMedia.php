@@ -78,7 +78,7 @@ class CreateMedia extends CreateRecord
 
             try {
                 if ($this->isYoutubeUrl($videoUrl)) {
-                    $service = app(VideoMetadataService::class);
+                    $service = resolve(VideoMetadataService::class);
                     $meta = $service->getYoutubeMetadata($videoUrl);
 
                     $update = [];

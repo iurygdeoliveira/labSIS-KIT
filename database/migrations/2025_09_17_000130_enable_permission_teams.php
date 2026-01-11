@@ -46,7 +46,7 @@ return new class extends Migration
             // Ajustar a primary key para incluir o team
             try {
                 DB::statement('ALTER TABLE '.$tableNames['model_has_roles'].' DROP CONSTRAINT IF EXISTS model_has_roles_role_model_type_primary');
-            } catch (Throwable $e) {
+            } catch (Throwable) {
             }
             try {
                 DB::statement('ALTER TABLE '.$tableNames['model_has_roles'].' DROP CONSTRAINT IF EXISTS '.$tableNames['model_has_roles'].'_pkey');
@@ -66,7 +66,7 @@ return new class extends Migration
 
             try {
                 DB::statement('ALTER TABLE '.$tableNames['model_has_permissions'].' DROP CONSTRAINT IF EXISTS model_has_permissions_permission_model_type_primary');
-            } catch (Throwable $e) {
+            } catch (Throwable) {
             }
             try {
                 DB::statement('ALTER TABLE '.$tableNames['model_has_permissions'].' DROP CONSTRAINT IF EXISTS '.$tableNames['model_has_permissions'].'_pkey');

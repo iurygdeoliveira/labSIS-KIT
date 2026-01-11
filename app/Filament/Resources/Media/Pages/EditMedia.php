@@ -73,7 +73,7 @@ class EditMedia extends EditRecord
                 ->label(__('filament-actions::delete.single.label'))
                 ->icon('heroicon-s-trash')
                 ->color('danger')
-                ->url(fn () => MediaResource::getUrl('delete', ['record' => $this->getRecord()])),
+                ->url(fn (): string => MediaResource::getUrl('delete', ['record' => $this->getRecord()])),
         ];
     }
 

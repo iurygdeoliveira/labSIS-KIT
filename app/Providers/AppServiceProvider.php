@@ -12,7 +12,6 @@ use App\Listeners\NotifyAdminNewUser;
 use App\Listeners\SendUserApprovedEmail;
 use App\Models\User as AppUser;
 use App\Models\Video;
-use App\Observers\UserObserver;
 use App\Observers\VideoObserver;
 use App\Support\AppDateTime;
 use App\Tenancy\SpatieTeamResolver as AppSpatieTeamResolver;
@@ -101,6 +100,6 @@ class AppServiceProvider extends ServiceProvider
     private function configObservers(): void
     {
         Video::observe(VideoObserver::class);
-        AppUser::observe(UserObserver::class);
+
     }
 }

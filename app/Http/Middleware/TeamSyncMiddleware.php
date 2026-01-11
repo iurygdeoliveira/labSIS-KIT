@@ -27,7 +27,7 @@ class TeamSyncMiddleware
                     $routeTenant = Tenant::query()->where('uuid', $routeTenantUuid)->first();
 
                     if ($routeTenant instanceof Tenant && $user->canAccessTenant($routeTenant)) {
-                        $resolver = app(SpatieTeamResolver::class);
+                        $resolver = resolve(SpatieTeamResolver::class);
                         $resolver->setPermissionsTeamId($routeTenant->getKey());
 
                         return $next($request);
@@ -42,7 +42,7 @@ class TeamSyncMiddleware
                         ->first();
 
                     if ($tenant instanceof Tenant) {
-                        $resolver = app(SpatieTeamResolver::class);
+                        $resolver = resolve(SpatieTeamResolver::class);
                         $resolver->setPermissionsTeamId($tenant->getKey());
 
                         return $next($request);
@@ -51,10 +51,10 @@ class TeamSyncMiddleware
 
                 $currentTenant = Filament::getTenant();
                 if ($currentTenant instanceof Tenant) {
-                    $resolver = app(SpatieTeamResolver::class);
+                    $resolver = resolve(SpatieTeamResolver::class);
                     $resolver->setPermissionsTeamId($currentTenant->getKey());
                 } else {
-                    $resolver = app(SpatieTeamResolver::class);
+                    $resolver = resolve(SpatieTeamResolver::class);
                     $resolver->setPermissionsTeamId(0);
                 }
             }

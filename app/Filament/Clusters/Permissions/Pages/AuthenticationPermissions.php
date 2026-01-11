@@ -16,6 +16,7 @@ class AuthenticationPermissions extends BasePermissionPage
 
     protected static string $resourceSlug = 'authentication-log';
 
+    #[\Override]
     protected function getAvailableActions(): array
     {
         return [\App\Enums\Permission::VIEW];
