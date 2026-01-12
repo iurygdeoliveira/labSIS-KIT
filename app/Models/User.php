@@ -6,14 +6,12 @@ namespace App\Models;
 
 use App\Enums\RoleType;
 use App\Notifications\Auth\ResetPasswordNotification;
-use App\Services\AvatarService;
 use App\Traits\Filament\AppAuthenticationRecoveryCodes;
 use App\Traits\Filament\AppAuthenticationSecret;
 use App\Traits\UuidTrait;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Models\Contracts\FilamentUser;
-use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -45,7 +43,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $suspension_reason
  * @property string|null $app_authentication_secret
  * @property array<array-key, mixed>|null $app_authentication_recovery_codes
- * @property string|null $avatar_url
  * @property string|null $theme_color
  * @property string|null $locale
  * @property string|null $custom_fields
@@ -72,7 +69,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User role($roles, $guard = null, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAppAuthenticationRecoveryCodes($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAppAuthenticationSecret($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAvatarUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCustomFields($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
@@ -104,7 +100,7 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasAvatar, HasMedia, HasTenants, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasMedia, HasTenants, MustVerifyEmail
 {
     use AppAuthenticationRecoveryCodes;
     use AppAuthenticationSecret;
@@ -122,7 +118,6 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         'name',
         'email',
         'password',
-        'avatar_url',
         'email_verified_at',
         'is_suspended',
         'suspended_at',
@@ -156,7 +151,17 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return resolve(AvatarService::class)->getAvatarUrl($this);
+        $media = $this->getFirstMedia('avatar');
+
+        if ($media instanceof \Spatie\MediaLibrary\MediaCollections\Models\Media) {
+            try {
+                return $media->getUrl();
+            } catch (\Throwable) {
+                return null;
+            }
+        }
+
+        return null;
     }
 
     public function sendPasswordResetNotification($token): void
@@ -372,18 +377,5 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         $this->rolesWithTeams()
             ->wherePivot('team_id', $tenant->id)
             ->detach($roleIds->toArray());
-    }
-
-    protected function setAvatarUrlAttribute(?string $value): void
-    {
-        if ($value === null || $value === '') {
-            $this->attributes['avatar_url'] = null;
-
-            return;
-        }
-
-        $avatarService = resolve(\App\Services\AvatarService::class);
-
-        $this->attributes['avatar_url'] = $avatarService->processAndSaveAvatar($this, $value) ? null : $value;
     }
 }
