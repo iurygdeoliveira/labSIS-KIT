@@ -22,13 +22,53 @@
     padding: 0 !important;
 }
 
-/* Item ativo da sidebar com fundo primário */
+/* Item ativo da sidebar (Light Theme + Borda Verde + Fundo Tintado) */
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
-    background-color: var(--color-primary-600) !important;
+    background-color: var(--color-primary-50) !important;
+    box-shadow: inset 4px 0 0 0 var(--color-primary-600) !important; /* Faixa lateral esquerda verde */
+    color: var(--color-primary-600) !important;
 }
 
-/* Texto branco e ícone para item ativo da sidebar */
+/* Ícone e Texto do item ativo */
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-icon,
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-label {
-    color: white !important;
+    color: var(--color-primary-600) !important;
+}
+
+/* Item hover (Light Theme + Borda Lateral Clara + Fundo Suave) */
+.fi-sidebar-item:not(.fi-active) .fi-sidebar-item-btn:hover {
+    background-color: var(
+        --color-primary-50
+    ) !important; /* Fundo suave similar ao ativo */
+    box-shadow: inset 4px 0 0 0 var(--color-primary-400) !important; /* Faixa lateral esquerda clara */
+}
+
+/* Transição suave para o botão e conteúdo */
+.fi-sidebar-item .fi-sidebar-item-btn,
+.fi-sidebar-item .fi-sidebar-item-btn .fi-sidebar-item-label,
+.fi-sidebar-item .fi-sidebar-item-btn .fi-sidebar-item-icon {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Deslocamento do conteúdo (texto) à direita no hover */
+.fi-sidebar-item:not(.fi-active)
+    .fi-sidebar-item-btn:hover
+    .fi-sidebar-item-label {
+    transform: translateX(4px);
+    color: var(--color-primary-600) !important;
+}
+
+/* Deslocamento e Cor do ícone (igual à barra lateral) no hover */
+.fi-sidebar-item:not(.fi-active)
+    .fi-sidebar-item-btn:hover
+    .fi-sidebar-item-icon {
+    transform: translateX(4px);
+    color: var(--color-primary-400) !important; /* Cor igual à barra lateral */
+}
+
+/* Ajuste para dark mode (apenas suavizar o fundo, manter acentos) */
+@media (prefers-color-scheme: dark) {
+    .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
 }
