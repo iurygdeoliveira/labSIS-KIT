@@ -49,3 +49,18 @@
     .fi-wi-stats-overview-stat-chart {
     color: var(--color-primary-500) !important;
 }
+
+/* Hover Effect: Neon */
+.fi-wi-stats-overview-stat:has(
+        .fi-wi-stats-overview-stat-description.fi-color-primary
+    ) {
+    transition: all 0.3s ease;
+}
+
+.fi-wi-stats-overview-stat:has(
+        .fi-wi-stats-overview-stat-description.fi-color-primary
+    ):hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px 0 var(--color-primary-500);
+    z-index: 10;
+}

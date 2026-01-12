@@ -4,23 +4,35 @@
  */
 
 /* Card do stat quando a descrição tem a classe warning */
-.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-warning) {
+.fi-wi-stats-overview-stat:has(
+        .fi-wi-stats-overview-stat-description.fi-color-warning
+    ) {
     background-color: var(--color-warning-50) !important;
     border-color: var(--color-warning-200) !important;
 }
 
 /* Ícone do stat (SVG dentro do label container) */
-.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-warning) .fi-wi-stats-overview-stat-label-ctn svg {
+.fi-wi-stats-overview-stat:has(
+        .fi-wi-stats-overview-stat-description.fi-color-warning
+    )
+    .fi-wi-stats-overview-stat-label-ctn
+    svg {
     color: var(--color-warning-600) !important;
 }
 
 /* Valor (número) quando descrição é warning */
-.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-warning) .fi-wi-stats-overview-stat-value {
+.fi-wi-stats-overview-stat:has(
+        .fi-wi-stats-overview-stat-description.fi-color-warning
+    )
+    .fi-wi-stats-overview-stat-value {
     color: var(--color-warning-900) !important;
 }
 
 /* Label quando descrição é warning */
-.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-warning) .fi-wi-stats-overview-stat-label {
+.fi-wi-stats-overview-stat:has(
+        .fi-wi-stats-overview-stat-description.fi-color-warning
+    )
+    .fi-wi-stats-overview-stat-label {
     color: var(--color-warning-700) !important;
 }
 
@@ -31,6 +43,24 @@
 }
 
 /* Chart/gráfico se houver */
-.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-warning) .fi-wi-stats-overview-stat-chart {
+.fi-wi-stats-overview-stat:has(
+        .fi-wi-stats-overview-stat-description.fi-color-warning
+    )
+    .fi-wi-stats-overview-stat-chart {
     color: var(--color-warning-500) !important;
+}
+
+/* Hover Effect: Neon */
+.fi-wi-stats-overview-stat:has(
+        .fi-wi-stats-overview-stat-description.fi-color-warning
+    ) {
+    transition: all 0.3s ease;
+}
+
+.fi-wi-stats-overview-stat:has(
+        .fi-wi-stats-overview-stat-description.fi-color-warning
+    ):hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px 0 var(--color-warning-500);
+    z-index: 10;
 }

@@ -54,7 +54,7 @@
 .fi-sidebar-item:not(.fi-active)
     .fi-sidebar-item-btn:hover
     .fi-sidebar-item-label {
-    transform: translateX(4px);
+    transform: translateX(6px);
     color: var(--color-primary-600) !important;
 }
 
@@ -62,7 +62,7 @@
 .fi-sidebar-item:not(.fi-active)
     .fi-sidebar-item-btn:hover
     .fi-sidebar-item-icon {
-    transform: translateX(4px);
+    transform: translateX(6px);
     color: var(--color-primary-400) !important; /* Cor igual à barra lateral */
 }
 
