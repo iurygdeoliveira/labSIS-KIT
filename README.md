@@ -57,6 +57,10 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 -   [**Utilizando Enumerações (Enums) com Filament**](/docs/04-backend-e-arquitetura/enums.md)
 -   [**Padronização de Data e Hora**](/docs/04-backend-e-arquitetura/padrao-datetime.md)
 
+### Stack Tecnológica
+
+-   [**Stack Tecnológica (Versões)**](/docs/04-backend-e-arquitetura/stack-tecnologica.md)
+
 ### Otimizações
 
 -   [**Otimização com #[Computed]**](/docs/05-otimizacoes/livewire-computed.md)
@@ -64,12 +68,21 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 -   [**Otimização de Cache de Página com Cloudflare**](/docs/05-otimizacoes/cloudflare-page-cache.md)
 -   [**Laravel Pulse**](/docs/05-otimizacoes/laravel-pulse.md)
 
-### Qualidade e Testes
+### Qualidade de Código
 
--   [**Larastan (Análise Estática)**](/docs/07-qualidade-de-codigo/01-larastan.md)
--   [**Rector (Refatoração Automática)**](/docs/07-qualidade-de-codigo/02-rector.md)
--   [**IDE Helper (Inteligência na IDE)**](/docs/07-qualidade-de-codigo/03-ide-helper.md)
+-   [**Larastan**](/docs/07-qualidade-de-codigo/01-larastan.md)
+-   [**Rector**](/docs/07-qualidade-de-codigo/02-rector.md)
+-   [**IDE Helper**](/docs/07-qualidade-de-codigo/03-ide-helper.md)
+
+### Testes Automatizados
+
 -   [**Introdução aos Testes Automatizados**](/docs/06-testes/01-introducao.md)
+-   [**Testes de Autenticação**](/docs/06-testes/02-autenticacao.md)
+-   [**Testes de Acesso aos Painéis**](/docs/06-testes/03-acesso-paineis.md)
+
+### Inteligência Artificial
+
+-   [**Integração com Agentes (.context)**](/docs/08-ai-agents/integracao-context.md)
 
 ## Pré-requisitos
 

@@ -22,8 +22,7 @@ class TenantInfolist
                             ->label('Status')
                             ->formatStateUsing(fn (bool $state): string => $state ? 'Ativo' : 'Inativo')
                             ->badge()
-                            ->color(fn ($record): string => (bool) $record->is_active ? 'primary' : 'danger')
-                            ->icon(fn ($record): string => (bool) $record->is_active ? 'heroicon-c-check' : 'heroicon-c-no-symbol'),
+                            ->color(fn ($record): string => (bool) $record->is_active ? 'primary' : 'danger'),
 
                         TextEntry::make('created_at')
                             ->label('Criado em')
