@@ -9,6 +9,13 @@ svg.fi-color-primary {
     color: var(--color-primary-700) !important;
 }
 
+/* Dark Mode Override */
+:is(.dark) .fi-icon.fi-color-primary,
+:is(.dark) .fi-color-primary .fi-icon,
+:is(.dark) svg.fi-color-primary {
+    color: var(--color-primary-100) !important;
+}
+
 .fi-icon.fi-color-primary:hover,
 .fi-color-primary:hover .fi-icon,
 svg.fi-color-primary:hover {

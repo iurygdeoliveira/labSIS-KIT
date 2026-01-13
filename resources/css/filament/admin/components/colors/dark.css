@@ -1,0 +1,71 @@
+/*
+ * Colors - Dark Mode
+ * Definições oficiais da paleta para o modo escuro.
+ */
+
+.dark {
+    /* Paleta de cor Primária (OKLCH Base #05df72) */
+    --primary-50: #122421;
+    --primary-100: #0f4a31;
+    --primary-200: #0c6f41;
+    --primary-300: #0a9451;
+    --primary-400: #07b961;
+    --primary-500: #05df72;
+    --primary-600: #34e58c;
+    --primary-700: #63eba6;
+    --primary-800: #92f2c0;
+    --primary-900: #c1f8da;
+    --primary-950: #f0fff5;
+
+    /* Paleta de cor Perigo (Base #a52927) */
+    --danger-50: #31151e;
+    --danger-100: #48191f;
+    --danger-200: #5f1d21;
+    --danger-300: #762123;
+    --danger-400: #8d2525;
+    --danger-500: #a52927;
+    --danger-600: #b45350;
+    --danger-700: #c37e79;
+    --danger-800: #d2a9a2;
+    --danger-900: #e1d4cb;
+    --danger-950: #f0fff5;
+
+    /* Paleta de cor Aviso (OKLCH Base #ffb900) */
+    --warning-50: #301d17;
+    --warning-100: #583718;
+    --warning-200: #825712;
+    --warning-300: #ab780c;
+    --warning-400: #d59806;
+    --warning-500: #ffb900;
+    --warning-600: #fcc731;
+    --warning-700: #f9d562;
+    --warning-800: #f6e393;
+    --warning-900: #f3f1c4;
+    --warning-950: #f0fff5;
+
+    /* Paleta de cor Info (Azul Sky Sugerido #0ea5e9) */
+    --info-50: #191e36;
+    --info-100: #163959;
+    --info-200: #14547d;
+    --info-300: #126fa1;
+    --info-400: #108ac5;
+    --info-500: #0ea5e9;
+    --info-600: #3bb7eb;
+    --info-700: #68c9ed;
+    --info-800: #95dbf0;
+    --info-900: #c2edf2;
+    --info-950: #f0fff5;
+
+    /* Paleta de cor Secundária (Interpolada) */
+    --secondary-50: #1f1f22;
+    --secondary-100: #2f2f33;
+    --secondary-200: #3f3f45;
+    --secondary-300: #505056;
+    --secondary-400: #606068;
+    --secondary-500: #71717a;
+    --secondary-600: #a1a1aa;
+    --secondary-700: #d4d4d8;
+    --secondary-800: #e4e4e7;
+    --secondary-900: #f4f4f5;
+    --secondary-950: #fafafa;
+}

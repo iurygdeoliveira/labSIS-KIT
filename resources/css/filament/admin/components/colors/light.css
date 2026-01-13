@@ -1,0 +1,71 @@
+/*
+ * Colors - Light Mode
+ * Definições oficiais da paleta para o modo claro.
+ */
+
+:root {
+    /* Paleta de cor Primária - Verde Floresta (Light) */
+    --primary-50: #e6f4ed;
+    --primary-100: #cce9dc;
+    --primary-200: #99d3b9;
+    --primary-300: #66bd96;
+    --primary-400: #33a773;
+    --primary-500: #014029;
+    --primary-600: #013322;
+    --primary-700: #01261a;
+    --primary-800: #011a11;
+    --primary-900: #000d09;
+    --primary-950: #000604;
+
+    /* Paleta de cor Perigo - Vermelho (Light) */
+    --danger-50: #fef2f1;
+    --danger-100: #fde5e3;
+    --danger-200: #fbcbc7;
+    --danger-300: #f8b1ab;
+    --danger-400: #f6978f;
+    --danger-500: #d93223;
+    --danger-600: #ae281c;
+    --danger-700: #821e15;
+    --danger-800: #57140e;
+    --danger-900: #2b0a07;
+    --danger-950: #160503;
+
+    /* Paleta de cor Aviso - Laranja (Light) */
+    --warning-50: #fef5ed;
+    --warning-100: #fdebdb;
+    --warning-200: #fbd7b7;
+    --warning-300: #f9c393;
+    --warning-400: #f7af6f;
+    --warning-500: #f28907;
+    --warning-600: #c26e06;
+    --warning-700: #915204;
+    --warning-800: #613703;
+    --warning-900: #301b01;
+    --warning-950: #180e01;
+
+    /* Paleta de cor Info - Azul (Light) */
+    --info-50: #eff6ff;
+    --info-100: #dbeafe;
+    --info-200: #bfdbfe;
+    --info-300: #93c5fd;
+    --info-400: #60a5fa;
+    --info-500: #3b82f6;
+    --info-600: #2563eb;
+    --info-700: #1d4ed8;
+    --info-800: #1e40af;
+    --info-900: #1e3a8a;
+    --info-950: #172554;
+
+    /* Paleta de cor Secundária - Cinza/Zinc (Light) */
+    --secondary-50: #fafafa;
+    --secondary-100: #f4f4f5;
+    --secondary-200: #e4e4e7;
+    --secondary-300: #d4d4d8;
+    --secondary-400: #a1a1aa;
+    --secondary-500: #71717a;
+    --secondary-600: #52525b;
+    --secondary-700: #3f3f46;
+    --secondary-800: #27272a;
+    --secondary-900: #18181b;
+    --secondary-950: #09090b;
+}

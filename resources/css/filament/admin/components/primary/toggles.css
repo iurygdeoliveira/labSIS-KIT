@@ -10,6 +10,14 @@
     background-color: var(--color-primary-500) !important;
 }
 
+/* Dark Mode Override */
+:is(.dark) .fi-toggle.fi-color-primary input:checked + span,
+:is(.dark) .fi-toggle.fi-color-primary[checked] span,
+:is(.dark) .fi-toggle-on.fi-color-primary,
+:is(.dark) .fi-toggle.fi-color-primary .fi-toggle-on {
+    background-color: var(--color-primary-100) !important;
+}
+
 .fi-toggle.fi-color-primary input:checked:hover + span,
 .fi-toggle.fi-color-primary[checked]:hover span,
 .fi-toggle-on.fi-color-primary:hover,

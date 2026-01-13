@@ -127,7 +127,6 @@ class UsersTable
             ->formatStateUsing(fn (User $record): string => $record->is_suspended ? __('Suspenso') : __('Liberado'))
             ->badge()
             ->color(fn (User $record): string => $record->is_suspended ? 'danger' : 'primary')
-            ->icon(fn (User $record): string => $record->is_suspended ? 'heroicon-c-no-symbol' : 'heroicon-c-check')
             ->alignCenter();
     }
 

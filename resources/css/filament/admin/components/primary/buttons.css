@@ -11,6 +11,28 @@ a.fi-btn.fi-color-primary {
     color: white !important;
 }
 
+/* Dark Mode Override: Primary Button Background */
+:is(.dark) .fi-btn.fi-color-primary,
+:is(.dark) button.fi-color-primary,
+:is(.dark) a.fi-btn.fi-color-primary {
+    background-color: var(--color-primary-100) !important;
+    border-color: var(
+        --color-primary-500
+    ) !important; /* Adjust border if needed */
+    color: var(
+        --color-primary-500
+    ) !important; /* Ensure text is visible on dark background? No, 50 is dark green background? Wait.
+    --primary-50 is #122421 (Very Dark).
+    If background is #122421, text should be light.
+    Base text is white. 
+    But user asked for background --primary-50.
+    Let's check primary-50 again.
+    In dark.css: --primary-50: #122421; which is dark green/black.
+    If the button is dark green/black, white text is fine.
+    */
+    color: white !important;
+}
+
 .fi-btn.fi-color-primary:hover,
 button.fi-color-primary:hover,
 a.fi-btn.fi-color-primary:hover {
