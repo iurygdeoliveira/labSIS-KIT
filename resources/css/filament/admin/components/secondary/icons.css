@@ -6,11 +6,11 @@
 .fi-icon.fi-color-secondary,
 .fi-color-secondary .fi-icon,
 svg.fi-color-secondary {
-    color: var(--color-secondary-700) !important;
+    color: var(--color-secondary-500) !important;
 }
 
 .fi-icon.fi-color-secondary:hover,
 .fi-color-secondary:hover .fi-icon,
 svg.fi-color-secondary:hover {
-    color: var(--color-secondary-800) !important;
+    color: var(--color-secondary-600) !important;
 }

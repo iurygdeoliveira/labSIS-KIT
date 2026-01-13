@@ -47,7 +47,7 @@ class TenantStats extends BaseWidget
             Stat::make('Tenants Ativos', number_format($summary['active']))
                 ->description("{$activePct}% do total")
                 ->icon('heroicon-c-check-badge')
-                ->color('success'),
+                ->color('primary'),
 
             Stat::make('Tenants Inativos', number_format($summary['inactive']))
                 ->description('Sem uso ou suspensos')

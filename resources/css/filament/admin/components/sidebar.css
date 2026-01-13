@@ -23,52 +23,78 @@
 }
 
 /* Item ativo da sidebar (Light Theme + Borda Verde + Fundo Tintado) */
+/* Item ativo da sidebar (Light Theme) */
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
     background-color: var(--color-primary-50) !important;
-    box-shadow: inset 4px 0 0 0 var(--color-primary-600) !important; /* Faixa lateral esquerda verde */
+    box-shadow: inset 4px 0 0 0 var(--color-primary-600) !important;
     color: var(--color-primary-600) !important;
 }
 
-/* Ícone e Texto do item ativo */
+/* Item ativo da sidebar (Dark Theme - via classe .dark) */
+:root.dark .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+    background-color: color-mix(
+        in srgb,
+        var(--color-primary-500),
+        transparent 85%
+    ) !important;
+    box-shadow: inset 4px 0 0 0 var(--color-primary-400) !important;
+    color: var(--color-primary-400) !important;
+}
+
+/* Ícone e Texto do item ativo (Light) */
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-icon,
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-label {
     color: var(--color-primary-600) !important;
 }
 
-/* Item hover (Light Theme + Borda Lateral Clara + Fundo Suave) */
+/* Ícone e Texto do item ativo (Dark) */
+:root.dark
+    .fi-sidebar-item.fi-active
+    .fi-sidebar-item-btn
+    .fi-sidebar-item-icon,
+:root.dark
+    .fi-sidebar-item.fi-active
+    .fi-sidebar-item-btn
+    .fi-sidebar-item-label {
+    color: var(--color-primary-400) !important;
+}
+
+/* Item hover (Light) - Container */
 .fi-sidebar-item:not(.fi-active) .fi-sidebar-item-btn:hover {
-    background-color: var(
-        --color-primary-50
-    ) !important; /* Fundo suave similar ao ativo */
-    box-shadow: inset 4px 0 0 0 var(--color-primary-400) !important; /* Faixa lateral esquerda clara */
+    background-color: var(--color-primary-50) !important;
+    box-shadow: inset 4px 0 0 0 var(--color-primary-400) !important;
 }
 
-/* Transição suave para o botão e conteúdo */
-.fi-sidebar-item .fi-sidebar-item-btn,
-.fi-sidebar-item .fi-sidebar-item-btn .fi-sidebar-item-label,
-.fi-sidebar-item .fi-sidebar-item-btn .fi-sidebar-item-icon {
-    transition: all 0.2s ease-in-out;
-}
-
-/* Deslocamento do conteúdo (texto) à direita no hover */
+/* Item hover (Light) - Texto e Ícone */
+.fi-sidebar-item:not(.fi-active)
+    .fi-sidebar-item-btn:hover
+    .fi-sidebar-item-icon,
 .fi-sidebar-item:not(.fi-active)
     .fi-sidebar-item-btn:hover
     .fi-sidebar-item-label {
-    transform: translateX(6px);
-    color: var(--color-primary-600) !important;
+    color: var(--color-primary-400) !important;
+    transition: color 0.2s ease-in-out;
 }
 
-/* Deslocamento e Cor do ícone (igual à barra lateral) no hover */
-.fi-sidebar-item:not(.fi-active)
+/* Item hover (Dark) - Container */
+:root.dark .fi-sidebar-item:not(.fi-active) .fi-sidebar-item-btn:hover {
+    background-color: color-mix(
+        in srgb,
+        var(--color-primary-500),
+        transparent 90%
+    ) !important;
+    box-shadow: inset 4px 0 0 0 var(--color-primary-500) !important;
+}
+
+/* Item hover (Dark) - Texto e Ícone */
+:root.dark
+    .fi-sidebar-item:not(.fi-active)
     .fi-sidebar-item-btn:hover
-    .fi-sidebar-item-icon {
-    transform: translateX(6px);
-    color: var(--color-primary-400) !important; /* Cor igual à barra lateral */
-}
-
-/* Ajuste para dark mode (apenas suavizar o fundo, manter acentos) */
-@media (prefers-color-scheme: dark) {
-    .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
-        background-color: rgba(255, 255, 255, 0.05) !important;
-    }
+    .fi-sidebar-item-icon,
+:root.dark
+    .fi-sidebar-item:not(.fi-active)
+    .fi-sidebar-item-btn:hover
+    .fi-sidebar-item-label {
+    color: var(--color-primary-400) !important;
+    transition: color 0.2s ease-in-out;
 }

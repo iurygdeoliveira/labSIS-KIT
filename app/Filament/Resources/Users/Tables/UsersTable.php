@@ -52,7 +52,11 @@ class UsersTable
                 //
             ])
             ->recordActions([
-                ViewAction::make()->icon('heroicon-s-eye')->label('')->tooltip('Visualizar'),
+                ViewAction::make()
+                    ->icon('heroicon-s-eye')
+                    ->label('')
+                    ->tooltip('Visualizar')
+                    ->color('secondary'),
                 EditAction::make()
                     ->icon('heroicon-s-pencil')
                     ->label('')

@@ -44,7 +44,7 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 
 ### UI e Customização
 
--   [**Cores no Filament**](/docs/03-ui-e-customizacao/cores-filament.md)
+-   [**Customização de Cores e CSS Modular**](/docs/03-ui-e-customizacao/customizacao-de-cores.md)
 -   [**Customização da Aparência do Painel**](/docs/03-ui-e-customizacao/customizando-layout.md)
 -   [**Customização de Logotipo**](/docs/03-ui-e-customizacao/customizando-logo.md)
 -   [**Widgets no Filament**](/docs/03-ui-e-customizacao/widgets-filament.md)

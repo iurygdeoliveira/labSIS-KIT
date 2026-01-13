@@ -19,5 +19,5 @@ svg.fi-color-primary {
 .fi-icon.fi-color-primary:hover,
 .fi-color-primary:hover .fi-icon,
 svg.fi-color-primary:hover {
-    color: var(--color-primary-800) !important;
+    color: var(--color-primary-200) !important;
 }

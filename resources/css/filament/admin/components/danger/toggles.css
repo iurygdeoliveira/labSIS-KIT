@@ -3,25 +3,73 @@
  * Estilos de toggles usando a paleta danger (#D93223)
  */
 
-.fi-toggle.fi-color-danger input:checked + span,
-.fi-toggle.fi-color-danger[checked] span,
-.fi-toggle-on.fi-color-danger,
-.fi-toggle.fi-color-danger .fi-toggle-on {
+/* Background do Toggle Form (Botão Switch) - Ativo ou Inativo com cor Danger */
+.fi-toggle.fi-color-danger button[role="switch"],
+.fi-toggle.fi-color-danger button[role="switch"][aria-checked="true"],
+.fi-toggle.fi-color-danger button[role="switch"][aria-checked="false"] {
     background-color: var(--color-danger-500) !important;
+    box-shadow: none !important;
+    border: none !important;
+    --tw-ring-color: transparent !important; /* Remove anel de foco/borda padrão */
 }
 
-.fi-toggle.fi-color-danger input:checked:hover + span,
-.fi-toggle.fi-color-danger[checked]:hover span,
-.fi-toggle-on.fi-color-danger:hover,
-.fi-toggle.fi-color-danger .fi-toggle-on:hover {
+/* Background Hover */
+.fi-toggle.fi-color-danger:hover button[role="switch"] {
     background-color: var(--color-danger-600) !important;
 }
 
-.fi-toggle.fi-color-danger input:checked:focus + span,
-.fi-toggle.fi-color-danger[checked]:focus span,
-.fi-toggle-on.fi-color-danger:focus,
-.fi-toggle.fi-color-danger .fi-toggle-on:focus {
+/* Ícones dentro do Toggle (X ou Check) - Normal */
+.fi-toggle.fi-color-danger svg,
+.fi-toggle.fi-color-danger .fi-icon,
+.fi-toggle.fi-color-danger button[role="switch"] svg {
+    color: var(--color-danger-600) !important;
+}
+
+/* Ícones dentro do Toggle - HOVER (Correção Crítica: Impede sumiço) */
+.fi-toggle.fi-color-danger:hover svg,
+.fi-toggle.fi-color-danger:hover .fi-icon,
+.fi-toggle.fi-color-danger button:hover svg {
+    color: var(
+        --color-danger-800
+    ) !important; /* Escurece um pouco no hover para feedback */
+}
+
+/* Toggle Column (Tabela) - Fallback para inputs checkbox escondidos */
+.fi-toggle.fi-color-danger input:checked + span,
+.fi-toggle.fi-color-danger input:not(:checked) + span {
+    background-color: var(--color-danger-500) !important;
+    box-shadow: none !important;
+}
+
+/* Correção Específica para Toggle Forms renderizados como BUTTON */
+button.fi-toggle.fi-color-danger,
+button.fi-toggle.fi-color-danger[role="switch"] {
+    border: 2px solid transparent !important; /* Restaura o inset para alinhar o thumb */
+    box-shadow: none !important;
+    --tw-ring-color: transparent !important;
+}
+
+/* Estado Hover do Botão */
+button.fi-toggle.fi-color-danger:hover {
     background-color: var(--color-danger-600) !important;
-    outline: 2px solid var(--color-danger-400);
+}
+
+/* Forçar ícone VERMELHO no hover (anula regra de botão branco) */
+button.fi-toggle.fi-color-danger:hover svg,
+button.fi-toggle.fi-color-danger:hover .fi-icon {
+    color: var(--color-danger-600) !important; /* Mantém contraste no hover */
+}
+
+/* Toggle Column (Tabela) - Fallback para inputs checkbox escondidos */
+.fi-toggle.fi-color-danger input:checked + span,
+.fi-toggle.fi-color-danger input:not(:checked) + span {
+    background-color: var(--color-danger-500) !important;
+    box-shadow: none !important;
+    border: 2px solid transparent !important; /* Garante que a div tbm tenha a borda transparente se precisar */
+}
+
+/* Focagem */
+.fi-toggle.fi-color-danger button:focus-visible {
+    outline: 2px solid var(--color-danger-400) !important;
     outline-offset: 2px;
 }

@@ -40,6 +40,14 @@ a.fi-btn.fi-color-primary:hover {
     border-color: var(--color-primary-700) !important;
 }
 
+/* Dark Mode Hover Override: Less vibrant */
+:is(.dark) .fi-btn.fi-color-primary:hover,
+:is(.dark) button.fi-color-primary:hover,
+:is(.dark) a.fi-btn.fi-color-primary:hover {
+    background-color: var(--color-primary-200) !important;
+    border-color: var(--color-primary-400) !important;
+}
+
 .fi-btn.fi-color-primary:focus,
 .fi-btn.fi-color-primary:focus-visible,
 button.fi-color-primary:focus,

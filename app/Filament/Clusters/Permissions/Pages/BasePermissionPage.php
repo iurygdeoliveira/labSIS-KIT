@@ -79,6 +79,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
                 ->offColor('danger')
                 ->onIcon('heroicon-c-check')
                 ->offIcon('heroicon-c-x-mark')
+                ->inline(false)
                 ->dehydrated(false)
                 ->reactive()
                 ->afterStateUpdated(function (bool $state): void {

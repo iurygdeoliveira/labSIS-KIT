@@ -3,33 +3,62 @@
  * Estilos de toggles usando a paleta primary (#014029)
  */
 
+/* Background do Toggle quando ATIVO */
 .fi-toggle.fi-color-primary input:checked + span,
-.fi-toggle.fi-color-primary[checked] span,
-.fi-toggle-on.fi-color-primary,
-.fi-toggle.fi-color-primary .fi-toggle-on {
+.fi-toggle.fi-color-primary[aria-checked="true"] button,
+.fi-toggle.fi-color-primary button[role="switch"][aria-checked="true"],
+.fi-toggle.fi-color-primary .fi-toggle-input:checked + .fi-toggle-display {
     background-color: var(--color-primary-500) !important;
+    border: 2px solid transparent !important;
+    box-shadow: none !important;
+    --tw-ring-color: transparent !important;
 }
 
-/* Dark Mode Override */
+/* Dark Mode Override - Padronizar para Verde Escuro (Primary 100) */
 :is(.dark) .fi-toggle.fi-color-primary input:checked + span,
-:is(.dark) .fi-toggle.fi-color-primary[checked] span,
-:is(.dark) .fi-toggle-on.fi-color-primary,
-:is(.dark) .fi-toggle.fi-color-primary .fi-toggle-on {
+:is(.dark) .fi-toggle.fi-color-primary[aria-checked="true"] button,
+:is(.dark) .fi-toggle.fi-color-primary button[role="switch"][aria-checked="true"],
+:is(.dark) .fi-toggle.fi-color-primary.fi-toggle-on[role="switch"], /* Catch-all para DIVs como switch */
+:is(.dark) .fi-toggle.fi-color-primary .fi-toggle-input:checked + .fi-toggle-display {
     background-color: var(--color-primary-100) !important;
+    border-color: transparent !important;
+    border: 2px solid transparent !important;
 }
 
+/* Estado Hover */
 .fi-toggle.fi-color-primary input:checked:hover + span,
-.fi-toggle.fi-color-primary[checked]:hover span,
-.fi-toggle-on.fi-color-primary:hover,
-.fi-toggle.fi-color-primary .fi-toggle-on:hover {
+.fi-toggle.fi-color-primary:hover input:checked + span,
+.fi-toggle.fi-color-primary:hover button[role="switch"][aria-checked="true"] {
     background-color: var(--color-primary-600) !important;
 }
 
-.fi-toggle.fi-color-primary input:checked:focus + span,
-.fi-toggle.fi-color-primary[checked]:focus span,
-.fi-toggle-on.fi-color-primary:focus,
-.fi-toggle.fi-color-primary .fi-toggle-on:focus {
-    background-color: var(--color-primary-600) !important;
-    outline: 2px solid var(--color-primary-400);
+/* Dark Mode Hover */
+:is(.dark) .fi-toggle.fi-color-primary:hover input:checked + span,
+:is(.dark)
+    .fi-toggle.fi-color-primary:hover
+    button[role="switch"][aria-checked="true"] {
+    background-color: var(
+        --color-primary-200
+    ) !important; /* Ligeiramente mais claro no hover */
+}
+
+/* Ícones dentro do Toggle (Check) */
+.fi-toggle.fi-color-primary svg,
+.fi-toggle.fi-color-primary .fi-icon,
+.fi-toggle.fi-color-primary button svg {
+    color: var(--color-primary-600) !important;
+}
+
+/* Ícones no Dark Mode (Check) */
+:is(.dark) .fi-toggle.fi-color-primary svg,
+:is(.dark) .fi-toggle.fi-color-primary .fi-icon,
+:is(.dark) .fi-toggle.fi-color-primary button svg {
+    color: var(--color-primary-400) !important; /* Contraste melhor no dark */
+}
+
+/* Focagem */
+.fi-toggle.fi-color-primary button:focus-visible,
+.fi-toggle.fi-color-primary input:focus-visible + span {
+    outline: 2px solid var(--color-primary-400) !important;
     outline-offset: 2px;
 }
