@@ -78,7 +78,7 @@
             "vendor/bin/sail artisan boost:update",
             "vendor/bin/sail artisan optimize:clear",
             "vendor/bin/sail artisan filament:optimize-clear",
-            "vendor/bin/sail artisan migrate:fresh --seed",
+            "vendor/bin/sail artisan migrate:fresh-all --seed",
             "vendor/bin/sail artisan storage:init",
             "vendor/bin/sail artisan filament:optimize",
             "docker compose exec -u root laravel.test rm -rf public/build",
