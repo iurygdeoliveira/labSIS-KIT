@@ -334,6 +334,102 @@ DB::connection('pgsql')
     });
 ```
 
+## ⚠️ Importante: `migrate:fresh` e MongoDB
+
+### MongoDB NÃO é afetado pelo `migrate:fresh`
+
+Quando você executa:
+
+```bash
+vendor/bin/sail artisan migrate:fresh --seed
+```
+
+**✅ PostgreSQL**: Todas as tabelas são dropadas e recriadas  
+**❌ MongoDB**: Permanece intacto, nenhum dado é perdido
+
+### Por quê?
+
+1. **Migrations são específicas por conexão**: O Laravel só executa migrations na conexão `DB_CONNECTION` (PostgreSQL)
+2. **MongoDB é schema-free**: Não possui migrations - collections são criadas automaticamente
+3. **Não há migration para `authentication_log`**: A collection MongoDB não está no diretório `database/migrations/`
+
+### Limpar Ambos os Bancos
+
+Se você quiser limpar **PostgreSQL E MongoDB** juntos, crie um comando personalizado:
+
+```php
+// app/Console/Commands/FreshAll.php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+
+class FreshAll extends Command
+{
+    protected $signature = 'migrate:fresh-all {--seed : Seed the database after migrating}';
+
+    protected $description = 'Drop PostgreSQL and MongoDB, then migrate PostgreSQL';
+
+    public function handle(): int
+    {
+        if (! $this->confirm('This will DROP all data in PostgreSQL AND MongoDB. Continue?')) {
+            $this->info('Operation cancelled.');
+            return 1;
+        }
+
+        // 1. Limpar MongoDB
+        $this->info('🗑️  Dropping MongoDB database...');
+        DB::connection('mongodb')->getDatabase()->drop();
+        $this->info('✅ MongoDB cleared!');
+
+        // 2. Executar migrate:fresh no PostgreSQL
+        $this->info('🗑️  Running migrate:fresh on PostgreSQL...');
+        $this->call('migrate:fresh', [
+            '--force' => true,
+            '--seed' => $this->option('seed'),
+        ]);
+
+        $this->newLine();
+        $this->info('✨ Both databases cleared and PostgreSQL migrated!');
+
+        return 0;
+    }
+}
+```
+
+**Uso**:
+
+```bash
+vendor/bin/sail artisan migrate:fresh-all --seed
+```
+
+### Limpar Apenas MongoDB
+
+Para limpar somente o MongoDB sem afetar o PostgreSQL:
+
+```bash
+vendor/bin/sail artisan tinker
+```
+
+```php
+DB::connection('mongodb')->getDatabase()->drop();
+```
+
+Ou via mongosh:
+
+```bash
+vendor/bin/sail mongodb mongosh -u sail -p password --authenticationDatabase admin
+```
+
+```javascript
+use labsis
+db.dropDatabase()
+```
+
 ## Troubleshooting
 
 ### Erro: Class 'MongoDB\Driver\Manager' not found
