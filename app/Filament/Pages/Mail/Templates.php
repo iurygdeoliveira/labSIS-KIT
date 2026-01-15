@@ -17,11 +17,13 @@ class Templates extends Page implements HasTable
 {
     use InteractsWithTable;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-envelope';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-s-envelope';
 
     protected static ?string $navigationLabel = 'Emails';
 
     protected static ?string $title = 'Templates de E-mail';
+
+    protected static ?int $navigationSort = 2;
 
     protected static string|\UnitEnum|null $navigationGroup = 'Sistema';
 

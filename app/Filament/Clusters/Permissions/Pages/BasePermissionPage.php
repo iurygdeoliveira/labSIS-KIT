@@ -17,7 +17,6 @@ use Filament\Forms\Components\Toggle as ToggleForm;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
@@ -31,8 +30,6 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
     use Tables\Concerns\InteractsWithTable;
 
     protected static ?string $cluster = PermissionsCluster::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedShieldCheck;
 
     /** @var string Slug do resource: ex. 'users', 'media' */
     protected static string $resourceSlug;

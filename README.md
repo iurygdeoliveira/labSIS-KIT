@@ -168,7 +168,7 @@ O Kit oferece uma base sólida com os seguintes recursos já implementados:
 
 -   **Website / Landing Page**: Página Inicial, Seções Pré-definidas (Hero e Sobre).
 
--   **Registro Histórico de Autenticações:** Monitoramento completo de acessos de usuários, com registros de login, logout e endereços IP, incluindo visualização detalhada no painel administrativo.
+-   **Registro Histórico de Autenticações:** Monitoramento completo de acessos de usuários com armazenamento otimizado em **MongoDB**, incluindo registros de login, logout, endereços IP e dispositivos. Visualização detalhada no painel administrativo com filtros avançados e analytics.
 
 -   **Gestão de Templates de E-mail:** Funcionalidade para visualizar e testar templates de e-mail diretamente pelo painel administrativo, com suporte a templates customizados e dados reais de preview.
 

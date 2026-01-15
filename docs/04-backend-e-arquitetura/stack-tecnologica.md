@@ -14,8 +14,10 @@
 
 ## 🗄️ Backend e Dados
 
--   **Banco de Dados**: PostgreSQL (Recomendado) ou MySQL 8+.
+-   **Banco de Dados Relacional**: PostgreSQL (Recomendado) ou MySQL 8+.
+-   **Banco de Dados NoSQL**: MongoDB Atlas Local (para logs de auditoria e dados não estruturados).
 -   **ORM**: Eloquent com suporte nativo a UUIDs.
+-   **MongoDB Driver**: `mongodb/laravel-mongodb` v5.5 (integração oficial MongoDB).
 -   **Tenancy**: Single-database tenancy (coluna `team_id`) com isolamento lógico via Scopes.
 -   **Cache/Queue**: Redis (Recomendado para produção) ou Database (Dev).
 

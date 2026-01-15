@@ -19,7 +19,7 @@ class PermissionsCluster extends Cluster
 
     protected static ?string $navigationLabel = 'Permissões';
 
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedShieldCheck;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::ShieldCheck;
 
     protected static ?int $navigationSort = 2;
 

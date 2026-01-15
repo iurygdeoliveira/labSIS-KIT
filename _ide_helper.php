@@ -28282,15 +28282,7 @@ namespace Filament\Clusters {
 namespace App\Filament\Clusters\UserRole\Pages {
     /**
      */
-    class AssignRoleOwner extends \App\Filament\Clusters\UserRole\Pages\BaseAssignRolePage {
-            }
-    /**
-     */
-    class BaseAssignRolePage extends \Filament\Pages\Page {
-            }
-    /**
-     */
-    class AssignRoleUser extends \App\Filament\Clusters\UserRole\Pages\BaseAssignRolePage {
+    class ManageUserRoles extends \Filament\Pages\Page {
             }
     }
 

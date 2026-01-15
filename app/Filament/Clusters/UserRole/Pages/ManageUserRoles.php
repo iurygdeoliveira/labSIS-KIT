@@ -33,7 +33,7 @@ class ManageUserRoles extends Page implements HasTable
 
     protected static string|\BackedEnum|null $navigationIcon = Heroicon::UserGroup;
 
-    protected static ?string $title = 'Tenants';
+    protected static ?string $title = 'Funções nos Tenants';
 
     protected static bool $shouldRegisterNavigation = true;
 

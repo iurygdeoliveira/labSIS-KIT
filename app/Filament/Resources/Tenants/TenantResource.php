@@ -32,7 +32,7 @@ class TenantResource extends Resource
 
     protected static ?string $title = 'Tenants';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 1;
 
     #[Override]
     public static function getModelLabel(): string

@@ -1,12 +1,15 @@
 <?php
 
 return [
+    // O Model customizado que usa MongoDB
+    'model' => \App\Models\AuthenticationLog::class,
+
     // The database table name
     // You can change this if the database keys get too long for your driver
     'table_name' => 'authentication_log',
 
     // The database connection where the authentication_log table resides. Leave empty to use the default
-    'db_connection' => null,
+    'db_connection' => 'mongodb',
 
     // The events the package listens for to log
     'events' => [
