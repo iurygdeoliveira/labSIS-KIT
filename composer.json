@@ -74,6 +74,7 @@
         ],
         "reset": [
             "vendor/bin/sail composer update",
+            "vendor/bin/sail artisan boost:update",
             "vendor/bin/sail artisan optimize:clear",
             "vendor/bin/sail artisan filament:optimize-clear",
             "vendor/bin/sail artisan migrate:fresh --seed",

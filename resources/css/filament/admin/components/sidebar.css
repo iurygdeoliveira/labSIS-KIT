@@ -45,6 +45,7 @@
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-icon,
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-label {
     color: var(--color-primary-600) !important;
+    font-weight: 700 !important;
 }
 
 /* Ícone e Texto do item ativo (Dark) */

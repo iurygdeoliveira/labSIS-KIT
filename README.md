@@ -83,6 +83,8 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 ### Inteligência Artificial
 
 -   [**Integração com Agentes (.context)**](/docs/08-ai-agents/integracao-context.md)
+-   [**Laravel Boost - MCP para Laravel**](/docs/08-ai-agents/laravel-boost.md)
+-   [**Serena - Navegação Semântica de Código**](/docs/08-ai-agents/serena.md)
 
 ## Pré-requisitos
 
@@ -188,12 +190,13 @@ Este projeto utiliza um conjunto de ferramentas para garantir a qualidade, padro
 -   **[barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar):** Adiciona uma barra de depuração com informações úteis sobre a aplicação.
 -   **[fakerphp/faker](https://github.com/fakerphp/faker):** Gera dados falsos para popular o banco de dados em testes e seeders.
 -   **[larastan/larastan](https://github.com/larastan/larastan):** Realiza análise estática de código para encontrar bugs sem executar o código.
--   **[laravel/boost](https://packagist.org/packages/laravel/boost):** Otimiza o desempenho de Agentes de IA para o desenvolvimento do sistema em ambiente de desenvolvimento.
+-   **[laravel/boost](https://packagist.org/packages/laravel/boost):** Servidor MCP oficial do Laravel que fornece contexto inteligente sobre a aplicação (versões, schema DB, rotas, Artisan) para agentes de IA. [Ver documentação](/docs/08-ai-agents/laravel-boost.md).
 -   **[laravel/pint](https://github.com/laravel/pint):** Formata o código PHP para seguir um padrão de estilo consistente (PSR-12).
 -   **[laravel/sail](https://github.com/laravel/sail):** Ambiente de desenvolvimento local completo baseado em Docker.
 -   **[laravel/tinker](https://github.com/laravel/tinker):** Console interativo (REPL) para executar código no contexto da aplicação.
 -   **[lucascudo/laravel-pt-br-localization](https://github.com/lucascudo/laravel-pt-br-localization):** Fornece traduções e configurações para a localização em português do Brasil.
 -   **[pestphp/pest](https://github.com/pestphp/pest):** Framework de testes elegante e focado no desenvolvedor para PHP.
+-   **[Serena](https://github.com/oraios/serena):** Servidor MCP de navegação semântica de código via LSP, permitindo busca inteligente, refatoração e análise de símbolos (classes, métodos) para agentes de IA. [Ver documentação](/docs/08-ai-agents/serena.md).
 
 ## 📄 Licença
 
