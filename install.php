@@ -418,9 +418,16 @@ function runSailInstallation(string $basePath): void
 
     echo "✅ Containers Sail iniciados com sucesso!\n";
 
-    // 5. Executar setup automatizado (inclui key:generate, migrate, storage:init, npm install/build)
+    // 5. Executar setup automatizado (key:generate, migrate, storage:init, filament:optimize, npm)
     echo "📦 Executando setup do projeto...\n";
-    run('composer run setup');
+    run('./vendor/bin/sail artisan key:generate --ansi');
+    run('./vendor/bin/sail artisan migrate --graceful --ansi');
+    run('./vendor/bin/sail artisan storage:init');
+    run('./vendor/bin/sail artisan filament:optimize');
+
+    echo "📦 Instalando dependências e buildando assets...\n";
+    run('./vendor/bin/sail npm install');
+    run('./vendor/bin/sail npm run build');
 
     // 6. Popular banco de dados
     echo "🌱 Populando banco de dados...\n";

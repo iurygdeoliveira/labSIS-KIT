@@ -62,17 +62,6 @@
         }
     },
     "scripts": {
-        "setup": [
-            "composer install",
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "vendor/bin/sail artisan key:generate --ansi",
-            "vendor/bin/sail artisan migrate --graceful --ansi",
-            "vendor/bin/sail artisan storage:link",
-            "vendor/bin/sail artisan storage:init",
-            "vendor/bin/sail artisan filament:optimize",
-            "vendor/bin/sail npm install",
-            "vendor/bin/sail npm run build"
-        ],
         "reset": [
             "vendor/bin/sail composer update",
             "vendor/bin/sail artisan boost:update",

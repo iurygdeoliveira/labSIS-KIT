@@ -47,7 +47,7 @@ class AuthenticationLog extends Model
     /**
      * Campos que podem ser preenchidos em massa.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = [
         'authenticatable_type',
@@ -86,7 +86,8 @@ class AuthenticationLog extends Model
     /**
      * Scope para buscar logs de autenticações bem-sucedidas.
      */
-    public function scopeSuccessful($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function successful($query)
     {
         return $query->where('login_successful', true);
     }
@@ -94,7 +95,8 @@ class AuthenticationLog extends Model
     /**
      * Scope para buscar logs de autenticações falhadas.
      */
-    public function scopeFailed($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function failed($query)
     {
         return $query->where('login_successful', false);
     }
@@ -102,7 +104,8 @@ class AuthenticationLog extends Model
     /**
      * Scope para buscar logs recentes.
      */
-    public function scopeRecent($query, int $days = 7)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function recent($query, int $days = 7)
     {
         return $query->where('login_at', '>=', now()->subDays($days));
     }
@@ -110,7 +113,8 @@ class AuthenticationLog extends Model
     /**
      * Scope para logs ainda ativos (sem logout).
      */
-    public function scopeActive($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function active($query)
     {
         return $query->whereNull('logout_at');
     }

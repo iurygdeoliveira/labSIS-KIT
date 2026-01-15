@@ -37,7 +37,7 @@ class TenantUser extends Pivot
      * Accessor para o atributo virtual role_virtual
      * Retorna a role atual baseada nas permissões do Spatie
      */
-    public function getRoleVirtualAttribute(): string
+    protected function getRoleVirtualAttribute(): string
     {
         if ($this->user->isOwnerOfTenant($this->tenant)) {
             return 'owner';
@@ -54,7 +54,7 @@ class TenantUser extends Pivot
      * Mutator para o atributo virtual role_virtual
      * Este mutator não salva nada - apenas dispara a atualização via página
      */
-    public function setRoleVirtualAttribute(string $value): void
+    protected function setRoleVirtualAttribute(string $value): void
     {
         // O save será interceptado e redirecionado para o método assignRole
         // através do beforeStateUpdated no SelectColumn

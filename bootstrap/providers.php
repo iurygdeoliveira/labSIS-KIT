@@ -5,4 +5,5 @@ return [
     App\Providers\Filament\AuthPanelProvider::class,
     App\Providers\Filament\AdminPanelProvider::class,
     App\Providers\Filament\UserPanelProvider::class,
+    MongoDB\Laravel\MongoDBServiceProvider::class,
 ];

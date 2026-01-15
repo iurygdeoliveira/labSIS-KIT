@@ -39,19 +39,13 @@ class FreshAll extends Command
      */
     public function handle(): int
     {
-        if (! $this->confirm('⚠️  This will DROP all data in PostgreSQL AND MongoDB. Continue?')) {
-            $this->info('Operation cancelled.');
-
-            return self::FAILURE;
-        }
-
-        $this->newLine();
-
         // 1. Limpar MongoDB
         $this->info('🗑️  Dropping MongoDB database...');
 
         try {
-            DB::connection('mongodb')->getDatabase()->drop();
+            /** @var \MongoDB\Laravel\Connection $connection */
+            $connection = DB::connection('mongodb');
+            $connection->getDatabase()->drop();
             $this->info('✅ MongoDB cleared!');
         } catch (\Exception $e) {
             $this->error("❌ Failed to drop MongoDB: {$e->getMessage()}");

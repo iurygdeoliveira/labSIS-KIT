@@ -25,11 +25,8 @@ class ManageUserRoles extends Page implements HasTable
     use InteractsWithTable;
     use NotificationsTrait;
 
+    #[\Livewire\Attributes\Url(except: '')]
     public ?string $tenant_id = null;
-
-    protected $queryString = [
-        'tenant_id' => ['except' => ''],
-    ];
 
     protected static string|\BackedEnum|null $navigationIcon = Heroicon::UserGroup;
 
@@ -37,6 +34,7 @@ class ManageUserRoles extends Page implements HasTable
 
     protected static bool $shouldRegisterNavigation = true;
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         return true;
@@ -47,13 +45,15 @@ class ManageUserRoles extends Page implements HasTable
     /**
      * @return array<NavigationItem>
      */
+    #[\Override]
     public static function getNavigationItems(): array
     {
         return Tenant::all()->map(
-            fn (Tenant $tenant) => static::buildTenantNavigationItem($tenant)
+            fn (Tenant $tenant): \Filament\Navigation\NavigationItem => static::buildTenantNavigationItem($tenant)
         )->toArray();
     }
 
+    #[\Override]
     public function getView(): string
     {
         return 'filament.clusters.user-role.pages.manage-user-roles';
@@ -102,7 +102,7 @@ class ManageUserRoles extends Page implements HasTable
 
                         return 'none';
                     })
-                    ->beforeStateUpdated(function (TenantUser $record, string $state) {
+                    ->beforeStateUpdated(function (TenantUser $record, string $state): false {
                         $this->assignRole($record, $state === 'none' ? null : $state);
 
                         // Retornar false para prevenir o save automático do Filament
@@ -121,7 +121,7 @@ class ManageUserRoles extends Page implements HasTable
     {
         return NavigationItem::make($tenant->name)
             ->icon('heroicon-o-building-office')
-            ->isActiveWhen(function () use ($tenant) {
+            ->isActiveWhen(function () use ($tenant): bool {
                 $url = request()->fullUrl();
                 $referer = request()->header('referer');
 

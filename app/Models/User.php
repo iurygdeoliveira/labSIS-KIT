@@ -108,6 +108,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     use HasFactory;
     use HasRoles;
     use InteractsWithMedia;
+    use \MongoDB\Laravel\Eloquent\HybridRelations;
     use Notifiable;
     use UuidTrait;
 
@@ -134,6 +135,10 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         'remember_token',
     ];
 
+    // ==========================================
+    // Setup & Configuration
+    // ==========================================
+
     protected function casts(): array
     {
         return [
@@ -149,35 +154,18 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         ];
     }
 
-    public function getFilamentAvatarUrl(): ?string
+    public function registerMediaCollections(): void
     {
-        $media = $this->getFirstMedia('avatar');
-
-        if ($media instanceof \Spatie\MediaLibrary\MediaCollections\Models\Media) {
-            try {
-                return $media->getUrl();
-            } catch (\Throwable) {
-                return null;
-            }
-        }
-
-        return null;
+        $this->addMediaCollection('avatar')
+            ->useDisk('s3')
+            ->singleFile();
     }
 
-    public function sendPasswordResetNotification($token): void
-    {
-        $this->notify(new ResetPasswordNotification($token));
-    }
+    public function registerMediaConversions(?Media $media = null): void {}
 
-    public function isSuspended(): bool
-    {
-        return (bool) $this->is_suspended;
-    }
-
-    public function isApproved(): bool
-    {
-        return (bool) $this->is_approved;
-    }
+    // ==========================================
+    // Relationships
+    // ==========================================
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, $this>
@@ -186,6 +174,55 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     {
         return $this->belongsTo(User::class, 'approved_by');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Tenant, $this, \Illuminate\Database\Eloquent\Relations\Pivot>
+     */
+    public function tenants(): BelongsToMany
+    {
+        return $this->belongsToMany(Tenant::class, 'tenant_user')
+            ->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany<\App\Models\Role, $this, \Illuminate\Database\Eloquent\Relations\MorphPivot>
+     */
+    public function rolesWithTeams(): MorphToMany
+    {
+        return $this->morphToMany(
+            Role::class,
+            'model',
+            config('permission.table_names.model_has_roles', 'model_has_roles'),
+            'model_id',
+            'role_id'
+        )->withPivot('team_id');
+    }
+
+    public function authentications()
+    {
+        return $this->morphMany(\App\Models\AuthenticationLog::class, 'authenticatable')->latest('login_at');
+    }
+
+    public function latestAuthentication()
+    {
+        return $this->morphOne(\App\Models\AuthenticationLog::class, 'authenticatable')->latestOfMany('login_at');
+    }
+
+    // ==========================================
+    // Scopes
+    // ==========================================
+
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function withRolesForTenant($query, Tenant $tenant): void
+    {
+        $query->with([
+            'rolesWithTeams' => fn ($q) => $q->where('team_id', $tenant->id),
+        ]);
+    }
+
+    // ==========================================
+    // Filament / Access Control
+    // ==========================================
 
     public function canAccessPanel(Panel $panel): bool
     {
@@ -220,47 +257,6 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         return false;
     }
 
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('avatar')
-            ->useDisk('s3')
-            ->singleFile();
-    }
-
-    public function registerMediaConversions(?Media $media = null): void {}
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Tenant, $this, \Illuminate\Database\Eloquent\Relations\Pivot>
-     */
-    public function tenants(): BelongsToMany
-    {
-        return $this->belongsToMany(Tenant::class, 'tenant_user')
-            ->withTimestamps();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany<\App\Models\Role, $this, \Illuminate\Database\Eloquent\Relations\MorphPivot>
-     */
-    public function rolesWithTeams(): MorphToMany
-    {
-        return $this->morphToMany(
-            Role::class,
-            'model',
-            config('permission.table_names.model_has_roles', 'model_has_roles'),
-            'model_id',
-            'role_id'
-        )->withPivot('team_id');
-    }
-
-    public function getTenants(Panel $panel): array|Collection
-    {
-        if ($this->cachedTenants instanceof \Illuminate\Support\Collection) {
-            return $this->cachedTenants;
-        }
-
-        return $this->cachedTenants = $this->tenants()->where('is_active', true)->get();
-    }
-
     public function canAccessTenant(Model $tenant): bool
     {
         if (! $tenant instanceof Tenant) {
@@ -273,6 +269,53 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
         return $this->tenants()->whereKey($tenant->getKey())->exists();
     }
+
+    public function getTenants(Panel $panel): array|Collection
+    {
+        if ($this->cachedTenants instanceof \Illuminate\Support\Collection) {
+            return $this->cachedTenants;
+        }
+
+        return $this->cachedTenants = $this->tenants()->where('is_active', true)->get();
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        $media = $this->getFirstMedia('avatar');
+
+        if ($media instanceof \Spatie\MediaLibrary\MediaCollections\Models\Media) {
+            try {
+                return $media->getUrl();
+            } catch (\Throwable) {
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    // ==========================================
+    // State Checks & Notifications
+    // ==========================================
+
+    public function isSuspended(): bool
+    {
+        return (bool) $this->is_suspended;
+    }
+
+    public function isApproved(): bool
+    {
+        return (bool) $this->is_approved;
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    // ==========================================
+    // Tenant & Role Logic (Business Logic)
+    // ==========================================
 
     public function isOwnerOfTenant(Tenant $tenant): bool
     {
@@ -288,13 +331,6 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             ->exists();
     }
 
-    public function getRolesForTenant(Tenant $tenant): Collection
-    {
-        return $this->getRoleQueryBuilder($tenant)
-            ->select('roles.*')
-            ->get();
-    }
-
     public function hasAnyRoleInTenant(Tenant $tenant): bool
     {
         return $this->getRoleQueryBuilder($tenant)->exists();
@@ -307,21 +343,11 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             ->exists();
     }
 
-    private function getRoleQueryBuilder(Tenant $tenant): Builder
+    public function getRolesForTenant(Tenant $tenant): Collection
     {
-        return Role::query()
-            ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
-            ->where('mhr.model_type', self::class)
-            ->where('mhr.model_id', $this->id)
-            ->where('mhr.team_id', $tenant->id);
-    }
-
-    #[\Illuminate\Database\Eloquent\Attributes\Scope]
-    protected function withRolesForTenant($query, Tenant $tenant): void
-    {
-        $query->with([
-            'rolesWithTeams' => fn ($q) => $q->where('team_id', $tenant->id),
-        ]);
+        return $this->getRoleQueryBuilder($tenant)
+            ->select('roles.*')
+            ->get();
     }
 
     public function assignRoleInTenant(Role $role, Tenant $tenant): void
@@ -377,5 +403,14 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         $this->rolesWithTeams()
             ->wherePivot('team_id', $tenant->id)
             ->detach($roleIds->toArray());
+    }
+
+    private function getRoleQueryBuilder(Tenant $tenant): Builder
+    {
+        return Role::query()
+            ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
+            ->where('mhr.model_type', self::class)
+            ->where('mhr.model_id', $this->id)
+            ->where('mhr.team_id', $tenant->id);
     }
 }

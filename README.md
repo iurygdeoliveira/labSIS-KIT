@@ -177,10 +177,8 @@ O Kit oferece uma base sólida com os seguintes recursos já implementados:
 Este projeto integra diversos plugins e pacotes robustos para expandir suas funcionalidades. Abaixo, destacamos os componentes utilizados:
 
 -   **[Filament Easy Footer](https://github.com/devonab/filament-easy-footer):** Adiciona um rodapé customizável ao painel administrativo, permitindo fácil inclusão de links e informações de copyright.
--   **[Filament Brisk Theme](https://github.com/filafly/brisk):** Um tema moderno e minimalista para o Filament, oferecendo uma estética visual aprimorada com suporte a modos claro e escuro.
 -   **[Filament Spatie Media Library](https://github.com/filamentphp/spatie-laravel-media-library-plugin):** Plugin oficial para integrar a poderosa biblioteca Spatie Media Library ao Filament, facilitando o upload e gestão de arquivos.
 -   **[Filament Media Action](https://github.com/hugomyb/filament-media-action):** Fornece ações adicionais para manipulação de mídias dentro do Filament, melhorando a experiência de gerenciamento de arquivos.
--   **[Filament Edit Profile](https://github.com/joaopaulolndev/filament-edit-profile):** Solução completa para edição de perfil de usuário no painel, incluindo suporte para autenticação de dois fatores (2FA).
 -   **[Laravel Authentication Log](https://github.com/TappNetwork/filament-authentication-log):** Pacote backend que rastreia e registra atividades de autenticação dos usuários, como logins, logouts e dispositivos utilizados.
 
 ## 🛠️ Recomendação de Ferramentas de Desenvolvimento
