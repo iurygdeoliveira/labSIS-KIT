@@ -63,6 +63,11 @@
 @import "./components/sidebar.css";
 @import "./components/login.css";
 
+/* Notificações customizadas para modo dark */
+@import "./components/notifications/primary.css";
+@import "./components/notifications/danger.css";
+@import "./components/notifications/warning.css";
+
 @source '../../../../app/Filament/';
 @source '../../../../resources/views/';
 

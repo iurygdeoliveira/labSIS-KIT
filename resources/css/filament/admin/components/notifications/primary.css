@@ -1,0 +1,36 @@
+/*
+ * Notification Primary (Verde)
+ * Customiza as cores das notificações primárias (sucesso) em modo dark
+ * para combinar com os stats cards primary
+ */
+
+/* Notification primary em modo dark */
+.dark .fi-no-notification.fi-color-primary {
+    background-color: var(--color-primary-50) !important;
+    border-color: var(--color-primary-200) !important;
+}
+
+/* Título da notification primary */
+.dark .fi-no-notification.fi-color-primary .fi-no-notification-title {
+    color: var(--color-primary-900) !important;
+}
+
+/* Corpo/descrição da notification primary */
+.dark .fi-no-notification.fi-color-primary .fi-no-notification-body {
+    color: var(--color-primary-700) !important;
+}
+
+/* Ícone da notification primary */
+.dark .fi-no-notification.fi-color-primary .fi-no-notification-icon {
+    color: var(--color-primary-600) !important;
+}
+
+/* Botão de fechar */
+.dark .fi-no-notification.fi-color-primary .fi-no-notification-close-btn {
+    color: var(--color-primary-400) !important;
+}
+
+.dark .fi-no-notification.fi-color-primary .fi-no-notification-close-btn:hover {
+    color: var(--color-primary-200) !important;
+    background-color: var(--color-primary-900) !important;
+}

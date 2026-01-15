@@ -12,86 +12,69 @@ Utilizamos um sistema **Skill-First** (Habilidades Primeiro) combinado com **MCP
 
 ---
 
-## 📋 Instruções Atuais (Versão em Português)
+# ⚡ PROTOCOLO DE EXECUÇÃO: SKILL-FIRST & MCP-ONLY
 
-Abaixo está o conteúdo original em Português que definiu este comportamento. A versão ativa no agente foi traduzida para Inglês para melhor "compreensão" e seguimento de instruções pela LLM.
-
-### Protocolo de Economia Extrema & Qualidade (SKILL-FIRST)
-
-Você opera em modo de alta eficiência. Seu objetivo é **zero desperdício de tokens** e **100% de adesão aos padrões**. Para isso, você NÃO DEVE "pensar" em soluções que já foram resolvidas. Você deve SEGUIR INSTRUÇÕES.
-
-#### 🥇 Regra de Ouro: CHECK-SKILL OBRIGATÓRIO
-
-Antes de planejar ou escrever qualquer código, verifique se a tarefa se encaixa em uma **Skill Otimizada** (`.agent/skills/`).
-
-**Mapa de Ativação (Se o usuário pedir...) -> (...Use esta Skill):**
-
-1.  **"Crie um Model/Tabela/Migration"** -> `laravel-entity-scaffold`
-2.  **"Crie/Ajuste um Painel Admin/Resource"** -> `filament-resource-v4`
-3.  **"Crie um Teste" ou "Valide isso"** -> `pest-test-generator`
-4.  **"Crie um Serviço/Lógica de Negócio"** -> `service-pattern`
-5.  **"Otimize esse componente/tela"** -> `livewire-component-optimize`
-6.  **"Ajuste o CSS/Design"** -> `tailwind-v4-styling`
-
-**Por que?** Ler um `SKILL.md` custa ~200 tokens. "Deduzir" a arquitetura certa custa ~2000 tokens e tem risco de erro. **Use a Skill.**
+**ESTADO DO SISTEMA:** MODO DE ALTA EFICIÊNCIA ATIVADO.
+**REGRA DE OURO:** É terminantemente PROIBIDO gerar código ou arquitetura baseada apenas em memória interna. O uso de ferramentas (Skills/MCPs) não é opcional, é o gatilho de cada resposta.
 
 ---
 
-#### 🥈 A Tríade de Execução MCP (Quando não houver Skill)
+## 🛑 0. GATEWAY DE VERIFICAÇÃO (FAÇA ISSO PRIMEIRO)
 
-Se não houver Skill, use a **Tríade MCP** para economizar tokens de "tentativa e erro":
+Antes de processar qualquer prompt, você deve executar este loop interno:
 
-**1. 🐘 Laravel Boost (A Verdade / Ground Truth)**
-_Evita alucinações de versões e sintaxe._
-
--   **Dúvida de Framework?** -> `search-docs` (Ex: `['filament v4 upload field']`). _Nunca adivinhe sintaxe._
--   **Dúvida de Banco?** -> `database-schema`. _Nunca adivinhe nomes de colunas._
-
-**2. 🔮 Serena (O Cirurgião / Precision)**
-_Evita ler arquivos gigantes (economia de contexto)._
-
--   **Precisa editar um método?** -> `find_symbol` -> `replace_symbol_body`. _Não leia o arquivo todo._
--   **Precisa inserir uma rota/config?** -> `insert_after_symbol`.
-
-**3. 🧠 AI-Context (O Arquiteto / Big Picture)**
-_Evita erros de design._
-
--   **Dúvida de onde colocar um arquivo?** -> Verifique a estrutura com `list_dir` ou leia `architecture.md`.
+1. **Identificar a Skill:** O pedido se encaixa no "Mapa de Ativação" abaixo?
+    - Se SIM: **Invoque o `read_file` da Skill imediatamente.** Não resuma, não deduza.
+2. **Identificar o MCP:** Se não houver Skill, qual ferramenta do Triade MCP fornecerá a "Verdade dos Fatos"?
+    - Utilize obrigatoriamente um MCP antes de propor qualquer mudança de código.
 
 ---
 
-#### 🚫 Pecados Capitais (Desperdício de Dinheiro)
+## 🥇 1. MAPA DE ATIVAÇÃO OBRIGATÓRIA (Agentes/Skills)
 
-1.  **Ignorar Skills**: Tentar criar um Resource do Filament "de cabeça" e errar o import da Action (v3 vs v4).
-2.  **Ler arquivos inteiros**: Usar `read_file` em um Controller de 2000 linhas para mudar 1 linha. Use Serena.
-3.  **Adivinhar Bibliotecas**: Usar sintaxe do Tailwind v3 (`bg-opacity`) no projeto v4 (`bg-black/50`). Use a Skill `tailwind-v4-styling`.
+Se o usuário solicitar algo desta lista, **leia o arquivo `.agent/skills/[nome].md` antes de qualquer outra ação**:
 
-**Resumo**: Se existe uma Skill, siga-a cegamente. Se não existe, use Boost para saber COMO fazer e Serena para FAZER cirurgicamente.
+| Se o usuário pedir...           | Ação Obrigatória (Use a Skill) |
+| :------------------------------ | :----------------------------- |
+| Criar Model/Table/Migration     | `laravel-entity-scaffold`      |
+| Criar/Ajustar Admin ou Resource | `filament-resource-v4`         |
+| Criar Teste ou Validar algo     | `pest-test-generator`          |
+| Criar Service/Regra de Negócio  | `service-pattern`              |
+| Otimizar Componente/Tela        | `livewire-component-optimize`  |
+| Ajustar CSS/Design/Tailwind     | `tailwind-v4-styling`          |
 
-## Instruções Personalizadas do Projeto
+**Justificativa de Custo:** Ignorar uma Skill gera um erro de arquitetura que custa 10x mais para corrigir. **USE A SKILL.**
 
-### Workflow e Comunicação
+---
 
--   **Testes:** Sempre proponha construir testes automatizados, mas **não crie automaticamente**. Pergunte ao usuário primeiro.
--   **Idioma:** Use **Português Brasileiro** exclusivamente. Nunca responda em inglês.
--   **Planos:** Escreva planos de implementação em português do Brasil.
--   **Confirmação:** Antes de alterar código, explique o que vai fazer e **solicite confirmação**.
--   **Escopo:** Não altere arquivos não solicitados explicitamente.
+## 🥈 2. TRÍADE MCP (Execução Cirúrgica)
 
-### Git Commit Workflow
+Use estas ferramentas como seus "olhos e mãos" para evitar alucinações de contexto:
 
-Quando solicitado um commit, execute:
+1.  **🐘 Laravel Boost (A Verdade):** - **Dúvida de Sintaxe?** -> `search-docs`. Proibido adivinhar versões de pacotes.
+    -   **Dúvida de DB?** -> `database-schema`. Proibido adivinhar nomes de colunas.
+2.  **🔮 Serena (O Cirurgião):** - **Edição de Código?** -> Use `find_symbol` e `replace_symbol_body`.
+    -   **PROIBIDO:** Ler arquivos inteiros (`read_file`) se você só precisa de uma função.
+3.  **🧠 AI-Context (O Arquiteto):** - **Localização de Arquivos?** -> `list_dir` ou consulte `architecture.md`.
 
-1. `./vendor/bin/sail bin pint --dirty`
-2. `git add .`
-3. `git commit -m "mensagem"`
-4. `git push`
+---
 
-Formato Conventional Commits (PT-BR), máximo 3 tópicos:
+## 🚫 PECADOS CAPITAIS (BLOQUEIO DE RESPOSTA)
 
-```
-<tipo>(<escopo>): <descrição>
-- Item 1
-- Item 2
-- Item 3
-```
+Você está programado para **falhar a execução** se:
+
+1.  Tentar criar um Resource do Filament "de cabeça" (risco de misturar v3 e v4).
+2.  Escrever Tailwind v3 (ex: `bg-opacity-50`) em vez de v4 (`bg-black/50`).
+3.  Ignorar a existência dos MCPs e agir como um chatbot comum.
+
+---
+
+## 📝 PROTOCOLO DE COMUNICAÇÃO (BR-PT)
+
+-   **Idioma:** Exclusivamente **Português Brasileiro**.
+-   **Confirmação:** Descreva o plano de ação -> Peça autorização -> Execute.
+-   **Git Commit:** Ao finalizar, execute o fluxo:
+    1. `./vendor/bin/sail bin pint --dirty`
+    2. `git add .`
+    3. `git commit -m "<type>(<scope>): <desc>"` (Max 3 bullets)
+    4. `git push`

@@ -1,0 +1,36 @@
+/*
+ * Notification Danger (Vermelho)
+ * Customiza as cores das notificações de erro em modo dark
+ * para combinar com os stats cards danger
+ */
+
+/* Notification danger em modo dark */
+.dark .fi-no-notification.fi-color-danger {
+    background-color: var(--color-danger-50) !important;
+    border-color: var(--color-danger-200) !important;
+}
+
+/* Título da notification danger */
+.dark .fi-no-notification.fi-color-danger .fi-no-notification-title {
+    color: var(--color-danger-900) !important;
+}
+
+/* Corpo/descrição da notification danger */
+.dark .fi-no-notification.fi-color-danger .fi-no-notification-body {
+    color: var(--color-danger-700) !important;
+}
+
+/* Ícone da notification danger */
+.dark .fi-no-notification.fi-color-danger .fi-no-notification-icon {
+    color: var(--color-danger-600) !important;
+}
+
+/* Botão de fechar */
+.dark .fi-no-notification.fi-color-danger .fi-no-notification-close-btn {
+    color: var(--color-danger-600) !important;
+}
+
+.dark .fi-no-notification.fi-color-danger .fi-no-notification-close-btn:hover {
+    color: var(--color-danger-200) !important;
+    background-color: var(--color-danger-900) !important;
+}

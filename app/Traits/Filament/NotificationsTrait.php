@@ -35,6 +35,8 @@ trait NotificationsTrait
             'primary' => $notification->success()
                 ->icon('heroicon-s-check-circle')
                 ->iconColor('primary')
+                ->persistent()
+                ->duration(500)
                 ->color('primary'),
 
             'danger' => $notification->danger()

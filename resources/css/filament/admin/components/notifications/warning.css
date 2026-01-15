@@ -1,0 +1,36 @@
+/*
+ * Notification Warning (Laranja)
+ * Customiza as cores das notificações de aviso em modo dark
+ * para combinar com os stats cards warning
+ */
+
+/* Notification warning em modo dark */
+.dark .fi-no-notification.fi-color-warning {
+    background-color: var(--color-warning-50) !important;
+    border-color: var(--color-warning-200) !important;
+}
+
+/* Título da notification warning */
+.dark .fi-no-notification.fi-color-warning .fi-no-notification-title {
+    color: var(--color-warning-900) !important;
+}
+
+/* Corpo/descrição da notification warning */
+.dark .fi-no-notification.fi-color-warning .fi-no-notification-body {
+    color: var(--color-warning-700) !important;
+}
+
+/* Ícone da notification warning */
+.dark .fi-no-notification.fi-color-warning .fi-no-notification-icon {
+    color: var(--color-warning-600) !important;
+}
+
+/* Botão de fechar */
+.dark .fi-no-notification.fi-color-warning .fi-no-notification-close-btn {
+    color: var(--color-warning-600) !important;
+}
+
+.dark .fi-no-notification.fi-color-warning .fi-no-notification-close-btn:hover {
+    color: var(--color-warning-200) !important;
+    background-color: var(--color-warning-900) !important;
+}
