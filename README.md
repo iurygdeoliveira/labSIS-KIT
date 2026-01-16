@@ -160,21 +160,19 @@ O Kit oferece uma base sólida com os seguintes recursos já implementados:
 
 -   **Customização de Logotipo:** Logotipo customizado para o painel de autenticação e para o rodapé do painel.
 
--   **Edição de Perfil:** Avatar, Configurações Personalizáveis e Autenticação de Dois Fatores (2FA).
-
--   **Login Unificado para diferentes painéis:** Login com Email e Senha, recuperação de senha.
+-   **Login Unificado para diferentes painéis:** Login com Email e Senha, recuperação de senha e autenticação de dois fatores (2FA).
 
 -   **Exibição de Widgets:** Widgets personalizados para exibição de métricas e informações relevantes.
 
 -   **Website / Landing Page**: Página Inicial, Seções Pré-definidas (Hero e Sobre).
 
--   **Registro Histórico de Autenticações:** Monitoramento completo de acessos de usuários com armazenamento otimizado em **MongoDB**, incluindo registros de login, logout, endereços IP e dispositivos. Visualização detalhada no painel administrativo com filtros avançados e analytics.
+-   **Registro Histórico de Autenticações:** Monitoramento completo de acessos de usuários com armazenamento em **MongoDB**, incluindo registros de login, logout, endereços IP e dispositivos.
 
 -   **Gestão de Templates de E-mail:** Funcionalidade para visualizar e testar templates de e-mail diretamente pelo painel administrativo, com suporte a templates customizados e dados reais de preview.
 
 ## 🧩 Plugins Utilizados
 
-Este projeto integra diversos plugins e pacotes robustos para expandir suas funcionalidades. Abaixo, destacamos os componentes utilizados:
+Este projeto integra plugins e pacotes robustos para expandir suas funcionalidades. Abaixo, destacamos os componentes utilizados:
 
 -   **[Filament Easy Footer](https://github.com/devonab/filament-easy-footer):** Adiciona um rodapé customizável ao painel administrativo, permitindo fácil inclusão de links e informações de copyright.
 -   **[Filament Spatie Media Library](https://github.com/filamentphp/spatie-laravel-media-library-plugin):** Plugin oficial para integrar a poderosa biblioteca Spatie Media Library ao Filament, facilitando o upload e gestão de arquivos.
