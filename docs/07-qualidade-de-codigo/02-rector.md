@@ -5,7 +5,7 @@ O Rector é uma ferramenta de refatoração automatizada que complementa o Laras
 ## Por que utilizar o Rector?
 
 1. **Upgrades Sem Dor**: Automatiza a migração de versões do Laravel (ex: Laravel 11 para 12), trocando métodos depreciados pelas novas implementações.
-2. **Código Mais Moderno**: Aplica melhorias do PHP moderno (8.2, 8.3, 8.4), como _readonly properties_, _constructor property promotion_ e novas funções de string/array.
+2. **Código Mais Moderno**: Aplica melhorias do PHP moderno (8.2, 8.3, 8.4, 8.5), como _readonly properties_, _constructor property promotion_ e novas funções de string/array.
 3. **Qualidade Consistente**: Remove código morto (_dead code_), simplifica condicionais complexas e garante que as declarações de tipo sejam aplicadas em todo o projeto.
 
 ---

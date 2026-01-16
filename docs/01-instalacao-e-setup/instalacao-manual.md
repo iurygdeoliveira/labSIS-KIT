@@ -30,7 +30,7 @@ php install.php
 
 O script irá:
 
--   ✅ Verificar e instalar automaticamente: PHP 8.4, extensões PHP e Composer
+-   ✅ Verificar e instalar automaticamente: PHP 8.5, extensões PHP e Composer
 -   ✅ Remover Apache2 se instalado (conflito com Nginx do Sail)
 -   ✅ Orientar instalação manual de: Node.js e Docker
 -   ✅ Configurar permissões Docker automaticamente

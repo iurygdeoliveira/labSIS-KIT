@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Script de instalação para preparar o projeto após clonagem/uso via Laravel Installer.
  *
  * Passos:
- * - Verifica e instala automaticamente: PHP 8.4, extensões PHP, Composer
+ * - Verifica e instala automaticamente: PHP 8.5, extensões PHP, Composer
  * - Remove Apache2 se instalado (conflito com Nginx do Sail)
  * - Orienta instalação manual de: Node.js e Docker
  * - Configura permissões Docker automaticamente
@@ -46,7 +46,7 @@ function commandExists(string $command): bool
 }
 
 /**
- * Verifica se PHP 8.4+ está instalado.
+ * Verifica se PHP 8.5+ está instalado.
  */
 function checkPhpVersion(): bool
 {
@@ -63,18 +63,18 @@ function checkPhpVersion(): bool
     if (preg_match('/PHP (\d+\.\d+)/', $version, $matches)) {
         $versionNumber = (float) $matches[1];
 
-        return $versionNumber >= 8.4;
+        return $versionNumber >= 8.5;
     }
 
     return false;
 }
 
 /**
- * Instala PHP 8.4 automaticamente.
+ * Instala PHP 8.5 automaticamente.
  */
-function installPhp84(): void
+function installPhp85(): void
 {
-    echo "📥 Instalando PHP 8.4 automaticamente...\n";
+    echo "📥 Instalando PHP 8.5 automaticamente...\n";
 
     // Instalar software-properties-common
     run('sudo apt install software-properties-common -y');
@@ -85,10 +85,10 @@ function installPhp84(): void
     // Atualizar pacotes
     run('sudo apt update');
 
-    // Instalar PHP 8.4
-    run('sudo apt install php8.4 php8.4-cli php8.4-fpm -y');
+    // Instalar PHP 8.5
+    run('sudo apt install php8.5 php8.5-cli php8.5-fpm -y');
 
-    echo "✅ PHP 8.4 instalado com sucesso!\n";
+    echo "✅ PHP 8.5 instalado com sucesso!\n";
 }
 
 /**
@@ -143,7 +143,7 @@ function installPhpExtensions(array $missingExtensions): void
 
     $extensionPackages = [];
     foreach ($missingExtensions as $extension) {
-        $extensionPackages[] = "php8.4-{$extension}";
+        $extensionPackages[] = "php8.5-{$extension}";
     }
 
     $command = 'sudo apt install '.implode(' ', $extensionPackages).' -y';
@@ -497,12 +497,12 @@ function showFinalSummary(): void
 echo "🚀 LabSIS KIT - Script de Instalação\n";
 echo str_repeat('=', 50)."\n";
 
-// 1. Verificação e instalação do PHP 8.4
-echo "\n🔍 Verificando PHP 8.4...\n";
+// 1. Verificação e instalação do PHP 8.5
+echo "\n🔍 Verificando PHP 8.5...\n";
 if (! checkPhpVersion()) {
-    installPhp84();
+    installPhp85();
 } else {
-    echo "✅ PHP 8.4+ já está instalado.\n";
+    echo "✅ PHP 8.5+ já está instalado.\n";
 }
 
 // 2. Verificação e instalação das extensões PHP
