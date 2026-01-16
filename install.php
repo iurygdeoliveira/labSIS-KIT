@@ -441,6 +441,24 @@ function runSailInstallation(string $basePath): void
 }
 
 /**
+ * Remove o arquivo context7.json se existir.
+ */
+function removeContext7File(string $basePath): void
+{
+    $contextFile = $basePath.'/context7.json';
+
+    if (file_exists($contextFile)) {
+        echo "\n🧹 Limpando arquivos de indexação...\n";
+
+        if (unlink($contextFile)) {
+            echo "ℹ️  O arquivo context7.json foi removido.\n";
+            echo "💡 Este arquivo serve apenas para indexação na ferramenta Context7 do repositório original.\n";
+            echo "📝 Caso deseje indexar seu próprio projeto, acesse a página oficial do Context7 para obter informações atualizadas.\n";
+        }
+    }
+}
+
+/**
  * Exibe resumo final com informações importantes.
  */
 function showFinalSummary(): void
@@ -578,5 +596,8 @@ configureDockerPermissions();
 // 9. Instalação via Sail
 runSailInstallation($basePath);
 
-// 10. Resumo final
+// 10. Limpeza de arquivos específicos
+removeContext7File($basePath);
+
+// 11. Resumo final
 showFinalSummary();
