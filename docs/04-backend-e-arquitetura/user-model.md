@@ -19,7 +19,8 @@ Para manter a classe legível e manutenível, o código foi organizado em seçõ
 
 1.  **Setup & Configuration**:
     -   `casts`: Definição de tipos (ex: senhas hash, campos criptografados).
-    -   `registerMediaCollections`: Configuração do disco S3 para avatares.
+    -   `registerMediaConversions`: Configuração de otimizações de imagem e thumbnails (vazio por padrão neste model).
+    -   (Nota: A configuração do disco S3 para avatares é feita diretamente no componente de upload do Filament, não no model via `registerMediaCollections`).
 2.  **Relationships**: Todos os relacionamentos Eloquent (SQL e MongoDB).
 3.  **Scopes**: Filtros de consulta reutilizáveis (ex: `withRolesForTenant`).
 4.  **Filament / Access Control**: Métodos para controlar quem pode entrar em qual painel (`admin`, `user`) e em qual `tenant`.

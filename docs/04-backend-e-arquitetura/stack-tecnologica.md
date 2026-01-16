@@ -4,13 +4,13 @@
 
 ## 核心 Core Stack
 
-| Componente       | Versão  | Notas                                              |
-| ---------------- | ------- | -------------------------------------------------- |
-| **PHP**          | `8.5.1` | Requer Property Hooks e novos recursos de tipagem. |
-| **Laravel**      | `12.46` | Framework base.                                    |
-| **Filament**     | `4.5`   | Painel Administrativo e TALL Stack wrapper.        |
-| **Livewire**     | `3.7`   | Camada de interatividade reativa.                  |
-| **Tailwind CSS** | `4.1`   | Motor de estilização (config via CSS nativo).      |
+| Componente       | Versão | Notas                                         |
+| ---------------- | ------ | --------------------------------------------- |
+| **PHP**          | `8.5`  | Requer novos recursos de linguagem.           |
+| **Laravel**      | `12.0` | Framework base.                               |
+| **Filament**     | `4.0`  | Painel Administrativo e TALL Stack wrapper.   |
+| **Livewire**     | `3.0`  | Camada de interatividade reativa.             |
+| **Tailwind CSS** | `4.0`  | Motor de estilização (config via CSS nativo). |
 
 ## 🗄️ Backend e Dados
 
@@ -36,8 +36,8 @@
 
 ## 🧪 Qualidade e Testes
 
--   **Pest PHP**: v4.3 (Testes Unitários e Feature).
--   **Larastan**: v3.8 (Análise estática nível 5+).
+-   **Pest PHP**: v4.0 (Testes Unitários e Feature).
+-   **Larastan**: v3.0 (Análise estática nível 5).
 -   **Laravel Pint**: Padronização de código (PSR-12 expandido).
 -   **Rector**: Upgrades automáticos e refatoração segura.
 

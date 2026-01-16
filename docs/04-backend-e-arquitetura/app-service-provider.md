@@ -116,24 +116,9 @@ Carbon::setLocale('pt_BR');
 1.  **`Date::use(CarbonImmutable::class)`**: Define que, por padrão, o Laravel deve usar a classe `CarbonImmutable` em vez da `Carbon` padrão para manipulação de datas. Objetos imutáveis são mais seguros, pois qualquer modificação (ex: `->addDay()`) retorna uma *nova* instância da data, em vez de alterar a original. Isso evita bugs difíceis de rastrear causados por modificações inesperadas em objetos de data.
 2.  **`Carbon::setLocale('pt_BR')`**: Configura o idioma padrão da biblioteca Carbon para português do Brasil. Isso afeta a formatação de datas em funções como `diffForHumans()`, que passará a retornar valores como "há 2 minutos" em vez de "2 minutes ago".
 
-#### `configFilamentColors()` - Paleta de Cores do Painel
+#### `configFilamentColors()` - REMOVIDO (Movido para CSS)
 
-Define as cores globais utilizadas pelos painéis do Filament.
-
-```php
-private function configFilamentColors(): void
-{
-    FilamentColor::register([
-        'danger' => Color::hex('#D93223'),
-        'warning' => Color::hex('#F28907'),
-        'success' => Color::hex('#52a0fa'),
-        'primary' => Color::hex('#014029'),
-        'secondary' => Color::Gray,
-    ]);
-}
-````
-
-**Propósito:** Centraliza a definição da paleta de cores, garantindo consistência visual em todos os componentes do Filament (botões, badges, notificações, etc.).
+A definição de cores via PHP foi removida em favor de uma arquitetura baseada em variáveis CSS. Consulte `resources/css/filament/` e os arquivos `colors.css` para entender a nova estrutura de estilização.
 
 #### `configStorage()` - REMOVIDO (Movido para `storage:init`)
 
@@ -180,3 +165,4 @@ private function configGates(): void
 ## Conclusão
 
 O `AppServiceProvider` é um arquivo fundamental para estabelecer padrões, configurações de segurança e comportamentos globais para a aplicação. Ao centralizar essas regras, garantimos que o projeto se mantenha consistente, seguro e alinhado com as melhores práticas de desenvolvimento desde a sua inicialização.
+````
