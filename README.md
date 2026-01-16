@@ -21,6 +21,8 @@ Este repositório é um Kit de Iniciação (Starter Kit) para o desenvolvimento 
 
 O objetivo deste projeto é fornecer uma base sólida e rica em recursos para acelerar o desenvolvimento de novas aplicações, seguindo as melhores práticas e convenções do ecossistema Laravel.
 
+Confira também o nosso [**Roadmap de Desenvolvimento**](ROADMAP.md) para ver o que planejado para o futuro do kit.
+
 ## Documentação do Kit
 
 Esta documentação foi criada para facilitar o entendimento de como as funcionalidades do kit foram implementadas, descrevendo os padrões adotados, decisões técnicas e exemplos práticos.

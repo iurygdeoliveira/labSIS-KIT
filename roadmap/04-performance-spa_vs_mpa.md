@@ -1,4 +1,7 @@
-# Metodologia de Teste de Performance: SPA vs MPA
+# Roadmap: Metodologia de Teste de Performance (SPA vs MPA)
+
+> [!IMPORTANT]
+> Este documento faz parte do Roadmap do LabSIS KIT. O objetivo é estabelecer um padrão de medição para futuras otimizações de performance.
 
 ## Objetivo
 
