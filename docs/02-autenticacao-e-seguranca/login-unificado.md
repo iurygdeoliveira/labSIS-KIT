@@ -6,19 +6,18 @@
 - [Arquitetura Geral](#arquitetura-geral)
 - [Sistema de Aprovação de Usuários](#sistema-de-aprovação-de-usuários)
 - [Providers do Filament](#providers-do-filament)
-  - [BasePanelProvider](#basepanelprovider)
-  - [AuthPanelProvider](#authpanelprovider)
-  - [AdminPanelProvider](#adminpanelprovider)
-  - [UserPanelProvider](#userpanelprovider)
+    - [BasePanelProvider](#basepanelprovider)
+    - [AuthPanelProvider](#authpanelprovider)
+    - [AdminPanelProvider](#adminpanelprovider)
+    - [UserPanelProvider](#userpanelprovider)
 - [Middlewares](#middlewares)
-  - [RedirectGuestsToCentralLoginMiddleware](#redirectgueststocentralloginmiddleware)
-  - [RedirectToProperPanelMiddleware](#redirecttoproperpanelmiddleware)
-  - [TeamSyncMiddleware](#teamsyncmiddleware)
+    - [RedirectToProperPanelMiddleware](#redirecttoproperpanelmiddleware)
+    - [TeamSyncMiddleware](#teamsyncmiddleware)
 - [Páginas de Autenticação](#páginas-de-autenticação)
-  - [Login Customizado](#login-customizado)
-  - [Registro com Tenant](#registro-com-tenant)
-  - [VerificationPending](#verificationpending)
-  - [AccountSuspended](#accountsuspended)
+    - [Login Customizado](#login-customizado)
+    - [Registro com Tenant](#registro-com-tenant)
+    - [VerificationPending](#verificationpending)
+    - [AccountSuspended](#accountsuspended)
 - [Sistema Multi-Tenant](#sistema-multi-tenant)
 - [Controle de Acesso aos Painéis](#controle-de-acesso-aos-painéis)
 - [Fluxo de Funcionamento](#fluxo-de-funcionamento)
@@ -54,6 +53,7 @@ O sistema implementa um fluxo de aprovação em duas etapas para garantir segura
 ### 1. Registro de Usuário
 
 Quando um usuário se registra:
+
 - **Usuário é criado suspenso** (`is_suspended = true`)
 - **Usuário não é aprovado** (`is_approved = false`)
 - **Tenant é criado automaticamente** para o usuário que recebe a role Owner no tenant
@@ -63,12 +63,14 @@ Quando um usuário se registra:
 ### 2. Processo de Aprovação
 
 **Administradores podem**:
+
 - Visualizar usuários pendentes de aprovação
 - Aprovar ou rejeitar usuários
 - Suspender usuários já aprovados
 - Gerenciar roles e permissões por tenant
 
 **Usuários aprovados podem**:
+
 - Acessar os painéis de aplicação
 - Ser redirecionados automaticamente para o tenant correto
 - Ter suas permissões sincronizadas por tenant
@@ -81,116 +83,122 @@ Quando um usuário se registra:
 
 ## Providers do Filament
 
-### BasePanelProvider  
+### BasePanelProvider
+
 Arquivo: `app/Providers/Filament/BasePanelProvider.php`
 
 Centraliza as configurações comuns de todos os painéis:
 
 **Configurações de UI**:
+
 - Tema: `viteTheme`, `darkMode`, `defaultThemeMode`
 - Layout: `sidebarWidth`, `maxContentWidth`, `spa()`
 - Cores: Paleta personalizada com cor primária `#014029`
 
 **Segurança e Autenticação**:
+
 - MFA (2FA) via `AppAuthentication::make()->recoverable()`
 - Middlewares essenciais: cookies, sessão, CSRF, bindings
-- Middlewares customizados: `RedirectGuestsToCentralLoginMiddleware`, `RedirectToProperPanelMiddleware`
+- Middlewares customizados: `RedirectToProperPanelMiddleware`, `TeamSyncMiddleware`
+- Autenticação de guests gerenciada automaticamente pelo Filament
 
 **Plugins Compartilhados**:
+
 - `BriskTheme`: Tema visual personalizado
 - `FilamentEditProfilePlugin`: Edição de perfil com avatar, e-mail e 2FA
 - `EasyFooterPlugin`: Rodapé com links e informações
 
 **Métodos Abstratos**:
+
 - `getPanelId()`: Define o ID único do painel
 - `getPanelPath()`: Define o caminho da URL do painel
 
-### AuthPanelProvider  
+### AuthPanelProvider
+
 Arquivo: `app/Providers/Filament/AuthPanelProvider.php`
 
 Painel público para autenticação centralizada:
 
 **Funcionalidades**:
+
 - Login unificado com página customizada
 - Registro de usuários com criação automática de tenant
 - Recuperação de senha
 - Páginas de status: `VerificationPending` e `AccountSuspended`
 
 **Configuração**:
+
 - ID: `auth`
 - Path: `/` (raiz)
 - Guard: `web`
 - Login customizado: `App\Filament\Pages\Auth\Login`
 - Registro customizado: `App\Filament\Pages\Auth\Register`
 
-### AdminPanelProvider  
+### AdminPanelProvider
+
 Arquivo: `app/Providers/Filament/AdminPanelProvider.php`
 
 Painel administrativo global:
 
 **Características**:
+
 - Painel padrão (`->default()`)
 - Sem tenancy (`->tenant(null, false)`)
 - Descoberta automática de resources, pages, clusters e widgets
 - Configuração de componentes via `FilamentComponentsConfigurator`
 
 **Recursos**:
+
 - Dashboard administrativo
 - Widgets: `AccountWidget`, `FilamentInfoWidget`, `SystemStats`
 - Acesso apenas para usuários com role `Admin`
 
-### UserPanelProvider  
+### UserPanelProvider
+
 Arquivo: `app/Providers/Filament/UserPanelProvider.php`
 
 Painel de usuários com suporte a multi-tenancy:
 
 **Multi-Tenancy**:
+
 - Tenant: `Tenant::class` com slug `uuid`
 - Menu de tenant habilitado (`->tenantMenu(true)`)
 - Relacionamento de propriedade: `tenants`
 
 **Recursos**:
+
 - Resources específicos: `UserResource`, `MediaResource`
 - Descoberta de clusters para gerenciamento de permissões
 - Middleware `TeamSyncMiddleware` para sincronização de permissões
 
 **Controle de Acesso**:
+
 - Usuários com role `User` em qualquer tenant
 - Usuários com role `Owner` em qualquer tenant
 - Usuários vinculados a tenants ativos
 
 ## Middlewares
 
-### RedirectGuestsToCentralLoginMiddleware  
-Arquivo: `app/Http/Middleware/RedirectGuestsToCentralLoginMiddleware.php`
+### RedirectToProperPanelMiddleware
 
-Controla o acesso de usuários não autenticados:
-
-**Funcionamento**:
-- Se usuário está autenticado: permite acesso
-- Se é rota pública (`login`, `register`): permite acesso
-- Caso contrário: redireciona para `/login`
-
-**Rotas Públicas**:
-- `/login`: Formulário de login
-- `/register`: Formulário de registro
-
-### RedirectToProperPanelMiddleware  
 Arquivo: `app/Http/Middleware/RedirectToProperPanelMiddleware.php`
 
 Gerencia redirecionamentos inteligentes baseados em status e roles:
 
 **Verificações de Status**:
+
 - **Usuários não aprovados**: Redirecionados para `VerificationPending` (exceto Admin)
 - **Usuários suspensos**: Redirecionados para `AccountSuspended` (exceto Admin)
 - **Rotas de logout**: Sempre permitidas
 
 **Redirecionamento por Painel**:
+
 - **Painel Auth**: Redireciona para painel apropriado baseado em roles
 - **Painel Admin**: Apenas usuários com role `Admin`
 - **Painel User**: Usuários com roles `User` ou `Owner`, ou seja, vinculados a tenants
 
 **Lógica de Redirecionamento**:
+
 ```php
 // Se no painel auth, redireciona para painel correto
 if ($panel->getId() === 'auth') {
@@ -204,18 +212,21 @@ if ($panel->getId() === 'auth') {
 }
 ```
 
-### TeamSyncMiddleware  
+### TeamSyncMiddleware
+
 Arquivo: `app/Http/Middleware/TeamSyncMiddleware.php`
 
 Sincroniza permissões com o tenant atual:
 
 **Funcionamento**:
+
 - Apenas ativo no painel `user`
 - Sincroniza `SpatieTeamResolver` com o tenant da rota
 - Fallback para primeiro tenant ativo do usuário
 - Define `team_id` como `0` quando não há tenant
 
 **Processo de Sincronização**:
+
 1. Extrai UUID do tenant da rota
 2. Verifica se usuário pode acessar o tenant
 3. Configura `SpatieTeamResolver` com o ID do tenant
@@ -224,17 +235,20 @@ Sincroniza permissões com o tenant atual:
 
 ## Páginas de Autenticação
 
-### Login Customizado  
+### Login Customizado
+
 Arquivo: `app/Filament/Pages/Auth/Login.php`
 
 Implementa verificações de status antes da autenticação:
 
 **Verificações Implementadas**:
+
 - **Usuário suspenso**: Login permitido, redireciona para `AccountSuspended`
 - **Usuário não aprovado**: Login permitido, redireciona para `VerificationPending`
 - **Usuário válido**: Continua com autenticação padrão do Filament
 
 **Fluxo de Autenticação**:
+
 ```php
 // Verifica se usuário existe
 $user = $authGuard->getProvider()->retrieveByCredentials($credentials);
@@ -254,18 +268,21 @@ if (!$user->isApproved()) {
 }
 ```
 
-### Registro com Tenant  
+### Registro com Tenant
+
 Arquivo: `app/Filament/Pages/Auth/Register.php`
 
 Cria usuário e tenant automaticamente:
 
 **Campos do Formulário**:
+
 - Nome completo
 - E-mail (único)
 - Senha (mínimo 8 caracteres, confirmada)
 - Nome do Tenant (único)
 
 **Processo de Registro**:
+
 1. **Cria usuário** com status suspenso e não aprovado
 2. **Cria tenant** com nome fornecido
 3. **Associa usuário ao tenant** via tabela pivot
@@ -273,38 +290,45 @@ Cria usuário e tenant automaticamente:
 5. **Exibe notificação** de sucesso
 
 **Configurações de Usuário**:
+
 - `is_suspended = true`: Usuário suspenso até aprovação
 - `is_approved = false`: Usuário não aprovado por padrão
 - `email_verified_at = null`: E-mail não verificado
 
-### VerificationPending  
+### VerificationPending
+
 Arquivo: `app/Filament/Pages/Auth/VerificationPending.php`
 
 Página exibida para usuários não aprovados:
 
 **Características**:
+
 - Página simples (`SimplePage`)
 - Não aparece na navegação (`$shouldRegisterNavigation = false`)
 - View: `filament.pages.auth.verification-pending`
 - Suporte a tenancy para URLs corretas
 
 **Funcionalidade**:
+
 - Informa ao usuário que sua conta está pendente de aprovação
 - Permite logout para tentar novamente mais tarde
 - Bloqueia acesso a outros painéis até aprovação
 
-### AccountSuspended  
+### AccountSuspended
+
 Arquivo: `app/Filament/Pages/Auth/AccountSuspended.php`
 
 Página exibida para usuários suspensos:
 
 **Características**:
+
 - Página simples (`SimplePage`)
 - Não aparece na navegação (`$shouldRegisterNavigation = false`)
 - View: `filament.pages.auth.account-suspended`
 - Suporte a tenancy para URLs corretas
 
 **Funcionalidade**:
+
 - Informa ao usuário que sua conta está suspensa
 - Orienta contato com suporte
 - Bloqueia completamente o acesso aos painéis
@@ -326,6 +350,7 @@ Implementa lógica de controle de acesso baseada em status e roles:
 5. **Painel User**: Usuários com roles `User` ou `Owner`, ou vinculados a tenants
 
 **Implementação**:
+
 ```php
 public function canAccessPanel(Panel $panel): bool
 {
@@ -363,11 +388,13 @@ public function canAccessPanel(Panel $panel): bool
 ### Métodos de Verificação de Roles
 
 **Verificação por Tenant**:
+
 - `isOwnerOfTenant(Tenant $tenant)`: Verifica se é Owner do tenant
 - `isUserOfTenant(Tenant $tenant)`: Verifica se é User do tenant
 - `hasAnyRoleInTenant(Tenant $tenant)`: Verifica se tem qualquer role no tenant
 
 **Verificação Global**:
+
 - `hasOwnerRoleInAnyTenant()`: Verifica se é Owner em algum tenant
 - `getRolesForTenant(Tenant $tenant)`: Retorna todas as roles do usuário no tenant
 
@@ -402,10 +429,10 @@ public function canAccessPanel(Panel $panel): bool
 
 ### 4. Acesso aos Painéis
 
-1. **`RedirectGuestsToCentralLoginMiddleware`** bloqueia convidados
-2. **`RedirectToProperPanelMiddleware`** verifica permissões
-3. **`TeamSyncMiddleware`** sincroniza permissões por tenant
-4. **`canAccessPanel()`** valida acesso final
+1. **Filament** gerencia automaticamente o redirecionamento de usuários não autenticados
+2. **`RedirectToProperPanelMiddleware`** verifica permissões e redireciona para painéis apropriados
+3. **`TeamSyncMiddleware`** sincroniza permissões por tenant (apenas painel User)
+4. **`canAccessPanel()`** valida acesso final baseado em status e roles
 
 ### 5. Processo de Aprovação
 
