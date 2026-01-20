@@ -2,7 +2,7 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Resources\Authentication\CustomAuthenticationLogResource;
+use App\Filament\Resources\Authentication\AuthenticationLogResource;
 use App\Filament\Resources\Media\MediaResource;
 use App\Filament\Resources\Users\UserResource;
 use App\Filament\Widgets\CustomStats;
@@ -29,7 +29,7 @@ class UserPanelProvider extends BasePanelProvider
             ->resources([
                 UserResource::class,
                 MediaResource::class,
-                CustomAuthenticationLogResource::class,
+                AuthenticationLogResource::class,
             ])
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->pages([

@@ -57,7 +57,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function configGates(): void
     {
-        Gate::policy(\Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog::class, \App\Policies\AuthenticationLogPolicy::class);
+        Gate::policy(\App\Models\AuthenticationLog::class, \App\Policies\AuthenticationLogPolicy::class);
         Gate::define('viewPulse', fn (AppUser $user): bool => $user->hasRole('admin'));
     }
 
@@ -95,6 +95,11 @@ class AppServiceProvider extends ServiceProvider
         // Registrar listeners manualmente para evitar duplicação
         $this->app['events']->listen(UserRegistered::class, NotifyAdminNewUser::class);
         $this->app['events']->listen(UserApproved::class, SendUserApprovedEmail::class);
+
+        // Logs de Autenticação (MongoDB)
+        $this->app['events']->listen(\Illuminate\Auth\Events\Login::class, \App\Listeners\LogAuthenticationActivity::class);
+        $this->app['events']->listen(\Illuminate\Auth\Events\Logout::class, \App\Listeners\LogAuthenticationActivity::class);
+        $this->app['events']->listen(\Illuminate\Auth\Events\Failed::class, \App\Listeners\LogAuthenticationActivity::class);
     }
 
     private function configObservers(): void

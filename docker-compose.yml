@@ -96,12 +96,12 @@ services:
         networks:
             - sail
     mongodb:
-        image: "mongodb/mongodb-atlas-local:latest"
+        image: "mongo:latest"
         ports:
             - "${FORWARD_MONGODB_PORT:-27017}:27017"
         environment:
-            MONGODB_INITDB_ROOT_USERNAME: "${MONGODB_USERNAME:-sail}"
-            MONGODB_INITDB_ROOT_PASSWORD: "${MONGODB_PASSWORD:-password}"
+            MONGO_INITDB_ROOT_USERNAME: "${MONGODB_USERNAME:-sail}"
+            MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_PASSWORD:-password}"
         volumes:
             - "sail-mongodb:/data/db"
         networks:

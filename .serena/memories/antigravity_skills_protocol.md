@@ -25,6 +25,7 @@ The following skills are available in `.agent/skills` and MUST be used when the 
 
 ### Quality & Testing
 - `audit-security`: Security checklist (XSS, CSP, IDOR).
+- `enforce-business-rules`: Validate Tenancy, RBAC, and IDOR compliance.
 - `optimize-performance`: Performance tuning (N+1, Caching).
 - `generate-tests`: Pest v4 generation (Unit, Feature, Arch).
 - `debug-browser`: Pest v4 Browser testing (Dusk/Panther).

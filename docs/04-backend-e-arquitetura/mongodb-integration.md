@@ -1,23 +1,35 @@
-# MongoDB Integration
+# Integração MongoDB - Auditoria e Logs
 
-## Visão Geral
+## 📋 Visão Geral
 
-Este projeto suporta **MongoDB** como banco de dados secundário, rodando paralelamente ao **PostgreSQL** (banco principal). A integração utiliza o pacote oficial `mongodb/laravel-mongodb` mantido pela MongoDB.
+Este projeto utiliza **arquitetura híbrida** com PostgreSQL e MongoDB para otimizar performance e escalabilidade:
 
-## Stack Técnica
+- **PostgreSQL**: Dados relacionais críticos (Users, Tenants, Permissions)
+- **MongoDB**: Logs de auditoria e dados que crescem rapidamente
 
--   **Banco de Dados**: MongoDB Atlas Local (via Docker)
--   **Driver PHP**: `php8.5-mongodb` (já instalado no Dockerfile)
--   **Pacote Laravel**: `mongodb/laravel-mongodb` (a ser instalado via Composer)
--   **Porta Padrão**: 27017
+## ⚙️ Configuração
 
-## Configuração
+### 1. Docker Compose
 
-### 1. Variáveis de Ambiente
+```yaml
+# docker-compose.yml
+mongodb:
+    image: "mongo:latest"
+    ports:
+        - "${FORWARD_MONGODB_PORT:-27017}:27017"
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: "${MONGODB_USERNAME:-sail}"
+        MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_PASSWORD:-password}"
+    volumes:
+        - "sail-mongodb:/data/db"
+    networks:
+        - sail
+```
 
-As seguintes variáveis já estão configuradas no `.env.example`:
+### 2. Variáveis de Ambiente
 
 ```ini
+# .env
 MONGODB_URI=mongodb://sail:password@mongodb:27017
 MONGODB_USERNAME=sail
 MONGODB_PASSWORD=password
@@ -25,228 +37,141 @@ MONGODB_DATABASE=labsis
 FORWARD_MONGODB_PORT=27017
 ```
 
-**Copie estas variáveis para o seu `.env` local.**
-
-### 2. Instalação do Pacote Laravel MongoDB
-
-Instale o pacote oficial via Composer:
-
-```bash
-vendor/bin/sail composer require mongodb/laravel-mongodb
-```
-
-### 3. Iniciar os Containers
-
-Reconstrua os containers para incluir o MongoDB:
-
-```bash
-vendor/bin/sail down
-vendor/bin/sail up -d
-```
-
-### 4. Verificar Conexão
-
-Teste a conexão com MongoDB:
-
-```bash
-vendor/bin/sail artisan tinker
-```
-
-No Tinker, execute:
+### 3. Configuração Laravel
 
 ```php
-DB::connection('mongodb')->getMongoDB()->listCollections();
+// config/database.php
+'mongodb' => [
+    'driver' => 'mongodb',
+    'dsn' => env('MONGODB_URI', 'mongodb://localhost:27017'),
+    'database' => env('MONGODB_DATABASE', 'labsis'),
+],
 ```
 
-## Usando MongoDB
+## 📝 Caso de Uso: Logs de Autenticação
 
-### Criar um Model MongoDB
-
-Os Models do MongoDB estendem `MongoDB\Laravel\Eloquent\Model`:
+### Model MongoDB
 
 ```php
+// app/Models/AuthenticationLog.php
 <?php
 
 namespace App\Models;
 
 use MongoDB\Laravel\Eloquent\Model;
 
-class Log extends Model
+class AuthenticationLog extends Model
 {
     protected $connection = 'mongodb';
-    protected $collection = 'logs';
-
-    protected $fillable = [
-        'message',
-        'level',
-        'context',
-        'created_at',
-    ];
+    protected $collection = 'authentication_log';
+    public $timestamps = false;
 
     protected function casts(): array
     {
         return [
-            'context' => 'array',
-            'created_at' => 'datetime',
+            'login_successful' => 'boolean',
+            'login_at' => 'datetime',
+            'logout_at' => 'datetime',
         ];
     }
-}
-```
 
-### Usar em Queries
-
-```php
-// Salvar documento
-Log::create([
-    'message' => 'User logged in',
-    'level' => 'info',
-    'context' => ['user_id' => 123, 'ip' => '192.168.1.1'],
-]);
-
-// Buscar documentos
-$logs = Log::where('level', 'error')->get();
-
-// Usar operadores MongoDB
-$recentLogs = Log::where('created_at', '>=', now()->subDays(7))->get();
-```
-
-### Hybrid Models (PostgreSQL + MongoDB)
-
-Você pode usar relações entre PostgreSQL e MongoDB:
-
-```php
-// Model PostgreSQL
-class User extends Authenticatable
-{
-    public function logs()
+    // Relacionamento híbrido com PostgreSQL
+    public function authentications()
     {
-        return $this->hasMany(Log::class, 'user_id', 'id');
+        return $this->morphMany(
+            AuthenticationLog::class,
+            'authenticatable'
+        )->latest('login_at');
     }
 }
-
-// Usar em queries
-$user = User::find(1);
-$userLogs = $user->logs;
 ```
 
-## Casos de Uso Recomendados
+### Estrutura de Documento
 
-✅ **Use MongoDB para**:
-
--   Logs de aplicação
--   Analytics e eventos
--   Cache de dados complexos
--   Dados não estruturados
--   Histórico de atividades
--   Notificações e mensagens
-
-❌ **Continue usando PostgreSQL para**:
-
--   Dados relacionais (users, tenants, etc.)
--   Transações ACID
--   Estruturas fixas com migrations
--   Integridade referencial
-
-## Comandos Úteis
-
-### Acessar MongoDB Shell
-
-```bash
-vendor/bin/sail mongodb mongosh -u sail -p password --authenticationDatabase admin
+```json
+{
+  "_id": ObjectId("69693240e77cefee61017852"),
+  "authenticatable_type": "App\\Models\\User",
+  "authenticatable_id": 1,
+  "ip_address": "192.168.1.100",
+  "user_agent": "Mozilla/5.0...",
+  "login_at": ISODate("2026-01-20T00:35:20Z"),
+  "login_successful": true,
+  "logout_at": null
+}
 ```
 
-### Ver Databases e Collections
+### Resource Filament
 
-```javascript
-// No mongosh
-show dbs
-use labsis
-show collections
+```php
+// app/Filament/Resources/Authentication/Tables/AuthenticationLogTable.php
+TextColumn::make('authenticatable_id')
+    ->label('Usuário')
+    ->formatStateUsing(function ($state, AuthenticationLog $record) {
+        // ⚠️ Carregamento manual para relacionamento híbrido
+        $user = User::find($record->authenticatable_id);
+
+        return $user?->name ?? 'Desconhecido';
+    })
+    ->searchable(isGlobal: false, isIndividual: true),
 ```
 
-### Backup MongoDB
+## 🎯 Quando Usar Cada Banco
 
-```bash
-vendor/bin/sail exec mongodb mongodump --uri="mongodb://sail:password@localhost:27017" --out=/data/backup
+### ✅ Use PostgreSQL Para:
+
+| Caso de Uso               | Razão                                    |
+| ------------------------- | ---------------------------------------- |
+| **Users, Tenants, Roles** | Integridade referencial, transações ACID |
+| **Permissions, Teams**    | Relacionamentos complexos (N:N)          |
+| **Media, Posts**          | Dados estruturados com foreign keys      |
+| **Dados financeiros**     | Precisão e consistência críticas         |
+
+### ✅ Use MongoDB Para:
+
+| Caso de Uso              | Razão                                        |
+| ------------------------ | -------------------------------------------- |
+| **Logs de Autenticação** | Alto volume de escritas, schema flexível     |
+| **Activity Logs**        | Crescimento rápido, queries temporais        |
+| **Analytics/Métricas**   | Agregações complexas, dados não estruturados |
+| **API Request Logs**     | Performance em inserções massivas            |
+
+## 💡 Benefícios Esperados
+
+### Performance
+
+- **Escritas 3-5x mais rápidas**: MongoDB otimizado para inserções
+- **Queries temporais eficientes**: Índices em datas (TTL automático)
+- **Sem bloqueios de tabela**: PostgreSQL não afetado por logs
+
+### Escalabilidade
+
+- **Schema flexível**: Adicionar campos sem migrations
+- **Sharding nativo**: Distribuição horizontal quando necessário
+- **TTL Index**: Auto-deletar logs antigos (ex: após 365 dias)
+
+### Manutenção
+
+- **Separação de concerns**: Auditoria isolada de dados críticos
+- **Backups independentes**: Estratégias diferentes por banco
+- **Migrations independentes**: `migrate:fresh` não afeta MongoDB
+
+## ⚠️ Relacionamentos Híbridos
+
+O Laravel **não suporta eager loading** entre PostgreSQL e MongoDB. Solução:
+
+```php
+// ❌ NÃO funciona
+TextColumn::make('authenticatable.name')
+
+// ✅ Funciona - Carregamento manual
+TextColumn::make('authenticatable_id')
+    ->formatStateUsing(fn ($state, $record) =>
+        User::find($record->authenticatable_id)?->name ?? 'Desconhecido'
+    )
 ```
 
-### Restaurar Backup
+## 📚 Recursos
 
-```bash
-vendor/bin/sail exec mongodb mongorestore --uri="mongodb://sail:password@localhost:27017" /data/backup
-```
-
-## Health Check
-
-O container MongoDB possui healthcheck configurado que verifica se o banco está respondendo:
-
-```yaml
-healthcheck:
-    test:
-        - CMD
-        - mongosh
-        - --eval
-        - "db.adminCommand('ping')"
-    retries: 3
-    timeout: 5s
-```
-
-## Troubleshooting
-
-### Erro: "Class 'MongoDB\Driver\Manager' not found"
-
-A extensão PHP já está instalada. Verifique se os containers foram reconstruídos:
-
-```bash
-vendor/bin/sail down
-vendor/bin/sail build --no-cache
-vendor/bin/sail up -d
-```
-
-### Erro: "Authentication failed"
-
-Verifique se as credenciais no `.env` correspondem às configuradas no `docker-compose.yml`:
-
-```ini
-MONGODB_USERNAME=sail
-MONGODB_PASSWORD=password
-```
-
-### Container não inicia
-
-Verifique os logs:
-
-```bash
-vendor/bin/sail logs mongodb
-```
-
-## Recursos Adicionais
-
--   [Documentação Laravel MongoDB](https://www.mongodb.com/docs/drivers/php/laravel-mongodb/)
--   [Laravel Database Documentation](https://laravel.com/docs/12.x/database#mongodb)
--   [MongoDB PHP Extension](https://www.php.net/manual/en/set.mongodb.php)
-
-## Arquitetura
-
-```
-┌─────────────────────────────────────────┐
-│         Laravel Application             │
-│  ┌───────────┐         ┌─────────────┐ │
-│  │ PostgreSQL│         │   MongoDB   │ │
-│  │ (Relacional)        │ (Documentos) │ │
-│  │                     │              │ │
-│  │ • Users             │ • Logs       │ │
-│  │ • Tenants           │ • Analytics  │ │
-│  │ • Events            │ • Activities │ │
-│  │ • Tickets           │ • Cache      │ │
-│  └───────────┘         └─────────────┘ │
-└─────────────────────────────────────────┘
-```
-
-## Próximos Passos
-
-1. ✅ Instalar pacote `mongodb/laravel-mongodb`
-2. ✅ Atualizar arquivo `.env` com as credenciais
-3. ✅ Reiniciar containers
-4. ✅ Criar seu primeiro Model MongoDB
-5. ✅ Testar conexão com Tinker
+- [MongoDB Laravel Driver](https://www.mongodb.com/docs/drivers/php/laravel-mongodb/)
+- [Laravel MongoDB](https://laravel.com/docs/12.x/mongodb)

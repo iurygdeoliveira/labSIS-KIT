@@ -24,7 +24,6 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
-use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -58,8 +57,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $roles_count
  * @property \Carbon\CarbonImmutable|null $last_login_at
  * @property string|null $last_login_ip
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog> $authentications
- * @property-read int|null $authentications_count
  *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
@@ -104,7 +101,6 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 {
     use AppAuthenticationRecoveryCodes;
     use AppAuthenticationSecret;
-    use AuthenticationLoggable;
     use HasFactory;
     use HasRoles;
     use InteractsWithMedia;

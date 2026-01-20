@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Policies;
 
 use App\Enums\RoleType;
+use App\Models\AuthenticationLog;
 use App\Models\Tenant;
 use App\Models\User;
 use Filament\Facades\Filament;
-use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 
 class AuthenticationLogPolicy
 {

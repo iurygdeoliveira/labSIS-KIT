@@ -28083,6 +28083,41 @@ namespace Filament\Notifications\Livewire {
             }
     }
 
+namespace App\Filament\Resources\Authentication\Pages {
+    /**
+     */
+    class ListAuthenticationLogs extends \Filament\Resources\Pages\ListRecords {
+            }
+    }
+
+namespace Filament\Resources\Pages {
+    /**
+     */
+    class ListRecords extends \Filament\Resources\Pages\Page {
+            }
+    /**
+     */
+    class Page extends \Filament\Pages\Page {
+            }
+    /**
+     * @property-read Schema $form
+     */
+    class CreateRecord extends \Filament\Resources\Pages\Page {
+            }
+    /**
+     * @template TModel of Model = Model
+     * @property-read Schema $form
+     */
+    class ViewRecord extends \Filament\Resources\Pages\Page {
+            }
+    /**
+     * @template TModel of Model = Model
+     * @property-read Schema $form
+     */
+    class EditRecord extends \Filament\Resources\Pages\Page {
+            }
+    }
+
 namespace App\Filament\Resources\Media\Pages {
     /**
      * @property \App\Models\MediaItem $record
@@ -28110,34 +28145,6 @@ namespace App\Filament\Resources\Media\Pages {
      * @property \App\Models\MediaItem $record
      */
     class ViewMedia extends \Filament\Resources\Pages\ViewRecord {
-            }
-    }
-
-namespace Filament\Resources\Pages {
-    /**
-     * @property-read Schema $form
-     */
-    class CreateRecord extends \Filament\Resources\Pages\Page {
-            }
-    /**
-     */
-    class Page extends \Filament\Pages\Page {
-            }
-    /**
-     * @template TModel of Model = Model
-     * @property-read Schema $form
-     */
-    class ViewRecord extends \Filament\Resources\Pages\Page {
-            }
-    /**
-     * @template TModel of Model = Model
-     * @property-read Schema $form
-     */
-    class EditRecord extends \Filament\Resources\Pages\Page {
-            }
-    /**
-     */
-    class ListRecords extends \Filament\Resources\Pages\Page {
             }
     }
 
@@ -28305,13 +28312,6 @@ namespace App\Filament\Widgets {
      * @property-read array $summary
      */
     class SystemStats extends \Filament\Widgets\StatsOverviewWidget {
-            }
-    }
-
-namespace Tapp\FilamentAuthenticationLog\Resources\AuthenticationLogResource\Pages {
-    /**
-     */
-    class ListAuthenticationLogs extends \Filament\Resources\Pages\ListRecords {
             }
     }
 
@@ -33896,11 +33896,6 @@ namespace  {
 }
 
 
-namespace Facades\Livewire\Features\SupportFileUploads {
-    /**
-     * @mixin \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl     */
-    class GenerateSignedUploadUrl extends \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl {}
-}
 
 
 

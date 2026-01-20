@@ -24,17 +24,15 @@
         "livewire/flux": "^2.2",
         "mongodb/laravel-mongodb": "^5.5",
         "nesbot/carbon": "^3.10",
-        "rappasoft/laravel-authentication-log": "^5.0",
         "resend/resend-laravel": "^0.21.0",
-        "spatie/laravel-permission": "^6.21",
-        "tapp/filament-authentication-log": "^5.0"
+        "spatie/laravel-permission": "^6.21"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.6",
         "driftingly/rector-laravel": "^2.1",
         "fakerphp/faker": "^1.23",
         "larastan/larastan": "^3.0",
-        "laravel/boost": "^1.0",
+        "laravel/boost": "1.8.7",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",

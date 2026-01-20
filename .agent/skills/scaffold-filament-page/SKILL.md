@@ -3,15 +3,17 @@ name: scaffold-filament-page
 description: Guidelines for creating Custom Filament Pages (independent of Resources) with Navigation Grouping.
 ---
 
-# Filament Page Customizer Skill
+# Scaffold Filament Page
 
-Use this skill when you need a dashboard, settings page, or report view that is NOT attached to a specific Model Resource.
+Use this skill when you need a dashboard, settings page, or report view that is **NOT** attached to a specific Model Resource.
 
-## Workflow
+## Context
 
-1.  **Check for Clusters**: Ask if this page belongs to an existing Cluster (e.g., `Settings`).
-2.  **Create Page**: `php artisan make:filament-page [PageName] --cluster=[ClusterName]`
-3.  **Define Cluster/Group**: If not using clusters, use `$navigationGroup`.
+Custom pages are useful for "dashboard" like views, settings, or tools that don't map 1:1 to a database record.
+
+## Tools
+
+- `scaffold-filament-resource`: Use that skill if the page IS attached to a model.
 
 ## Rules
 
@@ -32,3 +34,9 @@ Use this skill when you need a dashboard, settings page, or report view that is 
 ### 4. Title & Breadcrumbs
 
 - Customize title: `protected static ?string $title = 'Custom Title';`
+
+## Workflow
+
+1.  **Check for Clusters**: Ask if this page belongs to an existing Cluster (e.g., `Settings`).
+2.  **Create Page**: `php artisan make:filament-page [PageName] --cluster=[ClusterName]`
+3.  **Define Cluster/Group**: If not using clusters, use `$navigationGroup`.
