@@ -51,3 +51,7 @@ public function boot(): void
 ## Observação sobre Desenvolvimento Local
 
 A regra `uncompromised()` realiza uma requisição externa. Em ambientes de desenvolvimento sem internet ou com proxy restrito, isso pode causar lentidão ou falhas. Por isso, recomendamos ativá-la condicionalmente (`app()->isProduction()`).
+
+## Referências
+
+- [Provider: AppServiceProvider](/app/Providers/AppServiceProvider.php)

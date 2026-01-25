@@ -80,3 +80,8 @@ Este comando:
 
 **Integração:**
 O comando `storage:init` foi adicionado aos scripts `setup`, `reset` e `deploy` no `composer.json`. Dessa forma, garantimos que a estrutura de armazenamento esteja correta apenas nos momentos necessários (instalação ou deploy), eliminando completamente o overhead durante a navegação dos usuários.
+
+## Referências
+
+- [Command: InitStorageCommand](/app/Console/Commands/InitStorageCommand.php)
+- [Config: composer.json](/composer.json)

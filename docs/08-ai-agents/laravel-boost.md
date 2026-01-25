@@ -102,3 +102,9 @@ O Boost é usado para enriquecer os arquivos em `.context/docs/`:
 
 -   [Laravel Boost (Packagist)](https://packagist.org/packages/laravel/boost)
 -   [Documentação oficial](https://laravel.com/docs/12.x/boost)
+
+## Referências
+
+- [Config: MCP Config](/.gemini/antigravity/mcp_config.json)
+- [Model: User](/app/Models/User.php)
+- [Model: Video](/app/Models/Video.php)

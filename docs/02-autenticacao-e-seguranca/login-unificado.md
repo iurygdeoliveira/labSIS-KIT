@@ -452,3 +452,10 @@ O **Sistema de Login Unificado** implementado oferece uma solução robusta para
 - **Escalabilidade**: Arquitetura preparada para crescimento
 
 O sistema centraliza toda a autenticação no painel `auth`, implementa verificações de status rigorosas e garante que usuários sejam direcionados automaticamente para o painel correto baseado em suas permissões e contexto de tenant. A separação clara de responsabilidades entre Providers, Middlewares e métodos de controle de acesso torna o sistema previsível, seguro e fácil de manter.
+
+## Referências
+
+- [Provider: AuthPanelProvider](/app/Providers/Filament/AuthPanelProvider.php)
+- [Provider: AdminPanelProvider](/app/Providers/Filament/AdminPanelProvider.php)
+- [Middleware: RedirectToProperPanelMiddleware](/app/Http/Middleware/RedirectToProperPanelMiddleware.php)
+- [Page: Login](/app/Filament/Pages/Auth/Login.php)

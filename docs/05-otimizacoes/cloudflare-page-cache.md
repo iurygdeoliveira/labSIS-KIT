@@ -76,3 +76,9 @@ Durante a configuração, alguns trechos foram comentados para fins de referênc
 Esta implementação foi baseada no artigo:
 
 > [**Separate Your Cloudflare Page Cache with a Middleware Group**](https://laravel-news.com/separate-your-cloudflare-page-cache-with-a-middleware-group) - Laravel News
+
+## Referências
+
+- [Article: Separate Your Cloudflare Page Cache with a Middleware Group](https://laravel-news.com/separate-your-cloudflare-page-cache-with-a-middleware-group)
+- [Middleware: SetCacheHeaders](file:///home/iury/Projetos/labSIS-KIT/app/Http/Middleware/SetCacheHeaders.php)
+- [Bootstrap: app.php](file:///home/iury/Projetos/labSIS-KIT/bootstrap/app.php)

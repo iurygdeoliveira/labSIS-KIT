@@ -58,3 +58,9 @@ _Dica: O parâmetro `--nowrite` gera o arquivo `_ide_helper_models.php` separado
 
 > [!NOTE]
 > Esses arquivos são ferramentas de desenvolvimento. Eles nunca devem ser enviados para o repositório (`.gitignore`), pois são específicos para o estado atual das suas migrações e pacotes instalados localmente.
+
+## Referências
+
+- [Helper: IDE Helper](/_ide_helper.php)
+- [Helper Models: IDE Helper Models](/_ide_helper_models.php)
+- [Meta: PHPStorm Meta](/.phpstorm.meta.php)

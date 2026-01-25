@@ -76,8 +76,7 @@ Sail já disponibiliza um serviço `redis` no `docker-compose.yml` do projeto.
 ### Observers para Invalidação
 - Arquivos:
   - `app/Observers/VideoObserver.php`: remove `video:meta:{sha1(url)}`, `video:title:{sha1(url)}` e `stats:media`.
-  - `app/Observers/UserObserver.php`: remove `user:{id}:avatar:temp-url`, além de `stats:users` e `stats:tenants`.
-- Registro: `app/Providers/AppServiceProvider.php` (método `configObservers()`), garantindo que a invalidação aconteça em qualquer fluxo (painel, seeders, jobs, etc.).
+- Registro: `app/Providers/AppServiceProvider.php` (método `configObservers()`).
 
 
 ### Exemplos de Código
@@ -98,17 +97,6 @@ $meta = Cache::store('redis')->remember($cacheKey, 6 * 3600, function () use ($v
 });
 ```
 
-URL temporária de avatar com invalidação após processamento:
-
-```php
-$key = 'user:'.$user->id.':avatar:temp-url';
-$url = Cache::store('redis')->remember($key, 4 * 60, function () use ($path) {
-    return $this->getTemporaryUrl($path) ?? $this->getPublicUrl($path);
-});
-
-// Depois de salvar/atualizar o avatar:
-Cache::store('redis')->forget($key);
-```
 
 Agregações do dashboard com TTL curto:
 
@@ -149,3 +137,10 @@ Cache::store('redis')->forget('stats:media');
 ## Conclusão
 
 O uso de cache com Redis neste projeto reduz latência, evita recomputações e melhora a experiência do usuário. Com chaves previsíveis, TTLs adequados e invalidação cirúrgica via observers, mantemos dados frescos e performance consistente, respeitando as convenções do Laravel 12 e do ecossistema Filament.
+
+## Referências
+
+- [Service: VideoMetadataService](file:///home/iury/Projetos/labSIS-KIT/app/Services/VideoMetadataService.php)
+- [Widget: SystemStats](file:///home/iury/Projetos/labSIS-KIT/app/Filament/Widgets/SystemStats.php)
+- [Observer: VideoObserver](file:///home/iury/Projetos/labSIS-KIT/app/Observers/VideoObserver.php)
+- [Resource: MediaResource](file:///home/iury/Projetos/labSIS-KIT/app/Filament/Resources/Media/MediaResource.php)

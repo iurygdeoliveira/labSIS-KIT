@@ -45,3 +45,7 @@
 
 -   **Laravel Sail**: Ambiente Dockerizado padronizado.
     -   Serviços: `laravel.test` (App), `pgsql`, `redis`, `mailpit`, `minio` (S3 local).
+
+## Referências
+
+- [Config: composer.json](file:///home/iury/Projetos/labSIS-KIT/composer.json)

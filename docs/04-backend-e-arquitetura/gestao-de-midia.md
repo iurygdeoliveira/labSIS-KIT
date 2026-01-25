@@ -175,3 +175,6 @@ Observação sobre host: a URL assinada usa o host do `AWS_ENDPOINT`. Use o mesm
 ### Referências
 
 -   [URL pré‑assinada: manipule arquivos no AWS S3 de forma segura e eficiente](https://medium.com/geekieeducacao/url-pr%C3%A9-assinada-manipule-arquivos-no-aws-s3-de-forma-segura-e-eficiente-62f93b66bc9b)
+-   [Config: Filesystems](/config/filesystems.php)
+-   [Config: Media Library](/config/media-library.php)
+-   [Service: MediaService](/app/Services/MediaService.php)

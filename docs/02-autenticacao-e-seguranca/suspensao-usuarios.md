@@ -405,3 +405,9 @@ Para obter informações mais detalhadas sobre implementação de suspensão de 
 **[Implementing Account Suspension in Laravel](https://laravel-news.com/implementing-account-suspension-in-laravel)**
 
 Este artigo fornece insights adicionais sobre as melhores práticas e padrões recomendados para sistemas de suspensão de usuários.
+
+## Referências
+
+- [Model: User](/app/Models/User.php)
+- [Resource: Users](/app/Filament/Resources/Users/UsersResource.php)
+- [Migration: Users Table](/database/migrations/0001_01_01_000000_create_users_table.php)

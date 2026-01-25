@@ -78,3 +78,8 @@ A configuração do Larastan reside no arquivo `phpstan.neon` na raiz do projeto
 
 > [!IMPORTANT]
 > Use o `@phpstan-ignore` apenas em casos extremos onde a ferramenta apresenta um falso positivo e você tem certeza absoluta da segurança do código. Sempre adicione um comentário explicando o motivo.
+
+## Referências
+
+- [Configuração: PHPStan](/phpstan.neon)
+- [Model: User](/app/Models/User.php)

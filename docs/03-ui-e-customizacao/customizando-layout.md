@@ -194,3 +194,8 @@ Para entender como as diferentes camadas de customização interagem, é importa
 A customização da aparência no Filament é um processo flexível e em camadas. O **Brisk Theme** fornece uma base sólida e moderna, o **AdminPanelProvider** permite configurações globais de tema (cores, fontes, espaçamentos gerais), e o arquivo **`theme.css`** oferece controle total sobre estilos específicos de componentes.
 
 Para a maioria dos casos de uso, a combinação do Brisk Theme com as configurações do `AdminPanelProvider` será suficiente. Use o CSS customizado apenas quando precisar de ajustes muito específicos ou para implementar um design system complexo.
+
+## Referências
+
+- [Provider: AdminPanelProvider](/app/Providers/Filament/AdminPanelProvider.php)
+- [CSS: Theme](/resources/css/filament/admin/theme.css)

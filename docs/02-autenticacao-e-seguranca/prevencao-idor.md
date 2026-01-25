@@ -77,6 +77,11 @@ O Filament aplica escopos globais de Tenant automaticamente (`TenantScope`), ass
 
 ## Resultados Esperados
 
-1.  **Impossibilidade de Enumeração**: Um atacante não consegue "adivinhar" o próximo ID (ex: tentar ID 101 após ver o 100) para acessar dados de outro cliente.
 2.  **Segurança por Design**: O sistema falha de forma segura (404 Not Found) se um UUID inválido ou pertencente a outro tenant for acessado.
 3.  **Proteção de Dados Sensíveis**: As referências internas do banco de dados (IDs numéricos) permanecem ocultas do usuário final, sendo usadas apenas internamente para chaves estrangeiras (preservando performance de JOINs).
+
+## Referências
+
+- [Trait: UuidTrait](/app/Traits/UuidTrait.php)
+- [Model: MediaItem](/app/Models/MediaItem.php)
+- [Policy: MediaItemPolicy](/app/Policies/MediaItemPolicy.php)

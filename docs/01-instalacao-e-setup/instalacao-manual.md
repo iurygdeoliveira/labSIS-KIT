@@ -45,3 +45,7 @@ O script irá:
 -   **Admin**: admin@labsis.dev.br / mudar123
 -   **Sicrano**: sicrano@labsis.dev.br / mudar123
 -   **Beltrano**: beltrano@labsis.dev.br / mudar123
+
+## Referências
+
+- [Script: Install](/install.php)

@@ -60,3 +60,7 @@ public function __construct(public string $name) {}
 
 > [!TIP]
 > Integre o Rector ao seu fluxo de desenvolvimento após grandes refatorações ou ao atualizar dependências. Ele é o seu "garimpeiro" de código antigo.
+
+## Referências
+
+- [Configuração: Rector](/rector.php)

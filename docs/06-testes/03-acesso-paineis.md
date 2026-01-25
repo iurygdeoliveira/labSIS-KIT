@@ -38,3 +38,10 @@ Para rodar apenas os testes de controle de acesso:
 ```bash
 ./vendor/bin/sail artisan test tests/Feature/PanelAccessTest.php
 ```
+
+## Referências
+
+- [Test: PanelAccessTest](/tests/Feature/PanelAccessTest.php)
+- [Middleware: RedirectToProperPanelMiddleware](/app/Http/Middleware/RedirectToProperPanelMiddleware.php)
+- [Seeder: DatabaseSeeder](/database/seeders/DatabaseSeeder.php)
+- [Seeder: UserSeeder](/database/seeders/UserSeeder.php)

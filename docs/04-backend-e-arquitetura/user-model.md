@@ -107,3 +107,8 @@ classDiagram
     User "1" --> "*" Tenant : BelongsToMany
     User "1" --> "*" AuthenticationLog : MorphMany (Hybrid)
 ```
+
+## Referências
+
+- [Model: User](file:///home/iury/Projetos/labSIS-KIT/app/Models/User.php)
+

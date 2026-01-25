@@ -30,3 +30,7 @@ Para rodar apenas os testes de autenticação:
 ```bash
 ./vendor/bin/sail artisan test tests/Feature/AuthenticationTest.php
 ```
+
+## Referências
+
+- [Test: AuthenticationTest](/tests/Feature/AuthenticationTest.php)

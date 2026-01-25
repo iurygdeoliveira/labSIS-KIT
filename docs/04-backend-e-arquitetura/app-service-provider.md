@@ -130,14 +130,13 @@ private function configEvents(): void
 private function configObservers(): void
 {
     Video::observe(VideoObserver::class);
-    AppUser::observe(UserObserver::class);
 }
 ```
 
 **Propósito:** Centraliza o registro de lógica reativa.
 
 -   **Listeners:** Reagem a eventos como "Usuário Registrado" ou "Usuário Aprovado" para enviar notificações ou emails.
--   **Observers:** Observam mudanças nos modelos `Video` e `User` para executar ações automáticas (como limpar cache ou criar logs) quando registros são criados, atualizados ou excluídos.
+-   **Observers:** Observam mudanças nos modelos `Video` para executar ações automáticas (como limpar cache ou criar logs) quando registros são criados, atualizados ou excluídos.
 
 #### `configGates()` - Portões de Autorização
 
@@ -157,3 +156,7 @@ private function configGates(): void
 ## Conclusão
 
 O `AppServiceProvider` é um arquivo fundamental para estabelecer padrões, configurações de segurança e comportamentos globais para a aplicação. Ao centralizar essas regras, garantimos que o projeto se mantenha consistente, seguro e alinhado com as melhores práticas de desenvolvimento desde a sua inicialização.
+
+## Referências
+
+- [Provider: AppServiceProvider](file:///home/iury/Projetos/labSIS-KIT/app/Providers/AppServiceProvider.php)

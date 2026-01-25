@@ -125,3 +125,4 @@ protected function getColumns(): int|array
 ## Referências
 
 - Documentação Filament — Widgets: `https://filamentphp.com/docs/4.x/widgets/overview`
+- [Widget: UsersStats](/app/Filament/Resources/Users/Widgets/UsersStats.php)

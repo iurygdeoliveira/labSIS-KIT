@@ -169,6 +169,13 @@ Ou se não estiver usando Sail:
 
 ```bash
 php artisan optimize:clear
+```bash
+php artisan optimize:clear
 ```
+
+## Referências
+
+- [View: Logo Auth](/resources/views/filament/auth/logo_auth.blade.php)
+- [Provider: AuthPanelProvider](/app/Providers/Filament/AuthPanelProvider.php)
 
 

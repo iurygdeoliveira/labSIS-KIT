@@ -61,3 +61,10 @@ O LabSIS KIT inclui uma funcionalidade para visualizar e testar os templates de 
 
 -   **Acesso:** Menu `Emails` -> `Preview`.
 -   **Funcionalidade:** O preview utiliza os dados do usuário logado para renderizar o template em tempo real, permitindo verificar a formatação, variáveis e layout sem precisar disparar um e-mail real.
+
+## Referências
+
+- [View: Website Layout](/resources/views/vendor/mail/html/website-layout.blade.php)
+- [View: Password Reset](/resources/views/vendor/mail/html/password-reset.blade.php)
+- [Notification: ResetPasswordNotification](/app/Notifications/Auth/ResetPasswordNotification.php)
+- [Page: RequestPasswordReset](/app/Filament/Pages/Auth/RequestPasswordReset.php)

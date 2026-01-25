@@ -146,27 +146,33 @@ O Filament irá inspecionar o Enum `Status`, extrair seus casos e usar os métod
 
 ### Em Tabelas
 
-Para exibir o status em uma listagem (tabela), o componente `BadgeColumn` é a escolha ideal, pois aproveita todos os contratos implementados.
+Para exibir o status em uma listagem (tabela), utiliza-se o método `badge()` na `TextColumn`.
 
 ```php
 use App\Enums\Status;
-use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\TextColumn;
 
 public static function table(Table $table): Table
 {
     return $table
         ->columns([
             // ... outras colunas
-            BadgeColumn::make('status')
+            TextColumn::make('status')
                 ->label('Status')
+                ->badge()
                 ->sortable(),
         ])
         // ...
 }
 ```
 
-Automaticamente, a `BadgeColumn` exibirá um "badge" contendo o ícone (de `getIcon`), o texto (de `getLabel()`) e a cor (de `getColor()`) correspondentes a cada valor de status do registro.
+Automaticamente, o Filament exibirá um "badge" contendo o ícone (de `getIcon`), o texto (de `getLabel()`) e a cor (de `getColor()`) correspondentes a cada valor de status do registro.
 
 ## Conclusão
 
 O uso de Enumerações no PHP moderno, especialmente em conjunto com o Laravel e o Filament, representa um avanço significativo na qualidade e manutenibilidade do código. Esta abordagem promove a segurança de tipo, melhora a legibilidade e centraliza a lógica de negócios relacionada a estados finitos. Ao implementar os contratos do Filament, os Enums transcendem sua função no backend, tornando-se ferramentas poderosas para a criação de interfaces de usuário ricas, intuitivas e visualmente informativas, alinhadas às melhores práticas de desenvolvimento de software.
+
+## Referências
+
+- [Enum: Status](/app/Enums/Status.php)
+- [Filament Docs: Enums](https://filamentphp.com/docs/3.x/panels/resources/getting-started#enums)

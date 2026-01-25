@@ -93,5 +93,11 @@ public function canAccessPanel(Panel $panel): bool
 }
 ```
 
+## Referências
+
+- [Model: Tenant](/app/Models/Tenant.php)
+- [Resolver: SpatieTeamResolver](/app/Tenancy/SpatieTeamResolver.php)
+- [Middleware: TeamSyncMiddleware](/app/Http/Middleware/TeamSyncMiddleware.php)
+
 
 

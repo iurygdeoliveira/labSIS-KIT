@@ -63,7 +63,7 @@ Content-Security-Policy:
 
 O CSP está implementado no middleware `EnsureSecurityHeaders`:
 
-📄 [`app/Http/Middleware/EnsureSecurityHeaders.php`](file:///home/iury/Projetos/labSIS-KIT/app/Http/Middleware/EnsureSecurityHeaders.php)
+📄 [`app/Http/Middleware/EnsureSecurityHeaders.php`](/app/Http/Middleware/EnsureSecurityHeaders.php)
 
 ### Arquitetura da Implementação
 

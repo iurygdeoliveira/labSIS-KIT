@@ -224,4 +224,11 @@ O sistema de roles e permissões implementado oferece uma solução para control
 
 Os clusters `PermissionsCluster` e `UserRoleCluster` proporcionam uma experiência administrativa completa, permitindo que administradores e proprietários gerenciem permissões de forma eficiente e segura, respeitando o isolamento de dados por tenant.
 
+## Referências
+
+- [Enum: RoleType](/app/Enums/RoleType.php)
+- [Enum: Permission](/app/Enums/Permission.php)
+- [Model: Role](/app/Models/Role.php)
+- [Policy: UserPolicy](/app/Policies/UserPolicy.php)
+
 

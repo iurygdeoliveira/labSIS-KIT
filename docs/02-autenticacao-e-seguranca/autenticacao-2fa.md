@@ -68,7 +68,7 @@ O sistema utiliza dois traits para gerenciar a autenticação:
 Gerencia a chave secreta para geração dos códigos 2FA:
 
 ```php
-// app/Trait/Filament/AppAuthenticationSecret.php
+// app/Traits/Filament/AppAuthenticationSecret.php
 
 trait AppAuthenticationSecret
 {
@@ -95,7 +95,7 @@ trait AppAuthenticationSecret
 Gerencia os códigos de recuperação para casos de emergência:
 
 ```php
-// app/Trait/Filament/AppAuthenticationRecoveryCodes.php
+// app/Traits/Filament/AppAuthenticationRecoveryCodes.php
 
 trait AppAuthenticationRecoveryCodes
 {
@@ -219,3 +219,10 @@ Os códigos de recuperação são uma alternativa de acesso caso você perca seu
 O sistema de 2FA implementado neste projeto oferece uma camada adicional de segurança robusta e confiável. Seguindo as boas práticas e configurações recomendadas, você pode proteger efetivamente as contas dos usuários contra acessos não autorizados.
 
 Para mais informações sobre o sistema de 2FA do Filament, consulte a [documentação oficial](https://filamentphp.com/docs/4.x/users/multi-factor-authentication#introduction).
+
+## Referências
+
+- [Model: User](/app/Models/User.php)
+- [Trait: AppAuthenticationSecret](/app/Traits/Filament/AppAuthenticationSecret.php)
+- [Trait: AppAuthenticationRecoveryCodes](/app/Traits/Filament/AppAuthenticationRecoveryCodes.php)
+- [Provider: AdminPanelProvider](/app/Providers/Filament/AdminPanelProvider.php)

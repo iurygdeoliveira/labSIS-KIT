@@ -157,3 +157,7 @@ resources/css/filament/admin/
 2.  **Segurança na Manutenção**: Alterar o estilo de um erro (danger) nunca vai "quebrar" o estilo de um sucesso (primary).
 3.  **Organização Mental**: Sabe exatamente onde ir. Quer mexer na cor? Pasta `colors`. Quer mexer no botão? Pasta do componente.
 4.  **Performance**: CSS nativo é mais rápido que processamento JS em runtime.
+
+## Referências
+
+- [CSS: Colors](/resources/css/filament/admin/components/colors.css)

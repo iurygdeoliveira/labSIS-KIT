@@ -60,3 +60,7 @@ TextColumn::make('created_at_display')
 -   **Redução de Bugs:** Eliminação de erros causados por modificação acidental de objetos de data compartilhados.
 -   **Consistência:** Todo o código novo deve utilizar `AppDateTime` em vez de helpers genéricos ou classes nativas mutáveis.
 -   **Manutenibilidade:** Ponto central para correções ou alterações no comportamento de datas da aplicação.
+
+## Referências
+
+- [Support: AppDateTime](/app/Support/AppDateTime.php)

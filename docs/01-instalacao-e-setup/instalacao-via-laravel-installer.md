@@ -50,4 +50,10 @@ git commit -m "chore: inicializa projeto a partir do starter kit"
 git branch -M main
 git remote add origin https://github.com/SEU_USUARIO/minha-app.git
 git push -u origin main
+git remote add origin https://github.com/SEU_USUARIO/minha-app.git
+git push -u origin main
 ```
+
+## Referências
+
+- [Script: Install](/install.php)

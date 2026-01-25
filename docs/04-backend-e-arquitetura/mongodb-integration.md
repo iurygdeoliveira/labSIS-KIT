@@ -173,5 +173,7 @@ TextColumn::make('authenticatable_id')
 
 ## 📚 Recursos
 
+
 - [MongoDB Laravel Driver](https://www.mongodb.com/docs/drivers/php/laravel-mongodb/)
 - [Laravel MongoDB](https://laravel.com/docs/12.x/mongodb)
+- [Config: Database](/config/database.php)

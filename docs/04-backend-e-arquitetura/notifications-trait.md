@@ -298,4 +298,10 @@ Esta documentação fornece informações avançadas sobre:
 - **Notificações persistentes** e temporárias
 - **Integração com JavaScript** e Livewire
 
+
 A `NotificationsTrait` complementa perfeitamente as funcionalidades nativas do Filament, proporcionando uma experiência de desenvolvimento mais fluida e consistente! 🎉✨
+
+## Referências
+
+- [Trait: NotificationsTrait](/app/Traits/Filament/NotificationsTrait.php)
+- [Filament Notifications](https://filamentphp.com/docs/3.x/notifications/overview)
