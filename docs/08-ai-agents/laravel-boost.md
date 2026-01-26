@@ -90,14 +90,6 @@ O Boost é configurado em `.gemini/antigravity/mcp_config.json`:
 }
 ```
 
-## 🔗 Integração com .context
-
-O Boost é usado para enriquecer os arquivos em `.context/docs/`:
-
--   `project-overview.md` → Stack real com versões exatas
--   `architecture.md` → Models e relacionamentos detectados
--   `tooling.md` → Lista de comandos Artisan customizados
-
 ## 📖 Referência
 
 -   [Laravel Boost (Packagist)](https://packagist.org/packages/laravel/boost)
