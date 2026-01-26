@@ -35,8 +35,9 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 
 - [**Autenticação de Dois Fatores (2FA) no Filament**](/docs/02-autenticacao-e-seguranca/autenticacao-2fa.md)
 - [**Checklist de Segurança**](/docs/02-autenticacao-e-seguranca/checklist-de-seguranca.md)
-- [**Edição de Perfil no Filament**](/docs/02-autenticacao-e-seguranca/edicao-perfil.md)
+- [**Content Security Policy (CSP)**](/docs/02-autenticacao-e-seguranca/content-security-policy.md)
 - [**Fluxo de Registro de Novos Usuários**](/docs/02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.md)
+- [**Fortalecimento de Senha**](/docs/02-autenticacao-e-seguranca/fortalecimento-de-senha.md)
 - [**Login Unificado**](/docs/02-autenticacao-e-seguranca/login-unificado.md)
 - [**Prevenção Contra IDOR**](/docs/02-autenticacao-e-seguranca/prevencao-idor.md)
 - [**Roles/Permissions**](/docs/02-autenticacao-e-seguranca/roles-e-permissions.md)
@@ -54,6 +55,9 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 ### Backend e Arquitetura
 
 - [**Entendendo o AppServiceProvider**](/docs/04-backend-e-arquitetura/app-service-provider.md)
+- [**Arquitetura do Model User**](/docs/04-backend-e-arquitetura/user-model.md)
+- [**Integração MongoDB - Auditoria e Logs**](/docs/04-backend-e-arquitetura/mongodb-integration.md)
+- [**Scripts do Composer e Inicialização**](/docs/04-backend-e-arquitetura/scripts-composer.md)
 - [**Gestão de mídias**](/docs/04-backend-e-arquitetura/gestao-de-midia.md)
 - [**Notificações**](/docs/04-backend-e-arquitetura/notifications-trait.md)
 - [**Utilizando Enumerações (Enums) com Filament**](/docs/04-backend-e-arquitetura/enums.md)
@@ -85,7 +89,9 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 ### Inteligência Artificial
 
 - [**Laravel Boost - MCP para Laravel**](/docs/08-ai-agents/laravel-boost.md)
-- [**Serena - Navegação Semântica de Código**](/docs/08-ai-agents/serena.md)
+- [**Protocolo de Execução de Skills**](/docs/08-ai-agents/protocolo-operacional.md)
+- [**Padrão de Nomenclatura de Skills**](/docs/08-ai-agents/padrao-de-skills.md)
+- [**Guia de Workflows do Agente**](/docs/08-ai-agents/guia-workflows.md)
 
 ## Pré-requisitos
 
@@ -187,7 +193,6 @@ Este projeto utiliza um conjunto de ferramentas para garantir a qualidade, padro
 - **[laravel/tinker](https://github.com/laravel/tinker):** Console interativo (REPL) para executar código no contexto da aplicação.
 - **[lucascudo/laravel-pt-br-localization](https://github.com/lucascudo/laravel-pt-br-localization):** Fornece traduções e configurações para a localização em português do Brasil.
 - **[pestphp/pest](https://github.com/pestphp/pest):** Framework de testes elegante e focado no desenvolvedor para PHP.
-- **[Serena](https://github.com/oraios/serena):** Servidor MCP de navegação semântica de código via LSP, permitindo busca inteligente, refatoração e análise de símbolos (classes, métodos) para agentes de IA. [Ver documentação](/docs/08-ai-agents/serena.md).
 
 ## 📄 Licença
 
