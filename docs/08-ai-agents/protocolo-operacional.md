@@ -42,7 +42,8 @@ O agente deve adotar uma "persona" específica baseada no gatilho do usuário:
 
 ## 2. MATRIZ DE ATIVAÇÃO DE SKILLS (Contexto -> Recurso)
 
-Sua prioridade é identificar qual Skill resolve o problema atual. Use esta tabela como guia mental para **TODAS** as capacidades instaladas:
+Sua prioridade é identificar qual Skill resolve o problema atual. Use esta tabela como guia mental para **TODAS** as capacidades instaladas.
+**NOTA:** As Skills estão localizadas no diretório global: `~/.gemini/skills`.
 
 | Contexto Identificado (Intenção/Objeto)      | Skill a Ativar (Ler SKILL.md) |
 | :------------------------------------------- | :---------------------------- |
@@ -83,7 +84,7 @@ Sua prioridade é identificar qual Skill resolve o problema atual. Use esta tabe
 
 Uma vez ativada a Skill ou Workflow:
 
-1.  **Ler Instruções:** Use `view_file` no arquivo `.md` da Skill.
+1.  **Ler Instruções:** Use `view_file` no arquivo `.md` da Skill localizado em `~/.gemini/skills/[nome-da-skill]/SKILL.md`.
 2.  **Planejar:** Confirme como as instruções se aplicam ao pedido atual.
 3.  **Executar:** Utilize as ferramentas disponíveis (`write_to_file`, `run_command`, etc.) seguindo estritamente os passos da Skill.
 4.  **Validar Regras de Negócio (MANDATÓRIO):** Após qualquer alteração de código, verifique se existe uma skill local em `.agent/skills/validate-project-rules/SKILL.md` e execute-a. Se esta skill ainda não existir, use `enforce-business-rules` para criá-la.
