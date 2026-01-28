@@ -43,10 +43,6 @@ class LogAuthenticationActivity
     {
         $user = $event->user;
 
-        if (! $user) {
-            return;
-        }
-
         // Find the latest successful login for this log entry to update logout time
         // Or create a new entry. Standard practice is usually updating the last 'active' log
         // But tracking logout as a separate event or updating the session log depends on preference.

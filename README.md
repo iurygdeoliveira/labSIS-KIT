@@ -58,6 +58,7 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 - [**Arquitetura do Model User**](/docs/04-backend-e-arquitetura/user-model.md)
 - [**Integração MongoDB - Auditoria e Logs**](/docs/04-backend-e-arquitetura/mongodb-integration.md)
 - [**Scripts do Composer e Inicialização**](/docs/04-backend-e-arquitetura/scripts-composer.md)
+- [**Regras de Negócio**](/docs/04-backend-e-arquitetura/regras-de-negocio.md)
 - [**Gestão de mídias**](/docs/04-backend-e-arquitetura/gestao-de-midia.md)
 - [**Notificações**](/docs/04-backend-e-arquitetura/notifications-trait.md)
 - [**Utilizando Enumerações (Enums) com Filament**](/docs/04-backend-e-arquitetura/enums.md)
@@ -187,6 +188,7 @@ Este projeto utiliza um conjunto de ferramentas para garantir a qualidade, padro
 - **[barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar):** Adiciona uma barra de depuração com informações úteis sobre a aplicação.
 - **[fakerphp/faker](https://github.com/fakerphp/faker):** Gera dados falsos para popular o banco de dados em testes e seeders.
 - **[larastan/larastan](https://github.com/larastan/larastan):** Realiza análise estática de código para encontrar bugs sem executar o código.
+- **[laravel-shift/blueprint](https://blueprint.laravelshift.com/):** Gera código Laravel rapidamente a partir de um arquivo de definição.
 - **[laravel/boost](https://packagist.org/packages/laravel/boost):** Servidor MCP oficial do Laravel que fornece contexto inteligente sobre a aplicação (versões, schema DB, rotas, Artisan) para agentes de IA. [Ver documentação](/docs/08-ai-agents/laravel-boost.md).
 - **[laravel/pint](https://github.com/laravel/pint):** Formata o código PHP para seguir um padrão de estilo consistente (PSR-12).
 - **[laravel/sail](https://github.com/laravel/sail):** Ambiente de desenvolvimento local completo baseado em Docker.

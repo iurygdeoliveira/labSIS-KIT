@@ -5,6 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use MongoDB\Laravel\Eloquent\Model;
 
+/**
+ * @property string $authenticatable_type
+ * @property string|int $authenticatable_id
+ * @property string $ip_address
+ * @property string $user_agent
+ * @property \Illuminate\Support\Carbon|null $login_at
+ * @property \Illuminate\Support\Carbon|null $logout_at
+ * @property bool $login_successful
+ * @property bool $cleared_by_user
+ * @property array|null $location
+ */
 class AuthenticationLog extends Model
 {
     protected $connection = 'mongodb';

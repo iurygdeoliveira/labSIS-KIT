@@ -38,7 +38,11 @@ class AuthenticationLogTable
                     // Carrega o usuário diretamente do PostgreSQL usando o ID
                     $user = User::find($record->authenticatable_id);
 
-                    return $user?->name ?? 'Desconhecido';
+                    if (! $user) {
+                        return 'Desconhecido';
+                    }
+
+                    return $user->name;
                 })
                 ->searchable(isGlobal: false, isIndividual: true),
 

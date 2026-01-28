@@ -65,7 +65,7 @@ class AuthenticationLogResource extends Resource
 
         // 2. Proprietários veem logs dos usuários do seu tenant atual
         $tenant = Filament::getTenant();
-
+        /** @var \App\Models\Tenant|null $tenant */
         if ($tenant && $user->isOwnerOfTenant($tenant)) {
             // Busca IDs de usuários pertencentes a este tenant
             // Nota: Esta é uma query híbrida (SQL -> Mongo). Buscamos os IDs SQL primeiro.
