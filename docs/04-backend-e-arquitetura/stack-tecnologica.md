@@ -2,7 +2,7 @@
 
 > **Nota**: Este projeto utiliza versões "Bleeding Edge" (mais recentes disponíveis) para garantir longevidade e performance máxima.
 
-## 核心 Core Stack
+## Core Stack
 
 | Componente       | Versão | Notas                                         |
 | ---------------- | ------ | --------------------------------------------- |
@@ -48,4 +48,4 @@
 
 ## Referências
 
-- [Config: composer.json](file:///home/iury/Projetos/labSIS-KIT/composer.json)
+- [Config: composer.json](/labsis-kit/composer.json)

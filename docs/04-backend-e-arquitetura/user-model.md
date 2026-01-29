@@ -76,6 +76,74 @@ A seção **Tenant & Role Logic** fornece métodos para abstrair a complexidade 
 
 Toda a lógica cruza `user_id` + `role_id` + `team_id` (Tenant).
 
+### Distribuição Natural de Carga (Load Distribution)
+
+Uma característica **arquitetural importante** desta estrutura é que ela promove **distribuição natural de carga** sem necessidade de particionamento da tabela `users`. Isso ocorre porque:
+
+#### 1. Separação de Responsabilidades em Tabelas Pivot
+
+Ao invés de armazenar todas as permissões diretamente na tabela `users`, o sistema utiliza **tabelas pivot normalizadas**:
+
+```mermaid
+graph TD
+    A[users<br/>1M registros] --> B[tenant_user<br/>Pivot N:M]
+    A --> C[model_has_roles<br/>Pivot com team_id]
+    B --> D[tenants<br/>10K registros]
+    C --> E[roles<br/>100 registros]
+    
+    style A fill:#e3f2fd
+    style B fill:#fff3e0
+    style C fill:#fff3e0
+    style D fill:#f3e5f5
+    style E fill:#e8f5e9
+```
+
+**Benefícios de Performance:**
+
+- **Índices Menores**: Cada pivot tem índices específicos (`user_id`, `tenant_id`, `role_id`, `team_id`), que são muito mais compactos que um índice composto gigante na tabela `users`.
+- **Queries Mais Eficientes**: PostgreSQL consegue otimizar JOINs em tabelas menores com maior eficiência do que escanear uma tabela monolítica com milhões de linhas.
+- **Cache Hit Rate Maior**: Tabelas pivot frequentemente acessadas (ex: verificação de permissões) cabem inteiramente na memória (Shared Buffers do PostgreSQL), acelerando leituras.
+
+#### 2. Exemplo Prático: Query de Autorização
+
+Quando o Filament verifica se um usuário pode acessar um Tenant, a query executada é:
+
+```sql
+SELECT tenants.* 
+FROM tenants
+INNER JOIN tenant_user ON tenant_user.tenant_id = tenants.id
+WHERE tenant_user.user_id = 12345
+  AND tenants.is_active = true;
+```
+
+**Por que isso é eficiente?**
+
+- A tabela `tenant_user` possui um índice composto em `(user_id, tenant_id)`.
+- PostgreSQL usa **Index-Only Scan** quando possível, sem precisar tocar na tabela `users`.
+- Mesmo com 1 milhão de usuários, a pivot `tenant_user` pode ter apenas 3-5 milhões de registros (se cada usuário pertence a 3-5 tenants em média), mas com índices muito menores.
+
+#### 3. Comparação: Monolítico vs. Multi-Tenant Pivot
+
+| Abordagem | Estrutura | Performance em 1M usuários |
+|:----------|:----------|:---------------------------|
+| **Monolítica** | `users` com JSON de `tenant_ids` e `permissions` | ❌ Índices GIN/JSONB são lentos para queries complexas. Tabela única de 1M+ linhas. |
+| **Multi-Tenant Pivot** (labSIS-KIT) | `users` + `tenant_user` + `model_has_roles` | ✅ Cada tabela é especializada. Índices menores e queries otimizadas por JOIN. |
+| **Particionamento** | `users` particionada por `created_at` ou `hash(id)` | ⚠️ Não resolve o problema de RBAC. Complexidade alta sem ganho real para este caso de uso. |
+
+#### 4. Quando a Distribuição Atual NÃO é Suficiente?
+
+A arquitetura pivot atinge seus limites quando:
+
+- **Dezenas de milhões de usuários**: A tabela `model_has_roles` pode crescer desproporcionalmente (ex: 100M+ registros se cada usuário tem múltiplos papéis em múltiplos tenants).
+- **Queries analíticas pesadas**: Relatórios que precisam agregar dados de todos os tenants simultaneamente podem ser lentos.
+
+**Solução nesses casos:**
+- **Particionamento da pivot `model_has_roles`** por `team_id` (Range ou Hash).
+- **Read Replicas** para queries analíticas (separar carga de leitura e escrita).
+- **Caching de Permissões** com Redis (evitar consultas repetidas ao banco).
+
+
+
 ## 5. Integração com Filament
 
 O método `canAccessPanel(Panel $panel)` centraliza a lógica de autorização:
@@ -110,5 +178,5 @@ classDiagram
 
 ## Referências
 
-- [Model: User](file:///home/iury/Projetos/labSIS-KIT/app/Models/User.php)
+- [Model: User](/labsis-kit/app/Models/User.php)
 

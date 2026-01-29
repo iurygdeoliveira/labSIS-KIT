@@ -2,11 +2,17 @@
     "agents": [
         "gemini"
     ],
-    "editors": [
-        "gemini"
+    "guidelines": true,
+    "herd_mcp": false,
+    "mcp": true,
+    "packages": [
+        "filament/filament",
+        "spatie/boost-spatie-guidelines"
     ],
-    "guidelines": [
-        "filament/filament"
-    ],
-    "sail": true
+    "sail": true,
+    "skills": [
+        "fluxui-development",
+        "pest-testing",
+        "tailwindcss-development"
+    ]
 }

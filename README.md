@@ -9,9 +9,9 @@
 
 <br>
 <p align="center">
-    <a href="https://filamentphp.com"><img alt="Filament v3" src="https://img.shields.io/badge/Filament-v4-eab308?style=for-the-badge"></a>
+    <a href="https://filamentphp.com"><img alt="Filament v5" src="https://img.shields.io/badge/Filament-v5-eab308?style=for-the-badge"></a>
     <a href="https://laravel.com"><img alt="Laravel v12+" src="https://img.shields.io/badge/Laravel-v12+-FF2D20?style=for-the-badge&logo=laravel"></a>
-    <a href="https://livewire.laravel.com"><img alt="Livewire v3" src="https://img.shields.io/badge/Livewire-v3-FB70A9?style=for-the-badge"></a>
+    <a href="https://livewire.laravel.com"><img alt="Livewire v4" src="https://img.shields.io/badge/Livewire-v4-FB70A9?style=for-the-badge"></a>
     <a href="https://php.net"><img alt="PHP 8.5+" src="https://img.shields.io/badge/PHP-8.5+-777BB4?style=for-the-badge&logo=php"></a>
 </p>
 
@@ -57,6 +57,7 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 - [**Entendendo o AppServiceProvider**](/docs/04-backend-e-arquitetura/app-service-provider.md)
 - [**Arquitetura do Model User**](/docs/04-backend-e-arquitetura/user-model.md)
 - [**Integração MongoDB - Auditoria e Logs**](/docs/04-backend-e-arquitetura/mongodb-integration.md)
+- [**Estratégia de Backup**](/docs/04-backend-e-arquitetura/estrategia-backup.md)
 - [**Scripts do Composer e Inicialização**](/docs/04-backend-e-arquitetura/scripts-composer.md)
 - [**Regras de Negócio**](/docs/04-backend-e-arquitetura/regras-de-negocio.md)
 - [**Gestão de mídias**](/docs/04-backend-e-arquitetura/gestao-de-midia.md)
@@ -180,12 +181,15 @@ Este projeto integra plugins e pacotes robustos para expandir suas funcionalidad
 - **[Filament Spatie Media Library](https://github.com/filamentphp/spatie-laravel-media-library-plugin):** Plugin oficial para integrar a poderosa biblioteca Spatie Media Library ao Filament, facilitando o upload e gestão de arquivos.
 - **[Filament Media Action](https://github.com/hugomyb/filament-media-action):** Fornece ações adicionais para manipulação de mídias dentro do Filament, melhorando a experiência de gerenciamento de arquivos.
 - **[Laravel Authentication Log](https://github.com/TappNetwork/filament-authentication-log):** Pacote backend que rastreia e registra atividades de autenticação dos usuários, como logins, logouts e dispositivos utilizados.
+- **[Spatie Laravel Backup](https://github.com/spatie/laravel-backup):** Solução completa para backups de banco de dados e arquivos da aplicação, com suporte a notificações e armazenamento em cloud.
+- **[Spatie Laravel Query Builder](https://github.com/spatie/laravel-query-builder):** Facilita a construção de consultas Eloquent complexas a partir de parâmetros de requisição HTTP, ideal para APIs e filtragem avançada.
 
 ## 🛠️ Recomendação de Ferramentas de Desenvolvimento
 
 Este projeto utiliza um conjunto de ferramentas para garantir a qualidade, padronização e agilidade no desenvolvimento. Abaixo estão os pacotes incluídos no ambiente de desenvolvimento (`require-dev`):
 
 - **[barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar):** Adiciona uma barra de depuração com informações úteis sobre a aplicação.
+- **[beyondcode/laravel-query-detector](https://github.com/beyondcode/laravel-query-detector):** Auxilia na identificação de consultas N+1, notificando o desenvolvedor para melhorar a performance da aplicação.
 - **[fakerphp/faker](https://github.com/fakerphp/faker):** Gera dados falsos para popular o banco de dados em testes e seeders.
 - **[larastan/larastan](https://github.com/larastan/larastan):** Realiza análise estática de código para encontrar bugs sem executar o código.
 - **[laravel-shift/blueprint](https://blueprint.laravelshift.com/):** Gera código Laravel rapidamente a partir de um arquivo de definição.

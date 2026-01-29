@@ -7,7 +7,6 @@ namespace App\Providers\Filament;
 use App\Http\Middleware\EnsureSecurityHeaders;
 use App\Http\Middleware\RedirectToProperPanelMiddleware;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
-use Filafly\Themes\Brisk\BriskTheme;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -67,7 +66,6 @@ abstract class BasePanelProvider extends PanelProvider
     protected function applySharedPlugins(Panel $panel): Panel
     {
         return $panel
-            ->plugin(BriskTheme::make()->withoutSuggestedFont())
             ->plugin(
                 EasyFooterPlugin::make()
                     ->footerEnabled()

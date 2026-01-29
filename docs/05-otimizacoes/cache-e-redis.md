@@ -140,7 +140,7 @@ O uso de cache com Redis neste projeto reduz latência, evita recomputações e 
 
 ## Referências
 
-- [Service: VideoMetadataService](file:///home/iury/Projetos/labSIS-KIT/app/Services/VideoMetadataService.php)
-- [Widget: SystemStats](file:///home/iury/Projetos/labSIS-KIT/app/Filament/Widgets/SystemStats.php)
-- [Observer: VideoObserver](file:///home/iury/Projetos/labSIS-KIT/app/Observers/VideoObserver.php)
-- [Resource: MediaResource](file:///home/iury/Projetos/labSIS-KIT/app/Filament/Resources/Media/MediaResource.php)
+- [Service: VideoMetadataService](/labsis-kit/app/Services/VideoMetadataService.php)
+- [Widget: SystemStats](/labsis-kit/app/Filament/Widgets/SystemStats.php)
+- [Observer: VideoObserver](/labsis-kit/app/Observers/VideoObserver.php)
+- [Resource: MediaResource](/labsis-kit/app/Filament/Resources/Media/MediaResource.php)

@@ -159,4 +159,4 @@ O `AppServiceProvider` é um arquivo fundamental para estabelecer padrões, conf
 
 ## Referências
 
-- [Provider: AppServiceProvider](file:///home/iury/Projetos/labSIS-KIT/app/Providers/AppServiceProvider.php)
+- [Provider: AppServiceProvider](/labsis-kit/app/Providers/AppServiceProvider.php)
