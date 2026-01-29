@@ -18,12 +18,17 @@ Este documento centraliza as próximas funcionalidades e otimizações planejada
 
 - [ ] **Benchmarks Automatizados:** Integração contínua de testes de performance (SPA vs MPA) para garantir que as atualizações não degradem a experiência do usuário.
 - [ ] **Logs via MongoDB:** Refatorar o sistema de logs de atividades para utilizar MongoDB como storage padrão, garantindo escalabilidade e performance em aplicações com alto tráfego.
+- [ ] **Laravel Octane + FrankenPHP (PHP 8.5-ZTS):** Migrar para FrankenPHP com PHP-ZTS 8.5 para habilitar worker mode e melhorar performance de requisições. Implementação baseada em [PHP 8.5 com Laravel Octane e FrankenPHP - The Missing Manual](https://danielpetrica.com/running-php-8-5-with-laravel-octane-and-frankenphp-the-missing-manual/). Inclui:
+  - Instalação de PHP-ZTS 8.5 via repositório Henderkes
+  - Configuração de extensões ZTS (bcmath, gd, intl, mysql, mbstring, etc.)
+  - Debug logging com `--log-level=debug` para troubleshooting
+  - Arquitetura de alta performance com Traefik + FrankenPHP
 
 ---
 
 ## 📊 Pesquisas e Metodologias
 
-- [**Metodologia: SPA vs MPA**](/roadmap/04-performance-spa_vs_mpa.md) - Estudo detalhado sobre os ganhos de performance ao utilizar o modo Single Page Application do Filament.
+- [ ] **Metodologia: SPA vs MPA** - Estudo detalhado sobre os ganhos de performance ao utilizar o modo Single Page Application do Filament.
 
 ---
 

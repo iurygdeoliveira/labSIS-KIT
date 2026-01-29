@@ -48,7 +48,8 @@ Sua prioridade é identificar qual Skill resolve o problema atual. Use esta tabe
 | Contexto Identificado (Intenção/Objeto)      | Skill a Ativar (Ler SKILL.md) |
 | :------------------------------------------- | :---------------------------- |
 | **App Nativo / Desktop / Mobile**            | `scaffold-native-php`         |
-| **Arquitetura Frontend (Landing / Website)** | `frontend-architect`          |
+| **Dashboard / Admin Panel / SaaS App**       | `app-design`                  |
+| **Landing Page / Website Público / Marketing** | `landing-page-design`        |
 | **Arquitetura UX/UI Mobile**                 | `manage-mobile-design`        |
 | **Criar Controller / API / Lógica HTTP**     | `scaffold-controller`         |
 | **Criar Factory / Dados Fake**               | `scaffold-factory`            |
@@ -69,8 +70,8 @@ Sua prioridade é identificar qual Skill resolve o problema atual. Use esta tabe
 | **Livewire / Flux UI / Componente**          | `optimize-livewire`           |
 | **Otimização / Performance / Cache**         | `optimize-performance`        |
 | **Planejar / Roadmap / Execução**            | `write-plan`                  |
+| **Product Manager / RICE / PRD / Entrevistas** | `product-manager`           |
 | **Qualidade de Código / Larastan / Rector**  | `optimize-quality`            |
-| **Regras de Negócio / Validação Core**       | `enforce-business-rules`      |
 | **Revisão de Código / Code Review**          | `code-review`                 |
 | **Segurança / Auditoria / Vulnerabilidades** | `audit-security`              |
 | **SEO / Rankings / Sitemap**                 | `optimize-seo`                |
@@ -87,7 +88,7 @@ Uma vez ativada a Skill ou Workflow:
 1.  **Ler Instruções:** Use `view_file` no arquivo `.md` da Skill localizado em `~/.gemini/skills/[nome-da-skill]/SKILL.md`.
 2.  **Planejar:** Confirme como as instruções se aplicam ao pedido atual.
 3.  **Executar:** Utilize as ferramentas disponíveis (`write_to_file`, `run_command`, etc.) seguindo estritamente os passos da Skill.
-4.  **Validar Regras de Negócio (MANDATÓRIO):** Após qualquer alteração de código, verifique se existe uma skill local em `.agent/skills/validate-project-rules/SKILL.md` e execute-a. Se esta skill ainda não existir, use `enforce-business-rules` para criá-la.
+4.  **Validar Regras de Negócio (MANDATÓRIO):** Após qualquer alteração de código, execute a skill local `.agent/skills/validate-project-rules/SKILL.md` que contém as 10 regras de negócio inegociáveis do labSIS-KIT (multi-panel, autenticação unificada, multi-tenancy com UUIDs, RBAC, convenções Laravel/Filament/Livewire, etc.).
 5.  **Checklist Pré-Edição (O "Pause e Pense"):** Antes de alterar QUALQUER arquivo, pergunte-se:
     *   "O que importa este arquivo?" (Vou quebrar imports?)
     *   "Quais testes cobrem isso?" (Posso rodar antes?)
@@ -121,7 +122,8 @@ Uma vez ativada a Skill ou Workflow:
 
 - **Finalização (Qualidade & Git):** Ao concluir, siga esta ordem:
     1.  Pergunte: *"Deseja executar o ciclo de Qualidade (`optimize-quality`) com Larastan e Rector?"* (Se sim, execute até limpar ou limite de 3x).
-    2.  Pergunte: *"Deseja executar o commit (`manage-git`)?"* (Se sim: Pint -> Add -> Commit -> Push).
+    2.  Pergunte: *"Deseja validar as Regras de Negócio (`validate-project-rules`)?"* (Se sim, execute a skill de validação local).
+    3.  Pergunte: *"Deseja executar o commit (`manage-git`)?"* (Se sim: Pint -> Add -> Commit -> Push).
 
 - **Auto-Check de Conclusão:** Antes de dizer "terminei", valide mentalmente:
     *   ✅ Objetivo atingido? (Fiz exatamente o que foi pedido?)
