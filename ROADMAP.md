@@ -26,7 +26,71 @@ Este documento centraliza as próximas funcionalidades e otimizações planejada
 
 ---
 
+## 📚 Conteúdo Educacional
+
+- [ ] **Laboratório: Particionamento PostgreSQL** - Workshop prático de particionamento de tabelas grandes para fins educacionais.
+  
+  **Inspiração**: [Filament Slow on Large Table - Optimize with PostgreSQL Partitions](https://filamentmastery.com/articles/filament-slow-on-large-table-optimize-with-postgres-partitions)
+  
+  **Contexto Educacional**: Este laboratório demonstra particionamento PostgreSQL sem comprometer a arquitetura produtiva. A tabela `users` **não será particionada** porque a arquitetura multi-tenant com tabelas pivot (`tenant_user`, `model_has_roles`) já distribui carga eficientemente.
+  
+  **Tabela de Demonstração**: `notifications` (nativa do Laravel)
+  - ✅ Cresce naturalmente com uso do sistema
+  - ✅ Padrão de acesso temporal (queries filtram por data)
+  - ✅ Política de retenção (descartar notificações antigas)
+  - ✅ Consistente com arquitetura híbrida (PostgreSQL, não MongoDB)
+  
+  **Estrutura do Laboratório**:
+  
+  1. **Preparação (Aula 1 - 2h)**
+     - Teoria: O que é particionamento? Tipos (Range, List, Hash)
+     - Análise: Por que `users` não precisa ser particionada?
+     - Prática: Criar tabela `notifications`, popular com 1M de registros via seeder
+     - Benchmark inicial de queries
+  
+  2. **Implementação (Aula 2 - 2h)**
+     - Migration de particionamento Range (trimestral)
+     - Criar 9 partições (2024-2026)
+     - Índices especializados por partição
+     - Benchmark comparativo (com/sem partition pruning)
+     - Análise com `EXPLAIN ANALYZE`
+  
+  3. **Automação (Aula 3 - Opcional)**
+     - Comando Artisan para criar partições futuras
+     - Política de retenção (descartar partições > 12 meses)
+     - Agendamento via Laravel Scheduler
+  
+  **Exercícios Práticos**:
+  
+  ```php
+  // Query 1: Com partition pruning (rápida)
+  DB::table('notifications')
+      ->whereNull('read_at')
+      ->whereBetween('created_at', [now()->subMonths(3), now()])
+      ->count();
+  
+  // Query 2: Sem partition pruning (lenta)
+  DB::table('notifications')
+      ->where('notifiable_type', 'App\\Models\\User')
+      ->where('notifiable_id', 1)
+      ->count();
+  ```
+  
+  **Comparação Educacional**: Particionamento vs. Arquitetura Pivot
+  
+  | Aspecto | Particionamento PostgreSQL | Multi-Tenant Pivot (labSIS-KIT) |
+  |:--------|:---------------------------|:--------------------------------|
+  | **Quando Usar** | Milhões de registros + padrão temporal | Relacionamentos N:M complexos |
+  | **Benefício** | Partition Pruning (queries filtradas por data) | Índices especializados + Cache eficiente |
+  | **Complexidade** | 🔴 Alta (migrations, gerenciamento) | 🟢 Baixa (Eloquent nativo) |
+  | **Caso Ideal** | Notificações, telemetria, analytics | Multi-tenancy, RBAC, marketplaces |
+  
+  **Entregável**: Relatório em Markdown com benchmarks, análise de `EXPLAIN ANALYZE` e discussão sobre trade-offs
+
+---
+
 ## 📊 Pesquisas e Metodologias
+
 
 - [ ] **Metodologia: SPA vs MPA** - Estudo detalhado sobre os ganhos de performance ao utilizar o modo Single Page Application do Filament.
 
