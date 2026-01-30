@@ -98,16 +98,31 @@ function checkPhpExtensions(): array
 {
     $requiredExtensions = [
         // Essenciais do Laravel
-        'mbstring', 'xml', 'pdo', 'tokenizer', 'openssl', 'fileinfo',
-        'ctype', 'json', 'bcmath', 'curl',
+        'mbstring',
+        'xml',
+        'pdo',
+        'tokenizer',
+        'openssl',
+        'fileinfo',
+        'ctype',
+        'json',
+        'bcmath',
+        'curl',
         // Imagens/Arquivos
-        'gd', 'zip',
+        'gd',
+        'zip',
         // XML/DOM
-        'dom', 'xmlwriter', 'xmlreader', 'simplexml',
+        'dom',
+        'xmlwriter',
+        'xmlreader',
+        'simplexml',
         // Bancos de dados
-        'pgsql', 'sqlite3',
+        'pgsql',
+        'sqlite3',
+        'mongodb',
         // Recomendadas
-        'tidy', 'intl',
+        'tidy',
+        'intl',
     ];
 
     $installedExtensions = [];
@@ -405,9 +420,43 @@ function runSailInstallation(string $basePath): void
     echo "🚀 Iniciando containers Sail...\n";
     run('./vendor/bin/sail up -d');
 
-    // 4. Aguardar containers iniciarem
-    echo "⏳ Aguardando containers iniciarem...\n";
-    sleep(10); // Aguardar 10 segundos para containers iniciarem
+    // 4. Aguardar containers e serviços estarem prontos
+    echo "⏳ Aguardando serviços estarem prontos (PostgreSQL, MongoDB, MinIO)...\n";
+
+    $maxAttempts = 30; // 30 tentativas x 2 segundos = 60 segundos máximo
+    $attempt = 0;
+    $allHealthy = false;
+
+    while ($attempt < $maxAttempts && ! $allHealthy) {
+        $attempt++;
+
+        // Verificar health check dos containers críticos
+        $pgsqlHealth = shell_exec('docker inspect --format="{{.State.Health.Status}}" contabil-pgsql-1 2>/dev/null');
+        $mongoHealth = shell_exec('docker inspect --format="{{.State.Health.Status}}" contabil-mongodb-1 2>/dev/null');
+        $minioHealth = shell_exec('docker inspect --format="{{.State.Health.Status}}" contabil-minio-1 2>/dev/null');
+
+        $pgsqlHealthy = is_string($pgsqlHealth) && trim($pgsqlHealth) === 'healthy';
+        $mongoHealthy = is_string($mongoHealth) && trim($mongoHealth) === 'healthy';
+        $minioHealthy = is_string($minioHealth) && trim($minioHealth) === 'healthy';
+
+        if ($pgsqlHealthy && $mongoHealthy && $minioHealthy) {
+            $allHealthy = true;
+            echo "✅ Todos os serviços estão prontos!\n";
+        } else {
+            echo "   Tentativa {$attempt}/{$maxAttempts}: ";
+            echo 'PostgreSQL: '.($pgsqlHealthy ? '✓' : '⏳').' | ';
+            echo 'MongoDB: '.($mongoHealthy ? '✓' : '⏳').' | ';
+            echo 'MinIO: '.($minioHealthy ? '✓' : '⏳')."\n";
+            sleep(2);
+        }
+    }
+
+    if (! $allHealthy) {
+        echo "⚠️  Timeout aguardando serviços. Tentando continuar mesmo assim...\n";
+        echo "Você pode verificar os logs com: ./vendor/bin/sail logs\n";
+        // Aguardar mais 5 segundos antes de tentar
+        sleep(5);
+    }
 
     // Verificar se containers estão rodando
     $containers = shell_exec('docker ps | grep laravel');
