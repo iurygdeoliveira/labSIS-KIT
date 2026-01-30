@@ -1,201 +1,160 @@
-# Customização da Aparência do Painel Filament
+# Customização da Aparência e Plugins no Filament
 
 ## 📋 Índice
 
 - [Introdução](#introdução)
-- [1. Plugin Brisk Theme](#1-plugin-brisk-theme)
-- [2. Customização via `AdminPanelProvider.php`](#2-customização-via-adminpanelproviderphp)
-- [3. Customização Avançada com CSS (`theme.css`)](#3-customização-avançada-com-css-themecss)
-- [Hierarquia de Customização](#hierarquia-de-customização)
-- [Conclusão](#conclusão)
+- [1. Utilizando Plugins de Tema](#1-utilizando-plugins-de-tema)
+    - [Instalação](#instalação)
+    - [Registro no PanelProvider](#registro-no-panelprovider)
+    - [Exemplo: EasyFooterPlugin](#exemplo-easyfooterplugin)
+- [2. Customização Nativa de Componentes](#2-customização-nativa-de-componentes)
+    - [FilamentComponentsConfigurator](#filamentcomponentsconfigurator)
+- [3. Customização Avançada com CSS](#3-customização-avançada-com-css)
+    - [Arquivo `theme.css`](#arquivo-themecss)
+    - [Processo de Build (Vite)](#processo-de-build-vite)
+- [Referências](#referências)
 
 ## Introdução
 
-O Filament foi projetado para ser altamente extensível e personalizável, permitindo que os desenvolvedores adaptem a aparência do painel administrativo para alinhá-la à identidade visual de um projeto. Este kit inicial já vem com uma estrutura preparada para customizações.
+O Filament permite uma flexibilidade enorme na customização visual, evoluindo de configurações simples de cores para um ecossistema robusto baseado em **Plugins**.
 
-Este documento aborda as **três principais formas** de alterar o layout e o estilo do painel:
+Neste projeto, adotamos uma abordagem híbrida e modular:
+1. **Plugins**: Para funcionalidades visuais complexas e empacotadas (temas, footers, widgets).
+2. **Configurators**: Para padronizar o comportamento e estilo padrão dos componentes nativos.
+3. **CSS Customizado**: Para ajustes finos de design system que o framework não expõe nativamente.
 
-1. **Plugin Brisk Theme** - Tema pré-configurado com design moderno e amigável
-2. **Configurações via `AppServiceProvider`** - Para configurações globais de cores
-3. **CSS customizado** - Para ajustes finos e específicos de componentes
+## 1. Utilizando Plugins de Tema
 
-## 1. Plugin Brisk Theme
+A forma mais eficiente de customizar o layout é através de plugins comunitários ou próprios. Eles encapsulam Blade views, CSS e JS em pacotes reutilizáveis.
 
-Este projeto utiliza o **Brisk Theme**, um tema gratuito e moderno para Filament PHP que combina simplicidade com uma estética acolhedora e amigável.
+### Instalação
 
-### Características do Brisk Theme
+Geralmente, plugins são instalados via Composer.
 
-- **Gratuito e Open Source** - Sem taxas de licenciamento ou restrições
-- **Design Moderno** - Interface limpa e minimalista
-- **Modo Claro e Escuro** - Suporte completo para ambos os temas
-- **Layout Responsivo** - Funciona perfeitamente em todos os tamanhos de dispositivo
-- **Fonte Kumbh Sans** - Tipografia limpa e legível
-- **Integração Simples** - Configuração e configuração fáceis
+```bash
+composer require nome-do-vendor/nome-do-plugin
+```
 
-### Configuração Atual
+### Registro no PanelProvider
 
-O tema está configurado no `AdminPanelProvider` com a fonte sugerida desabilitada:
+Após instalar, você deve registrar o plugin no seu `AdminPanelProvider` (ou `BasePanelProvider` se for compartilhado entre painéis).
 
 ```php
 // app/Providers/Filament/AdminPanelProvider.php
 
-->plugin(BriskTheme::make()->withoutSuggestedFont())
-```
-
-### Documentação Oficial
-
-Para informações detalhadas sobre personalização e recursos do Brisk Theme, consulte a [documentação oficial](https://filafly.com/themes/brisk).
-
-### Personalização do Brisk Theme
-
-Se desejar usar sua própria fonte em vez da Kumbh Sans (que está desabilitada), você pode remover o método `withoutSuggestedFont()`:
-
-```php
-// Para usar a fonte padrão do Brisk Theme
-->plugin(BriskTheme::make())
-
-// Para manter a configuração atual (sem fonte sugerida)
-->plugin(BriskTheme::make()->withoutSuggestedFont())
-```
-
-## 2. Customização via `AppServiceProvider.php`
-
-O arquivo `app/Providers/AppServiceProvider.php` é o centro de controle para a configuração de cores. 
-### Exemplo 1: Alterando a Paleta de Cores
-
-O método `colors()` permite definir a paleta de cores que será utilizada em todo o painel. A chave `primary` tem um papel de destaque, sendo usada em botões, links, e indicadores de foco.
-
-**Localização:**
-```php
-// app/Providers/AppServiceProvider.php
-
-public function boot(): void
+public function panel(Panel $panel): Panel
 {
-    // ... outras configurações
-    $this->configFilamentColors();
-}
-
-// ... outras configurações
-
-private function configFilamentColors(): void
-{
-    Filament::colors([
-        'primary' => '#014029',
-        'danger' => '#D93223',
-    ]);
+    return $panel
+        // ... outras configurações
+        ->plugin(
+            NomeDoPlugin::make()
+                ->opcaoDeConfiguracao()
+        );
 }
 ```
 
-**Demonstração:**
-Vamos supor que desejamos alterar a cor primária para um tom de azul.
+### Exemplo: EasyFooterPlugin
+
+Neste kit, utilizamos o `EasyFooterPlugin` para adicionar um rodapé customizado ao painel. Ele está configurado no `BasePanelProvider.php` através do método auxiliar `applySharedPlugins`.
 
 ```php
-// Alteração sugerida
-Filament::colors([
-    'primary' => '#2563eb', // Novo tom de azul
-    'danger' => '#D93223',
-    // ...
-])
+// app/Providers/Filament/BasePanelProvider.php
+
+protected function applySharedPlugins(Panel $panel): Panel
+{
+    return $panel
+        ->plugin(
+            EasyFooterPlugin::make()
+                ->footerEnabled()
+                ->withGithub(showLogo: true, showUrl: true)
+                // ...
+        );
+}
 ```
 
-**Resultado:**
+Isso demonstra como "injetar" novas seções de UI sem precisar alterar manualmente as views do esqueleto do Filament.
 
-Após essa alteração, todos os componentes que utilizam a cor primária (botões de ação, links ativos, anéis de foco em campos de formulário) passarão a usar o tom de azul definido, alterando drasticamente a identidade visual do painel.
+## 2. Customização Nativa de Componentes
 
-### Exemplo 2: Ajustando a Largura da Barra Lateral
+Para garantir consistência visual em todo o projeto (ex: todas as tabelas terem paginação de 20 itens, todos os inputs traduzirem labels automaticamente), utilizamos uma classe configuradora central.
 
-É possível controlar a largura da barra de navegação lateral através do método `sidebarWidth()`.
+### FilamentComponentsConfigurator
 
-**Localização:**
+Localizado em `app/Filament/Configurators/FilamentComponentsConfigurator.php`, este arquivo define os padrões globais dos componentes usando o método `configureUsing`.
+
+**Exemplo de uso:**
+
 ```php
-// app/Providers/Filament/AdminPanelProvider.php
+// app/Filament/Configurators/FilamentComponentsConfigurator.php
 
-->sidebarWidth('15rem') // Largura atual
+public static function configure(): void
+{
+    // Força todos os campos a traduzirem suas labels automaticamente
+    Field::configureUsing(function (Field $field): void {
+        $field->translateLabel();
+    });
+
+    // Centraliza ícones em colunas de tabelas
+    IconColumn::configureUsing(function (IconColumn $iconColumn): void {
+        $iconColumn
+            ->alignment(Alignment::Center)
+            ->verticalAlignment(VerticalAlignment::Center);
+    });
+}
 ```
 
-**Demonstração:**
-Para tornar a barra lateral mais espaçosa, podemos aumentar seu valor.
+Esta classe é inicializada no `bootUsing` do `AdminPanelProvider`, garantindo que as regras sejam aplicadas assim que o painel carrega.
+
+## 3. Customização Avançada com CSS
+
+Quando os métodos PHP não são suficientes, recorremos ao CSS customizado. O Filament utiliza Tailwind CSS, e nós temos um arquivo de entrada específico para o tema do admin.
+
+### Arquivo `theme.css`
+
+O arquivo principal está em:
+`resources/css/filament/admin/theme.css`
+
+Ele é registrado no painel via método `viteTheme()`:
 
 ```php
-// Alteração sugerida
-->sidebarWidth('18rem') // Nova largura
-```
-
-**Resultado:**
-
-A barra de navegação lateral se tornará visivelmente mais larga, o que pode ser útil caso os nomes dos recursos no menu sejam extensos.
-
-## 3. Customização Avançada com CSS (`theme.css`)
-
-Para um controle mais granular e para aplicar estilos que não são cobertos pelos métodos do `PanelProvider` ou pelo Brisk Theme, podemos escrever CSS customizado. O arquivo preparado para isso neste kit é o `resources/css/filament/admin/theme.css`.
-
-Este arquivo é carregado no painel através do método `viteTheme()`, como pode ser visto no `AdminPanelProvider`:
-
-```php
-// app/Providers/Filament/AdminPanelProvider.php
-
+// app/Providers/Filament/BasePanelProvider.php
 ->viteTheme('resources/css/filament/admin/theme.css')
 ```
 
-**Importante:** Após qualquer alteração neste arquivo CSS, é necessário recompilar os assets do frontend com o Vite:
+Aqui você pode sobrescrever classes do Filament, importar fontes personalizadas ou ajustar variáveis do Tailwind.
 
+**Exemplo:**
+```css
+/* resources/css/filament/admin/theme.css */
+
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config '../../../../tailwind.config.js';
+
+/* Customizações específicas */
+.fi-sidebar-item {
+    @apply hover:bg-primary-500/10;
+}
+```
+
+### Processo de Build (Vite)
+
+Sempre que alterar o arquivo `theme.css` ou as configurações do Tailwind, é **obrigatório** recompilar os assets.
+
+**Em desenvolvimento (Hot Reload):**
 ```bash
 npm run dev
-# ou para produção
+```
+
+**Para produção:**
+```bash
 npm run build
 ```
 
-### Exemplo 1: Alterar a Fonte do Painel
-
-Podemos definir uma nova fonte para todo o painel adicionando uma regra ao `theme.css`.
-
-**Demonstração:**
-```css
-/* Adicione ao final de resources/css/filament/admin/theme.css */
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
-body {
-    font-family: 'Roboto', sans-serif;
-}
-```
-
-**Resultado:**
-
-Todo o texto dentro do painel administrativo passará a ser renderizado com a fonte "Roboto", conferindo uma nova tipografia à interface.
-
-### Exemplo 2: Arredondar Bordas dos Inputs
-
-Suponha que o design do projeto exija que os campos de formulário tenham bordas mais arredondadas.
-
-**Demonstração:**
-```css
-/* Adicione ao final de resources/css/filament/admin/theme.css */
-
-.fi-input-wrapper {
-    border-radius: 0.75rem !important; /* 12px */
-}
-```
-
-**Resultado:**
-
-Todos os campos de entrada (`TextInput`, `Select`, etc.) no painel terão suas bordas arredondadas, suavizando a aparência dos formulários. O uso de `!important` pode ser necessário para sobrescrever estilos muito específicos do Filament.
-
-## Hierarquia de Customização
-
-Para entender como as diferentes camadas de customização interagem, é importante saber a ordem de prioridade:
-
-1. **CSS Customizado** (`theme.css`) - Maior prioridade, sobrescreve tudo
-2. **Configurações do AdminPanelProvider** - Configurações programáticas
-3. **Brisk Theme** - Tema base com estilos padrão
-
-## Conclusão
-
-A customização da aparência no Filament é um processo flexível e em camadas. O **Brisk Theme** fornece uma base sólida e moderna, o **AdminPanelProvider** permite configurações globais de tema (cores, fontes, espaçamentos gerais), e o arquivo **`theme.css`** oferece controle total sobre estilos específicos de componentes.
-
-Para a maioria dos casos de uso, a combinação do Brisk Theme com as configurações do `AdminPanelProvider` será suficiente. Use o CSS customizado apenas quando precisar de ajustes muito específicos ou para implementar um design system complexo.
+---
 
 ## Referências
 
-- [Provider: AdminPanelProvider](/app/Providers/Filament/AdminPanelProvider.php)
-- [CSS: Theme](/resources/css/filament/admin/theme.css)
+- [BasePanelProvider (Plugins)](/app/Providers/Filament/BasePanelProvider.php)
+- [FilamentComponentsConfigurator (Padrões)](/app/Filament/Configurators/FilamentComponentsConfigurator.php)
+- [Theme CSS](/resources/css/filament/admin/theme.css)

@@ -1,13 +1,13 @@
 # 🎨 Customizando o Logotipo nos Painéis Filament
 
-Este guia explica, de forma direta e completa, como alterar o logotipo exibido na barra superior (topbar) dos painéis do Filament neste projeto, bem como o logotipo do rodapé adicionado pelo EasyFooter. A solução adotada separa o logotipo do painel de Autenticação do logotipo aplicado aos demais painéis (via `BasePanelProvider`).
+Este guia explica, de forma direta e completa, como alterar o logotipo exibido na barra superior (topbar) dos painéis do Filament neste projeto. A solução adotada separa o logotipo do painel de Autenticação do logotipo aplicado aos demais painéis (via `BasePanelProvider`).
 
 ## 📋 Índice
 
 - [Onde ficam as views de logo](#onde-ficam-as-views-de-logo)
 - [Como o Filament recebe a logo](#como-o-filament-recebe-a-logo)
 - [Views de exemplo](#views-de-exemplo)
-- [Logo no rodapé (EasyFooter)](#logo-no-rodapé-easyfooter)
+
 - [Passo a passo para alterar a logo](#passo-a-passo-para-alterar-a-logo)
 - [Dicas úteis](#dicas-úteis)
 
@@ -56,22 +56,7 @@ View base para os demais painéis (`resources/views/filament/auth/logo_base.blad
 
 Se preferir SVG, você pode colocar o conteúdo SVG diretamente na view para melhor controle de cor (incluindo suporte a `dark:`).
 
-## Logo no rodapé (EasyFooter)
 
-O projeto utiliza o EasyFooter, e o logotipo do rodapé pode ser configurado em `BasePanelProvider` por meio de `withLogo()` do plugin:
-
-```php
-EasyFooterPlugin::make()
-    ->footerEnabled()
-    ->withFooterPosition('footer')
-    ->withGithub(showLogo: true, showUrl: true)
-    ->withLogo(
-        asset('images/LabSIS_painel.png'),
-        'https://www.labsis.dev.br'
-    )
-```
-
-Para alterar, troque a imagem em `public/images/LabSIS_painel.png` ou ajuste o caminho passado para `withLogo()`.
 
 ---
 
@@ -79,13 +64,13 @@ Para alterar, troque a imagem em `public/images/LabSIS_painel.png` ou ajuste o c
 
 ### 1. **Identificar qual logo deseja alterar**
 
-Este projeto possui **3 logos diferentes**:
+Este projeto possui **2 logos diferentes**:
 
 | Logo | Arquivo de Imagem | View Blade | Provider | Onde aparece |
 |------|-------------------|------------|----------|--------------|
 | Login/Auth | `public/images/LabSIS_login.png` | `resources/views/filament/auth/logo_auth.blade.php` | `AuthPanelProvider` | Página de login |
 | Topbar (Admin/User) | `public/images/LabSIS.png` | `resources/views/filament/auth/logo_base.blade.php` | `BasePanelProvider` | Topo dos painéis |
-| Rodapé | `public/images/LabSIS_painel.png` | N/A | `EasyFooterPlugin` | Rodapé dos painéis |
+
 
 ### 2. **Alterar a imagem**
 
@@ -122,22 +107,7 @@ nano resources/views/filament/auth/logo_base.blade.php
 <img src="{{ asset('images/SEU_NOVO_ARQUIVO.png') }}" alt="LabSIS" class="h-full" />
 ```
 
-### 4. **Alterar a logo do rodapé (EasyFooter)**
 
-Edite o arquivo `app/Providers/Filament/BasePanelProvider.php`:
-
-```bash
-nano app/Providers/Filament/BasePanelProvider.php
-```
-
-Procure por `withLogo()` e altere:
-
-```php
-->withLogo(
-    asset('images/SEU_NOVO_ARQUIVO.png'), // ← Altere aqui
-    'https://www.labsis.dev.br'
-)
-```
 
 ### 5. **Ajustar altura (se necessário)**
 
