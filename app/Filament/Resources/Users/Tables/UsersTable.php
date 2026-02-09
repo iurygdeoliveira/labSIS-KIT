@@ -61,7 +61,7 @@ class UsersTable
                     ->icon('heroicon-s-pencil')
                     ->label('')
                     ->tooltip('Editar')
-                    ->visible(fn (User $record): bool => $record->isApproved()),
+                    ->visible(fn (User $record): bool => Filament::auth()->user()->can('update', $record) && $record->isApproved()),
                 DeleteUserAction::make()->icon('heroicon-s-trash')->label('')->tooltip('Excluir'),
             ])
             ->toolbarActions([

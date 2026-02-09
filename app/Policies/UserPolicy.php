@@ -70,6 +70,11 @@ class UserPolicy
      */
     public function update(User $user, User $record): bool
     {
+        // Impede que usuários comuns editem administradores (Admins) ou proprietários (Owners)
+        if ($user->hasRole(RoleType::USER->value) && ($record->hasRole(RoleType::ADMIN->value) || $record->hasRole(RoleType::OWNER->value))) {
+            return false;
+        }
+
         return $this->hasPermission($user, Permission::UPDATE);
     }
 
@@ -80,6 +85,11 @@ class UserPolicy
      */
     public function delete(User $user, User $record): bool
     {
+        // Impede que usuários comuns excluam donos (Owners)
+        if ($user->hasRole(RoleType::USER->value) && $record->hasRole(RoleType::OWNER->value)) {
+            return false;
+        }
+
         return $this->hasPermission($user, Permission::DELETE);
     }
 

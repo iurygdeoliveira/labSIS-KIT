@@ -40,9 +40,9 @@ class UserPanelProvider extends BasePanelProvider
                 // FilamentInfoWidget::class,
                 CustomStats::class,
             ])
-            ->middleware([
+            ->tenantMiddleware([
                 TeamSyncMiddleware::class,
-            ]);
+            ], isPersistent: true);
 
         return $panel;
     }

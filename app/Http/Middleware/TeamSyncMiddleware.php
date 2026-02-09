@@ -30,6 +30,11 @@ class TeamSyncMiddleware
                         $resolver = resolve(SpatieTeamResolver::class);
                         $resolver->setPermissionsTeamId($routeTenant->getKey());
 
+                        // Critical: Clear user relations to force re-fetch with new team_id
+                        $user->unsetRelation('roles');
+                        $user->unsetRelation('permissions');
+                        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+
                         return $next($request);
                     }
                 }
@@ -45,17 +50,30 @@ class TeamSyncMiddleware
                         $resolver = resolve(SpatieTeamResolver::class);
                         $resolver->setPermissionsTeamId($tenant->getKey());
 
+                        // Critical: Clear user relations to force re-fetch with new team_id
+                        $user->unsetRelation('roles');
+                        $user->unsetRelation('permissions');
+                        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+
                         return $next($request);
                     }
                 }
 
                 $currentTenant = Filament::getTenant();
+                $teamId = 0;
+
                 if ($currentTenant instanceof Tenant) {
-                    $resolver = resolve(SpatieTeamResolver::class);
-                    $resolver->setPermissionsTeamId($currentTenant->getKey());
-                } else {
-                    $resolver = resolve(SpatieTeamResolver::class);
-                    $resolver->setPermissionsTeamId(0);
+                    $teamId = $currentTenant->getKey();
+                }
+
+                $resolver = resolve(SpatieTeamResolver::class);
+                $resolver->setPermissionsTeamId($teamId);
+
+                // Critical: Clear user relations to force re-fetch with new team_id
+                if ($teamId !== 0) {
+                    $user->unsetRelation('roles');
+                    $user->unsetRelation('permissions');
+                    app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
                 }
             }
         }

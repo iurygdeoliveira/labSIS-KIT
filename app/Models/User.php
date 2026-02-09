@@ -212,7 +212,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     protected function withRolesForTenant($query, Tenant $tenant): void
     {
         $query->with([
-            'rolesWithTeams' => fn ($q) => $q->where('team_id', $tenant->id),
+            'rolesWithTeams' => fn ($q) => $q->where('model_has_roles.team_id', $tenant->id),
         ]);
     }
 
