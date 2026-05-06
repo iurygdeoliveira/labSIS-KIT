@@ -14,6 +14,15 @@ Este documento centraliza as próximas funcionalidades e otimizações planejada
 
 - [ ] **Customização de Branding por Tenant:** Permitir que cada tenant defina seu próprio logotipo e cores primárias no painel `/user`.
 
+### 📥 Importação e Exportação de Dados
+
+- [ ] **Trait/Função de Importação CSV:** Criar uma trait reutilizável ou função helper para importar dados a partir de arquivos CSV, facilitando a carga em massa de registros no sistema. Deve incluir:
+  - Validação de estrutura do arquivo
+  - Mapeamento flexível de colunas
+  - Tratamento de erros e relatório de inconsistências
+  - Suporte a grandes volumes de dados (processamento em lotes)
+  - Integração com Filament para interface de upload
+
 ### ⚡ Performance e Monitoramento
 
 - [ ] **Benchmarks Automatizados:** Integração contínua de testes de performance (SPA vs MPA) para garantir que as atualizações não degradem a experiência do usuário.

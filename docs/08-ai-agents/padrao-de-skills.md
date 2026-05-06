@@ -21,7 +21,7 @@ Se a skill se chamar `scaffold-model`, a conexão é direta e neuralmente mais f
 
 Todas as skills devem seguir rigorosamente o formato:
 
-```
+```text
 [action]-[target]
 ```
 
@@ -48,6 +48,9 @@ Usado para geração de código boilerplate, arquivos e estruturas.
 - `scaffold-migration`
 - `scaffold-policy`
 - `scaffold-filament-resource`
+- `scaffold-enum`
+- `scaffold-exception`
+- `scaffold-event`
 
 ### Manage (Gestão/Operação)
 
@@ -72,6 +75,6 @@ Usado para geração de conteúdo textual.
 
 ## Benefícios Esperados
 
-1.  **Redução de Alucinação**: O agente não precisa "adivinhar" qual ferramenta usar.
-2.  **Economia de Tokens**: Prompts menores, pois não é necessário explicar qual skill usar.
-3.  **Padronização**: Facilita a criação de novas skills seguindo um modelo mental claro.
+1. **Redução de Alucinação**: O agente não precisa "adivinhar" qual ferramenta usar.
+2. **Economia de Tokens**: Prompts menores, pois não é necessário explicar qual skill usar.
+3. **Padronização**: Facilita a criação de novas skills seguindo um modelo mental claro.
