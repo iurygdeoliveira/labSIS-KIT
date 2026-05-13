@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages\Auth;
 
+use App\Filament\Pages\Concerns\ResolvesFilamentPageConfiguration;
 use Filament\Facades\Filament;
 use Filament\Pages\Concerns\HasRoutes;
 use Filament\Pages\SimplePage;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class VerificationPending extends SimplePage
 {
     use HasRoutes;
+    use ResolvesFilamentPageConfiguration;
 
     protected string $view = 'filament.pages.auth.verification-pending';
 

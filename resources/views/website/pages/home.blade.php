@@ -1,13 +1,15 @@
-@extends('website.layouts.app')
+@extends('website.layouts.landing')
 
 @section('content')
-    @include('website.components.website.hero')
+    @include('website.components.website-v2.hero')
 
-    @include('website.components.website.sobre')
+    @include('website.components.website-v2.diferenciais')
 
-    @include('website.components.website.projetos')
+    @include('website.components.website-v2.projetos')
 
-    @include('website.components.website.estatisticas')
+    @include('website.components.website-v2.ecossistema')
 
-    @include('website.components.website.contato')
+    @include('website.components.website-v2.stats')
+
+    @include('website.components.website-v2.cta')
 @endsection
