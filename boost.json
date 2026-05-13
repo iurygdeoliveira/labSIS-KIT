@@ -1,18 +1,26 @@
 {
     "agents": [
-        "gemini"
+        "cursor"
     ],
+    "cloud": false,
     "guidelines": true,
-    "herd_mcp": false,
     "mcp": true,
+    "nightwatch": false,
     "packages": [
         "filament/filament",
-        "spatie/boost-spatie-guidelines"
+        "filament/blueprint",
+        "spatie/boost-spatie-guidelines",
+        "fruitcake/laravel-debugbar"
     ],
     "sail": true,
     "skills": [
+        "laravel-best-practices",
+        "configure-nightwatch",
+        "pulse-development",
         "fluxui-development",
         "pest-testing",
-        "tailwindcss-development"
+        "tailwindcss-development",
+        "debug-using-debugbar",
+        "spatie-laravel-php-standards"
     ]
 }
