@@ -10,10 +10,10 @@ use Spatie\Permission\Models\Role as SpatieRole;
 class Role extends SpatieRole
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Tenant, $this>
+     * @return BelongsTo<Team, $this>
      */
-    public function tenant(): BelongsTo
+    public function team(): BelongsTo
     {
-        return $this->belongsTo(Tenant::class, 'team_id');
+        return $this->belongsTo(Team::class, 'team_id');
     }
 }

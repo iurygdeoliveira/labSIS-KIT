@@ -3,10 +3,12 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
+use App\Models\User;
 use App\Traits\Filament\HasBackButtonAction;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 
 class DeleteUser extends ViewRecord
@@ -35,7 +37,7 @@ class DeleteUser extends ViewRecord
             Action::make('delete')
                 ->label('Confirmar Exclusão')
                 ->color('danger')
-                ->icon('heroicon-o-trash')
+                ->icon(Heroicon::OutlinedTrash)
                 ->requiresConfirmation()
                 ->modalHeading('Confirmar Exclusão Permanente')
                 ->modalDescription('Tem certeza de que deseja excluir permanentemente este usuário? Esta ação não pode ser desfeita.')
@@ -61,7 +63,7 @@ class DeleteUser extends ViewRecord
     {
         $record = $this->getRecord();
 
-        if (! $record instanceof \App\Models\User) {
+        if (! $record instanceof User) {
             return 'Excluir Usuário';
         }
 

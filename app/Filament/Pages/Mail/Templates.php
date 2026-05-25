@@ -6,6 +6,7 @@ namespace App\Filament\Pages\Mail;
 
 use Filament\Actions\Action;
 use Filament\Pages\Page;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -17,7 +18,7 @@ class Templates extends Page implements HasTable
 {
     use InteractsWithTable;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-s-envelope';
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::Envelope;
 
     protected static ?string $navigationLabel = 'Emails';
 
@@ -60,15 +61,15 @@ class Templates extends Page implements HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->records(fn (): \Illuminate\Support\Collection => $this->getTemplates())
+            ->records(fn (): Collection => $this->getTemplates())
             ->columns([
-                TextColumn::make('name')->label('Nome')->sortable(),
-                TextColumn::make('description')->label('Descrição'),
+                TextColumn::make('name')->label('Nome')->sortable()->searchable(),
+                TextColumn::make('description')->label('Descrição')->searchable(),
             ])
             ->recordActions([
                 Action::make('preview')
                     ->label('Preview')
-                    ->icon('heroicon-s-eye')
+                    ->icon(Heroicon::Eye)
                     ->color('primary')
                     ->url(fn (array $record): string => PreviewTemplate::getUrl(['type' => $record['id']])),
             ]);

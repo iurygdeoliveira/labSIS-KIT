@@ -72,3 +72,5 @@
 @source '../../../../resources/views/';
 
 @source '../../../../vendor/devonab/filament-easy-footer/resources/views/**/*';
+@source '../../../../vendor/wallacemartinss/filament-security/resources/views/**/*';
+@source '../../../../vendor/wallacemartinss/filament-security/src/**/*';

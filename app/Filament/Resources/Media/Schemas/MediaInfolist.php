@@ -6,6 +6,7 @@ use App\Support\AppDateTime;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Hugomyb\FilamentMediaAction\Actions\MediaAction;
 
 class MediaInfolist
@@ -56,12 +57,12 @@ class MediaInfolist
                                 'Áudio' => 'danger',
                                 default => 'secondary',
                             })
-                            ->icon(fn (string $state): string => match ($state) {
-                                'Imagem' => 'heroicon-c-photo',
-                                'Vídeo' => 'heroicon-c-video-camera',
-                                'Documento' => 'heroicon-c-document',
-                                'Áudio' => 'heroicon-c-musical-note',
-                                default => 'heroicon-c-question-mark-circle',
+                            ->icon(fn (string $state): Heroicon => match ($state) {
+                                'Imagem' => Heroicon::Photo,
+                                'Vídeo' => Heroicon::VideoCamera,
+                                'Documento' => Heroicon::Document,
+                                'Áudio' => Heroicon::MusicalNote,
+                                default => Heroicon::QuestionMarkCircle,
                             }),
 
                         TextEntry::make('created_at_display')
@@ -79,7 +80,7 @@ class MediaInfolist
 
             return [
                 'label' => 'Assistir',
-                'icon' => 'heroicon-s-video-camera',
+                'icon' => Heroicon::VideoCamera,
                 'media' => $url ?: null,
             ];
         }
@@ -88,10 +89,10 @@ class MediaInfolist
         $fileType = (string) $record->file_type;
 
         $icon = match ($fileType) {
-            'Imagem' => 'heroicon-s-photo',
-            'Áudio' => 'heroicon-s-musical-note',
-            'Documento' => 'heroicon-s-document',
-            default => 'heroicon-s-eye',
+            'Imagem' => Heroicon::Photo,
+            'Áudio' => Heroicon::MusicalNote,
+            'Documento' => Heroicon::Document,
+            default => Heroicon::Eye,
         };
 
         $label = match ($fileType) {

@@ -37,17 +37,17 @@ class RedirectToProperPanelMiddleware
         $panel = Filament::getCurrentPanel();
 
         // 1. Verificar aprovação do usuário
-        if (($response = $this->handlePendingVerification($user, $request, $next)) instanceof \Symfony\Component\HttpFoundation\Response) {
+        if (($response = $this->handlePendingVerification($user, $request, $next)) instanceof Response) {
             return $response;
         }
 
         // 2. Se estiver no painel de auth, redirecionar para o painel correto
-        if (($response = $this->handleAuthPanelRedirect($user, $panel)) instanceof \Symfony\Component\HttpFoundation\Response) {
+        if (($response = $this->handleAuthPanelRedirect($user, $panel)) instanceof Response) {
             return $response;
         }
 
         // 3. Se não puder acessar o painel atual, redirecionar para o correto
-        if (($response = $this->handleUnauthorizedPanelAccess($user, $panel)) instanceof \Symfony\Component\HttpFoundation\Response) {
+        if (($response = $this->handleUnauthorizedPanelAccess($user, $panel)) instanceof Response) {
             return $response;
         }
 
@@ -94,7 +94,7 @@ class RedirectToProperPanelMiddleware
 
     private function handleAuthPanelRedirect(User $user, ?Panel $panel): ?Response
     {
-        if ($panel instanceof \Filament\Panel && $panel->getId() === 'auth') {
+        if ($panel instanceof Panel && $panel->getId() === 'auth') {
             return redirect()->to($this->resolveRedirectUrl($user));
         }
 
@@ -117,9 +117,9 @@ class RedirectToProperPanelMiddleware
         }
 
         if ($user->canAccessPanel(Filament::getPanel('user'))) {
-            $firstTenant = $user->getTenants(Filament::getPanel('user'))->first();
-            if ($firstTenant) {
-                return '/user/'.$firstTenant->uuid;
+            $firstTeam = $user->getTenants(Filament::getPanel('user'))->first();
+            if ($firstTeam) {
+                return '/user/'.$firstTeam->slug;
             }
 
             return '/user';

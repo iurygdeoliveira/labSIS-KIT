@@ -3,12 +3,16 @@
 namespace App\Filament\Resources\Users\Tables;
 
 use App\Enums\RoleType;
+use App\Events\UserApproved;
 use App\Filament\Resources\Users\Actions\DeleteUserAction;
+use App\Models\Team;
 use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Facades\Filament;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
@@ -25,17 +29,16 @@ class UsersTable
         }
 
         $query = User::query()->withoutRole(RoleType::ADMIN->value);
-        $currentTenant = Filament::getTenant();
+        $currentTeam = Filament::getTenant();
 
         if (! $isAdmin) {
-            $currentTenant = Filament::getTenant();
-            if ($currentTenant instanceof \App\Models\Tenant) {
-                $query->whereHas('tenants', function ($q) use ($currentTenant): void {
-                    $q->where('tenants.id', $currentTenant->getKey());
-                })->withRolesForTenant($currentTenant);
+            if ($currentTeam instanceof Team) {
+                $query->whereHas('teams', function ($q) use ($currentTeam): void {
+                    $q->where('teams.id', $currentTeam->getKey());
+                })->withRolesForTeam($currentTeam);
             }
         } else {
-            $query->with(['tenants', 'rolesWithTeams']);
+            $query->with(['teams', 'rolesWithTeams']);
         }
 
         return $table
@@ -53,16 +56,16 @@ class UsersTable
             ])
             ->recordActions([
                 ViewAction::make()
-                    ->icon('heroicon-s-eye')
-                    ->label('')
+                    ->iconButton()
+                    ->icon(Heroicon::Eye)
                     ->tooltip('Visualizar')
                     ->color('secondary'),
                 EditAction::make()
-                    ->icon('heroicon-s-pencil')
-                    ->label('')
+                    ->iconButton()
+                    ->icon(Heroicon::Pencil)
                     ->tooltip('Editar')
                     ->visible(fn (User $record): bool => Filament::auth()->user()->can('update', $record) && $record->isApproved()),
-                DeleteUserAction::make()->icon('heroicon-s-trash')->label('')->tooltip('Excluir'),
+                DeleteUserAction::make()->iconButton()->icon(Heroicon::Trash)->tooltip('Excluir'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
@@ -75,7 +78,7 @@ class UsersTable
     /**
      * Coluna do nome do usuário
      */
-    private static function getNameColumn(): \Filament\Tables\Columns\Column
+    private static function getNameColumn(): Column
     {
         return TextColumn::make('name')
             ->searchable(isIndividual: true, isGlobal: false)
@@ -85,14 +88,14 @@ class UsersTable
     /**
      * Coluna do email do usuário
      */
-    private static function getEmailColumn(): \Filament\Tables\Columns\Column
+    private static function getEmailColumn(): Column
     {
         return TextColumn::make('email')
             ->label('Email address');
     }
 
     /**
-     * Coluna de tenants (apenas para Admin)
+     * Coluna de teams (apenas para Admin)
      */
     private static function getTenantsColumn(bool $isAdmin): array
     {
@@ -101,10 +104,10 @@ class UsersTable
         }
 
         return [
-            TextColumn::make('tenants.name')
-                ->label('Tenants')
-                ->listWithLineBreaks(fn (?User $record): bool => $record instanceof \App\Models\User && $record->isApproved())
-                ->bulleted(fn (?User $record): bool => $record instanceof \App\Models\User && $record->isApproved()),
+            TextColumn::make('teams.name')
+                ->label('Teams')
+                ->listWithLineBreaks(fn (?User $record): bool => $record instanceof User && $record->isApproved())
+                ->bulleted(fn (?User $record): bool => $record instanceof User && $record->isApproved()),
         ];
     }
 
@@ -116,14 +119,14 @@ class UsersTable
         return TextColumn::make('tenant_roles')
             ->label($isAdmin ? 'Funções' : 'Função')
             ->state(fn (User $record): array|string => self::getTenantRolesForUser($record, $isAdmin))
-            ->listWithLineBreaks(fn (?User $record): bool => $record instanceof \App\Models\User && $record->isApproved())
-            ->when($isAdmin, fn ($column): \Filament\Tables\Columns\TextColumn => $column->bulleted(fn (?User $record): bool => $record instanceof \App\Models\User && $record->isApproved()));
+            ->listWithLineBreaks(fn (?User $record): bool => $record instanceof User && $record->isApproved())
+            ->when($isAdmin, fn ($column): TextColumn => $column->bulleted(fn (?User $record): bool => $record instanceof User && $record->isApproved()));
     }
 
     /**
      * Coluna de status (suspenso/autorizado) - apenas para usuários aprovados
      */
-    private static function getStatusColumn(): \Filament\Tables\Columns\Column
+    private static function getStatusColumn(): Column
     {
         return TextColumn::make('is_suspended')
             ->label('Acesso')
@@ -137,13 +140,13 @@ class UsersTable
     /**
      * Coluna de aprovação - apenas para usuários não aprovados e visível para Admin/Owner
      */
-    private static function getApprovalColumn(): \Filament\Tables\Columns\ToggleColumn
+    private static function getApprovalColumn(): ToggleColumn
     {
         return ToggleColumn::make('is_approved')
             ->onColor('primary')
             ->offColor('danger')
-            ->onIcon('heroicon-c-check')
-            ->offIcon('heroicon-c-x-mark')
+            ->onIcon(Heroicon::Check)
+            ->offIcon(Heroicon::XMark)
             ->label('Aprovar')
             ->afterStateUpdated(function (User $record, $state): void {
                 // Se o usuário foi aprovado
@@ -159,7 +162,7 @@ class UsersTable
                     $record->save();
 
                     // Disparar evento de aprovação
-                    event(new \App\Events\UserApproved($record));
+                    event(new UserApproved($record));
                 }
             });
     }
@@ -179,17 +182,17 @@ class UsersTable
 
     private static function getAdminViewRoles(User $record): array|string
     {
-        $tenants = $record->tenants;
+        $teams = $record->teams;
 
-        if ($tenants->isEmpty()) {
+        if ($teams->isEmpty()) {
             return '—';
         }
 
         $lines = [];
 
-        foreach ($tenants as $tenant) {
+        foreach ($teams as $team) {
             $roles = $record->rolesWithTeams
-                ->where('team_id', $tenant->id);
+                ->where('team_id', $team->id);
 
             if ($roles->isEmpty()) {
                 $lines[] = '—';

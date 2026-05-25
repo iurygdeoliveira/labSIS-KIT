@@ -19,6 +19,7 @@
         "laravel/nightwatch": "^1.7",
         "laravel/pulse": "^1.4",
         "laravel/sanctum": "^4.0",
+        "laraveldaily/filateams": "^0.2",
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/flux": "^2.2",
         "mongodb/laravel-mongodb": "^5.5",
@@ -26,7 +27,8 @@
         "resend/resend-laravel": "^1.4",
         "spatie/laravel-backup": "^10.2",
         "spatie/laravel-permission": "^6.21",
-        "spatie/laravel-query-builder": "^6.4"
+        "spatie/laravel-query-builder": "^6.4",
+        "wallacemartinss/filament-security": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.6",
@@ -36,6 +38,7 @@
         "filament/blueprint": "^2.1",
         "filament/upgrade": "^5.0",
         "fruitcake/laravel-debugbar": "^4.0",
+        "laramint/laravel-brain": "^2.0",
         "larastan/larastan": "^3.0",
         "laravel-shift/blueprint": "^2.13",
         "laravel/boost": "^2.4",
@@ -43,6 +46,7 @@
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",
         "laravel/tinker": "^3.0",
+        "laraveldaily/filacheck-pro": "^1.2",
         "lucascudo/laravel-pt-br-localization": "^3.0",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
@@ -125,6 +129,10 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "repositories": [{
+        "name": "filacheck",
+        "type": "composer",
+        "url": "https://satis.filamentexamples.com"
+    },{
         "name": "filament",
         "type": "composer",
         "url": "https://packages.filamentphp.com/composer"

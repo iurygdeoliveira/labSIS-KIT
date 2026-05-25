@@ -3,13 +3,15 @@
 namespace App\Filament\Resources\Media\Pages;
 
 use App\Filament\Resources\Media\MediaResource;
+use App\Models\MediaItem;
 use App\Traits\Filament\HasBackButtonAction;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 
 /**
- * @property \App\Models\MediaItem $record
+ * @property MediaItem $record
  */
 class DeleteMedia extends ViewRecord
 {
@@ -30,7 +32,7 @@ class DeleteMedia extends ViewRecord
             Action::make('confirm_delete')
                 ->label('Confirmar Exclusão')
                 ->color('danger')
-                ->icon('heroicon-s-trash')
+                ->icon(Heroicon::Trash)
                 ->requiresConfirmation()
                 ->modalHeading('Confirmar Exclusão Permanente')
                 ->modalDescription('Esta ação não pode ser desfeita. O arquivo será excluído permanentemente.')
@@ -48,7 +50,7 @@ class DeleteMedia extends ViewRecord
     {
         $record = $this->getRecord();
 
-        if (! $record instanceof \App\Models\MediaItem) {
+        if (! $record instanceof MediaItem) {
             return 'Excluir Mídia';
         }
 

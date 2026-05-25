@@ -6,6 +6,7 @@ namespace App\Http\Responses;
 
 use App\Enums\RoleType;
 use App\Filament\Pages\Auth\VerificationPending;
+use App\Models\Team;
 use App\Models\User;
 use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as FilamentRegistrationResponse;
 use Filament\Facades\Filament;
@@ -30,10 +31,10 @@ class RegistrationResponse implements FilamentRegistrationResponse
         }
 
         if ($user->canAccessPanel(Filament::getPanel('user'))) {
-            /** @var \App\Models\Tenant|null $firstTenant */
-            $firstTenant = $user->tenants()->first();
-            if ($firstTenant) {
-                return redirect()->to('/user/'.$firstTenant->uuid.'/dashboard');
+            /** @var Team|null $firstTeam */
+            $firstTeam = $user->teams()->first();
+            if ($firstTeam) {
+                return redirect()->to('/user/'.$firstTeam->slug.'/dashboard');
             }
 
             return redirect()->to('/user');

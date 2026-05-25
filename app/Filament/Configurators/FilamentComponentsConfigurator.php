@@ -7,6 +7,7 @@ namespace App\Filament\Configurators;
 use Filament\Forms\Components\Field;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\VerticalAlignment;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\IconColumn;
@@ -49,7 +50,7 @@ class FilamentComponentsConfigurator
                 ->extremePaginationLinks()
                 ->defaultPaginationPageOption(20)
                 ->paginated([20, 40, 60, 80, 'all'])
-                ->emptyStateIcon('heroicon-s-exclamation-triangle');
+                ->emptyStateIcon(Heroicon::ExclamationTriangle);
         });
     }
 }

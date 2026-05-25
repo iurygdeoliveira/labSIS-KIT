@@ -1,0 +1,236 @@
+Project "labSIS-KIT" {
+  database_type: 'PostgreSQL'
+  Note: 'Laravel application database schema generated from migrations.'
+}
+
+Table users {
+  id bigserial [pk]
+  uuid uuid [unique, not null]
+  name varchar [not null]
+  email varchar [unique, not null]
+  password varchar [not null]
+  is_suspended boolean [default: false]
+  suspended_at timestamp
+  is_approved boolean [default: false]
+  approved_by bigint
+  suspension_reason text
+  app_authentication_secret text
+  app_authentication_recovery_codes text
+  remember_token varchar
+  email_verified_at timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table password_reset_tokens {
+  email varchar [pk]
+  token varchar [not null]
+  created_at timestamp
+}
+
+Table sessions {
+  id varchar [pk]
+  user_id bigint
+  ip_address varchar(45)
+  user_agent text
+  payload longtext [not null]
+  last_activity integer [not null]
+}
+
+Table tenants {
+  id bigserial [pk]
+  uuid uuid [unique, not null]
+  name varchar [not null]
+  is_active boolean [default: true]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table tenant_user {
+  id bigserial [pk]
+  tenant_id bigint [not null]
+  user_id bigint [not null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table permissions {
+  id bigserial [pk]
+  name varchar [not null]
+  guard_name varchar [not null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table roles {
+  id bigserial [pk]
+  team_id bigint
+  name varchar [not null]
+  guard_name varchar [not null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table model_has_permissions {
+  team_id bigint [default: 0]
+  permission_id bigint [not null]
+  model_type varchar [not null]
+  model_id bigint [not null]
+}
+
+Table model_has_roles {
+  team_id bigint [default: 0]
+  role_id bigint [not null]
+  model_type varchar [not null]
+  model_id bigint [not null]
+}
+
+Table role_has_permissions {
+  permission_id bigint [not null]
+  role_id bigint [not null]
+}
+
+Table media {
+  id bigserial [pk]
+  model_type varchar [not null]
+  model_id bigint [not null]
+  uuid uuid [unique]
+  collection_name varchar [not null]
+  name varchar [not null]
+  file_name varchar [not null]
+  mime_type varchar
+  disk varchar [not null]
+  conversions_disk varchar
+  size bigint [not null]
+  manipulations json [not null]
+  custom_properties json [not null]
+  generated_conversions json [not null]
+  responsive_images json [not null]
+  order_column integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table media_items {
+  id bigserial [pk]
+  tenant_id bigint
+  video boolean [default: false]
+  uuid uuid [unique, not null]
+  name varchar [not null]
+}
+
+Table videos {
+  id bigserial [pk]
+  uuid uuid [unique, not null]
+  tenant_id bigint
+  media_item_id bigint [unique, not null]
+  provider varchar
+  provider_video_id varchar
+  url varchar [not null]
+  title varchar
+  duration_seconds integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table authentication_log {
+  id bigserial [pk]
+  authenticatable_type varchar [not null]
+  authenticatable_id bigint [not null]
+  ip_address varchar(45)
+  user_agent text
+  login_at timestamp
+  login_successful boolean [default: false]
+  logout_at timestamp
+  cleared_by_user boolean [default: false]
+  location json
+}
+
+Table cache {
+  key varchar [pk]
+  value mediumtext [not null]
+  expiration integer [not null]
+}
+
+Table cache_locks {
+  key varchar [pk]
+  owner varchar [not null]
+  expiration integer [not null]
+}
+
+Table jobs {
+  id bigserial [pk]
+  queue varchar [not null]
+  payload longtext [not null]
+  attempts integer [not null]
+  reserved_at integer
+  available_at integer [not null]
+  created_at integer [not null]
+}
+
+Table job_batches {
+  id varchar [pk]
+  name varchar [not null]
+  total_jobs integer [not null]
+  pending_jobs integer [not null]
+  failed_jobs integer [not null]
+  failed_job_ids longtext [not null]
+  options mediumtext
+  cancelled_at integer
+  created_at integer [not null]
+  finished_at integer
+}
+
+Table failed_jobs {
+  id bigserial [pk]
+  uuid varchar [unique, not null]
+  connection text [not null]
+  queue text [not null]
+  payload longtext [not null]
+  exception longtext [not null]
+  failed_at timestamp [not null]
+}
+
+Table pulse_values {
+  id bigserial [pk]
+  timestamp integer [not null]
+  type varchar [not null]
+  key mediumtext [not null]
+  key_hash uuid [not null]
+  value mediumtext [not null]
+}
+
+Table pulse_entries {
+  id bigserial [pk]
+  timestamp integer [not null]
+  type varchar [not null]
+  key mediumtext [not null]
+  key_hash uuid [not null]
+  value bigint
+}
+
+Table pulse_aggregates {
+  id bigserial [pk]
+  bucket integer [not null]
+  period integer [not null]
+  type varchar [not null]
+  key mediumtext [not null]
+  key_hash uuid [not null]
+  aggregate varchar [not null]
+  value decimal(20,2) [not null]
+  count integer
+}
+
+// Relationships
+Ref: users.approved_by > users.id
+Ref: sessions.user_id > users.id
+Ref: tenant_user.tenant_id > tenants.id [delete: cascade]
+Ref: tenant_user.user_id > users.id [delete: cascade]
+Ref: roles.team_id > tenants.id
+Ref: model_has_permissions.permission_id > permissions.id [delete: cascade]
+Ref: model_has_roles.role_id > roles.id [delete: cascade]
+Ref: role_has_permissions.permission_id > permissions.id [delete: cascade]
+Ref: role_has_permissions.role_id > roles.id [delete: cascade]
+Ref: media_items.tenant_id > tenants.id [delete: set null]
+Ref: videos.tenant_id > tenants.id [delete: set null]
+Ref: videos.media_item_id - media_items.id [delete: cascade]

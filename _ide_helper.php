@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 13.8.0.
+ * Generated for Laravel 13.11.2.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -5498,7 +5498,7 @@ namespace Illuminate\Support\Facades {
 
             }
     /**
-     * @method static array run(\Closure|array $tasks)
+     * @method static array run(\Closure|array $tasks, \Carbon\CarbonInterval|int|null $timeout = null)
      * @method static \Illuminate\Support\Defer\DeferredCallback defer(\Closure|array $tasks)
      * @see \Illuminate\Concurrency\ConcurrencyManager
      */
@@ -13084,6 +13084,20 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Determine which of the given queues are currently paused.
+         *
+         * @param string $connection
+         * @param array $queues
+         * @return array
+         * @static
+         */
+        public static function getPausedQueues($connection, $queues)
+        {
+            /** @var \Illuminate\Queue\QueueManager $instance */
+            return $instance->getPausedQueues($connection, $queues);
+        }
+
+        /**
          * Indicate that queue workers should not poll for restart or pause signals.
          *
          * This prevents the workers from hitting the application cache to determine if they need to pause or restart.
@@ -13256,6 +13270,19 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Assert if a job was pushed exactly once.
+         *
+         * @param string $job
+         * @return void
+         * @static
+         */
+        public static function assertPushedOnce($job)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+            $instance->assertPushedOnce($job);
+        }
+
+        /**
          * Assert if a job was pushed based on a truth-test callback.
          *
          * @param \UnitEnum|string $queue
@@ -13421,7 +13448,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the size of the queue.
          *
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return int
          * @static
          */
@@ -13434,7 +13461,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the number of pending jobs.
          *
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return int
          * @static
          */
@@ -13447,7 +13474,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the number of delayed jobs.
          *
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return int
          * @static
          */
@@ -13460,7 +13487,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the number of reserved jobs.
          *
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return int
          * @static
          */
@@ -13473,7 +13500,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the pending jobs for the given queue.
          *
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return \Illuminate\Support\Collection<int, \Illuminate\Queue\Jobs\InspectedJob>
          * @static
          */
@@ -13486,7 +13513,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the delayed jobs for the given queue.
          *
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return \Illuminate\Support\Collection
          * @static
          */
@@ -13499,7 +13526,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the reserved jobs for the given queue.
          *
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return \Illuminate\Support\Collection
          * @static
          */
@@ -13548,7 +13575,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the creation timestamp of the oldest pending job, excluding delayed jobs.
          *
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return int|null
          * @static
          */
@@ -13563,7 +13590,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|object $job
          * @param mixed $data
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return mixed
          * @static
          */
@@ -13590,7 +13617,7 @@ namespace Illuminate\Support\Facades {
          * Push a raw payload onto the queue.
          *
          * @param string $payload
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @param array $options
          * @return mixed
          * @static
@@ -13607,7 +13634,7 @@ namespace Illuminate\Support\Facades {
          * @param \DateTimeInterface|\DateInterval|int $delay
          * @param string|object $job
          * @param mixed $data
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return mixed
          * @static
          */
@@ -13620,7 +13647,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Push a new job onto the queue.
          *
-         * @param string $queue
+         * @param \UnitEnum|string $queue
          * @param string|object $job
          * @param mixed $data
          * @return mixed
@@ -13635,7 +13662,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Push a new job onto a specific queue after (n) seconds.
          *
-         * @param string $queue
+         * @param \UnitEnum|string $queue
          * @param \DateTimeInterface|\DateInterval|int $delay
          * @param string|object $job
          * @param mixed $data
@@ -13651,7 +13678,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Pop the next job off of the queue.
          *
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return \Illuminate\Contracts\Queue\Job|null
          * @static
          */
@@ -13666,7 +13693,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param array $jobs
          * @param mixed $data
-         * @param string|null $queue
+         * @param \UnitEnum|string|null $queue
          * @return mixed
          * @static
          */
@@ -14430,7 +14457,6 @@ namespace Illuminate\Support\Facades {
 
             }
     /**
-     * @method static \BackedEnum|(\BackedEnum|null enum(string $key, string $enumClass, \BackedEnum|null $default = null)
      * @see \Illuminate\Http\Request
      */
     class Request {
@@ -19219,6 +19245,21 @@ namespace Illuminate\Support\Facades {
             //Method inherited from \Illuminate\Database\Schema\Builder 
             /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
             return $instance->hasIndex($table, $index, $type);
+        }
+
+        /**
+         * Determine if the table has a given foreign key.
+         *
+         * @param string $table
+         * @param array|string $foreignKey
+         * @return bool
+         * @static
+         */
+        public static function hasForeignKey($table, $foreignKey)
+        {
+            //Method inherited from \Illuminate\Database\Schema\Builder 
+            /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+            return $instance->hasForeignKey($table, $foreignKey);
         }
 
         /**
@@ -24966,10 +25007,10 @@ namespace Laravel\Nightwatch\Facades {
          * @internal
          * @static
          */
-        public static function prepareForNextScheduledTask($event)
+        public static function prepareForScheduledTask($event)
         {
             /** @var \Laravel\Nightwatch\Core $instance */
-            return $instance->prepareForNextScheduledTask($event);
+            return $instance->prepareForScheduledTask($event);
         }
 
         /**
@@ -26303,6 +26344,18 @@ namespace Illuminate\Support {
             return \Illuminate\Support\Str::sanitizeHtml($html);
         }
 
+        /**
+         * @see \Filament\Support\SupportServiceProvider::packageBooted()
+         * @param string|null $url
+         * @param array $allowedSchemes
+         * @return string|null
+         * @static
+         */
+        public static function sanitizeUrl($url, $allowedSchemes = [])
+        {
+            return \Illuminate\Support\Str::sanitizeUrl($url, $allowedSchemes);
+        }
+
             }
     /**
      */
@@ -26315,6 +26368,17 @@ namespace Illuminate\Support {
         public static function sanitizeHtml()
         {
             return \Illuminate\Support\Stringable::sanitizeHtml();
+        }
+
+        /**
+         * @see \Filament\Support\SupportServiceProvider::packageBooted()
+         * @param array $allowedSchemes
+         * @return \Illuminate\Support\Stringable
+         * @static
+         */
+        public static function sanitizeUrl($allowedSchemes = [])
+        {
+            return \Illuminate\Support\Stringable::sanitizeUrl($allowedSchemes);
         }
 
             }
@@ -29547,12 +29611,12 @@ namespace App\Filament\Resources\Media\Pages {
     class CreateMedia extends \Filament\Resources\Pages\CreateRecord {
             }
     /**
-     * @property \App\Models\MediaItem $record
+     * @property MediaItem $record
      */
     class DeleteMedia extends \Filament\Resources\Pages\ViewRecord {
             }
     /**
-     * @property-read \App\Models\MediaItem|null $record
+     * @property-read MediaItem|null $record
      * @property-read bool $canDelete
      * @property-read string $fileSizeHuman
      * @property-read array $mediaInfo
@@ -29564,7 +29628,7 @@ namespace App\Filament\Resources\Media\Pages {
     class ListMedia extends \Filament\Resources\Pages\ListRecords {
             }
     /**
-     * @property \App\Models\MediaItem $record
+     * @property MediaItem $record
      */
     class ViewMedia extends \Filament\Resources\Pages\ViewRecord {
             }
@@ -29590,44 +29654,44 @@ namespace Filament\Widgets {
             }
     }
 
-namespace App\Filament\Resources\Tenants\Pages {
+namespace App\Filament\Resources\Teams\Pages {
     /**
      */
-    class CreateTenant extends \Filament\Resources\Pages\CreateRecord {
+    class CreateTeam extends \Filament\Resources\Pages\CreateRecord {
             }
     /**
      */
-    class DeleteTenant extends \Filament\Resources\Pages\ViewRecord {
+    class DeleteTeam extends \Filament\Resources\Pages\ViewRecord {
             }
     /**
-     * @property \App\Models\Tenant|null $record
+     * @property Team|null $record
      * @property-read bool $canDelete
      * @property-read bool $canEditUsers
      * @property-read int $userCount
-     * @property-read array $tenantStats
+     * @property-read array $teamStats
      */
-    class EditTenant extends \Filament\Resources\Pages\EditRecord {
+    class EditTeam extends \Filament\Resources\Pages\EditRecord {
             }
     /**
      */
-    class ListTenants extends \Filament\Resources\Pages\ListRecords {
+    class ListTeams extends \Filament\Resources\Pages\ListRecords {
             }
     /**
-     * @property \App\Models\Tenant|null $record
-     * @property-read array $tenantStats
+     * @property Team|null $record
+     * @property-read array $teamStats
      * @property-read bool $canDelete
      * @property-read bool $canEdit
-     * @property-read array $tenantPermissions
+     * @property-read array $teamPermissions
      */
-    class ViewTenant extends \Filament\Resources\Pages\ViewRecord {
+    class ViewTeam extends \Filament\Resources\Pages\ViewRecord {
             }
     }
 
-namespace App\Filament\Resources\Tenants\Widgets {
+namespace App\Filament\Resources\Teams\Widgets {
     /**
      * @property-read array $summary
      */
-    class TenantStats extends \Filament\Widgets\StatsOverviewWidget {
+    class TeamStats extends \Filament\Widgets\StatsOverviewWidget {
             }
     }
 
@@ -29641,7 +29705,7 @@ namespace App\Filament\Resources\Users\Pages {
     class DeleteUser extends \Filament\Resources\Pages\ViewRecord {
             }
     /**
-     * @property-read \App\Models\User|null $record
+     * @property-read User|null $record
      */
     class EditUser extends \Filament\Resources\Pages\EditRecord {
             }
@@ -29650,7 +29714,7 @@ namespace App\Filament\Resources\Users\Pages {
     class ListUsers extends \Filament\Resources\Pages\ListRecords {
             }
     /**
-     * @property-read \App\Models\User|null $record
+     * @property-read User|null $record
      * @property-read array $userStats
      * @property-read bool $canSuspend
      * @property-read bool $canUnsuspend
@@ -29663,7 +29727,7 @@ namespace App\Filament\Resources\Users\Pages {
 
 namespace App\Filament\Resources\Users\Widgets {
     /**
-     * @property-read \Illuminate\Database\Eloquent\Builder $baseQuery
+     * @property-read Builder $baseQuery
      * @property-read int $totalUsers
      * @property-read int $suspendedUsers
      * @property-read int $verifiedUsers
@@ -29708,32 +29772,42 @@ namespace Filament\Clusters {
             }
     }
 
-namespace App\Filament\Clusters\UserRole\Pages {
-    /**
-     */
-    class ManageUserRoles extends \Filament\Pages\Page {
-            }
-    }
-
-namespace App\Filament\Clusters\UserRole {
-    /**
-     */
-    class UserRoleCluster extends \Filament\Clusters\Cluster {
-            }
-    }
-
 namespace App\Filament\Widgets {
     /**
      */
     class CustomStats extends \Filament\Widgets\StatsOverviewWidget {
             }
     /**
-     * @property-read array $tenantsData
+     * @property-read array $teamsData
      * @property-read array $usersData
      * @property-read array $mediaData
      * @property-read array $summary
      */
     class SystemStats extends \Filament\Widgets\StatsOverviewWidget {
+            }
+    }
+
+namespace LaravelDaily\FilaTeams\Pages {
+    /**
+     */
+    class CreateTeamPage extends \Filament\Pages\Tenancy\RegisterTenant {
+            }
+    /**
+     */
+    class EditTeam extends \Filament\Pages\Tenancy\EditTenantProfile {
+            }
+    }
+
+namespace Filament\Pages\Tenancy {
+    /**
+     * @property-read Schema $form
+     */
+    class RegisterTenant extends \Filament\Pages\SimplePage {
+            }
+    /**
+     * @property-read Schema $form
+     */
+    class EditTenantProfile extends \Filament\Pages\Page {
             }
     }
 
@@ -30555,7 +30629,7 @@ namespace  {
          * @param string $pageName
          * @param int|null $page
          * @param \Closure|int|null $total
-         * @return \Illuminate\Pagination\LengthAwarePaginator
+         * @return \Illuminate\Pagination\LengthAwarePaginator<int, TModel>
          * @throws \InvalidArgumentException
          * @static
          */
@@ -30572,7 +30646,7 @@ namespace  {
          * @param array|string $columns
          * @param string $pageName
          * @param int|null $page
-         * @return \Illuminate\Contracts\Pagination\Paginator
+         * @return \Illuminate\Pagination\Paginator<int, TModel>
          * @static
          */
         public static function simplePaginate($perPage = null, $columns = [], $pageName = 'page', $page = null)
@@ -30588,7 +30662,7 @@ namespace  {
          * @param array|string $columns
          * @param string $cursorName
          * @param \Illuminate\Pagination\Cursor|string|null $cursor
-         * @return \Illuminate\Contracts\Pagination\CursorPaginator
+         * @return \Illuminate\Pagination\CursorPaginator<int, TModel>
          * @static
          */
         public static function cursorPaginate($perPage = null, $columns = [], $cursorName = 'cursor', $cursor = null)

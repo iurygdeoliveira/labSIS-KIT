@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Pages\Auth;
 
-use App\Models\Tenant;
+use App\Enums\AppTeamRole;
+use App\Events\UserRegistered;
+use App\Models\Membership;
+use App\Models\Team;
 use App\Models\User;
 use App\Traits\Filament\NotificationsTrait;
 use Exception;
@@ -52,7 +55,7 @@ class Register extends BaseRegister
                     ->label('Nome do Tenant')
                     ->required()
                     ->maxLength(255)
-                    ->unique(Tenant::class, 'name'),
+                    ->unique(Team::class, 'name'),
             ])
             ->columns(1);
     }
@@ -72,15 +75,15 @@ class Register extends BaseRegister
     {
         try {
             $userData = $this->prepareUserData($data);
-            $tenantData = $this->prepareTenantData($data);
+            $teamData = $this->prepareTeamData($data);
 
             $user = $this->createUser($userData);
-            $tenant = $this->createTenant($tenantData);
+            $team = $this->createTeam($teamData);
 
-            $this->associateUserWithTenant($user, $tenant);
+            $this->associateUserWithTeam($user, $team);
 
             // Disparar evento de usuário registrado
-            event(new \App\Events\UserRegistered($user));
+            event(new UserRegistered($user));
 
             $this->showSuccessNotification();
 
@@ -111,12 +114,13 @@ class Register extends BaseRegister
     }
 
     /**
-     * Prepara os dados do tenant para criação
+     * Prepara os dados do team para criação
      */
-    protected function prepareTenantData(array $data): array
+    protected function prepareTeamData(array $data): array
     {
         return [
             'name' => $data['tenant_name'],
+            'is_personal' => false,
             'is_active' => true,
         ];
     }
@@ -130,41 +134,26 @@ class Register extends BaseRegister
     }
 
     /**
-     * Cria o tenant no banco de dados
+     * Cria o team no banco de dados
      */
-    protected function createTenant(array $tenantData): Tenant
+    protected function createTeam(array $teamData): Team
     {
-        return Tenant::create($tenantData);
+        return Team::create($teamData);
     }
 
     /**
-     * Associa o usuário ao tenant e atribui role Owner
+     * Associa o usuário ao team via Membership.
+     * O App\Observers\MembershipObserver sincroniza a role Spatie automaticamente.
      */
-    protected function associateUserWithTenant(User $user, Tenant $tenant): void
+    protected function associateUserWithTeam(User $user, Team $team): void
     {
-        $user->tenants()->attach($tenant->id);
-
-        // Atribuir role Owner para o usuário no tenant criado
-        $this->assignOwnerRoleToUser($user, $tenant);
-    }
-
-    /**
-     * Atribui a role Owner para o usuário no tenant
-     */
-    protected function assignOwnerRoleToUser(User $user, Tenant $tenant): void
-    {
-        // Buscar ou criar a role Owner para o tenant
-        $ownerRole = \Spatie\Permission\Models\Role::firstOrCreate([
-            'name' => 'Owner',
-            'team_id' => $tenant->id,
-        ], [
-            'guard_name' => 'web',
+        Membership::create([
+            'team_id' => $team->id,
+            'user_id' => $user->id,
+            'role' => AppTeamRole::OWNER->value,
         ]);
 
-        // Atribuir a role ao usuário
-        $user->rolesWithTeams()->syncWithoutDetaching([
-            $ownerRole->id => ['team_id' => $tenant->id],
-        ]);
+        $user->forceFill(['current_team_id' => $team->id])->save();
     }
 
     /**
@@ -188,7 +177,7 @@ class Register extends BaseRegister
                 'Email já cadastrado',
                 'O email informado já está sendo usado por outro usuário. Por favor, use um email diferente.'
             );
-        } elseif ($e->getCode() === '23505' && str_contains($e->getMessage(), 'tenants_name_unique')) {
+        } elseif ($e->getCode() === '23505' && str_contains($e->getMessage(), 'teams_name')) {
             $this->notifyDanger(
                 'Nome do tenant já existe',
                 'O nome da organização informado já está sendo usado. Por favor, escolha um nome diferente.'

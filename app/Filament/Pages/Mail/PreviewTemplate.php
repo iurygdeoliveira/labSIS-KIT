@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Filament\Pages\Mail;
 
+use App\Traits\Filament\HasBackButtonAction;
+use Filament\Facades\Filament;
 use Filament\Pages\Page;
+use Filament\Support\Icons\Heroicon;
 use Livewire\Attributes\Url;
 
 class PreviewTemplate extends Page
 {
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected string $view = 'filament.pages.mail.preview-template';
 
@@ -38,7 +41,7 @@ class PreviewTemplate extends Page
 
     protected function renderPasswordReset(): void
     {
-        $user = \Filament\Facades\Filament::auth()->user();
+        $user = Filament::auth()->user();
 
         $this->previewHtml = view('vendor.mail.html.password-reset', [
             'user' => $user,
@@ -47,7 +50,7 @@ class PreviewTemplate extends Page
         ])->render();
     }
 
-    use \App\Traits\Filament\HasBackButtonAction;
+    use HasBackButtonAction;
 
     protected function getHeaderActions(): array
     {

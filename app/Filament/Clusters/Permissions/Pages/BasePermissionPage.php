@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Filament\Clusters\Permissions\Pages;
 
+use App\Enums\Permission;
 use App\Enums\Permission as PermissionEnum;
 use App\Enums\RoleType;
 use App\Filament\Clusters\Permissions\PermissionsCluster;
 use App\Models\Role;
-use App\Models\Tenant;
+use App\Models\Team;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -17,6 +18,7 @@ use Filament\Forms\Components\Toggle as ToggleForm;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
@@ -65,20 +67,20 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
                 ])
                 ->native(false)
                 ->required()
-                ->reactive(),
+                ->live(),
         ];
 
         // Toggle mestre só aparece para Admin
         if ($isAdmin) {
             $sectionSchema[] = ToggleForm::make('selectAll')
-                ->label('Habilitar todas as permissões em todos os Tenants')
+                ->label('Habilitar todas as permissões em todos os Teams')
                 ->onColor('primary')
                 ->offColor('danger')
-                ->onIcon('heroicon-c-check')
-                ->offIcon('heroicon-c-x-mark')
+                ->onIcon(Heroicon::Check)
+                ->offIcon(Heroicon::XMark)
                 ->inline(false)
                 ->dehydrated(false)
-                ->reactive()
+                ->live()
                 ->afterStateUpdated(function (bool $state): void {
                     $this->toggleAll($state);
                 });
@@ -108,22 +110,22 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
             $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
         }
 
-        /** @var Tenant|null $currentTenant */
-        $currentTenant = Filament::getTenant();
+        /** @var Team|null $currentTeam */
+        $currentTeam = Filament::getTenant();
 
-        $query = Tenant::query()
+        $query = Team::query()
             ->where('is_active', true)
             ->select(['id', 'name']);
 
-        // Se não for admin, filtra apenas o tenant atual
-        if (! $isAdmin && $currentTenant) {
-            $query->where('id', $currentTenant->id);
+        // Se não for admin, filtra apenas o team atual
+        if (! $isAdmin && $currentTeam) {
+            $query->where('id', $currentTeam->id);
         }
 
         $columns = [
             TextColumn::make('name')
-                ->label('Tenant')
-                ->when($isAdmin, fn ($column): \Filament\Tables\Columns\TextColumn => $column->searchable(isIndividual: true, isGlobal: false)),
+                ->label('Team')
+                ->when($isAdmin, fn ($column): TextColumn => $column->searchable(isIndividual: true, isGlobal: false)),
         ];
 
         // Coluna "Todas" só aparece para Admin e se houver mais de uma ação
@@ -132,13 +134,13 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
                 ->label('Todas')
                 ->onColor('primary')
                 ->offColor('danger')
-                ->onIcon('heroicon-c-check')
-                ->offIcon('heroicon-c-x-mark')
+                ->onIcon(Heroicon::Check)
+                ->offIcon(Heroicon::XMark)
                 ->getStateUsing(
-                    fn (Tenant $record): bool => $this->rowAllEnabled($record->id, $slug)
+                    fn (Team $record): bool => $this->rowAllEnabled($record->id, $slug)
                 )
                 ->updateStateUsing(
-                    fn (bool $state, Tenant $record) => tap($state, fn () => $this->setAllPermissionsForTenant($record->id, $slug, $state))
+                    fn (bool $state, Team $record) => tap($state, fn () => $this->setAllPermissionsForTeam($record->id, $slug, $state))
                 );
         }
 
@@ -147,13 +149,13 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
                 ->label($action->getLabel())
                 ->onColor('primary')
                 ->offColor('danger')
-                ->onIcon('heroicon-c-check')
-                ->offIcon('heroicon-c-x-mark')
+                ->onIcon(Heroicon::Check)
+                ->offIcon(Heroicon::XMark)
                 ->getStateUsing(
-                    fn (Tenant $record): bool => $this->hasPermission($record->id, $slug, $action)
+                    fn (Team $record): bool => $this->hasPermission($record->id, $slug, $action)
                 )
                 ->updateStateUsing(
-                    fn (bool $state, Tenant $record) => $this->setPermission($record->id, $slug, $action, $state)
+                    fn (bool $state, Team $record) => $this->setPermission($record->id, $slug, $action, $state)
                 );
         }
 
@@ -162,29 +164,28 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
             ->columns($columns);
     }
 
-    protected function hasPermission(int $tenantId, string $resourceSlug, PermissionEnum $action): bool
+    protected function hasPermission(int $teamId, string $resourceSlug, PermissionEnum $action): bool
     {
-        if ($this->selectedRole === null) {
+        if ($this->selectedRole === null || ! $this->isAuthorizedForTeam($teamId)) {
             return false;
         }
 
-        // Para USER, usar contexto de team (tenant). Proprietário não aparece; Admin não aparece nesta tela.
-        resolve(PermissionRegistrar::class)->setPermissionsTeamId($tenantId);
+        resolve(PermissionRegistrar::class)->setPermissionsTeamId($teamId);
 
-        $role = $this->resolveRole($tenantId);
+        $role = $this->resolveRole($teamId);
 
         return $role->hasPermissionTo("{$resourceSlug}.{$action->value}", $this->guard);
     }
 
-    protected function setPermission(int $tenantId, string $resourceSlug, PermissionEnum $action, bool $enabled): void
+    protected function setPermission(int $teamId, string $resourceSlug, PermissionEnum $action, bool $enabled): void
     {
-        if ($this->selectedRole === null) {
+        if ($this->selectedRole === null || ! $this->isAuthorizedForTeam($teamId)) {
             return;
         }
 
-        resolve(PermissionRegistrar::class)->setPermissionsTeamId($tenantId);
+        resolve(PermissionRegistrar::class)->setPermissionsTeamId($teamId);
 
-        $role = $this->resolveRole($tenantId);
+        $role = $this->resolveRole($teamId);
         $permissionName = "{$resourceSlug}.{$action->value}";
 
         SpatiePermission::findOrCreate($permissionName, $this->guard);
@@ -202,16 +203,33 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
         }
     }
 
+    protected function isAuthorizedForTeam(int $teamId): bool
+    {
+        $user = Filament::auth()->user();
+
+        if (! $user instanceof User) {
+            return false;
+        }
+
+        if ($user->hasRole(RoleType::ADMIN->value)) {
+            return true;
+        }
+
+        $team = Team::find($teamId);
+
+        return $team instanceof Team && $user->isOwnerOfTeam($team);
+    }
+
     protected function toggleAll(bool $state): void
     {
         $slug = static::$resourceSlug;
 
-        Tenant::query()
+        Team::query()
             ->where('is_active', true)
             ->pluck('id')
-            ->each(function ($tenantId) use ($slug, $state): void {
+            ->each(function ($teamId) use ($slug, $state): void {
                 foreach ($this->getAvailableActions() as $action) {
-                    $this->setPermission((int) $tenantId, $slug, $action, $state);
+                    $this->setPermission((int) $teamId, $slug, $action, $state);
                 }
             });
 
@@ -220,26 +238,26 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
         $this->dispatch('refreshTable');
     }
 
-    public function rowAllEnabled(int $tenantId, string $resourceSlug): bool
+    public function rowAllEnabled(int $teamId, string $resourceSlug): bool
     {
-        return array_all($this->getAvailableActions(), fn (\App\Enums\Permission $action): bool => $this->hasPermission($tenantId, $resourceSlug, $action));
+        return array_all($this->getAvailableActions(), fn (Permission $action): bool => $this->hasPermission($teamId, $resourceSlug, $action));
     }
 
-    public function setAllPermissionsForTenant(int $tenantId, string $resourceSlug, bool $enabled): void
+    public function setAllPermissionsForTeam(int $teamId, string $resourceSlug, bool $enabled): void
     {
         foreach ($this->getAvailableActions() as $action) {
-            $this->setPermission($tenantId, $resourceSlug, $action, $enabled);
+            $this->setPermission($teamId, $resourceSlug, $action, $enabled);
         }
 
         $this->dispatch('refreshTable');
     }
 
-    protected function resolveRole(int $tenantId): Role
+    protected function resolveRole(int $teamId): Role
     {
         if ($this->selectedRole === RoleType::OWNER->value) {
-            return RoleType::ensureOwnerRoleForTeam($tenantId, $this->guard);
+            return RoleType::ensureOwnerRoleForTeam($teamId, $this->guard);
         }
 
-        return RoleType::ensureUserRoleForTeam($tenantId, $this->guard);
+        return RoleType::ensureUserRoleForTeam($teamId, $this->guard);
     }
 }

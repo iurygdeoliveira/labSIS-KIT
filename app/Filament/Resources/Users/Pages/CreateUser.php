@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Users\Pages;
 
+use App\Enums\AppTeamRole;
 use App\Enums\RoleType;
 use App\Filament\Resources\Users\UserResource;
-use App\Models\Tenant;
+use App\Models\Membership;
+use App\Models\Team;
 use App\Models\User;
 use App\Traits\Filament\HasStandardCreateFooterActions;
 use App\Traits\Filament\HasStandardCreateHeaderActions;
@@ -32,7 +34,7 @@ class CreateUser extends CreateRecord
     protected function afterCreate(): void
     {
         $record = $this->record;
-        if (! $record instanceof \App\Models\User) {
+        if (! $record instanceof User) {
             return;
         }
 
@@ -41,14 +43,23 @@ class CreateUser extends CreateRecord
         $isAdmin = $currentUser instanceof User && $currentUser->hasRole(RoleType::ADMIN->value);
 
         if ($isAdmin) {
-            $tenantId = (int) ($this->data['tenant_id'] ?? 0);
-            if ($tenantId > 0) {
-                $record->tenants()->syncWithoutDetaching([$tenantId]);
+            $teamId = (int) ($this->data['tenant_id'] ?? 0);
+            if ($teamId > 0 && ! Membership::query()->where('team_id', $teamId)->where('user_id', $record->id)->exists()) {
+                Membership::create([
+                    'team_id' => $teamId,
+                    'user_id' => $record->id,
+                    'role' => AppTeamRole::MEMBER->value,
+                ]);
             }
         } else {
-            $currentTenant = Filament::getTenant();
-            if ($currentTenant instanceof Tenant) {
-                $record->tenants()->syncWithoutDetaching([$currentTenant->id]);
+            $currentTeam = Filament::getTenant();
+            if ($currentTeam instanceof Team
+                && ! Membership::query()->where('team_id', $currentTeam->id)->where('user_id', $record->id)->exists()) {
+                Membership::create([
+                    'team_id' => $currentTeam->id,
+                    'user_id' => $record->id,
+                    'role' => AppTeamRole::MEMBER->value,
+                ]);
             }
         }
 

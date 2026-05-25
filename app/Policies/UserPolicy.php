@@ -6,7 +6,6 @@ namespace App\Policies;
 
 use App\Enums\Permission;
 use App\Enums\RoleType;
-use App\Models\Tenant;
 use App\Models\User;
 use Filament\Facades\Filament;
 
@@ -16,17 +15,11 @@ class UserPolicy
      * Executado antes de qualquer verificação de autorização.
      * Permite atalhos hierárquicos sem consultar permissões específicas:
      * - Admin: acesso total global (todos os tenants)
-     * - Owner: acesso total dentro do tenant atual
      * Retorna null para delegar a verificação aos métodos específicos.
      */
     public function before(User $user): ?bool
     {
         if ($user->hasRole(RoleType::ADMIN->value)) {
-            return true;
-        }
-
-        $currentTenant = Filament::getTenant();
-        if ($currentTenant instanceof Tenant && $user->isOwnerOfTenant($currentTenant)) {
             return true;
         }
 
@@ -50,6 +43,10 @@ class UserPolicy
      */
     public function view(User $user, User $record): bool
     {
+        if (! $this->belongsToCurrentTenant($record)) {
+            return false;
+        }
+
         return $this->hasPermission($user, Permission::VIEW);
     }
 
@@ -70,6 +67,10 @@ class UserPolicy
      */
     public function update(User $user, User $record): bool
     {
+        if (! $this->belongsToCurrentTenant($record)) {
+            return false;
+        }
+
         // Impede que usuários comuns editem administradores (Admins) ou proprietários (Owners)
         if ($user->hasRole(RoleType::USER->value) && ($record->hasRole(RoleType::ADMIN->value) || $record->hasRole(RoleType::OWNER->value))) {
             return false;
@@ -85,6 +86,10 @@ class UserPolicy
      */
     public function delete(User $user, User $record): bool
     {
+        if (! $this->belongsToCurrentTenant($record)) {
+            return false;
+        }
+
         // Impede que usuários comuns excluam donos (Owners)
         if ($user->hasRole(RoleType::USER->value) && $record->hasRole(RoleType::OWNER->value)) {
             return false;
@@ -101,6 +106,20 @@ class UserPolicy
     public function deleteAny(User $user): bool
     {
         return $this->hasPermission($user, Permission::DELETE);
+    }
+
+    /**
+     * Verifica se o registro pertence ao tenant atual do Filament.
+     */
+    private function belongsToCurrentTenant(User $record): bool
+    {
+        $currentTenant = Filament::getTenant();
+
+        if (! $currentTenant) {
+            return false;
+        }
+
+        return $record->teams()->whereKey($currentTenant->getKey())->exists();
     }
 
     /**

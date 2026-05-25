@@ -6,7 +6,7 @@ namespace App\Policies;
 
 use App\Enums\RoleType;
 use App\Models\AuthenticationLog;
-use App\Models\Tenant;
+use App\Models\Team;
 use App\Models\User;
 use Filament\Facades\Filament;
 
@@ -25,8 +25,8 @@ class AuthenticationLogPolicy
             return true;
         }
 
-        $currentTenant = Filament::getTenant();
-        if ($currentTenant instanceof Tenant && $user->isOwnerOfTenant($currentTenant)) {
+        $currentTeam = Filament::getTenant();
+        if ($currentTeam instanceof Team && $user->isOwnerOfTeam($currentTeam)) {
             return true;
         }
 

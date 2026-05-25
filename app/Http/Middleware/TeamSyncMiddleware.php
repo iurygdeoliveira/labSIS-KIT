@@ -4,80 +4,80 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Models\Tenant;
+use App\Models\Team;
 use App\Models\User;
 use App\Tenancy\SpatieTeamResolver;
 use Closure;
 use Filament\Facades\Filament;
 use Illuminate\Http\Request;
+use Spatie\Permission\PermissionRegistrar;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Mantém o resolver de team do Spatie sincronizado com o tenant ativo do
+ * Filament e invalida caches relacionais para evitar roles vazadas entre
+ * teams na mesma requisição.
+ *
+ * O FilaTeams configura a tenancy do Filament, mas não toca no Spatie. Este
+ * middleware faz a ponte entre os dois.
+ */
 class TeamSyncMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
         $panel = Filament::getCurrentPanel();
 
-        if ($panel && $panel->getId() === 'user') {
-            $user = Filament::auth()->user();
+        if (! $panel || $panel->getId() !== 'user') {
+            return $next($request);
+        }
 
-            if ($user instanceof User) {
-                $routeTenantUuid = (string) ($request->route('tenant') ?? '');
-                if ($routeTenantUuid !== '') {
-                    $routeTenant = Tenant::query()->where('uuid', $routeTenantUuid)->first();
+        $user = Filament::auth()->user();
 
-                    if ($routeTenant instanceof Tenant && $user->canAccessTenant($routeTenant)) {
-                        $resolver = resolve(SpatieTeamResolver::class);
-                        $resolver->setPermissionsTeamId($routeTenant->getKey());
+        if (! $user instanceof User) {
+            return $next($request);
+        }
 
-                        // Critical: Clear user relations to force re-fetch with new team_id
-                        $user->unsetRelation('roles');
-                        $user->unsetRelation('permissions');
-                        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        $routeTeamSlug = (string) ($request->route('tenant') ?? '');
 
-                        return $next($request);
-                    }
-                }
+        if ($routeTeamSlug !== '') {
+            $routeTeam = Team::query()->where('slug', $routeTeamSlug)->first();
 
-                $currentTenant = Filament::getTenant();
-                if ($currentTenant === null) {
-                    $tenant = $user->tenants()
-                        ->where('is_active', true)
-                        ->orderBy('name', 'asc')
-                        ->first();
+            if ($routeTeam instanceof Team && $user->canAccessTenant($routeTeam)) {
+                $this->applyTeam($user, $routeTeam->getKey());
 
-                    if ($tenant instanceof Tenant) {
-                        $resolver = resolve(SpatieTeamResolver::class);
-                        $resolver->setPermissionsTeamId($tenant->getKey());
-
-                        // Critical: Clear user relations to force re-fetch with new team_id
-                        $user->unsetRelation('roles');
-                        $user->unsetRelation('permissions');
-                        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-
-                        return $next($request);
-                    }
-                }
-
-                $currentTenant = Filament::getTenant();
-                $teamId = 0;
-
-                if ($currentTenant instanceof Tenant) {
-                    $teamId = $currentTenant->getKey();
-                }
-
-                $resolver = resolve(SpatieTeamResolver::class);
-                $resolver->setPermissionsTeamId($teamId);
-
-                // Critical: Clear user relations to force re-fetch with new team_id
-                if ($teamId !== 0) {
-                    $user->unsetRelation('roles');
-                    $user->unsetRelation('permissions');
-                    app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-                }
+                return $next($request);
             }
         }
 
+        $currentTeam = Filament::getTenant();
+
+        if ($currentTeam === null) {
+            $fallback = $user->teams()
+                ->where('is_active', true)
+                ->orderBy('name', 'asc')
+                ->first();
+
+            if ($fallback instanceof Team) {
+                $this->applyTeam($user, $fallback->getKey());
+
+                return $next($request);
+            }
+        }
+
+        $teamId = $currentTeam instanceof Team ? $currentTeam->getKey() : 0;
+        $this->applyTeam($user, $teamId);
+
         return $next($request);
+    }
+
+    private function applyTeam(User $user, int $teamId): void
+    {
+        resolve(SpatieTeamResolver::class)->setPermissionsTeamId($teamId);
+
+        if ($teamId !== 0) {
+            $user->unsetRelation('roles');
+            $user->unsetRelation('permissions');
+            app(PermissionRegistrar::class)->forgetCachedPermissions();
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
+use App\Models\User;
 use App\Traits\Filament\HasBackButtonAction;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 
 /**
- * @property-read \App\Models\User|null $record
+ * @property-read User|null $record
  * @property-read array $userStats
  * @property-read bool $canSuspend
  * @property-read bool $canUnsuspend
@@ -28,7 +29,7 @@ class ViewUser extends ViewRecord
     {
         $record = $this->getRecord();
 
-        if (! $record instanceof \App\Models\User) {
+        if (! $record instanceof User) {
             return [
                 'tenant_count' => 0,
                 'role_count' => 0,
@@ -39,9 +40,9 @@ class ViewUser extends ViewRecord
         }
 
         return [
-            'tenant_count' => $record->tenants()->count(),
+            'tenant_count' => $record->teams()->count(),
             'role_count' => $record->rolesWithTeams()->count(),
-            'is_owner_anywhere' => $record->hasOwnerRoleInAnyTenant(),
+            'is_owner_anywhere' => $record->hasOwnerRoleInAnyTeam(),
             'last_login' => $record->last_login_at?->diffForHumans(),
             'is_current_user' => $record->getKey() === Auth::id(),
         ];
@@ -52,7 +53,7 @@ class ViewUser extends ViewRecord
     {
         $record = $this->getRecord();
 
-        return $record instanceof \App\Models\User &&
+        return $record instanceof User &&
                $record->getKey() !== Auth::id() &&
                ! $record->is_suspended;
     }
@@ -62,7 +63,7 @@ class ViewUser extends ViewRecord
     {
         $record = $this->getRecord();
 
-        return $record instanceof \App\Models\User &&
+        return $record instanceof User &&
                $record->getKey() !== Auth::id() &&
                $record->is_suspended;
     }
@@ -72,7 +73,7 @@ class ViewUser extends ViewRecord
     {
         $record = $this->getRecord();
 
-        return $record instanceof \App\Models\User && $record->getKey() !== Auth::id();
+        return $record instanceof User && $record->getKey() !== Auth::id();
     }
 
     #[Computed]

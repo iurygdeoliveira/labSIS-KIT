@@ -19,7 +19,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -36,8 +36,9 @@ abstract class BasePanelProvider extends PanelProvider
             ->databaseTransactions()
             ->profile()
             ->topbar(false)
+            ->darkMode(true, true)
             ->brandLogo(fn (): Factory|View => view('filament.auth.logo_base'))
-            ->brandLogoHeight('2.5rem')
+            ->brandLogoHeight('3rem')
             ->multiFactorAuthentication(
                 AppAuthentication::make()
                     ->recoverable()
@@ -51,7 +52,7 @@ abstract class BasePanelProvider extends PanelProvider
                 StartSession::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
-                VerifyCsrfToken::class,
+                PreventRequestForgery::class,
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
@@ -61,6 +62,8 @@ abstract class BasePanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+
+        return $this->applySharedPlugins($panel);
     }
 
     protected function applySharedPlugins(Panel $panel): Panel
@@ -72,7 +75,7 @@ abstract class BasePanelProvider extends PanelProvider
                     ->withFooterPosition('footer')
                     ->withGithub(showLogo: true, showUrl: true)
                     ->withLogo(
-                        asset('images/LabSIS_painel.png'),
+                        asset('images/labsis_logo_bg.png'),
                         'https://www.labsis.dev.br'
                     )
                     ->withLinks([

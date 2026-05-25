@@ -7,12 +7,12 @@ use App\Filament\Resources\Authentication\Pages\ListAuthenticationLogs;
 use App\Filament\Resources\Authentication\Schemas\AuthenticationLogForm;
 use App\Filament\Resources\Authentication\Tables\AuthenticationLogTable;
 use App\Models\AuthenticationLog;
+use App\Models\Team;
 use App\Models\User;
 use BackedEnum;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Override;
@@ -21,7 +21,7 @@ class AuthenticationLogResource extends Resource
 {
     protected static ?string $model = AuthenticationLog::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::ShieldCheck;
+    protected static string|BackedEnum|null $navigationIcon = 'icon-log-access';
 
     protected static ?string $navigationLabel = 'Logs de Acesso';
 
@@ -54,7 +54,7 @@ class AuthenticationLogResource extends Resource
     #[Override]
     public static function getEloquentQuery(): Builder
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Filament::auth()->user();
         $query = parent::getEloquentQuery();
 
@@ -63,17 +63,17 @@ class AuthenticationLogResource extends Resource
             return $query;
         }
 
-        // 2. Proprietários veem logs dos usuários do seu tenant atual
-        $tenant = Filament::getTenant();
-        /** @var \App\Models\Tenant|null $tenant */
-        if ($tenant && $user->isOwnerOfTenant($tenant)) {
-            // Busca IDs de usuários pertencentes a este tenant
+        // 2. Proprietários veem logs dos usuários do seu team atual
+        $team = Filament::getTenant();
+        /** @var Team|null $team */
+        if ($team && $user->isOwnerOfTeam($team)) {
+            // Busca IDs de usuários pertencentes a este team
             // Nota: Esta é uma query híbrida (SQL -> Mongo). Buscamos os IDs SQL primeiro.
-            $tenantUserIds = User::whereHas('tenants', function ($q) use ($tenant) {
-                $q->whereKey($tenant->getKey());
+            $teamUserIds = User::whereHas('teams', function ($q) use ($team) {
+                $q->whereKey($team->getKey());
             })->pluck('id')->toArray();
 
-            return $query->whereIn('authenticatable_id', $tenantUserIds)
+            return $query->whereIn('authenticatable_id', $teamUserIds)
                 ->where('authenticatable_type', User::class);
         }
 

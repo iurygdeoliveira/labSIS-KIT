@@ -4,13 +4,14 @@ namespace App\Filament\Resources\Media\Tables;
 
 use App\Filament\Resources\Media\Actions\DeleteMediaAction;
 use App\Models\MediaItem as MediaItemModel;
-use App\Models\Tenant;
+use App\Models\Team;
 use App\Support\AppDateTime;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Facades\Filament;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -44,18 +45,18 @@ class MediaTable
                 TextColumn::make('created_at_display')
                     ->label('Criado em')
                     ->state(fn ($record): string => self::resolveCreatedAt($record)),
-                TextColumn::make('tenant.name')
-                    ->label('Tenant')
-                    ->state(fn ($record): string => self::resolveTenantName($record))
+                TextColumn::make('team.name')
+                    ->label('Team')
+                    ->state(fn ($record): string => self::resolveTeamName($record))
                     ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                ViewAction::make()->icon('heroicon-s-eye')->label('')->tooltip('Visualizar'),
-                EditAction::make()->icon('heroicon-s-pencil')->label('')->tooltip('Editar'),
-                DeleteMediaAction::make()->icon('heroicon-s-trash')->label('')->tooltip('Excluir'),
+                ViewAction::make()->iconButton()->icon(Heroicon::Eye)->tooltip('Visualizar'),
+                EditAction::make()->iconButton()->icon(Heroicon::Pencil)->tooltip('Editar'),
+                DeleteMediaAction::make()->iconButton()->icon(Heroicon::Trash)->tooltip('Excluir'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
@@ -95,13 +96,13 @@ class MediaTable
         return $media?->created_at?->format('d/m/Y H:i') ?? '—';
     }
 
-    private static function resolveTenantName($record): string
+    private static function resolveTeamName($record): string
     {
-        $tenantId = $record->tenant_id ?? null;
-        if (! $tenantId) {
+        $teamId = $record->team_id ?? null;
+        if (! $teamId) {
             return Filament::hasTenancy() ? '—' : 'Global';
         }
 
-        return Tenant::query()->whereKey($tenantId)->value('name') ?? '—';
+        return Team::query()->whereKey($teamId)->value('name') ?? '—';
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Clusters\Permissions;
 
 use App\Enums\RoleType;
-use App\Models\Tenant;
+use App\Models\Team;
 use App\Models\User;
 use Filament\Clusters\Cluster;
 use Filament\Facades\Filament;
@@ -35,8 +35,8 @@ class PermissionsCluster extends Cluster
             return true;
         }
 
-        $currentTenant = Filament::getTenant();
+        $currentTeam = Filament::getTenant();
 
-        return $currentTenant instanceof Tenant && $user->isOwnerOfTenant($currentTenant);
+        return $currentTeam instanceof Team && $user->isOwnerOfTeam($currentTeam);
     }
 }

@@ -3,17 +3,19 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
+use App\Models\User;
 use App\Traits\Filament\HasBackButtonAction;
 use App\Traits\Filament\NotificationsTrait;
 use Filament\Actions\Action;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 
 /**
- * @property-read \App\Models\User|null $record
+ * @property-read User|null $record
  */
 class EditUser extends EditRecord
 {
@@ -32,10 +34,10 @@ class EditUser extends EditRecord
     {
         return [
             $this->getBackButtonAction(),
-            $this->getSaveFormAction()->formId('form')->icon('heroicon-s-check'),
+            $this->getSaveFormAction()->formId('form')->icon(Heroicon::Check),
             Action::make('delete')
                 ->label(__('filament-actions::delete.single.label'))
-                ->icon('heroicon-s-trash')
+                ->icon(Heroicon::Trash)
                 ->color('danger')
                 ->url(fn (): string => UserResource::getUrl('delete', ['record' => $this->getRecord()])),
             // ViewAction::make(),
@@ -57,7 +59,7 @@ class EditUser extends EditRecord
     protected function afterSave(): void
     {
         $record = $this->getRecord();
-        if (! $record instanceof \App\Models\User) {
+        if (! $record instanceof User) {
             return;
         }
 

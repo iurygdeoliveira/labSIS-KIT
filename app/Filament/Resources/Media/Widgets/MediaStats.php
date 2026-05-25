@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Media\Widgets;
 
 use App\Models\Video;
+use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Livewire\Attributes\Computed;
@@ -14,6 +15,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
  */
 class MediaStats extends BaseWidget
 {
+    protected ?string $pollingInterval = null;
+
     #[Computed]
     protected function summary(): array
     {
@@ -76,27 +79,27 @@ class MediaStats extends BaseWidget
         return [
             Stat::make('Imagens', number_format($stats['images']))
                 ->description("{$percentages['images']}% do total")
-                ->icon('heroicon-c-photo')
+                ->icon(Heroicon::Photo)
                 ->color('primary'),
 
             Stat::make('Vídeos', number_format($stats['videos']))
                 ->description("{$percentages['videos']}% do total")
-                ->icon('heroicon-c-video-camera')
+                ->icon(Heroicon::VideoCamera)
                 ->color('warning'),
 
             Stat::make('Documentos', number_format($stats['documents']))
                 ->description("{$percentages['documents']}% do total")
-                ->icon('heroicon-c-document')
+                ->icon(Heroicon::Document)
                 ->color('info'),
 
             Stat::make('Áudios', number_format($stats['audios']))
                 ->description("{$percentages['audios']}% do total")
-                ->icon('heroicon-c-musical-note')
+                ->icon(Heroicon::MusicalNote)
                 ->color('danger'),
 
             Stat::make('Tamanho total', $stats['size'])
                 ->description('Espaço utilizado')
-                ->icon('heroicon-c-server-stack')
+                ->icon(Heroicon::ServerStack)
                 ->color('secondary'),
         ];
     }

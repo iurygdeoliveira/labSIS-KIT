@@ -24,8 +24,8 @@ class MediaResource extends Resource
 {
     protected static ?string $model = MediaItem::class;
 
-    // Define o relacionamento de pertença ao tenant para este Resource
-    protected static ?string $tenantOwnershipRelationshipName = 'tenant';
+    /** @see MediaItem::team() */
+    protected static ?string $tenantOwnershipRelationshipName = 'team';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Photo;
 
@@ -43,26 +43,26 @@ class MediaResource extends Resource
         return __('Media');
     }
 
-    #[\Override]
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return MediaForm::configure($schema);
     }
 
-    #[\Override]
+    #[Override]
     public static function infolist(Schema $schema): Schema
     {
         return MediaInfolist::configure($schema);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return MediaTable::configure($table)
             ->modifyQueryUsing(fn ($query) => $query->with('video'));
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -83,8 +83,8 @@ class MediaResource extends Resource
 
     public static function getRecordTitle(?Model $record): string|Htmlable|null
     {
-        /** @var \App\Models\MediaItem|null $record */
-        if (! $record instanceof \App\Models\MediaItem) {
+        /** @var MediaItem|null $record */
+        if (! $record instanceof MediaItem) {
             return null;
         }
 

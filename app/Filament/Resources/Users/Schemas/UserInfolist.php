@@ -68,7 +68,7 @@ class UserInfolist
                     ->formatStateUsing(fn (?bool $state): string => $state ? __('Suspenso') : __('Autorizado'))
                     ->badge()
                     ->color(fn (?bool $state): string => $state ? 'danger' : 'primary')
-                    ->icon(fn (?bool $state): string => $state ? 'heroicon-c-no-symbol' : 'heroicon-c-check'),
+                    ->icon(fn (?bool $state): Heroicon => $state ? Heroicon::NoSymbol : Heroicon::Check),
                 TextEntry::make('suspended_at')
                     ->label('Suspenso em')
                     ->dateTime('d-m-Y H:i')
@@ -81,43 +81,43 @@ class UserInfolist
 
     private static function getTenantsTab(): Tab
     {
-        return Tab::make('Tenants')
+        return Tab::make('Teams')
             ->icon(Heroicon::BuildingOffice)
             ->schema([
-                RepeatableEntry::make('tenants_roles')
+                RepeatableEntry::make('teams_roles')
                     ->hiddenLabel()
-                    ->visible(fn (?User $record): bool => (bool) $record?->tenants()->exists())
-                    ->state(fn (?User $record): array => self::getTenantsRolesState($record))
+                    ->visible(fn (?User $record): bool => (bool) $record?->teams()->exists())
+                    ->state(fn (?User $record): array => self::getTeamsRolesState($record))
                     ->schema([
-                        TextEntry::make('tenant')
-                            ->label('Tenant'),
+                        TextEntry::make('team')
+                            ->label('Team'),
                         TextEntry::make('roles')
                             ->label('Funções')
                             ->badge(),
                     ])
                     ->columns(2),
-                TextEntry::make('no_tenants')
-                    ->label('')
-                    ->state('Usuário não associado a nenhum tenant')
-                    ->visible(fn (?User $record): bool => ! (bool) $record?->tenants()->exists()),
+                TextEntry::make('no_teams')
+                    ->hiddenLabel()
+                    ->state('Usuário não associado a nenhum team')
+                    ->visible(fn (?User $record): bool => ! (bool) $record?->teams()->exists()),
             ]);
     }
 
-    private static function getTenantsRolesState(?User $record): array
+    private static function getTeamsRolesState(?User $record): array
     {
-        if (! $record instanceof \App\Models\User) {
+        if (! $record instanceof User) {
             return [];
         }
 
         $items = [];
-        $tenants = $record->tenants()->select(['tenants.id', 'tenants.name'])->get();
+        $teams = $record->teams()->select(['teams.id', 'teams.name'])->get();
 
-        foreach ($tenants as $tenant) {
+        foreach ($teams as $team) {
             $roleNames = Role::query()
-                ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
+                ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id', 'inner', false)
                 ->where('mhr.model_type', User::class)
                 ->where('mhr.model_id', $record->id)
-                ->where('mhr.team_id', $tenant->id)
+                ->where('mhr.team_id', $team->id)
                 ->pluck('roles.name')
                 ->all();
 
@@ -131,7 +131,7 @@ class UserInfolist
             }
 
             $items[] = [
-                'tenant' => (string) $tenant->name,
+                'team' => (string) $team->name,
                 'roles' => $labels === [] ? 'sem função' : implode(', ', $labels),
             ];
         }

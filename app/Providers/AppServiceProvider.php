@@ -8,15 +8,24 @@ use App\Events\UserApproved;
 use App\Events\UserRegistered;
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\LogoutResponse;
+use App\Http\Responses\RegistrationResponse;
+use App\Listeners\LogAuthenticationActivity;
 use App\Listeners\NotifyAdminNewUser;
 use App\Listeners\SendUserApprovedEmail;
+use App\Models\AuthenticationLog;
+use App\Models\Membership;
 use App\Models\User as AppUser;
 use App\Models\Video;
+use App\Observers\MembershipObserver;
 use App\Observers\VideoObserver;
+use App\Policies\AuthenticationLogPolicy;
 use App\Support\AppDateTime;
 use App\Tenancy\SpatieTeamResolver as AppSpatieTeamResolver;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
 use Filament\Auth\Http\Responses\Contracts\LogoutResponse as LogoutResponseContract;
+use Illuminate\Auth\Events\Failed;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(FilamentLoginResponse::class, LoginResponse::class);
         $this->app->bind(LogoutResponseContract::class, LogoutResponse::class);
-        $this->app->bind(\Filament\Auth\Http\Responses\Contracts\RegistrationResponse::class, \App\Http\Responses\RegistrationResponse::class);
+        $this->app->bind(\Filament\Auth\Http\Responses\Contracts\RegistrationResponse::class, RegistrationResponse::class);
         $this->app->bind(SpatiePermissionsTeamResolver::class, AppSpatieTeamResolver::class);
     }
 
@@ -57,7 +66,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function configGates(): void
     {
-        Gate::policy(\App\Models\AuthenticationLog::class, \App\Policies\AuthenticationLogPolicy::class);
+        Gate::policy(AuthenticationLog::class, AuthenticationLogPolicy::class);
         Gate::define('viewPulse', fn (AppUser $user): bool => $user->hasRole('admin'));
     }
 
@@ -97,14 +106,19 @@ class AppServiceProvider extends ServiceProvider
         $this->app['events']->listen(UserApproved::class, SendUserApprovedEmail::class);
 
         // Logs de Autenticação (MongoDB)
-        $this->app['events']->listen(\Illuminate\Auth\Events\Login::class, \App\Listeners\LogAuthenticationActivity::class);
-        $this->app['events']->listen(\Illuminate\Auth\Events\Logout::class, \App\Listeners\LogAuthenticationActivity::class);
-        $this->app['events']->listen(\Illuminate\Auth\Events\Failed::class, \App\Listeners\LogAuthenticationActivity::class);
+        $this->app['events']->listen(Login::class, LogAuthenticationActivity::class);
+        $this->app['events']->listen(Logout::class, LogAuthenticationActivity::class);
+        $this->app['events']->listen(Failed::class, LogAuthenticationActivity::class);
     }
 
     private function configObservers(): void
     {
         Video::observe(VideoObserver::class);
 
+        // O pacote laraveldaily/filateams (controller AcceptInvitation, Action
+        // CreateTeam, Livewire MembersTable) usa o model BASE diretamente.
+        // Registramos o observer em ambos para garantir sincronização com Spatie.
+        Membership::observe(MembershipObserver::class);
+        \LaravelDaily\FilaTeams\Models\Membership::observe(MembershipObserver::class);
     }
 }

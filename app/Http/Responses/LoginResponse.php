@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Responses;
 
+use App\Models\Team;
 use App\Models\User;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
 use Filament\Facades\Filament;
@@ -22,10 +23,10 @@ class LoginResponse implements FilamentLoginResponse
         }
 
         if ($user->canAccessPanel(Filament::getPanel('user'))) {
-            /** @var \App\Models\Tenant|null $firstTenant */
-            $firstTenant = $user->tenants()->first();
-            if ($firstTenant) {
-                return redirect()->to('/user/'.$firstTenant->uuid);
+            /** @var Team|null $firstTeam */
+            $firstTeam = $user->teams()->first();
+            if ($firstTeam) {
+                return redirect()->to('/user/'.$firstTeam->slug);
             }
 
             return redirect()->to('/user');

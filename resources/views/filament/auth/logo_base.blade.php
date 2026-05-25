@@ -1,3 +1,7 @@
-<div class="rounded-lg p-1 dark:bg-white/90 transition-colors duration-300 h-full flex items-center">
-    <img src="{{ asset('images/LabSIS_painel.png') }}" alt="LabSIS" class="h-full object-contain" />
+<div class="flex items-center justify-center w-full h-full">
+    <img
+        src="{{ asset('images/labsis_logo_bg.png') }}"
+        alt="LabSIS"
+        class="h-10 w-auto object-contain"
+    >
 </div>

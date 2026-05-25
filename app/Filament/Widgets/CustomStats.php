@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\Filament\Widgets;
 
 use Composer\InstalledVersions;
+use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class CustomStats extends BaseWidget
 {
+    protected ?string $pollingInterval = null;
+
     #[\Override]
     protected function getStats(): array
     {
@@ -38,7 +41,7 @@ class CustomStats extends BaseWidget
         $version = $this->getTailwindVersion();
 
         return Stat::make('Tailwind CSS', str_replace('^', 'v', $version))
-            ->descriptionIcon('heroicon-m-check-circle')
+            ->descriptionIcon(Heroicon::CheckCircle)
             ->icon('icon-tailwind');
     }
 

@@ -4,12 +4,14 @@ namespace App\Filament\Resources\Users\Widgets;
 
 use App\Enums\RoleType;
 use App\Models\User;
+use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Computed;
 
 /**
- * @property-read \Illuminate\Database\Eloquent\Builder $baseQuery
+ * @property-read Builder $baseQuery
  * @property-read int $totalUsers
  * @property-read int $suspendedUsers
  * @property-read int $verifiedUsers
@@ -20,6 +22,8 @@ use Livewire\Attributes\Computed;
 class UsersStats extends BaseWidget
 {
     protected static ?string $color = 'primary';
+
+    protected ?string $pollingInterval = null;
 
     #[Computed]
     protected function baseQuery()
@@ -93,22 +97,22 @@ class UsersStats extends BaseWidget
         return [
             Stat::make('Total de Usuários', number_format($summary['total']))
                 ->description('Cadastrados no sistema')
-                ->icon('heroicon-c-user-group')
+                ->icon(Heroicon::UserGroup)
                 ->color('info'),
 
             Stat::make('Usuários Verificados', number_format($summary['verified']))
                 ->description("{$percentages['verified']}% do total")
-                ->icon('heroicon-c-check-badge')
+                ->icon(Heroicon::CheckBadge)
                 ->color('primary'),
 
             Stat::make('Usuários Suspensos', number_format($summary['suspended']))
                 ->description("{$percentages['suspended']}% do total")
-                ->icon('heroicon-c-no-symbol')
+                ->icon(Heroicon::NoSymbol)
                 ->color('warning'),
 
             Stat::make('Usuários Não Aprovados', number_format($summary['unapproved']))
                 ->description("{$percentages['unapproved']}% do total")
-                ->icon('heroicon-c-clock')
+                ->icon(Heroicon::Clock)
                 ->color('danger'),
         ];
     }

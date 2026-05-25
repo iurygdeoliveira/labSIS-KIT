@@ -3,14 +3,16 @@
 namespace App\Filament\Resources\Media\Pages;
 
 use App\Filament\Resources\Media\MediaResource;
+use App\Models\MediaItem;
 use App\Traits\Filament\HasBackButtonAction;
 use App\Traits\Filament\NotificationsTrait;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Support\Icons\Heroicon;
 use Livewire\Attributes\Computed;
 
 /**
- * @property-read \App\Models\MediaItem|null $record
+ * @property-read MediaItem|null $record
  * @property-read bool $canDelete
  * @property-read string $fileSizeHuman
  * @property-read array $mediaInfo
@@ -41,7 +43,7 @@ class EditMedia extends EditRecord
     {
         $record = $this->record;
 
-        if (! $record instanceof \App\Models\MediaItem) {
+        if (! $record instanceof MediaItem) {
             return [
                 'can_delete' => false,
                 'file_size_human' => '0 B',
@@ -68,10 +70,10 @@ class EditMedia extends EditRecord
     {
         return [
             $this->getBackButtonAction(),
-            $this->getSaveFormAction()->formId('form')->icon('heroicon-s-check'),
+            $this->getSaveFormAction()->formId('form')->icon(Heroicon::Check),
             Action::make('delete')
                 ->label(__('filament-actions::delete.single.label'))
-                ->icon('heroicon-s-trash')
+                ->icon(Heroicon::Trash)
                 ->color('danger')
                 ->url(fn (): string => MediaResource::getUrl('delete', ['record' => $this->getRecord()])),
         ];
@@ -98,7 +100,7 @@ class EditMedia extends EditRecord
     {
         $record = $this->getRecord();
 
-        if (! $record instanceof \App\Models\MediaItem) {
+        if (! $record instanceof MediaItem) {
             return;
         }
 

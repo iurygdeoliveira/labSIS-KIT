@@ -4,75 +4,79 @@ namespace App\Filament\Widgets;
 
 use App\Enums\RoleType;
 use App\Filament\Resources\Media\MediaResource;
-use App\Filament\Resources\Tenants\TenantResource;
+use App\Filament\Resources\Teams\TeamResource;
 use App\Filament\Resources\Users\UserResource;
-use App\Models\Tenant;
+use App\Models\Team;
 use App\Models\User;
 use App\Models\Video;
+use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Computed;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
 /**
- * @property-read array $tenantsData
+ * @property-read array $teamsData
  * @property-read array $usersData
  * @property-read array $mediaData
  * @property-read array $summary
  */
 class SystemStats extends BaseWidget
 {
+    protected ?string $pollingInterval = null;
+
     #[Computed]
-    protected function tenantsData(): array
+    protected function teamsData(): array
     {
-        return Cache::store('redis')->remember('stats:tenants', 60, function (): array {
-            $totalTenants = Tenant::query()->count();
+        return Cache::store('redis')->remember('stats:teams', 60, function (): array {
+            $totalTeams = Team::query()->count('*');
 
-            $approvedTenants = Tenant::query()
-                ->whereHas('users', function (\Illuminate\Contracts\Database\Query\Builder $query): void {
-                    $query->whereHas('roles', function (\Illuminate\Contracts\Database\Query\Builder $roleQuery): void {
+            $approvedTeams = Team::query()
+                ->whereHas('members', function (Builder $query): void {
+                    $query->whereHas('roles', function (Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
                         ->where('is_approved', true);
                 })
-                ->count();
+                ->count('*');
 
-            $activeTenants = Tenant::query()
+            $activeTeams = Team::query()
                 ->where('is_active', true)
-                ->whereHas('users', function (\Illuminate\Contracts\Database\Query\Builder $query): void {
-                    $query->whereHas('roles', function (\Illuminate\Contracts\Database\Query\Builder $roleQuery): void {
+                ->whereHas('members', function (Builder $query): void {
+                    $query->whereHas('roles', function (Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
                         ->where('is_approved', true);
                 })
-                ->count();
+                ->count('*');
 
-            $inactiveTenants = Tenant::query()
+            $inactiveTeams = Team::query()
                 ->where('is_active', false)
-                ->whereHas('users', function (\Illuminate\Contracts\Database\Query\Builder $query): void {
-                    $query->whereHas('roles', function (\Illuminate\Contracts\Database\Query\Builder $roleQuery): void {
+                ->whereHas('members', function (Builder $query): void {
+                    $query->whereHas('roles', function (Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
                         ->where('is_approved', true);
                 })
-                ->count();
+                ->count('*');
 
-            $unapprovedTenants = Tenant::query()
-                ->whereDoesntHave('users', function (\Illuminate\Contracts\Database\Query\Builder $query): void {
-                    $query->whereHas('roles', function (\Illuminate\Contracts\Database\Query\Builder $roleQuery): void {
+            $unapprovedTeams = Team::query()
+                ->whereDoesntHave('members', function (Builder $query): void {
+                    $query->whereHas('roles', function (Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
                         ->where('is_approved', true);
                 })
-                ->count();
+                ->count('*');
 
             return [
-                'total' => $totalTenants,
-                'approved' => $approvedTenants,
-                'active' => $activeTenants,
-                'inactive' => $inactiveTenants,
-                'unapproved' => $unapprovedTenants,
+                'total' => $totalTeams,
+                'approved' => $approvedTeams,
+                'active' => $activeTeams,
+                'inactive' => $inactiveTeams,
+                'unapproved' => $unapprovedTeams,
             ];
         });
     }
@@ -84,21 +88,21 @@ class SystemStats extends BaseWidget
             $baseQuery = User::query()
                 ->whereDoesntHave('roles', fn ($q) => $q->where('name', RoleType::ADMIN->value));
 
-            $totalUsers = $baseQuery->count();
+            $totalUsers = $baseQuery->count('*');
 
             $activeUsers = (clone $baseQuery)
                 ->where('is_suspended', false)
                 ->where('is_approved', true)
-                ->count();
+                ->count('*');
 
             $suspendedUsers = (clone $baseQuery)
                 ->where('is_suspended', true)
-                ->count();
+                ->count('*');
 
             $unapprovedUsers = (clone $baseQuery)
                 ->where('is_suspended', false)
                 ->where('is_approved', false)
-                ->count();
+                ->count('*');
 
             return [
                 'total' => $totalUsers,
@@ -116,10 +120,10 @@ class SystemStats extends BaseWidget
             $images = SpatieMedia::query()
                 ->where('mime_type', 'like', 'image/%')
                 ->where('collection_name', '!=', 'avatar')
-                ->count();
-            $videos = Video::query()->count();
-            $audios = SpatieMedia::query()->where('mime_type', 'like', 'audio/%')->count();
-            $documents = SpatieMedia::query()->where('mime_type', 'like', 'application/%')->count();
+                ->count('*');
+            $videos = Video::query()->count('*');
+            $audios = SpatieMedia::query()->where('mime_type', 'like', 'audio/%')->count('*');
+            $documents = SpatieMedia::query()->where('mime_type', 'like', 'application/%')->count('*');
             $totalMedia = $images + $videos + $audios + $documents;
 
             $totalSizeBytes = (int) SpatieMedia::query()
@@ -138,7 +142,7 @@ class SystemStats extends BaseWidget
     protected function summary(): array
     {
         return [
-            'tenants' => $this->tenantsData,
+            'teams' => $this->teamsData,
             'users' => $this->usersData,
             'media' => $this->mediaData,
         ];
@@ -150,16 +154,16 @@ class SystemStats extends BaseWidget
         $s = $this->summary;
 
         return [
-            // Widget Tenants
-            Stat::make('Tenants', number_format($s['tenants']['total']))
+            // Widget Teams
+            Stat::make('Teams', number_format($s['teams']['total']))
                 ->description(
-                    'Aprovados: '.number_format($s['tenants']['approved']).' | '.
-                    'Ativos: '.number_format($s['tenants']['active']).' | '.
-                    'Inativos: '.number_format($s['tenants']['inactive']).' | '.
-                    'Não Aprovados: '.number_format($s['tenants']['unapproved'])
+                    'Aprovados: '.number_format($s['teams']['approved']).' | '.
+                    'Ativos: '.number_format($s['teams']['active']).' | '.
+                    'Inativos: '.number_format($s['teams']['inactive']).' | '.
+                    'Não Aprovados: '.number_format($s['teams']['unapproved'])
                 )
-                ->icon('heroicon-c-building-office')
-                ->url(TenantResource::getUrl()),
+                ->icon(Heroicon::BuildingOffice)
+                ->url(TeamResource::getUrl()),
 
             // Widget Usuários
             Stat::make('Usuários', number_format($s['users']['total']))
@@ -168,7 +172,7 @@ class SystemStats extends BaseWidget
                     'Suspensos: '.number_format($s['users']['suspended']).' | '.
                     'Não Aprovados: '.number_format($s['users']['unapproved'])
                 )
-                ->icon('heroicon-c-user-group')
+                ->icon(Heroicon::UserGroup)
                 ->url(UserResource::getUrl()),
 
             // Widget Mídia

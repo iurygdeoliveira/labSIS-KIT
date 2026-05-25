@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\UuidTrait;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Spatie\MediaLibrary\HasMedia;
 /**
  * @property int $id
  * @property string $uuid
@@ -17,15 +17,15 @@ use Spatie\MediaLibrary\HasMedia;
  * @property bool $video
  * @property string|null $mime_type
  * @property int|null $size
- * @property string|null $tenant_id
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property int|null $team_id
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property-read string $file_type
  * @property-read string $human_size
  * @property-read string|null $image_url
  * @property-read string|null $collection_name
- * @property-read \App\Models\Video|null $videoRelation
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read Video|null $videoRelation
+ * @property-read MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|MediaItem newModelQuery()
@@ -38,7 +38,10 @@ use Spatie\MediaLibrary\HasMedia;
  *
  * @mixin \Eloquent
  */
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MediaItem extends Model implements HasMedia
 {
@@ -54,7 +57,7 @@ class MediaItem extends Model implements HasMedia
         'video',
         'mime_type',
         'size',
-        'tenant_id',
+        'team_id',
     ];
 
     protected $appends = [
@@ -107,7 +110,7 @@ class MediaItem extends Model implements HasMedia
     {
         $media = $this->getFirstMedia('media');
 
-        if (! $media instanceof \Spatie\MediaLibrary\MediaCollections\Models\Media) {
+        if (! $media instanceof Media) {
             return null;
         }
 
@@ -134,7 +137,7 @@ class MediaItem extends Model implements HasMedia
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Video, $this>
+     * @return HasOne<Video, $this>
      */
     public function video(): HasOne
     {
@@ -142,10 +145,10 @@ class MediaItem extends Model implements HasMedia
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Tenant, $this>
+     * @return BelongsTo<Team, $this>
      */
-    public function tenant(): BelongsTo
+    public function team(): BelongsTo
     {
-        return $this->belongsTo(Tenant::class);
+        return $this->belongsTo(Team::class);
     }
 }

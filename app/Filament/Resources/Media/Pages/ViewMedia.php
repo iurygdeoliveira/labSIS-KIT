@@ -3,13 +3,15 @@
 namespace App\Filament\Resources\Media\Pages;
 
 use App\Filament\Resources\Media\MediaResource;
+use App\Models\MediaItem;
 use App\Traits\Filament\HasBackButtonAction;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 
 /**
- * @property \App\Models\MediaItem $record
+ * @property MediaItem $record
  */
 class ViewMedia extends ViewRecord
 {
@@ -21,7 +23,7 @@ class ViewMedia extends ViewRecord
     {
         return [
             $this->getBackButtonAction(),
-            EditAction::make()->icon('heroicon-s-pencil'),
+            EditAction::make()->icon(Heroicon::Pencil),
         ];
     }
 
@@ -29,7 +31,7 @@ class ViewMedia extends ViewRecord
     {
         $record = $this->getRecord();
 
-        if (! $record instanceof \App\Models\MediaItem) {
+        if (! $record instanceof MediaItem) {
             return 'Visualizar Mídia';
         }
 

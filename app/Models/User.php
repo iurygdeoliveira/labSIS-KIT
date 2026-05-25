@@ -9,24 +9,31 @@ use App\Notifications\Auth\ResetPasswordNotification;
 use App\Traits\Filament\AppAuthenticationRecoveryCodes;
 use App\Traits\Filament\AppAuthenticationSecret;
 use App\Traits\UuidTrait;
+use Carbon\CarbonImmutable;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Models\Contracts\FilamentUser;
-use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
+use LaravelDaily\FilaTeams\Concerns\HasTeams;
+use LaravelDaily\FilaTeams\Contracts\HasTeamMembership;
+use MongoDB\Laravel\Eloquent\HybridRelations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -36,7 +43,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $email
  * @property string $password
  * @property bool $is_suspended
- * @property \Carbon\CarbonImmutable|null $suspended_at
+ * @property CarbonImmutable|null $suspended_at
  * @property bool $is_approved
  * @property int|null $approved_by
  * @property string|null $suspension_reason
@@ -46,16 +53,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $locale
  * @property string|null $custom_fields
  * @property string|null $remember_token
- * @property \Carbon\CarbonImmutable|null $email_verified_at
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property CarbonImmutable|null $email_verified_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property \Carbon\CarbonImmutable|null $last_login_at
+ * @property CarbonImmutable|null $last_login_at
  * @property string|null $last_login_ip
  *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
@@ -83,28 +90,28 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
- * @method bool isOwnerOfTenant(Tenant $tenant)
- * @method bool isUserOfTenant(Tenant $tenant)
- * @method \Illuminate\Support\Collection getRolesForTenant(Tenant $tenant)
- * @method bool hasAnyRoleInTenant(Tenant $tenant)
- * @method bool hasOwnerRoleInAnyTenant()
- * @method void assignRoleInTenant(Role $role, Tenant $tenant)
- * @method void removeRoleFromTenant(string $roleName, Tenant $tenant)
- * @method void removeAllUserRolesFromTenant(Tenant $tenant)
- * @method void removeAllOwnerRolesFromTenant(Tenant $tenant)
- * @method \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Tenant, \App\Models\User> tenants()
+ * @method bool isOwnerOfTeam(Team $team)
+ * @method bool isUserOfTeam(Team $team)
+ * @method \Illuminate\Support\Collection getRolesForTeam(Team $team)
+ * @method bool hasAnyRoleInTeam(Team $team)
+ * @method bool hasOwnerRoleInAnyTeam()
+ * @method void assignRoleInTeam(Role $role, Team $team)
+ * @method void removeRoleFromTeam(string $roleName, Team $team)
+ * @method void removeAllUserRolesFromTeam(Team $team)
+ * @method void removeAllOwnerRolesFromTeam(Team $team)
  * @method \Illuminate\Database\Eloquent\Relations\MorphToMany<\Spatie\Permission\Models\Role, \App\Models\User> rolesWithTeams()
  *
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasMedia, HasTenants, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasMedia, HasTeamMembership, MustVerifyEmail
 {
     use AppAuthenticationRecoveryCodes;
     use AppAuthenticationSecret;
     use HasFactory;
     use HasRoles;
+    use HasTeams;
+    use HybridRelations;
     use InteractsWithMedia;
-    use \MongoDB\Laravel\Eloquent\HybridRelations;
     use Notifiable;
     use UuidTrait;
 
@@ -164,7 +171,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     // ==========================================
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, $this>
+     * @return BelongsTo<User, $this>
      */
     public function approvedByUser(): BelongsTo
     {
@@ -172,16 +179,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Tenant, $this, \Illuminate\Database\Eloquent\Relations\Pivot>
-     */
-    public function tenants(): BelongsToMany
-    {
-        return $this->belongsToMany(Tenant::class, 'tenant_user')
-            ->withTimestamps();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany<\App\Models\Role, $this, \Illuminate\Database\Eloquent\Relations\MorphPivot>
+     * @return MorphToMany<Role, $this, MorphPivot>
      */
     public function rolesWithTeams(): MorphToMany
     {
@@ -196,23 +194,23 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function authentications()
     {
-        return $this->morphMany(\App\Models\AuthenticationLog::class, 'authenticatable')->latest('login_at');
+        return $this->morphMany(AuthenticationLog::class, 'authenticatable')->latest('login_at');
     }
 
     public function latestAuthentication()
     {
-        return $this->morphOne(\App\Models\AuthenticationLog::class, 'authenticatable')->latestOfMany('login_at');
+        return $this->morphOne(AuthenticationLog::class, 'authenticatable')->latestOfMany('login_at');
     }
 
     // ==========================================
     // Scopes
     // ==========================================
 
-    #[\Illuminate\Database\Eloquent\Attributes\Scope]
-    protected function withRolesForTenant($query, Tenant $tenant): void
+    #[Scope]
+    protected function withRolesForTeam($query, Team $team): void
     {
         $query->with([
-            'rolesWithTeams' => fn ($q) => $q->where('model_has_roles.team_id', $tenant->id),
+            'rolesWithTeams' => fn ($q) => $q->where('model_has_roles.team_id', $team->id),
         ]);
     }
 
@@ -243,11 +241,11 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
                 return true;
             }
 
-            if ($this->hasOwnerRoleInAnyTenant()) {
+            if ($this->hasOwnerRoleInAnyTeam()) {
                 return true;
             }
 
-            return $this->tenants()->exists();
+            return $this->teams()->exists();
         }
 
         return false;
@@ -255,7 +253,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function canAccessTenant(Model $tenant): bool
     {
-        if (! $tenant instanceof Tenant) {
+        if (! $tenant instanceof Team) {
             return false;
         }
 
@@ -263,23 +261,23 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             return false;
         }
 
-        return $this->tenants()->whereKey($tenant->getKey())->exists();
+        return $this->teams()->whereKey($tenant->getKey())->exists();
     }
 
     public function getTenants(Panel $panel): array|Collection
     {
-        if ($this->cachedTenants instanceof \Illuminate\Support\Collection) {
+        if ($this->cachedTenants instanceof Collection) {
             return $this->cachedTenants;
         }
 
-        return $this->cachedTenants = $this->tenants()->where('is_active', true)->get();
+        return $this->cachedTenants = $this->teams()->where('is_active', true)->get();
     }
 
     public function getFilamentAvatarUrl(): ?string
     {
         $media = $this->getFirstMedia('avatar');
 
-        if ($media instanceof \Spatie\MediaLibrary\MediaCollections\Models\Media) {
+        if ($media instanceof Media) {
             try {
                 return $media->getUrl();
             } catch (\Throwable) {
@@ -310,54 +308,54 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     }
 
     // ==========================================
-    // Tenant & Role Logic (Business Logic)
+    // Team & Role Logic (Business Logic)
     // ==========================================
 
-    public function isOwnerOfTenant(Tenant $tenant): bool
+    public function isOwnerOfTeam(Team $team): bool
     {
-        return $this->getRoleQueryBuilder($tenant)
+        return $this->getRoleQueryBuilder($team)
             ->where('roles.name', RoleType::OWNER->value)
             ->exists();
     }
 
-    public function isUserOfTenant(Tenant $tenant): bool
+    public function isUserOfTeam(Team $team): bool
     {
-        return $this->getRoleQueryBuilder($tenant)
+        return $this->getRoleQueryBuilder($team)
             ->where('roles.name', RoleType::USER->value)
             ->exists();
     }
 
-    public function hasAnyRoleInTenant(Tenant $tenant): bool
+    public function hasAnyRoleInTeam(Team $team): bool
     {
-        return $this->getRoleQueryBuilder($tenant)->exists();
+        return $this->getRoleQueryBuilder($team)->exists();
     }
 
-    public function hasOwnerRoleInAnyTenant(): bool
+    public function hasOwnerRoleInAnyTeam(): bool
     {
         return $this->rolesWithTeams()
             ->where('roles.name', RoleType::OWNER->value)
             ->exists();
     }
 
-    public function getRolesForTenant(Tenant $tenant): Collection
+    public function getRolesForTeam(Team $team): Collection
     {
-        return $this->getRoleQueryBuilder($tenant)
+        return $this->getRoleQueryBuilder($team)
             ->select('roles.*')
             ->get();
     }
 
-    public function assignRoleInTenant(Role $role, Tenant $tenant): void
+    public function assignRoleInTeam(Role $role, Team $team): void
     {
         $this->rolesWithTeams()->syncWithoutDetaching([
-            $role->getKey() => ['team_id' => $tenant->id],
+            $role->getKey() => ['team_id' => $team->id],
         ]);
     }
 
-    public function removeRoleFromTenant(string $roleName, Tenant $tenant): void
+    public function removeRoleFromTeam(string $roleName, Team $team): void
     {
         $role = Role::query()
             ->where('name', $roleName)
-            ->where('team_id', $tenant->id)
+            ->where('team_id', $team->id)
             ->first();
 
         if (! $role) {
@@ -365,15 +363,15 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         $this->rolesWithTeams()
-            ->wherePivot('team_id', $tenant->id)
+            ->wherePivot('team_id', $team->id)
             ->detach($role->getKey());
     }
 
-    public function removeAllUserRolesFromTenant(Tenant $tenant): void
+    public function removeAllUserRolesFromTeam(Team $team): void
     {
         $roleIds = Role::query()
             ->where('name', RoleType::USER->value)
-            ->where('team_id', $tenant->id)
+            ->where('team_id', $team->id)
             ->pluck('id');
 
         if ($roleIds->isEmpty()) {
@@ -381,15 +379,15 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         $this->rolesWithTeams()
-            ->wherePivot('team_id', $tenant->id)
+            ->wherePivot('team_id', $team->id)
             ->detach($roleIds->toArray());
     }
 
-    public function removeAllOwnerRolesFromTenant(Tenant $tenant): void
+    public function removeAllOwnerRolesFromTeam(Team $team): void
     {
         $roleIds = Role::query()
             ->where('name', RoleType::OWNER->value)
-            ->where('team_id', $tenant->id)
+            ->where('team_id', $team->id)
             ->pluck('id');
 
         if ($roleIds->isEmpty()) {
@@ -397,16 +395,16 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         $this->rolesWithTeams()
-            ->wherePivot('team_id', $tenant->id)
+            ->wherePivot('team_id', $team->id)
             ->detach($roleIds->toArray());
     }
 
-    private function getRoleQueryBuilder(Tenant $tenant): Builder
+    private function getRoleQueryBuilder(Team $team): Builder
     {
         return Role::query()
             ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
             ->where('mhr.model_type', self::class)
             ->where('mhr.model_id', $this->id)
-            ->where('mhr.team_id', $tenant->id);
+            ->where('mhr.team_id', $team->id);
     }
 }

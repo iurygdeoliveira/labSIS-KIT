@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Users\Actions;
 
 use App\Filament\Resources\Users\UserResource;
 use Filament\Actions\Action;
+use Filament\Facades\Filament;
+use Filament\Support\Icons\Heroicon;
 
 class DeleteUserAction
 {
@@ -11,10 +13,10 @@ class DeleteUserAction
     {
         return Action::make('delete')
             ->label('Excluir')
-            ->icon('heroicon-s-trash')
+            ->icon(Heroicon::Trash)
             ->color('danger')
             ->visible(
-                fn ($record): bool => \Filament\Facades\Filament::auth()->user()?->can('delete', $record) ?? false
+                fn ($record): bool => Filament::auth()->user()?->can('delete', $record) ?? false
             )
             ->url(fn ($record): string => UserResource::getUrl('delete', ['record' => $record]))
             ->openUrlInNewTab(false);

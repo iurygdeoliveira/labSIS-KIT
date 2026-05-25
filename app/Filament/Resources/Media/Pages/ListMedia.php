@@ -8,6 +8,7 @@ use Aws\S3\S3Client;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Icons\Heroicon;
 
 class ListMedia extends ListRecords
 {
@@ -18,7 +19,7 @@ class ListMedia extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()->icon('heroicon-s-plus'),
+            CreateAction::make()->icon(Heroicon::Plus),
         ];
     }
 
@@ -60,10 +61,10 @@ class ListMedia extends ListRecords
             ->modal()
             ->modalHeading('Bucket LabSIS não encontrado')
             ->modalDescription('O bucket "labsis" não existe no MinIO ou não está acessível. É necessário criar o bucket "labsis" manualmente no MinIO para que a gestão de midias funcione corretamente.')
-            ->modalIcon('heroicon-o-exclamation-triangle')
+            ->modalIcon(Heroicon::OutlinedExclamationTriangle)
             ->modalIconColor('warning')
             ->modalSubmitAction(false)
-            ->modalCancelAction(fn (Action $action): \Filament\Actions\Action => $action
+            ->modalCancelAction(fn (Action $action): Action => $action
                 ->label('Entendi')
                 ->color('warning')
             )

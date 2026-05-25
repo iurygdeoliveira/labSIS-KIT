@@ -16,14 +16,15 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use LaravelDaily\FilaTeams\Concerns\HasTeams;
 use Override;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    // Define o relacionamento de pertença ao tenant para este Resource
-    protected static ?string $tenantOwnershipRelationshipName = 'tenants';
+    /** @see HasTeams::teams() */
+    protected static ?string $tenantOwnershipRelationshipName = 'teams';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::UserGroup;
 
@@ -49,25 +50,25 @@ class UserResource extends Resource
         return 'uuid';
     }
 
-    #[\Override]
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return UserForm::configure($schema);
     }
 
-    #[\Override]
+    #[Override]
     public static function infolist(Schema $schema): Schema
     {
         return UserInfolist::configure($schema);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return UsersTable::configure($table);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [

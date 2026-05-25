@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\RoleType;
-use App\Models\Tenant;
+use App\Models\Team;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
@@ -12,6 +12,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Auth;
 
 class UserForm
@@ -20,8 +21,8 @@ class UserForm
     {
         return $schema
             ->components([
-                Section::make('Tenant')
-                    ->description('Selecione o tenant ao qual o usuário pertence')
+                Section::make('Team')
+                    ->description('Selecione o team ao qual o usuário pertence')
                     ->columnSpanFull()
                     ->visible(fn (string $operation): bool => self::shouldShowTenantField($operation))
                     ->components(self::getTenantFields()),
@@ -42,10 +43,10 @@ class UserForm
     {
         return [
             Select::make('tenant_id')
-                ->label('Tenant')
-                ->options(fn (): array => Tenant::query()
+                ->label('Team')
+                ->options(fn (): array => Team::query()
                     ->where('is_active', true)
-                    ->orderBy('name')
+                    ->orderBy('name', 'asc')
                     ->pluck('name', 'id')
                     ->all())
                 ->searchable()
@@ -73,8 +74,8 @@ class UserForm
                 ->label(fn (Get $get): string => $get('is_suspended') ? 'Usuário suspenso' : 'Usuário com acesso liberado')
                 ->onColor('danger')
                 ->offColor('primary')
-                ->onIcon('heroicon-c-no-symbol')
-                ->offIcon('heroicon-c-check')
+                ->onIcon(Heroicon::NoSymbol)
+                ->offIcon(Heroicon::Check)
                 ->default(fn ($record): bool => (bool) ($record?->is_suspended))
                 ->disabled(fn (?User $record): bool => $record?->getKey() === Auth::id())
                 ->hint(fn (?User $record): ?string => $record?->getKey() === Auth::id() ? __('Você não pode suspender a si mesmo.') : null)

@@ -7,11 +7,11 @@ use App\Filament\Resources\Media\MediaResource;
 use App\Filament\Resources\Users\UserResource;
 use App\Filament\Widgets\CustomStats;
 use App\Http\Middleware\TeamSyncMiddleware;
-use App\Models\Tenant;
+use App\Models\Team;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
+use LaravelDaily\FilaTeams\Pages\CreateTeamPage;
+use LaravelDaily\FilaTeams\Pages\EditTeam;
 
 class UserPanelProvider extends BasePanelProvider
 {
@@ -20,11 +20,12 @@ class UserPanelProvider extends BasePanelProvider
     {
         // Configurações compartilhadas (Base define id/path via getPanelId/getPanelPath)
         $panel = parent::panel($panel);
-        $panel = $this->applySharedPlugins($panel);
 
         // Particularidades do painel user
         $panel = $panel
-            ->tenant(Tenant::class, slugAttribute: 'uuid', ownershipRelationship: 'tenants')
+            ->tenant(Team::class, slugAttribute: 'slug', ownershipRelationship: 'teams')
+            ->tenantRegistration(CreateTeamPage::class)
+            ->tenantProfile(EditTeam::class)
             ->tenantMenu(true)
             ->resources([
                 UserResource::class,
@@ -36,8 +37,6 @@ class UserPanelProvider extends BasePanelProvider
                 Dashboard::class,
             ])
             ->widgets([
-                // AccountWidget::class,
-                // FilamentInfoWidget::class,
                 CustomStats::class,
             ])
             ->tenantMiddleware([

@@ -1,103 +1,75 @@
-### Tenancy (single database) e “teams” do Spatie Permission
+### Multi-organização (single database), FilaTeams e “teams” do Spatie Permission
 
-Quando falamos de multi-tenant em single database, estamos dizendo que todos os dados vivem nas mesmas tabelas, mas cada registro “pertence” a um tenant específico através de uma coluna como `tenant_id`. Isso resolve o isolamento dos DADOS: cada mídia, cada vídeo, cada item de negócio aponta para o seu tenant por meio do `tenant_id`.
+Em single database, os dados de todas as organizações vivem nas mesmas tabelas; o isolamento lógico é feito por **chave estrangeira para a organização ativa**. No domínio da aplicação isso é o modelo **`Team`** (tabela `teams`), com vínculo N:N em **`team_members`** (pacote `laraveldaily/filateams`). Exemplos: `media_items.team_id`, `videos.team_id` apontam para `teams.id`.
 
-Controle de acesso (RBAC) é um problema diferente do dado em si. Em vez de isolar registros, precisamos isolar quais papéis e permissões um usuário possui em cada tenant. É aqui que entram os “teams” do Spatie Permission: eles adicionam um escopo (`team_id`) nas relações de papéis e permissões. Na prática, isso permite que o mesmo usuário tenha, por exemplo, o papel “User” no Tenant A e nenhum papel no Tenant B, ou ainda que tenha permissão de “editar mídias” em um tenant e não no outro. Tudo isso sem colisão de nomes nem gambiarras, porque cada vínculo de role/permission fica salvo com o `team_id` correto.
+O **RBAC** (quem pode o quê) é um problema separado do “dono do registro”. O Spatie Permission com **teams** adiciona `team_id` em `roles`, `model_has_roles` e `model_has_permissions`. Aqui, **`team_id` referencia `teams.id`** — o mesmo identificador da organização no FilaTeams. Assim, o mesmo usuário pode ser `Owner` no Team A e apenas `User` no Team B, com permissões distintas por contexto, sem colisão de nomes de role.
 
-Neste projeto, o `SpatieTeamResolver` integra esse conceito com o Filament. Quando você está no painel do admin (sem tenant selecionado), o resolver retorna `0` como `team_id`, que usamos como “time global”. Já no dia a dia, você navega no painel do usuário e escolhe o tenant pelo menu de tenant. Ao selecionar um tenant nesse menu, o resolver passa a retornar o `id` desse tenant como `team_id`. Assim, qualquer checagem de autorização feita pelo Spatie (como `hasRole`, `can`, `hasPermissionTo`) automaticamente considera o tenant selecionado no painel do usuário. Você não precisa ficar filtrando “na unha”: o escopo do time já está embutido nas consultas do pacote.
+A **UI de equipes** (switcher no header, criar equipe, `/user/{slug}/settings` com membros, papéis no pivot, convites com expiração) vem do **FilaTeams**, integrado ao painel Filament `user` via `tenant(Team::class, slugAttribute: 'slug')`, `tenantRegistration` e `tenantProfile`. O Filament continua usando o vocabulário interno **`tenant`** na API (`getTenant()`, parâmetro de rota `{tenant:slug}`, `canAccessTenant(Model $tenant)`): na prática o modelo é sempre **`Team`**.
 
-Em resumo, o `tenant_id` mantém os REGISTROS no seu condomínio certo, enquanto o `team_id` mantém os CRACHÁS (roles) e CHAVES (permissions) válidos apenas dentro daquele condomínio. É por isso que usamos as duas coisas ao mesmo tempo: `tenant_id` garante isolação de dados; “teams” garantem isolação de regras de acesso. Essa combinação dá segurança e previsibilidade: cada tenant enxerga seus dados e aplica suas próprias regras, enquanto o painel admin (time 0) continua com uma visão e um controle globais, sem conflitar com o que acontece dentro dos tenants.
+O **`SpatieTeamResolver`** liga o tenant Filament ao `PermissionRegistrar`: no painel **admin** (sem organização selecionada) o contexto global usa `team_id = 0`. No painel **user**, ao navegar em `/user/{slug}/…`, o resolver usa o `id` do `Team` atual como `team_id` do Spatie. Checagens como `hasRole`, `can` e `hasPermissionTo` passam a considerar esse contexto.
 
-## Sistema Multi-Tenant
+O **`TeamSyncMiddleware`** alinha o resolver ao **slug** da rota (ou ao primeiro team ativo do usuário), e **invalida** relações em memória (`roles`, `permissions`) e o cache do Spatie ao trocar de equipe na mesma requisição — evitando vazamento de permissões entre teams.
 
-O sistema implementa um ambiente multi-tenant completo onde cada organização possui seus próprios usuários, dados e permissões isoladas.
+O pivot **`team_members.role`** (valores do enum de app `AppTeamRole`: `owner`, `member`) é espelhado para o Spatie pelo **`MembershipObserver`**: a fonte de verdade para autorização de negócio continua sendo **Spatie** (`RoleType::OWNER`, `RoleType::USER` por `team_id`).
 
-### Arquitetura Multi-Tenant
+Em resumo: **`team_id` em dados de domínio** e **`team_id` no Spatie** apontam para a mesma entidade **`teams`**. O FilaTeams cuida de **membros e convites**; o Spatie cuida de **permissões**; o middleware e o resolver mantêm o **contexto** coerente.
 
-**Modelos Principais**:
-- **`Tenant`**: Representa uma organização/empresa
-- **`User`**: Usuários que podem pertencer a múltiplos tenants
-- **`TenantUser`**: Tabela pivot para relacionamento many-to-many
-- **`Role`**: Roles específicas por tenant (Owner, User)
+## Sistema multi-organização (teams)
 
-**Isolamento de Dados**:
-- Cada tenant possui suas próprias roles e permissões
-- Usuários podem ter diferentes roles em diferentes tenants
-- Permissões são verificadas no contexto do tenant atual
-- Dados são filtrados automaticamente por tenant
+Cada **team** representa uma organização com membros, slug único para URLs (`/user/{slug}`), flag `is_active` e integração com o painel.
 
-### Hierarquia de Acesso
+### Arquitetura
 
-1. **Admin (Global)**: Acesso total a todos os tenants e recursos
-2. **Owner (Por Tenant)**: Acesso total dentro do tenant específico
-3. **User (Por Tenant)**: Acesso baseado em permissões específicas dentro do tenant
+**Modelos e pacotes principais**
 
-### Sincronização de Permissões
+- **`App\Models\Team`**: estende o `Team` do FilaTeams; campos extras (`is_active`); relação com mídias/vídeos.
+- **`App\Models\User`**: `HasTeams` + `HasTeamMembership` (FilaTeams) + `HasRoles` (Spatie); implementa os contratos Filament que ainda falam em “tenant” mas operam em `Team`.
+- **`App\Models\Membership`**: pivot `team_members` (role no pivot sincronizada com Spatie).
+- **`App\Models\Role`**: roles do Spatie com `team_id` → `teams.id`.
 
-O `TeamSyncMiddleware` garante que as permissões sejam verificadas no contexto correto:
+**Isolamento**
+
+- Papéis e permissões são avaliados no contexto do team atual (`team_id` do Spatie).
+- Dados de domínio ligados à organização usam `team_id` onde aplicável.
+- Policies e queries do painel `user` devem considerar `Filament::getTenant()` como instância de `Team`.
+
+### Hierarquia de acesso
+
+1. **Admin (global)**: `team_id = 0` no resolver; acesso ao painel admin e a recursos globais conforme role `Admin`.
+2. **Owner (por team)**: no pivot / Spatie como Owner daquele `teams.id`; permissões amplas dentro do team (inclui UI FilaTeams de gestão quando autorizado).
+3. **User (por team)**: colaborador com permissões granulares definidas no cluster **Permissions** e nas roles Spatie daquele `team_id`.
+
+### Sincronização de contexto Spatie
+
+O middleware mantém o resolver alinhado ao team da rota:
 
 ```php
-// Sincroniza permissões com tenant atual
-$resolver = app(SpatieTeamResolver::class);
-$resolver->setPermissionsTeamId($tenant->getKey());
+resolve(\App\Tenancy\SpatieTeamResolver::class)->setPermissionsTeamId($teamId);
+// Em seguida: unset relations + forgetCachedPermissions() quando aplicável
 ```
 
-## Controle de Acesso aos Painéis
+Arquivo de referência: `app/Http/Middleware/TeamSyncMiddleware.php`.
 
-### Método canAccessPanel
+## Controle de acesso aos painéis
 
-Arquivo: `app/Models/User.php`
+### Método `canAccessPanel`
 
-Implementa lógica de controle de acesso baseada em status e roles:
+Arquivo: `app/Models/User.php`.
 
-**Regras de Acesso**:
+**Regras resumidas**
 
-1. **Painel Auth**: Sempre permitido (viabiliza login unificado)
-2. **Usuários Suspensos**: Bloqueados em todos os painéis
-3. **E-mail Não Verificado**: Bloqueados em painéis de aplicação
-4. **Painel Admin**: Apenas usuários com role `Admin`
-5. **Painel User**: Usuários com roles `User` ou `Owner`, ou vinculados a tenants
+1. **Painel `auth`**: sempre permitido (login unificado).
+2. **Suspensos / e-mail não verificado**: bloqueados nos painéis de aplicação.
+3. **Painel `admin`**: apenas role global `Admin`.
+4. **Painel `user`**: role global `User`, ou **owner em algum team**, ou **membro de algum team** (`teams()`).
 
-**Implementação**:
-```php
-public function canAccessPanel(Panel $panel): bool
-{
-    // Painel auth sempre permitido
-    if ($panel->getId() === 'auth') {
-        return true;
-    }
+A coleção retornada por `getTenants()` (contrato Filament) é na prática a lista de **`Team`** ativos aos quais o usuário pertence.
 
-    // Usuários suspensos bloqueados
-    if ($this->isSuspended()) {
-        return false;
-    }
+## Referências no código
 
-    // E-mail deve ser verificado
-    if (!$this->hasVerifiedEmail()) {
-        return false;
-    }
-
-    // Painel admin: apenas Admin
-    if ($panel->getId() === 'admin') {
-        return $this->hasRole(RoleType::ADMIN->value);
-    }
-
-    // Painel user: User, Owner ou vinculado a tenants
-    if ($panel->getId() === 'user') {
-        return $this->hasRole(RoleType::USER->value) ||
-               $this->hasOwnerRoleInAnyTenant() ||
-               $this->tenants()->exists();
-    }
-
-    return false;
-}
-```
-
-## Referências
-
-- [Model: Tenant](/app/Models/Tenant.php)
+- [Model: Team](/app/Models/Team.php)
 - [Resolver: SpatieTeamResolver](/app/Tenancy/SpatieTeamResolver.php)
 - [Middleware: TeamSyncMiddleware](/app/Http/Middleware/TeamSyncMiddleware.php)
-
-
-
+- [Observer: MembershipObserver](/app/Observers/MembershipObserver.php)
+- [Config: filateams](/config/filateams.php)
+- [Painel: UserPanelProvider](/app/Providers/Filament/UserPanelProvider.php)
