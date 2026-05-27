@@ -1,16 +1,44 @@
 /*
  * Icons - DANGER (Vermelho)
- * Estilos de ícones usando a paleta danger (#D93223)
+ * Ícones de .fi-btn → danger/buttons.css | Ícones de .fi-link → herdam cor do link
  */
 
 .fi-icon.fi-color-danger,
-.fi-color-danger .fi-icon,
+.fi-badge.fi-color-danger .fi-icon,
 svg.fi-color-danger {
     color: var(--color-danger-500) !important;
 }
 
+.fi-link.fi-color-danger .fi-icon,
+.fi-link.fi-color-danger svg {
+    color: inherit !important;
+}
+
+:is(.dark) .fi-icon.fi-color-danger,
+:is(.dark) .fi-badge.fi-color-danger .fi-icon,
+:is(.dark) .fi-tabs-item.fi-color-danger .fi-icon,
+:is(.dark) svg.fi-color-danger {
+    color: var(--color-danger-600) !important;
+}
+
+:is(.dark) .fi-link.fi-color-danger .fi-icon,
+:is(.dark) .fi-link.fi-color-danger svg {
+    color: inherit !important;
+}
+
 .fi-icon.fi-color-danger:hover,
-.fi-color-danger:hover .fi-icon,
+.fi-badge.fi-color-danger:hover .fi-icon,
 svg.fi-color-danger:hover {
     color: var(--color-danger-600) !important;
+}
+
+:is(.dark) .fi-icon.fi-color-danger:hover,
+:is(.dark) .fi-badge.fi-color-danger:hover .fi-icon,
+:is(.dark) svg.fi-color-danger:hover {
+    color: var(--color-danger-700) !important;
+}
+
+:is(.dark) .fi-link.fi-color-danger:hover .fi-icon,
+:is(.dark) .fi-link.fi-color-danger:hover svg {
+    color: inherit !important;
 }

@@ -1,19 +1,34 @@
 /*
  * Buttons - DANGER (Vermelho)
- * Estilos de botões usando a paleta danger (#D93223)
+ * Escopo: apenas .fi-btn — não afeta .fi-link (ações de tabela do Filament)
  */
 
 .fi-btn.fi-color-danger,
-button.fi-color-danger,
 a.fi-btn.fi-color-danger {
     background-color: var(--color-danger-500) !important;
     border-color: var(--color-danger-600) !important;
     color: white !important;
 }
 
+:is(.dark) .fi-btn.fi-color-danger,
+:is(.dark) a.fi-btn.fi-color-danger {
+    background-color: var(--color-danger-500) !important;
+    border-color: var(--color-danger-600) !important;
+    color: white !important;
+    white-space: nowrap;
+    width: auto;
+    min-width: fit-content;
+}
+
 .fi-btn.fi-color-danger:hover,
-button.fi-color-danger:hover,
 a.fi-btn.fi-color-danger:hover {
+    background-color: var(--color-danger-600) !important;
+    border-color: var(--color-danger-700) !important;
+    color: white !important;
+}
+
+:is(.dark) .fi-btn.fi-color-danger:hover,
+:is(.dark) a.fi-btn.fi-color-danger:hover {
     background-color: var(--color-danger-600) !important;
     border-color: var(--color-danger-700) !important;
     color: white !important;
@@ -21,8 +36,6 @@ a.fi-btn.fi-color-danger:hover {
 
 .fi-btn.fi-color-danger:focus,
 .fi-btn.fi-color-danger:focus-visible,
-button.fi-color-danger:focus,
-button.fi-color-danger:focus-visible,
 a.fi-btn.fi-color-danger:focus,
 a.fi-btn.fi-color-danger:focus-visible {
     background-color: var(--color-danger-600) !important;
@@ -31,39 +44,53 @@ a.fi-btn.fi-color-danger:focus-visible {
     outline-offset: 2px;
 }
 
+:is(.dark) .fi-btn.fi-color-danger:focus,
+:is(.dark) .fi-btn.fi-color-danger:focus-visible,
+:is(.dark) a.fi-btn.fi-color-danger:focus,
+:is(.dark) a.fi-btn.fi-color-danger:focus-visible {
+    background-color: var(--color-danger-600) !important;
+    border-color: var(--color-danger-700) !important;
+    outline: 2px solid var(--color-danger-400) !important;
+}
+
 .fi-btn.fi-color-danger:active,
-button.fi-color-danger:active,
 a.fi-btn.fi-color-danger:active {
     background-color: var(--color-danger-700) !important;
     border-color: var(--color-danger-800) !important;
 }
 
+:is(.dark) .fi-btn.fi-color-danger:active,
+:is(.dark) a.fi-btn.fi-color-danger:active {
+    background-color: var(--color-danger-700) !important;
+    border-color: var(--color-danger-800) !important;
+}
+
 .fi-btn.fi-color-danger:disabled,
-.fi-btn.fi-color-danger[disabled],
-button.fi-color-danger:disabled,
-button.fi-color-danger[disabled] {
+.fi-btn.fi-color-danger[disabled] {
     background-color: var(--color-danger-300) !important;
     border-color: var(--color-danger-400) !important;
     opacity: 0.6;
     cursor: not-allowed;
 }
 
-/* Forçar ícone branco */
 .fi-btn.fi-color-danger .fi-icon,
 .fi-btn.fi-color-danger svg,
-button.fi-color-danger .fi-icon,
-button.fi-color-danger svg,
 a.fi-btn.fi-color-danger .fi-icon,
-a.fi-btn.fi-color-danger svg {
+a.fi-btn.fi-color-danger svg,
+.fi-btn.fi-color-danger:hover .fi-icon,
+.fi-btn.fi-color-danger:hover svg,
+a.fi-btn.fi-color-danger:hover .fi-icon,
+a.fi-btn.fi-color-danger:hover svg {
     color: white !important;
 }
 
-/* Forçar ícone branco NO HOVER (Fix para evitar override do icons.css) */
-.fi-btn.fi-color-danger:hover .fi-icon,
-.fi-btn.fi-color-danger:hover svg,
-button.fi-color-danger:hover .fi-icon,
-button.fi-color-danger:hover svg,
-a.fi-btn.fi-color-danger:hover .fi-icon,
-a.fi-btn.fi-color-danger:hover svg {
+:is(.dark) .fi-btn.fi-color-danger .fi-icon,
+:is(.dark) .fi-btn.fi-color-danger svg,
+:is(.dark) a.fi-btn.fi-color-danger .fi-icon,
+:is(.dark) a.fi-btn.fi-color-danger svg,
+:is(.dark) .fi-btn.fi-color-danger:hover .fi-icon,
+:is(.dark) .fi-btn.fi-color-danger:hover svg,
+:is(.dark) a.fi-btn.fi-color-danger:hover .fi-icon,
+:is(.dark) a.fi-btn.fi-color-danger:hover svg {
     color: white !important;
 }

@@ -62,6 +62,7 @@
 /* Componentes específicos */
 @import "./components/sidebar.css";
 @import "./components/tenant-menu.css";
+@import "./components/tables.css";
 @import "./components/login.css";
 
 /* Notificações customizadas para modo dark */

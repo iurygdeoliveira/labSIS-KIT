@@ -6,6 +6,28 @@
     @apply border-r border-gray-200 dark:border-gray-900;
 }
 
+/* Deslocamento horizontal: hover + item ativo */
+.fi-sidebar-item-btn {
+    transition:
+        transform 0.2s ease-in-out,
+        background-color 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+}
+
+.fi-sidebar-item:not(.fi-active) .fi-sidebar-item-btn:hover {
+    transform: translateX(0.375rem);
+}
+
+.fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+    transform: translateX(0.375rem);
+}
+
+:dir(rtl) .fi-sidebar-item:not(.fi-active) .fi-sidebar-item-btn:hover,
+:dir(rtl) .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+    transform: translateX(-0.375rem);
+}
+
 /* Forçar a visibilidade do logo quando a topbar está desabilitada */
 .fi-sidebar-header-logo-ctn {
     display: flex !important;

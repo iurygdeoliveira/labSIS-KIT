@@ -1,11 +1,18 @@
 /*
  * Links - PRIMARY (Verde Floresta)
- * Estilos de links usando a paleta primary (#014029)
+ * Inclui ações de tabela (.fi-link) — padrão Filament para recordActions
  */
 
 .fi-link.fi-color-primary,
 a.fi-color-primary:not(.fi-btn) {
     color: var(--color-primary-700) !important;
+    background-color: transparent !important;
+}
+
+:is(.dark) .fi-link.fi-color-primary,
+:is(.dark) a.fi-color-primary:not(.fi-btn) {
+    color: var(--color-primary-400) !important;
+    background-color: transparent !important;
 }
 
 .fi-link.fi-color-primary:hover,
@@ -13,9 +20,19 @@ a.fi-color-primary:not(.fi-btn):hover {
     color: var(--color-primary-800) !important;
 }
 
+:is(.dark) .fi-link.fi-color-primary:hover,
+:is(.dark) a.fi-color-primary:not(.fi-btn):hover {
+    color: var(--color-primary-300) !important;
+}
+
 .fi-link.fi-color-primary:focus,
 a.fi-color-primary:not(.fi-btn):focus {
     color: var(--color-primary-800) !important;
     outline: 2px solid var(--color-primary-400);
     outline-offset: 2px;
+}
+
+:is(.dark) .fi-link.fi-color-primary:focus,
+:is(.dark) a.fi-color-primary:not(.fi-btn):focus {
+    color: var(--color-primary-300) !important;
 }

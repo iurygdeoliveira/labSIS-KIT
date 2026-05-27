@@ -21,6 +21,12 @@ class AuthenticationLogResource extends Resource
 {
     protected static ?string $model = AuthenticationLog::class;
 
+    /**
+     * Logs ficam no MongoDB sem relação direta com team;
+     * o escopo por tenant é aplicado manualmente em getEloquentQuery().
+     */
+    protected static bool $isScopedToTenant = false;
+
     protected static string|BackedEnum|null $navigationIcon = 'icon-log-access';
 
     protected static ?string $navigationLabel = 'Logs de Acesso';

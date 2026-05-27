@@ -1,0 +1,19 @@
+/*
+ * Tabelas Filament — ações de linha (fi-link) e botões de header (fi-btn)
+ */
+
+:is(.dark) .fi-ta-actions {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+:is(.dark) .fi-ta-actions .fi-link {
+    background-color: transparent !important;
+    white-space: nowrap;
+}
+
+:is(.dark) .fi-ta-actions .fi-btn {
+    overflow: visible;
+    min-width: fit-content;
+    white-space: nowrap;
+}

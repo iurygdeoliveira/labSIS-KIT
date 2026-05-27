@@ -1,23 +1,44 @@
 /*
  * Icons - PRIMARY (Verde Floresta)
- * Estilos de ícones usando a paleta primary (#014029)
+ * Ícones de .fi-btn → primary/buttons.css | Ícones de .fi-link → herdam cor do link
  */
 
 .fi-icon.fi-color-primary,
-.fi-color-primary .fi-icon,
+.fi-badge.fi-color-primary .fi-icon,
 svg.fi-color-primary {
     color: var(--color-primary-700) !important;
 }
 
-/* Dark Mode Override */
+.fi-link.fi-color-primary .fi-icon,
+.fi-link.fi-color-primary svg {
+    color: inherit !important;
+}
+
 :is(.dark) .fi-icon.fi-color-primary,
-:is(.dark) .fi-color-primary .fi-icon,
+:is(.dark) .fi-badge.fi-color-primary .fi-icon,
+:is(.dark) .fi-tabs-item.fi-color-primary .fi-icon,
 :is(.dark) svg.fi-color-primary {
-    color: var(--color-primary-100) !important;
+    color: var(--color-primary-400) !important;
+}
+
+:is(.dark) .fi-link.fi-color-primary .fi-icon,
+:is(.dark) .fi-link.fi-color-primary svg {
+    color: inherit !important;
 }
 
 .fi-icon.fi-color-primary:hover,
-.fi-color-primary:hover .fi-icon,
+.fi-badge.fi-color-primary:hover .fi-icon,
 svg.fi-color-primary:hover {
     color: var(--color-primary-200) !important;
+}
+
+:is(.dark) .fi-icon.fi-color-primary:hover,
+:is(.dark) .fi-badge.fi-color-primary:hover .fi-icon,
+:is(.dark) svg.fi-color-primary:hover {
+    color: var(--color-primary-300) !important;
+}
+
+:is(.dark) .fi-link.fi-color-primary:hover .fi-icon,
+:is(.dark) .fi-link.fi-color-primary:hover svg {
+    color: inherit !important;
 }

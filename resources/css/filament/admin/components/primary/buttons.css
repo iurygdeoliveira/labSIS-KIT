@@ -1,48 +1,32 @@
 /*
  * Buttons - PRIMARY (Verde Floresta)
- * Estilos de botões usando a paleta primary (#014029)
+ * Escopo: apenas .fi-btn — não afeta .fi-link (ações de tabela do Filament)
  */
 
 .fi-btn.fi-color-primary,
-button.fi-color-primary,
 a.fi-btn.fi-color-primary {
     background-color: var(--color-primary-500) !important;
     border-color: var(--color-primary-600) !important;
     color: white !important;
 }
 
-/* Dark Mode Override: Primary Button Background */
 :is(.dark) .fi-btn.fi-color-primary,
-:is(.dark) button.fi-color-primary,
 :is(.dark) a.fi-btn.fi-color-primary {
     background-color: var(--color-primary-100) !important;
-    border-color: var(
-        --color-primary-500
-    ) !important; /* Adjust border if needed */
-    color: var(
-        --color-primary-500
-    ) !important; /* Ensure text is visible on dark background? No, 50 is dark green background? Wait.
-    --primary-50 is #122421 (Very Dark).
-    If background is #122421, text should be light.
-    Base text is white. 
-    But user asked for background --primary-50.
-    Let's check primary-50 again.
-    In dark.css: --primary-50: #122421; which is dark green/black.
-    If the button is dark green/black, white text is fine.
-    */
+    border-color: var(--color-primary-500) !important;
     color: white !important;
+    white-space: nowrap;
+    width: auto;
+    min-width: fit-content;
 }
 
 .fi-btn.fi-color-primary:hover,
-button.fi-color-primary:hover,
 a.fi-btn.fi-color-primary:hover {
     background-color: var(--color-primary-600) !important;
     border-color: var(--color-primary-700) !important;
 }
 
-/* Dark Mode Hover Override: Less vibrant */
 :is(.dark) .fi-btn.fi-color-primary:hover,
-:is(.dark) button.fi-color-primary:hover,
 :is(.dark) a.fi-btn.fi-color-primary:hover {
     background-color: var(--color-primary-200) !important;
     border-color: var(--color-primary-400) !important;
@@ -50,8 +34,6 @@ a.fi-btn.fi-color-primary:hover {
 
 .fi-btn.fi-color-primary:focus,
 .fi-btn.fi-color-primary:focus-visible,
-button.fi-color-primary:focus,
-button.fi-color-primary:focus-visible,
 a.fi-btn.fi-color-primary:focus,
 a.fi-btn.fi-color-primary:focus-visible {
     background-color: var(--color-primary-600) !important;
@@ -60,46 +42,64 @@ a.fi-btn.fi-color-primary:focus-visible {
     outline-offset: 2px;
 }
 
+:is(.dark) .fi-btn.fi-color-primary:focus,
+:is(.dark) .fi-btn.fi-color-primary:focus-visible,
+:is(.dark) a.fi-btn.fi-color-primary:focus,
+:is(.dark) a.fi-btn.fi-color-primary:focus-visible {
+    background-color: var(--color-primary-200) !important;
+    border-color: var(--color-primary-400) !important;
+    outline: 2px solid var(--color-primary-400) !important;
+}
+
 .fi-btn.fi-color-primary:active,
-button.fi-color-primary:active,
 a.fi-btn.fi-color-primary:active {
     background-color: var(--color-primary-700) !important;
     border-color: var(--color-primary-800) !important;
 }
 
+:is(.dark) .fi-btn.fi-color-primary:active,
+:is(.dark) a.fi-btn.fi-color-primary:active {
+    background-color: var(--color-primary-300) !important;
+    border-color: var(--color-primary-500) !important;
+}
+
 .fi-btn.fi-color-primary:disabled,
-.fi-btn.fi-color-primary[disabled],
-button.fi-color-primary:disabled,
-button.fi-color-primary[disabled] {
+.fi-btn.fi-color-primary[disabled] {
     background-color: var(--color-primary-300) !important;
     border-color: var(--color-primary-400) !important;
     opacity: 0.6;
     cursor: not-allowed;
 }
 
-/* Forçar ícone branco no Primary */
 .fi-btn.fi-color-primary .fi-icon,
 .fi-btn.fi-color-primary svg,
-button.fi-color-primary .fi-icon,
-button.fi-color-primary svg,
 a.fi-btn.fi-color-primary .fi-icon,
 a.fi-btn.fi-color-primary svg {
     color: white !important;
 }
 
+:is(.dark) .fi-btn.fi-color-primary .fi-icon,
+:is(.dark) .fi-btn.fi-color-primary svg,
+:is(.dark) a.fi-btn.fi-color-primary .fi-icon,
+:is(.dark) a.fi-btn.fi-color-primary svg,
+:is(.dark) .fi-btn.fi-color-primary:hover .fi-icon,
+:is(.dark) .fi-btn.fi-color-primary:hover svg,
+:is(.dark) a.fi-btn.fi-color-primary:hover .fi-icon,
+:is(.dark) a.fi-btn.fi-color-primary:hover svg {
+    color: white !important;
+}
+
 /*
  * Botão Customizado - Salvar e Criar Outro
- * Cor: save-another (Verde Claro Customizado) - Variação do Primary
  */
 
 :root {
-    --color-save-another-500: #1f8c4e; /* Custom Green - Base */
-    --color-save-another-600: #197541; /* Custom Green - Hover */
-    --color-save-another-700: #145e34; /* Custom Green - Active */
+    --color-save-another-500: #1f8c4e;
+    --color-save-another-600: #197541;
+    --color-save-another-700: #145e34;
 }
 
 .fi-btn.fi-color-save-another,
-button.fi-color-save-another,
 a.fi-btn.fi-color-save-another {
     background-color: var(--color-save-another-500) !important;
     border-color: var(--color-save-another-600) !important;
@@ -107,23 +107,18 @@ a.fi-btn.fi-color-save-another {
 }
 
 .fi-btn.fi-color-save-another:hover,
-button.fi-color-save-another:hover,
 a.fi-btn.fi-color-save-another:hover {
     background-color: var(--color-save-another-600) !important;
     border-color: var(--color-save-another-700) !important;
 }
 
 .fi-btn.fi-color-save-another:focus,
-button.fi-color-save-another:focus,
 a.fi-btn.fi-color-save-another:focus {
     outline-color: var(--color-save-another-500) !important;
 }
 
-/* Forçar ícone branco */
 .fi-btn.fi-color-save-another .fi-icon,
 .fi-btn.fi-color-save-another svg,
-button.fi-color-save-another .fi-icon,
-button.fi-color-save-another svg,
 a.fi-btn.fi-color-save-another .fi-icon,
 a.fi-btn.fi-color-save-another svg {
     color: white !important;
