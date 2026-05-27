@@ -1,23 +1,42 @@
 /*
- * Login Page Styling
- * Sobrescreve os tons amarelados padrão do Filament com a paleta primary (Verde Floresta)
+ * Login / Registro / Páginas simples (fi-simple-layout)
+ * Login, criar usuário, criar time — alinhado à paleta primary do tema
  */
 
-/* Botão de Login - Background primary */
+/* Botão submit — light */
 .fi-simple-layout .fi-btn-primary,
+.fi-simple-layout .fi-btn.fi-color-primary,
 .fi-simple-layout button[type="submit"].fi-color-primary {
     background-color: var(--color-primary-500) !important;
     border-color: var(--color-primary-600) !important;
     color: white !important;
 }
 
+/* Botão submit — dark (verde escuro, igual ao restante do painel) */
+:is(.dark) .fi-simple-layout .fi-btn-primary,
+:is(.dark) .fi-simple-layout .fi-btn.fi-color-primary,
+:is(.dark) .fi-simple-layout button[type="submit"].fi-color-primary {
+    background-color: var(--color-primary-100) !important;
+    border-color: var(--color-primary-500) !important;
+    color: white !important;
+}
+
 .fi-simple-layout .fi-btn-primary:hover,
+.fi-simple-layout .fi-btn.fi-color-primary:hover,
 .fi-simple-layout button[type="submit"].fi-color-primary:hover {
     background-color: var(--color-primary-600) !important;
     border-color: var(--color-primary-700) !important;
 }
 
+:is(.dark) .fi-simple-layout .fi-btn-primary:hover,
+:is(.dark) .fi-simple-layout .fi-btn.fi-color-primary:hover,
+:is(.dark) .fi-simple-layout button[type="submit"].fi-color-primary:hover {
+    background-color: var(--color-primary-200) !important;
+    border-color: var(--color-primary-400) !important;
+}
+
 .fi-simple-layout .fi-btn-primary:focus,
+.fi-simple-layout .fi-btn.fi-color-primary:focus,
 .fi-simple-layout button[type="submit"].fi-color-primary:focus {
     background-color: var(--color-primary-600) !important;
     border-color: var(--color-primary-700) !important;
@@ -25,32 +44,72 @@
     outline-offset: 2px;
 }
 
+:is(.dark) .fi-simple-layout .fi-btn-primary:focus,
+:is(.dark) .fi-simple-layout .fi-btn.fi-color-primary:focus,
+:is(.dark) .fi-simple-layout button[type="submit"].fi-color-primary:focus {
+    background-color: var(--color-primary-200) !important;
+    border-color: var(--color-primary-400) !important;
+    outline: 2px solid var(--color-primary-400);
+    outline-offset: 2px;
+}
+
 .fi-simple-layout .fi-btn-primary:active,
+.fi-simple-layout .fi-btn.fi-color-primary:active,
 .fi-simple-layout button[type="submit"].fi-color-primary:active {
     background-color: var(--color-primary-700) !important;
     border-color: var(--color-primary-800) !important;
 }
 
+:is(.dark) .fi-simple-layout .fi-btn-primary:active,
+:is(.dark) .fi-simple-layout .fi-btn.fi-color-primary:active,
+:is(.dark) .fi-simple-layout button[type="submit"].fi-color-primary:active {
+    background-color: var(--color-primary-300) !important;
+    border-color: var(--color-primary-500) !important;
+}
+
+/* Ícones brancos nos botões submit */
+.fi-simple-layout .fi-btn-primary .fi-icon,
+.fi-simple-layout .fi-btn-primary svg,
+.fi-simple-layout .fi-btn.fi-color-primary .fi-icon,
+.fi-simple-layout .fi-btn.fi-color-primary svg {
+    color: white !important;
+}
+
 /* Links (crie uma conta, Esqueceu sua senha?) */
 .fi-simple-layout .fi-link.fi-color-primary,
-.fi-simple-layout a.fi-color-primary {
+.fi-simple-layout a.fi-color-primary:not(.fi-btn) {
     color: var(--color-primary-700) !important;
 }
 
+:is(.dark) .fi-simple-layout .fi-link.fi-color-primary,
+:is(.dark) .fi-simple-layout a.fi-color-primary:not(.fi-btn) {
+    color: var(--color-primary-400) !important;
+}
+
 .fi-simple-layout .fi-link.fi-color-primary:hover,
-.fi-simple-layout a.fi-color-primary:hover {
+.fi-simple-layout a.fi-color-primary:not(.fi-btn):hover {
     color: var(--color-primary-800) !important;
 }
 
+:is(.dark) .fi-simple-layout .fi-link.fi-color-primary:hover,
+:is(.dark) .fi-simple-layout a.fi-color-primary:not(.fi-btn):hover {
+    color: var(--color-primary-300) !important;
+}
+
 .fi-simple-layout .fi-link.fi-color-primary:focus,
-.fi-simple-layout a.fi-color-primary:focus {
+.fi-simple-layout a.fi-color-primary:not(.fi-btn):focus {
     color: var(--color-primary-800) !important;
     outline: 2px solid var(--color-primary-400);
     outline-offset: 2px;
 }
 
-/* Checkbox "Lembre de mim" - já está verde mas garantindo consistência */
+/* Checkbox "Lembre de mim" */
 .fi-simple-layout input[type="checkbox"]:checked {
+    background-color: var(--color-primary-500) !important;
+    border-color: var(--color-primary-600) !important;
+}
+
+:is(.dark) .fi-simple-layout input[type="checkbox"]:checked {
     background-color: var(--color-primary-500) !important;
     border-color: var(--color-primary-600) !important;
 }
@@ -60,7 +119,7 @@
     outline-offset: 2px;
 }
 
-/* Input focus - bordas primary */
+/* Input focus */
 .fi-simple-layout .fi-input:focus,
 .fi-simple-layout input:focus,
 .fi-simple-layout textarea:focus {
@@ -69,8 +128,20 @@
     outline-offset: 0;
 }
 
-/* Ring color para elementos focados */
+:is(.dark) .fi-simple-layout .fi-input:focus,
+:is(.dark) .fi-simple-layout input:focus,
+:is(.dark) .fi-simple-layout textarea:focus {
+    border-color: var(--color-primary-400) !important;
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 0;
+}
+
 .fi-simple-layout .fi-fo-field-wrp input:focus,
 .fi-simple-layout .fi-fo-field-wrp textarea:focus {
     --tw-ring-color: var(--color-primary-500) !important;
+}
+
+:is(.dark) .fi-simple-layout .fi-fo-field-wrp input:focus,
+:is(.dark) .fi-simple-layout .fi-fo-field-wrp textarea:focus {
+    --tw-ring-color: var(--color-primary-400) !important;
 }
