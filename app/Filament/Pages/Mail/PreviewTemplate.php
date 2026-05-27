@@ -52,6 +52,7 @@ class PreviewTemplate extends Page
 
     use HasBackButtonAction;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

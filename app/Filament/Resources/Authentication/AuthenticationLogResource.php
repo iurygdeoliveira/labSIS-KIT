@@ -69,7 +69,7 @@ class AuthenticationLogResource extends Resource
         if ($team && $user->isOwnerOfTeam($team)) {
             // Busca IDs de usuários pertencentes a este team
             // Nota: Esta é uma query híbrida (SQL -> Mongo). Buscamos os IDs SQL primeiro.
-            $teamUserIds = User::whereHas('teams', function ($q) use ($team) {
+            $teamUserIds = User::whereHas('teams', function (\Illuminate\Contracts\Database\Query\Builder $q) use ($team): void {
                 $q->whereKey($team->getKey());
             })->pluck('id')->toArray();
 
@@ -81,6 +81,7 @@ class AuthenticationLogResource extends Resource
         return $query->where('authenticatable_id', $user->getAuthIdentifier());
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

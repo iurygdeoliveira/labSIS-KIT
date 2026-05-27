@@ -28,11 +28,7 @@ final class WebsiteLandingController
             default => 0,
         };
 
-        return view('website.pages.home', compact(
-            'totalProjects',
-            'totalAllProjects',
-            'totalAllDevelopers',
-        ));
+        return view('website.pages.home', ['totalProjects' => $totalProjects, 'totalAllProjects' => $totalAllProjects, 'totalAllDevelopers' => $totalAllDevelopers]);
     }
 
     private function resolveEloquentModelKey(string $key): string

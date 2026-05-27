@@ -7,7 +7,7 @@ use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 class LogAuthenticationActivity
 {
@@ -29,11 +29,11 @@ class LogAuthenticationActivity
         $user = $event->user;
 
         AuthenticationLog::create([
-            'authenticatable_type' => get_class($user),
+            'authenticatable_type' => $user::class,
             'authenticatable_id' => $user->getAuthIdentifier(),
             'ip_address' => $this->request->ip(),
             'user_agent' => $this->request->userAgent(),
-            'login_at' => Carbon::now(),
+            'login_at' => Date::now(),
             'login_successful' => true,
             'location' => [], // Implement IP geolocation if needed later
         ]);
@@ -51,11 +51,11 @@ class LogAuthenticationActivity
         $log = AuthenticationLog::where('authenticatable_id', $user->getAuthIdentifier())
             ->where('ip_address', $this->request->ip())
             ->where('user_agent', $this->request->userAgent())
-            ->orderBy('login_at', 'desc')
+            ->latest('login_at')
             ->first();
 
         if ($log) {
-            $log->update(['logout_at' => Carbon::now()]);
+            $log->update(['logout_at' => Date::now()]);
         }
     }
 
@@ -64,14 +64,14 @@ class LogAuthenticationActivity
         $user = $event->user;
 
         AuthenticationLog::create([
-            'authenticatable_type' => $user ? get_class($user) : 'Unknown', // 'Unknown' or record valid attempts for non-existing users? Standard practice: only if user exists or store attempted email.
+            'authenticatable_type' => $user ? $user::class : 'Unknown', // 'Unknown' or record valid attempts for non-existing users? Standard practice: only if user exists or store attempted email.
             // If user is null (invalid email), we can't store authenticatable_id easily unless we store strict 'email'.
             // For now, let's only log if we have a user (wrong password) or skip.
             // Better: If user is known, log it.
             'authenticatable_id' => $user?->getAuthIdentifier(),
             'ip_address' => $this->request->ip(),
             'user_agent' => $this->request->userAgent(),
-            'login_at' => Carbon::now(),
+            'login_at' => Date::now(),
             'login_successful' => false,
         ]);
     }

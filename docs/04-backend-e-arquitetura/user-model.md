@@ -22,10 +22,10 @@ Para manter a classe legível e manutenível, o código foi organizado em seçõ
     -   `registerMediaConversions`: Configuração de otimizações de imagem e thumbnails (vazio por padrão neste model).
     -   (Nota: A configuração do disco S3 para avatares é feita diretamente no componente de upload do Filament, não no model via `registerMediaCollections`).
 2.  **Relationships**: Todos os relacionamentos Eloquent (SQL e MongoDB).
-3.  **Scopes**: Filtros de consulta reutilizáveis (ex: `withRolesForTenant`).
-4.  **Filament / Access Control**: Métodos para controlar quem pode entrar em qual painel (`admin`, `user`) e em qual `tenant`.
+3.  **Scopes**: Filtros de consulta reutilizáveis.
+4.  **Filament / Access Control**: Métodos para controlar quem pode entrar em qual painel (`admin`, `user`) e em qual team (tenant Filament).
 5.  **State Checks & Notifications**: Métodos de verificação de estado (`isSuspended`, `isApproved`).
-6.  **Tenant & Role Logic**: Lógica de negócio complexa para gerenciar papéis dentro de um contexto de Tenant (times).
+6.  **Team & Role Logic**: Lógica de negócio para papéis dentro do contexto de um team.
 
 ## 3. Arquitetura Híbrida (SQL + MongoDB)
 
@@ -39,42 +39,41 @@ O model utiliza a trait `MongoDB\Laravel\Eloquent\HybridRelations`. Isso permite
 use \MongoDB\Laravel\Eloquent\HybridRelations;
 ```
 
-### Logs de Autenticação (Correção de Driver)
+### Logs de Autenticação (MongoDB)
 
-O pacote `rappasoft/laravel-authentication-log` foi customizado para gravar logs no MongoDB. Para isso, o relacionamento `authentications()` foi sobrescrito no `User.php`.
-
-**Problema Original:** A trait padrão do pacote tentava instanciar o model de Log usando uma conexão SQL padrão, causando erro `prepare() on null` ao tentar salvar no Mongo.
-
-**Solução:** Sobrescrevemos o método para apontar explicitamente para `App\Models\AuthenticationLog` (que estende o Model do Mongo), garantindo que o driver correto seja carregado.
+O projeto utiliza `App\Models\AuthenticationLog` persistido em **MongoDB**. O relacionamento `authentications()` no `User` aponta explicitamente para esse model híbrido:
 
 ```php
 public function authentications()
 {
-    // Força o uso do Model MongoDB customizado
     return $this->morphMany(\App\Models\AuthenticationLog::class, 'authenticatable')->latest('login_at');
 }
 ```
 
+Eventos `Login`, `Logout` e `Failed` são registrados via `LogAuthenticationActivity` em `AppServiceProvider`.
+
 ## 4. Multi-Tenancy e Permissões
 
-O sistema utiliza uma abordagem de **Multi-Tenancy com Times** (Tenants) onde os papéis (Roles) são atribuídos ao usuário _dentro do contexto de um Tenant_.
+O sistema utiliza **multi-teams** (FilaTeams + Filament tenant API) onde os papéis Spatie são atribuídos ao usuário _dentro do contexto de um team_ (`team_id`).
 
 ### Estrutura de Dados
 
 -   **Users**: Tabela global.
--   **Tenants**: Tabela global.
--   **Roles**: Spatie Permissions (globais, mas atribuídas com `team_id`).
+-   **Teams**: Tabela global (`teams`).
+-   **Memberships**: Pivot FilaTeams (`team_id`, `user_id`, `role`).
+-   **Roles**: Spatie Permissions (globais, atribuídas com `team_id`).
 -   **Pivot (`model_has_roles`)**: Contém a coluna extra `team_id`.
 
 ### Métodos de Helper
 
-A seção **Tenant & Role Logic** fornece métodos para abstrair a complexidade dessa query:
+A seção **Team & Role Logic** abstrai a complexidade das queries:
 
--   `isOwnerOfTenant($tenant)`: Verifica se o usuário tem o papel de 'Owner' no contexto daquele tenant.
--   `isUserOfTenant($tenant)`: Verifica se o usuário tem o papel de 'User' no contexto daquele tenant.
--   `getRolesForTenant($tenant)`: Retorna todos os papéis que o usuário possui naquele tenant específico.
+-   `isOwnerOfTeam(Team $team)`: Owner no contexto do team.
+-   `isUserOfTeam(Team $team)`: User no contexto do team.
+-   `getRolesForTeam(Team $team)`: Roles Spatie naquele team.
+-   `assignRoleInTeam(Role $role, Team $team)`: Atribui role com `team_id` correto.
 
-Toda a lógica cruza `user_id` + `role_id` + `team_id` (Tenant).
+Toda a lógica cruza `user_id` + `role_id` + `team_id`.
 
 ### Distribuição Natural de Carga (Load Distribution)
 
@@ -86,16 +85,10 @@ Ao invés de armazenar todas as permissões diretamente na tabela `users`, o sis
 
 ```mermaid
 graph TD
-    A[users<br/>1M registros] --> B[tenant_user<br/>Pivot N:M]
-    A --> C[model_has_roles<br/>Pivot com team_id]
-    B --> D[tenants<br/>10K registros]
-    C --> E[roles<br/>100 registros]
-    
-    style A fill:#e3f2fd
-    style B fill:#fff3e0
-    style C fill:#fff3e0
-    style D fill:#f3e5f5
-    style E fill:#e8f5e9
+    A[users] --> B[memberships / team_members]
+    A --> C[model_has_roles]
+    B --> D[teams]
+    C --> E[roles]
 ```
 
 **Benefícios de Performance:**
@@ -106,28 +99,27 @@ graph TD
 
 #### 2. Exemplo Prático: Query de Autorização
 
-Quando o Filament verifica se um usuário pode acessar um Tenant, a query executada é:
+Quando o Filament verifica teams acessíveis ao usuário, a consulta envolve `teams` + pivot de membership (FilaTeams), filtrando por `is_active`:
 
 ```sql
-SELECT tenants.* 
-FROM tenants
-INNER JOIN tenant_user ON tenant_user.tenant_id = tenants.id
-WHERE tenant_user.user_id = 12345
-  AND tenants.is_active = true;
+SELECT teams.*
+FROM teams
+INNER JOIN team_members ON team_members.team_id = teams.id
+WHERE team_members.user_id = :user_id
+  AND teams.is_active = true;
 ```
 
 **Por que isso é eficiente?**
 
-- A tabela `tenant_user` possui um índice composto em `(user_id, tenant_id)`.
-- PostgreSQL usa **Index-Only Scan** quando possível, sem precisar tocar na tabela `users`.
-- Mesmo com 1 milhão de usuários, a pivot `tenant_user` pode ter apenas 3-5 milhões de registros (se cada usuário pertence a 3-5 tenants em média), mas com índices muito menores.
+- Índices em `(user_id, team_id)` na pivot aceleram lookups por usuário.
+- PostgreSQL usa **Index-Only Scan** quando possível em pivots menores.
 
 #### 3. Comparação: Monolítico vs. Multi-Tenant Pivot
 
 | Abordagem | Estrutura | Performance em 1M usuários |
 |:----------|:----------|:---------------------------|
 | **Monolítica** | `users` com JSON de `tenant_ids` e `permissions` | ❌ Índices GIN/JSONB são lentos para queries complexas. Tabela única de 1M+ linhas. |
-| **Multi-Tenant Pivot** (labSIS-KIT) | `users` + `tenant_user` + `model_has_roles` | ✅ Cada tabela é especializada. Índices menores e queries otimizadas por JOIN. |
+| **Multi-Team Pivot** (labSIS-KIT) | `users` + memberships + `model_has_roles` | ✅ Tabelas especializadas; índices menores e JOINs otimizados. |
 | **Particionamento** | `users` particionada por `created_at` ou `hash(id)` | ⚠️ Não resolve o problema de RBAC. Complexidade alta sem ganho real para este caso de uso. |
 
 #### 4. Quando a Distribuição Atual NÃO é Suficiente?
@@ -148,23 +140,29 @@ A arquitetura pivot atinge seus limites quando:
 
 O método `canAccessPanel(Panel $panel)` centraliza a lógica de autorização:
 
--   **Painel Admin**: Requer Role `Super Admin` (RoleType::ADMIN).
--   **Painel User**: Requer Role `User` OU ser dono de algum Tenant OU pertencer a algum Tenant.
--   **Bloqueios Globais**: Usuários suspensos ou sem e-mail verificado são bloqueados em todos os painéis (exceto 'auth').
+-   **Painel Admin**: Requer role `Admin` (`RoleType::ADMIN`).
+-   **Painel User**: Requer role `User` ou `Owner` em algum team, ou membership ativo em `teams()`.
+-   **Bloqueios Globais**: Usuários suspensos ou não aprovados são bloqueados nos painéis operacionais (exceto fluxos do painel `auth`).
 
 ## Diagrama de Relacionamento Simplificado
 
 ```mermaid
 classDiagram
     class User {
-        +UUID id
+        +id
         +String email
         +authentications() [MongoDB]
-        +tenants()
+        +teams()
     }
-    class Tenant {
-        +UUID id
+    class Team {
+        +id
         +String name
+        +String slug
+    }
+    class Membership {
+        +team_id
+        +user_id
+        +role
     }
     class AuthenticationLog {
         <<MongoDB>>
@@ -172,11 +170,14 @@ classDiagram
         +UserAgent
     }
 
-    User "1" --> "*" Tenant : BelongsToMany
+    User "1" --> "*" Membership
+    Team "1" --> "*" Membership
     User "1" --> "*" AuthenticationLog : MorphMany (Hybrid)
 ```
 
 ## Referências
 
-- [Model: User](/labsis-kit/app/Models/User.php)
+- [Model: User](../../app/Models/User.php)
+- [Model: Team](../../app/Models/Team.php)
+- [Tenancy e Teams](../02-autenticacao-e-seguranca/tenancy-e-teams.md)
 

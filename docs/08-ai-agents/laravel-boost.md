@@ -23,8 +23,8 @@ Retorna informações globais da aplicação:
 
 ```json
 {
-    "php_version": "8.5.1",
-    "laravel_version": "12.46.0",
+    "php_version": "8.5.x",
+    "laravel_version": "13.x",
     "database_engine": "pgsql",
     "packages": [...],
     "models": ["App\\Models\\Video"]
@@ -45,7 +45,7 @@ Executa código PHP no contexto da aplicação (equivalente ao `php artisan tink
 
 ### `search-docs`
 
-Busca documentação oficial **específica para a versão** dos pacotes instalados (Laravel 12, Filament 4, etc.).
+Busca documentação oficial **específica para a versão** dos pacotes instalados (Laravel 13, Filament 5, Livewire 4, etc.).
 
 ## 🚀 Casos de Uso
 
@@ -53,7 +53,7 @@ Busca documentação oficial **específica para a versão** dos pacotes instalad
 
 ```
 Agente: "Preciso criar um Resource no Filament"
-Boost: "Filament 4.5.2 instalado - use sintaxe v4"
+Boost: "Filament 5.x instalado — use sintaxe v5"
 ```
 
 ### 2. Debugar erros usando Tinker

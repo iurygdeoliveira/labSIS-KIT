@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\UuidTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 /**
  * @property int $id
  * @property int $media_item_id
@@ -15,9 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $url
  * @property string|null $title
  * @property int|null $duration_seconds
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read \App\Models\MediaItem $mediaItem
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property-read MediaItem $mediaItem
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Video newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Video newQuery()
@@ -34,22 +34,24 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin \Eloquent
  */
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[Fillable([
+    'uuid',
+    'media_item_id',
+    'provider',
+    'provider_video_id',
+    'url',
+    'title',
+    'duration_seconds',
+])]
 class Video extends Model
 {
     use HasFactory, UuidTrait;
 
-    protected $fillable = [
-        'uuid',
-        'media_item_id',
-        'provider',
-        'provider_video_id',
-        'url',
-        'title',
-        'duration_seconds',
-    ];
-
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -58,7 +60,7 @@ class Video extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\MediaItem, $this>
+     * @return BelongsTo<MediaItem, $this>
      */
     public function mediaItem(): BelongsTo
     {

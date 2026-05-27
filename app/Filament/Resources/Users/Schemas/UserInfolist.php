@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\RoleType;
-use App\Models\Role;
+use App\Models\Team;
 use App\Models\User;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -86,7 +86,7 @@ class UserInfolist
             ->schema([
                 RepeatableEntry::make('teams_roles')
                     ->hiddenLabel()
-                    ->visible(fn (?User $record): bool => (bool) $record?->teams()->exists())
+                    ->visible(fn (?User $record): bool => $record instanceof User && $record->teams->isNotEmpty())
                     ->state(fn (?User $record): array => self::getTeamsRolesState($record))
                     ->schema([
                         TextEntry::make('team')
@@ -99,7 +99,7 @@ class UserInfolist
                 TextEntry::make('no_teams')
                     ->hiddenLabel()
                     ->state('Usuário não associado a nenhum team')
-                    ->visible(fn (?User $record): bool => ! (bool) $record?->teams()->exists()),
+                    ->visible(fn (?User $record): bool => $record instanceof User && $record->teams->isEmpty()),
             ]);
     }
 
@@ -110,15 +110,19 @@ class UserInfolist
         }
 
         $items = [];
-        $teams = $record->teams()->select(['teams.id', 'teams.name'])->get();
 
-        foreach ($teams as $team) {
-            $roleNames = Role::query()
-                ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id', 'inner', false)
-                ->where('mhr.model_type', User::class)
-                ->where('mhr.model_id', $record->id)
-                ->where('mhr.team_id', $team->id)
-                ->pluck('roles.name')
+        foreach ($record->teams as $team) {
+            if (! $team instanceof Team) {
+                continue;
+            }
+
+            $roleNames = $record->rolesWithTeams
+                ->filter(function ($role) use ($team): bool {
+                    $pivotTeamId = data_get($role, 'pivot.team_id');
+
+                    return $pivotTeamId !== null && (int) $pivotTeamId === (int) $team->id;
+                })
+                ->pluck('name')
                 ->all();
 
             $labels = [];

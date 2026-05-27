@@ -56,7 +56,7 @@ Quando um usuário se registra:
 
 - **Usuário é criado suspenso** (`is_suspended = true`)
 - **Usuário não é aprovado** (`is_approved = false`)
-- **Tenant é criado automaticamente** para o usuário que recebe a role Owner no tenant
+- **Team é criado automaticamente** no registro; o usuário recebe role Owner via `MembershipObserver`
 - **Associação é estabelecida** entre usuário e tenant
 - **Evento é disparado** para notificar administradores
 
@@ -159,11 +159,12 @@ Arquivo: `app/Providers/Filament/UserPanelProvider.php`
 
 Painel de usuários com suporte a multi-tenancy:
 
-**Multi-Tenancy**:
+**Multi-Tenancy** (vocabulário Filament; model = `Team`):
 
-- Tenant: `Tenant::class` com slug `uuid`
+- Tenant: `Team::class` com slug em `slug` (`slugAttribute: 'slug'`)
 - Menu de tenant habilitado (`->tenantMenu(true)`)
-- Relacionamento de propriedade: `tenants`
+- Relacionamento de propriedade: `teams`
+- Registro/perfil de team via FilaTeams (`CreateTeamPage`, `EditTeam`)
 
 **Recursos**:
 
@@ -206,8 +207,8 @@ if ($panel->getId() === 'auth') {
         return redirect()->to('/admin');
     }
     if ($user->canAccessPanel(Filament::getPanel('user'))) {
-        $firstTenant = $user->getTenants(Filament::getPanel('user'))->first();
-        return redirect()->to('/user/'.$firstTenant->uuid);
+        $firstTeam = $user->getTenants(Filament::getPanel('user'))->first();
+        return redirect()->to('/user/'.$firstTeam->slug);
     }
 }
 ```
@@ -377,8 +378,8 @@ public function canAccessPanel(Panel $panel): bool
     // Painel user: User, Owner ou vinculado a tenants
     if ($panel->getId() === 'user') {
         return $this->hasRole(RoleType::USER->value) ||
-               $this->hasOwnerRoleInAnyTenant() ||
-               $this->tenants()->exists();
+               $this->hasOwnerRoleInAnyTeam() ||
+               $this->teams()->exists();
     }
 
     return false;
@@ -387,16 +388,16 @@ public function canAccessPanel(Panel $panel): bool
 
 ### Métodos de Verificação de Roles
 
-**Verificação por Tenant**:
+**Verificação por Team** (tenant Filament):
 
-- `isOwnerOfTenant(Tenant $tenant)`: Verifica se é Owner do tenant
-- `isUserOfTenant(Tenant $tenant)`: Verifica se é User do tenant
-- `hasAnyRoleInTenant(Tenant $tenant)`: Verifica se tem qualquer role no tenant
+- `isOwnerOfTeam(Team $team)`: Verifica se é Owner do team
+- `isUserOfTeam(Team $team)`: Verifica se é User do team
+- `hasAnyRoleInTeam(Team $team)`: Verifica se tem qualquer role no team
 
 **Verificação Global**:
 
-- `hasOwnerRoleInAnyTenant()`: Verifica se é Owner em algum tenant
-- `getRolesForTenant(Tenant $tenant)`: Retorna todas as roles do usuário no tenant
+- `hasOwnerRoleInAnyTeam()`: Verifica se é Owner em algum team
+- `getRolesForTeam(Team $team)`: Retorna todas as roles do usuário no team
 
 ## Fluxo de Funcionamento
 
@@ -405,8 +406,8 @@ public function canAccessPanel(Panel $panel): bool
 1. **Usuário acessa `/register`**
 2. **Preenche formulário** com dados pessoais e nome do tenant
 3. **Sistema cria usuário suspenso** (`is_suspended = true`, `is_approved = false`)
-4. **Sistema cria tenant** com nome fornecido
-5. **Sistema associa usuário ao tenant** via tabela pivot
+4. **Sistema cria team** (`App\Models\Team`) com nome fornecido
+5. **Sistema associa usuário ao team** via `Membership` (role `owner`); `MembershipObserver` sincroniza role Spatie
 6. **Evento `UserRegistered` é disparado** para notificar administradores
 7. **Usuário é redirecionado** para página de sucesso
 
@@ -424,7 +425,7 @@ public function canAccessPanel(Panel $panel): bool
 1. **`LoginResponse` processa** usuário autenticado
 2. **`RedirectToProperPanelMiddleware` verifica** status e roles
 3. **Se Admin**: Redireciona para `/admin`
-4. **Se User/Owner**: Redireciona para `/user/{tenant-uuid}`
+4. **Se User/Owner**: Redireciona para `/user/{team-slug}`
 5. **Se não aprovado**: Redireciona para `VerificationPending`
 
 ### 4. Acesso aos Painéis

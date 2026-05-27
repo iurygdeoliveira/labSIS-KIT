@@ -25,6 +25,7 @@ class DeleteMedia extends ViewRecord
         return 'filament.resources.media.pages.delete-media';
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

@@ -29,7 +29,7 @@ class AppDateTime extends CarbonImmutable
 
 Substituímos o uso direto de `Carbon::parse()` por `AppDateTime::parse()` em Infolists e Tables.
 
-**Exemplo em Infolist (TenantInfolist.php):**
+**Exemplo em Infolist (`TeamInfolist.php`):**
 
 ```php
 use App\Support\AppDateTime;

@@ -91,6 +91,8 @@ O pacote Spatie Media Library define o modelo Eloquent `Spatie\MediaLibrary\Medi
 
 No domínio da aplicação, `App\Models\MediaItem` funciona como o agregado que representa uma mídia cadastrada. Ele não substitui o modelo `media` da Spatie; em vez disso, o utiliza via `InteractsWithMedia` para anexar exatamente um arquivo à coleção `media` no disco `s3` (`singleFile()`). O `MediaItem` também oferece atributos derivados úteis à UI, como `file_type` (que unifica `text/*` como Documento) e `human_size`, além de `name` (que prioriza o nome do anexo) e `image_url` (URL assinada para pré-visualizações quando houver imagem). Quando a mídia não é um arquivo, mas uma referência externa de vídeo, o relacionamento `video()` (hasOne) provê os metadados do vídeo vinculados ao mesmo registro de `MediaItem`.
 
+> **Colisão `video`:** O model possui coluna booleana `video` e relação `video()`. Em Tables/Infolists do Filament, use `linkedVideo()` para acessar o model `Video` sem ambiguidade. A listagem em `MediaResource` aplica eager load `with(['video', 'team', 'media'])` — consulte [Performance no Filament](../05-otimizacoes/filament-performance.md).
+
 #### 5) Modelo Video
 
 O modelo `App\Models\Video` guarda os metadados sobre os vídeos externos (provedor, ID do provedor, URL, título e duração em segundos) e pertence a um `MediaItem`. Essa separação reflete a decisão de produto de não armazenar binários de vídeo no MinIO, mantendo apenas links e metadados de Vídeos no Youtube. A UI do Filament usa essas informações para exibir e abrir o conteúdo de forma adequada quando o item é um vídeo.

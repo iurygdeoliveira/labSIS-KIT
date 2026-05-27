@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Override;
 
 class TeamResource extends Resource
@@ -33,6 +34,14 @@ class TeamResource extends Resource
     protected static ?string $title = 'Teams';
 
     protected static ?int $navigationSort = 1;
+
+    #[Override]
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with([
+            'members' => fn ($query) => $query->orderBy('name'),
+        ]);
+    }
 
     #[Override]
     public static function getModelLabel(): string
@@ -58,6 +67,7 @@ class TeamResource extends Resource
         return TeamInfolist::configure($schema);
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use LaravelDaily\FilaTeams\Concerns\HasTeams;
 use Override;
 
@@ -42,6 +43,12 @@ class UserResource extends Resource
     public static function getModelLabel(): string
     {
         return __('User');
+    }
+
+    #[Override]
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['teams', 'rolesWithTeams']);
     }
 
     #[Override]
@@ -76,6 +83,7 @@ class UserResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

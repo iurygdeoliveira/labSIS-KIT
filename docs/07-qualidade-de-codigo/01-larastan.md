@@ -1,6 +1,6 @@
 # Larastan: Garantindo a Integridade Técnica 🛡️
 
-O Larastan é uma ferramenta de análise estática para o ecossistema Laravel, construída sobre o PHPStan. No **labSIS-SaaS-KIT-V4**, ele desempenha um papel fundamental na manutenção de uma base de código robusta, livre de bugs silenciosos e preparada para escalabilidade.
+O Larastan é uma ferramenta de análise estática para o ecossistema Laravel, construída sobre o PHPStan. No **labSIS-KIT**, ele desempenha um papel fundamental na manutenção de uma base de código robusta, livre de bugs silenciosos e preparada para escalabilidade.
 
 ## Por que o Larastan é Vital?
 
@@ -9,7 +9,7 @@ Diferente de testes automatizados que validam o _comportamento_ em tempo de exec
 1. **Detecção de Bugs antes da Produção**: Identifica acessos a propriedades inexistentes, chamadas de métodos em objetos nulos e incompatibilidades de tipos que causariam erros fatais em runtime.
 2. **Documentação de Tipagem**: Obriga o desenvolvedor a declarar explicitamente o que cada método recebe e retorna, tornando o código autoexplicativo.
 3. **Refatoração Segura**: Ao alterar o nome de um método ou propriedade, o Larastan aponta instantaneamente todos os lugares que "quebraram", garantindo que nenhuma ponta fique solta.
-4. **Padronização para SaaS**: Em sistemas multi-tenant complexos, a certeza de que um objeto é realmente um `User` ou um `Tenant` evita vazamentos de dados e falhas de autorização.
+4. **Padronização para SaaS**: Em sistemas multi-team complexos, a certeza de que um objeto é realmente um `User` ou um `Team` evita vazamentos de dados e falhas de autorização.
 
 ---
 
@@ -41,8 +41,8 @@ public function afterSave(): void
     $record = $this->getRecord();
 
     if ($record instanceof \App\Models\User) {
-        // Agora o Larastan sabe que $record tem o método tenants()
-        $record->tenants()->sync(...);
+        // Agora o Larastan sabe que $record tem o método teams()
+        $record->teams()->sync(...);
     }
 }
 ```
@@ -65,9 +65,9 @@ No Model, informe ao Larastan o que as relações retornam:
 
 ```php
 /**
- * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Tenant, \App\Models\User>
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Team, \App\Models\User>
  */
-public function tenants(): BelongsToMany { ... }
+public function teams(): BelongsToMany { ... }
 ```
 
 ---
@@ -81,5 +81,6 @@ A configuração do Larastan reside no arquivo `phpstan.neon` na raiz do projeto
 
 ## Referências
 
-- [Configuração: PHPStan](/phpstan.neon)
-- [Model: User](/app/Models/User.php)
+- [Configuração: PHPStan](../../phpstan.neon)
+- [Model: User](../../app/Models/User.php)
+- [Filacheck Pro](./04-filacheck.md)

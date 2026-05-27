@@ -24,6 +24,7 @@ class DeleteTeam extends ViewRecord
         return 'filament.resources.teams.pages.delete-team';
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

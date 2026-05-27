@@ -13,10 +13,15 @@ use App\Listeners\LogAuthenticationActivity;
 use App\Listeners\NotifyAdminNewUser;
 use App\Listeners\SendUserApprovedEmail;
 use App\Models\AuthenticationLog;
+use App\Models\MediaItem;
 use App\Models\Membership;
+use App\Models\Team;
 use App\Models\User as AppUser;
 use App\Models\Video;
+use App\Observers\MediaItemObserver;
 use App\Observers\MembershipObserver;
+use App\Observers\TeamObserver;
+use App\Observers\UserObserver;
 use App\Observers\VideoObserver;
 use App\Policies\AuthenticationLogPolicy;
 use App\Support\AppDateTime;
@@ -29,6 +34,7 @@ use Illuminate\Auth\Events\Logout;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -102,18 +108,21 @@ class AppServiceProvider extends ServiceProvider
     private function configEvents(): void
     {
         // Registrar listeners manualmente para evitar duplicação
-        $this->app['events']->listen(UserRegistered::class, NotifyAdminNewUser::class);
-        $this->app['events']->listen(UserApproved::class, SendUserApprovedEmail::class);
+        Event::listen(UserRegistered::class, NotifyAdminNewUser::class);
+        Event::listen(UserApproved::class, SendUserApprovedEmail::class);
 
         // Logs de Autenticação (MongoDB)
-        $this->app['events']->listen(Login::class, LogAuthenticationActivity::class);
-        $this->app['events']->listen(Logout::class, LogAuthenticationActivity::class);
-        $this->app['events']->listen(Failed::class, LogAuthenticationActivity::class);
+        Event::listen(Login::class, LogAuthenticationActivity::class);
+        Event::listen(Logout::class, LogAuthenticationActivity::class);
+        Event::listen(Failed::class, LogAuthenticationActivity::class);
     }
 
     private function configObservers(): void
     {
         Video::observe(VideoObserver::class);
+        AppUser::observe(UserObserver::class);
+        Team::observe(TeamObserver::class);
+        MediaItem::observe(MediaItemObserver::class);
 
         // O pacote laraveldaily/filateams (controller AcceptInvitation, Action
         // CreateTeam, Livewire MembersTable) usa o model BASE diretamente.

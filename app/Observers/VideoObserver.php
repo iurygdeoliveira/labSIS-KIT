@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Models\Video;
+use App\Support\FilamentStatsCache;
 use Illuminate\Support\Facades\Cache;
 
 class VideoObserver
@@ -32,7 +33,6 @@ class VideoObserver
             Cache::store('redis')->forget('video:title:'.sha1($url));
         }
 
-        // Estatísticas de mídia podem ser afetadas
-        Cache::store('redis')->forget('stats:media');
+        FilamentStatsCache::forgetMedia();
     }
 }

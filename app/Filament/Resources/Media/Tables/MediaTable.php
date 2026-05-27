@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Media\Tables;
 
 use App\Filament\Resources\Media\Actions\DeleteMediaAction;
 use App\Models\MediaItem as MediaItemModel;
-use App\Models\Team;
 use App\Support\AppDateTime;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -25,10 +24,16 @@ class MediaTable
                     ->label('Nome do Arquivo')
                     ->state(function ($record) {
                         if ((bool) ($record->video ?? false)) {
-                            return $record->video->title ?? 'Vídeo (URL)';
+                            $linkedVideo = $record->linkedVideo();
+
+                            return ($linkedVideo !== null && $linkedVideo->title !== '')
+                                ? $linkedVideo->title
+                                : 'Vídeo (URL)';
                         }
 
-                        return $record->getFirstMedia('media')->name ?? '—';
+                        $media = $record->getFirstMedia('media');
+
+                        return $media !== null ? $media->name : '—';
                     })
                     ->searchable(isIndividual: true, isGlobal: false)
                     ->sortable(true, fn ($query, $direction) => self::sortAttachmentName($query, $direction)),
@@ -86,7 +91,7 @@ class MediaTable
     private static function resolveCreatedAt($record): string
     {
         if ((bool) ($record->video ?? false)) {
-            $createdAt = $record->video->created_at;
+            $createdAt = $record->linkedVideo()?->created_at;
 
             return $createdAt ? AppDateTime::parse($createdAt)->format('d/m/Y H:i') : '—';
         }
@@ -98,11 +103,12 @@ class MediaTable
 
     private static function resolveTeamName($record): string
     {
-        $teamId = $record->team_id ?? null;
-        if (! $teamId) {
+        if (! ($record->team_id ?? null)) {
             return Filament::hasTenancy() ? '—' : 'Global';
         }
 
-        return Team::query()->whereKey($teamId)->value('name') ?? '—';
+        $team = $record->team;
+
+        return $team !== null ? $team->name : '—';
     }
 }

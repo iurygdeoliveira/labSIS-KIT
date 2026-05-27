@@ -17,8 +17,10 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Override;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MediaResource extends Resource
 {
@@ -44,6 +46,16 @@ class MediaResource extends Resource
     }
 
     #[Override]
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with([
+            'video',
+            'team',
+            'media' => fn ($mediaQuery) => $mediaQuery->where('collection_name', 'media'),
+        ]);
+    }
+
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return MediaForm::configure($schema);
@@ -59,7 +71,11 @@ class MediaResource extends Resource
     public static function table(Table $table): Table
     {
         return MediaTable::configure($table)
-            ->modifyQueryUsing(fn ($query) => $query->with('video'));
+            ->modifyQueryUsing(fn ($query) => $query->with([
+                'video',
+                'team',
+                'media' => fn ($mediaQuery) => $mediaQuery->where('collection_name', 'media'),
+            ]));
     }
 
     #[Override]
@@ -70,6 +86,7 @@ class MediaResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [
@@ -81,6 +98,7 @@ class MediaResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getRecordTitle(?Model $record): string|Htmlable|null
     {
         /** @var MediaItem|null $record */
@@ -89,11 +107,13 @@ class MediaResource extends Resource
         }
 
         if ((bool) $record->video) {
-            $title = $record->video()->first()?->title;
+            $title = $record->linkedVideo()?->title;
 
             return $title ?: 'Vídeo (URL)';
         }
 
-        return $record->getFirstMedia('media')->name ?? 'Sem nome';
+        $media = $record->getFirstMedia('media');
+
+        return $media instanceof Media ? $media->name : 'Sem nome';
     }
 }

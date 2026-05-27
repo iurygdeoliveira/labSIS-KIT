@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\AccountSuspended;
@@ -16,6 +18,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -32,7 +35,7 @@ class AuthPanelProvider extends PanelProvider
             ->path('')
             ->default()
             ->darkMode(true, true)
-            ->brandLogo(fn (): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View => view('filament.auth.logo_auth'))
+            ->brandLogo(fn (): Factory|\Illuminate\Contracts\View\View => view('filament.auth.logo_auth'))
             ->brandLogoHeight('8rem')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->authGuard('web')

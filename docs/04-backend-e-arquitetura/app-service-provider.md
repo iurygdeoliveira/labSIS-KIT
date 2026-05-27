@@ -86,7 +86,7 @@ private function configCommands(): void
 private function configUrls(): void
 {
     if (app()->isProduction()) {
-        URL::forceScheme('https');
+        URL::forceHttps();
     }
 }
 ```
@@ -98,15 +98,17 @@ private function configUrls(): void
 ```php
 private function configDate(): void
 {
-    Date::use(CarbonImmutable::class);
-    Carbon::setLocale('pt_BR');
+    Date::use(AppDateTime::class);
+    Date::setLocale('pt_BR');
 }
 ```
 
 **Propósito:**
 
-1.  **`Date::use(CarbonImmutable::class)`**: Define que, por padrão, o Laravel deve usar a classe `CarbonImmutable` em vez da `Carbon` padrão para manipulação de datas. Objetos imutáveis são mais seguros, pois qualquer modificação (ex: `->addDay()`) retorna uma _nova_ instância da data, em vez de alterar a original. Isso evita bugs difíceis de rastrear causados por modificações inesperadas em objetos de data.
-2.  **`Carbon::setLocale('pt_BR')`**: Configura o idioma padrão da biblioteca Carbon para português do Brasil. Isso afeta a formatação de datas em funções como `diffForHumans()`, que passará a retornar valores como "há 2 minutos" em vez de "2 minutes ago".
+1.  **`Date::use(AppDateTime::class)`**: Define `App\Support\AppDateTime` como implementação padrão de datas. A classe estende `CarbonImmutable` e centraliza formatação pt-BR (`d/m/Y H:i:s`) e helpers como `formatForHumans()`. Objetos imutáveis evitam mutações acidentais em instâncias de data.
+2.  **`Date::setLocale('pt_BR')`**: Configura o idioma padrão para português do Brasil, afetando funções como `diffForHumans()` ("há 2 minutos" em vez de "2 minutes ago").
+
+Consulte [Padronização de Data e Hora](./padrao-datetime.md) para detalhes.
 
 #### `configFilamentColors()` - REMOVIDO (Movido para CSS)
 
@@ -123,20 +125,31 @@ Registra ouvintes de eventos e observadores de modelos.
 ```php
 private function configEvents(): void
 {
-    $this->app['events']->listen(UserRegistered::class, NotifyAdminNewUser::class);
-    $this->app['events']->listen(UserApproved::class, SendUserApprovedEmail::class);
+    Event::listen(UserRegistered::class, NotifyAdminNewUser::class);
+    Event::listen(UserApproved::class, SendUserApprovedEmail::class);
+
+    // Logs de Autenticação (MongoDB)
+    Event::listen(Login::class, LogAuthenticationActivity::class);
+    Event::listen(Logout::class, LogAuthenticationActivity::class);
+    Event::listen(Failed::class, LogAuthenticationActivity::class);
 }
 
 private function configObservers(): void
 {
     Video::observe(VideoObserver::class);
+    AppUser::observe(UserObserver::class);
+    Team::observe(TeamObserver::class);
+    MediaItem::observe(MediaItemObserver::class);
+
+    Membership::observe(MembershipObserver::class);
+    \LaravelDaily\FilaTeams\Models\Membership::observe(MembershipObserver::class);
 }
 ```
 
 **Propósito:** Centraliza o registro de lógica reativa.
 
--   **Listeners:** Reagem a eventos como "Usuário Registrado" ou "Usuário Aprovado" para enviar notificações ou emails.
--   **Observers:** Observam mudanças nos modelos `Video` para executar ações automáticas (como limpar cache ou criar logs) quando registros são criados, atualizados ou excluídos.
+-   **Listeners:** Reagem a eventos de domínio (`UserRegistered`, `UserApproved`) e de autenticação (`Login`, `Logout`, `Failed`) para emails e auditoria em MongoDB.
+-   **Observers:** Invalidam cache de stats do Filament (`FilamentStatsCache`) e metadados de vídeo quando `User`, `Team`, `Video`, `MediaItem` ou `Membership` são alterados. Consulte [Cache e Redis](../05-otimizacoes/cache-e-redis.md).
 
 #### `configGates()` - Portões de Autorização
 
@@ -145,13 +158,15 @@ Define regras de autorização globais que não estão atreladas a um modelo esp
 ```php
 private function configGates(): void
 {
-    Gate::define('viewPulse', function (AppUser $user) {
-        return $user->hasRole('admin');
-    });
+    Gate::policy(AuthenticationLog::class, AuthenticationLogPolicy::class);
+    Gate::define('viewPulse', fn (AppUser $user): bool => $user->hasRole('admin'));
 }
 ```
 
-**Propósito:** Define o Gate `viewPulse`, que protege o acesso ao dashboard do **Laravel Pulse**, garantindo que apenas usuários com o papel de `admin` possam visualizar as métricas de performance do sistema.
+**Propósito:**
+
+-   **`AuthenticationLogPolicy`**: Autoriza acesso ao Resource de logs de autenticação no painel admin.
+-   **`viewPulse`**: Protege o dashboard do **Laravel Pulse**, permitindo acesso apenas a usuários com papel `admin`.
 
 ## Conclusão
 
@@ -159,4 +174,4 @@ O `AppServiceProvider` é um arquivo fundamental para estabelecer padrões, conf
 
 ## Referências
 
-- [Provider: AppServiceProvider](/labsis-kit/app/Providers/AppServiceProvider.php)
+- [Provider: AppServiceProvider](../../app/Providers/AppServiceProvider.php)

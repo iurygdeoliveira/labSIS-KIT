@@ -30,6 +30,7 @@ class EditUser extends EditRecord
         return $this->record?->getKey() !== Auth::id();
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

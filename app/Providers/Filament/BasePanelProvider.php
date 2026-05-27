@@ -28,42 +28,42 @@ abstract class BasePanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        return $panel
-            ->id($this->getPanelId())
-            ->path($this->getPanelPath())
-            ->spa()
-            ->globalSearch(false)
-            ->databaseTransactions()
-            ->profile()
-            ->topbar(false)
-            ->darkMode(true, true)
-            ->brandLogo(fn (): Factory|View => view('filament.auth.logo_base'))
-            ->brandLogoHeight('3rem')
-            ->multiFactorAuthentication(
-                AppAuthentication::make()
-                    ->recoverable()
-            )
-            ->viteTheme('resources/css/filament/admin/theme.css')
-            ->sidebarWidth('15rem')
-            ->maxContentWidth(Width::Full)
-            ->middleware([
-                EncryptCookies::class,
-                AddQueuedCookiesToResponse::class,
-                StartSession::class,
-                AuthenticateSession::class,
-                ShareErrorsFromSession::class,
-                PreventRequestForgery::class,
-                SubstituteBindings::class,
-                DisableBladeIconComponents::class,
-                DispatchServingFilamentEvent::class,
-                RedirectToProperPanelMiddleware::class,
-                EnsureSecurityHeaders::class,
-            ])
-            ->authMiddleware([
-                Authenticate::class,
-            ]);
-
-        return $this->applySharedPlugins($panel);
+        return $this->applySharedPlugins(
+            $panel
+                ->id($this->getPanelId())
+                ->path($this->getPanelPath())
+                ->spa()
+                ->globalSearch(false)
+                ->databaseTransactions()
+                ->profile()
+                ->topbar(false)
+                ->darkMode(true, true)
+                ->brandLogo(fn (): Factory|View => view('filament.auth.logo_base'))
+                ->brandLogoHeight('3rem')
+                ->multiFactorAuthentication(
+                    AppAuthentication::make()
+                        ->recoverable()
+                )
+                ->viteTheme('resources/css/filament/admin/theme.css')
+                ->sidebarWidth('15rem')
+                ->maxContentWidth(Width::Full)
+                ->middleware([
+                    EncryptCookies::class,
+                    AddQueuedCookiesToResponse::class,
+                    StartSession::class,
+                    AuthenticateSession::class,
+                    ShareErrorsFromSession::class,
+                    PreventRequestForgery::class,
+                    SubstituteBindings::class,
+                    DisableBladeIconComponents::class,
+                    DispatchServingFilamentEvent::class,
+                    RedirectToProperPanelMiddleware::class,
+                    EnsureSecurityHeaders::class,
+                ])
+                ->authMiddleware([
+                    Authenticate::class,
+                ])
+        );
     }
 
     protected function applySharedPlugins(Panel $panel): Panel

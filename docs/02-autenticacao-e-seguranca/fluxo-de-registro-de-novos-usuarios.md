@@ -15,29 +15,37 @@
 
 ## Visão Geral
 
-O sistema implementa um fluxo simplificado de registro de usuários com criação automática de tenants, atribuição de roles e envio de emails de notificação. O sistema utiliza eventos e listeners do Laravel para garantir desacoplamento e facilidade de manutenção.
+O sistema implementa um fluxo simplificado de registro de usuários com criação automática de **teams** (organizações via `laraveldaily/filateams`), associação via `Membership`, sincronização de roles Spatie e envio de emails de notificação. O sistema utiliza eventos e listeners do Laravel para garantir desacoplamento e facilidade de manutenção.
+
+> **Terminologia:** O formulário ainda expõe o campo `tenant_name` com rótulo "Nome do Tenant" na UI, mas o dado persiste no model `App\Models\Team` (tabela `teams`). No código, "tenant" na interface equivale a **team** no domínio.
 
 ## Arquitetura do Sistema
 
 ### Componentes Principais
 
 1. **Página de Registro Personalizada** (`app/Filament/Pages/Auth/Register.php`)
-2. **Sistema de Eventos** (Events e Listeners)
-3. **Templates de Email** (Blade templates)
-4. **Configuração de Email** (Mailpit para desenvolvimento)
-5. **Sistema de Aprovação** (Toggle na tabela de usuários)
+2. **Models de multi-team** (`Team`, `Membership` — FilaTeams)
+3. **Sistema de Eventos** (Events e Listeners)
+4. **Templates de Email** (Blade templates)
+5. **Configuração de Email** (Mailpit para desenvolvimento)
+6. **Sistema de Aprovação** (Toggle na tabela de usuários)
+7. **MembershipObserver** — sincroniza role Spatie ao criar membership
 
 ### Arquivos Utilizados
 
-- **`app/Filament/Pages/Auth/Register.php`** - Página de registro personalizada
-- **`app/Events/UserRegistered.php`** - Evento disparado no registro
-- **`app/Events/UserApproved.php`** - Evento disparado na aprovação
-- **`app/Listeners/NotifyAdminNewUser.php`** - Listener para notificar admin
-- **`app/Listeners/SendUserApprovedEmail.php`** - Listener para notificar usuário aprovado
-- **`app/Mail/NewUserNotificationMail.php`** - Email para administrador
-- **`app/Mail/UserApprovedMail.php`** - Email para usuário aprovado
-- **`app/Providers/AppServiceProvider.php`** - Registro de listeners
-- **`app/Filament/Resources/Users/Tables/UsersTable.php`** - Toggle de aprovação
+- **`app/Filament/Pages/Auth/Register.php`** — Página de registro personalizada
+- **`app/Models/Team.php`** — Organização (team) criada no cadastro
+- **`app/Models/Membership.php`** — Pivot usuário ↔ team com role (`owner` / `member`)
+- **`app/Enums/AppTeamRole.php`** — Roles do pivot FilaTeams
+- **`app/Observers/MembershipObserver.php`** — Sincroniza Spatie Permission por team
+- **`app/Events/UserRegistered.php`** — Evento disparado no registro
+- **`app/Events/UserApproved.php`** — Evento disparado na aprovação
+- **`app/Listeners/NotifyAdminNewUser.php`** — Listener para notificar admin
+- **`app/Listeners/SendUserApprovedEmail.php`** — Listener para notificar usuário aprovado
+- **`app/Mail/NewUserNotificationMail.php`** — Email para administrador
+- **`app/Mail/UserApprovedMail.php`** — Email para usuário aprovado
+- **`app/Providers/AppServiceProvider.php`** — Registro de listeners e observers
+- **`app/Filament/Resources/Users/Tables/UsersTable.php`** — Toggle de aprovação
 
 ## Fluxo de Registro
 
@@ -57,6 +65,9 @@ O sistema utiliza o `AuthPanelProvider` para gerenciar o registro, que está con
 O formulário personalizado (`Register.php`) inclui:
 
 ```php
+use App\Models\Team;
+use App\Models\User;
+
 public function form(Schema $schema): Schema
 {
     return $schema
@@ -89,7 +100,7 @@ public function form(Schema $schema): Schema
                 ->label('Nome do Tenant')
                 ->required()
                 ->maxLength(255)
-                ->unique(Tenant::class, 'name'),
+                ->unique(Team::class, 'name'),
         ])
         ->columns(1);
 }
@@ -97,7 +108,7 @@ public function form(Schema $schema): Schema
 
 **Validações:**
 - Email único na tabela `users`
-- Nome do tenant único na tabela `tenants`
+- Nome da organização único na tabela `teams` (campo de formulário: `tenant_name`)
 - Senha com confirmação
 - Todos os campos obrigatórios
 
@@ -110,15 +121,14 @@ protected function handleRegistration(array $data): Model
 {
     try {
         $userData = $this->prepareUserData($data);
-        $tenantData = $this->prepareTenantData($data);
+        $teamData = $this->prepareTeamData($data);
 
         $user = $this->createUser($userData);
-        $tenant = $this->createTenant($tenantData);
+        $team = $this->createTeam($teamData);
 
-        $this->associateUserWithTenant($user, $tenant);
-        
-        // Disparar evento de usuário registrado
-        event(new \App\Events\UserRegistered($user));
+        $this->associateUserWithTeam($user, $team);
+
+        event(new UserRegistered($user));
 
         $this->showSuccessNotification();
 
@@ -134,6 +144,7 @@ protected function handleRegistration(array $data): Model
 ```
 
 **Dados do Usuário:**
+
 ```php
 protected function prepareUserData(array $data): array
 {
@@ -141,12 +152,45 @@ protected function prepareUserData(array $data): array
         'name' => $data['name'],
         'email' => $data['email'],
         'password' => $data['password'],
-        'is_suspended' => true, // Usuário fica suspenso até aprovação
-        'is_approved' => false, // Usuário não aprovado por padrão
-        'email_verified_at' => null, // Email não verificado por padrão
+        'is_suspended' => true,
+        'is_approved' => false,
+        'email_verified_at' => null,
     ];
 }
 ```
+
+**Dados do Team:**
+
+```php
+protected function prepareTeamData(array $data): array
+{
+    return [
+        'name' => $data['tenant_name'],
+        'is_personal' => false,
+        'is_active' => true,
+    ];
+}
+```
+
+**Associação usuário ↔ team:**
+
+```php
+use App\Enums\AppTeamRole;
+use App\Models\Membership;
+
+protected function associateUserWithTeam(User $user, Team $team): void
+{
+    Membership::create([
+        'team_id' => $team->id,
+        'user_id' => $user->id,
+        'role' => AppTeamRole::OWNER->value,
+    ]);
+
+    $user->forceFill(['current_team_id' => $team->id])->save();
+}
+```
+
+O `MembershipObserver` reage à criação do membership e atribui automaticamente a role Spatie de **owner** daquele team (`RoleType::ensureOwnerRoleForTeam`). Não é necessário chamar `assignRole` manualmente no fluxo de registro.
 
 ### 4. Status do Usuário
 
@@ -222,11 +266,13 @@ class UserApproved
 **Arquivo:** `app/Providers/AppServiceProvider.php`
 
 ```php
+use Illuminate\Support\Facades\Event;
+
 private function configEvents(): void
 {
     // Registrar listeners manualmente para evitar duplicação
-    $this->app['events']->listen(UserRegistered::class, NotifyAdminNewUser::class);
-    $this->app['events']->listen(UserApproved::class, SendUserApprovedEmail::class);
+    Event::listen(UserRegistered::class, NotifyAdminNewUser::class);
+    Event::listen(UserApproved::class, SendUserApprovedEmail::class);
 }
 ```
 
@@ -355,29 +401,25 @@ MAIL_FROM_NAME="${APP_NAME}"
 **Arquivo:** `app/Filament/Resources/Users/Tables/UsersTable.php`
 
 ```php
-private static function getApprovalColumn()
+private static function getApprovalColumn(): ToggleColumn
 {
     return ToggleColumn::make('is_approved')
         ->onColor('primary')
         ->offColor('danger')
-        ->onIcon('heroicon-c-check')
-        ->offIcon('heroicon-c-x-mark')
+        ->onIcon(Heroicon::Check)
+        ->offIcon(Heroicon::XMark)
         ->label('Aprovar')
-        ->afterStateUpdated(function (User $record, $state) {
-            // Se o usuário foi aprovado
+        ->afterStateUpdated(function (User $record, $state): void {
             if ($state) {
-                // Remover suspensão
                 $record->is_suspended = false;
 
-                // Se o email não está verificado, verificar automaticamente
                 if (! $record->hasVerifiedEmail()) {
                     $record->markEmailAsVerified();
                 }
 
                 $record->save();
 
-                // Disparar evento de aprovação
-                event(new \App\Events\UserApproved($record));
+                event(new UserApproved($record));
             }
         });
 }
@@ -410,17 +452,29 @@ private static function getApprovalColumn()
    - Verificar se o toggle está funcionando
    - Verificar se o evento está sendo disparado
 
+4. **Role Spatie não atribuída após registro**
+   - Confirmar que `MembershipObserver` está registrado em `AppServiceProvider::configObservers()`
+   - Verificar registro em `App\Models\Membership` e `\LaravelDaily\FilaTeams\Models\Membership`
+   - Conferir pivot `team_members` com `role = owner`
+
 
 ## Conclusão
 
 O sistema implementa um fluxo simplificado e eficiente de registro de usuários com:
 
 - ✅ **Registro simplificado** com validações adequadas
-- ✅ **Criação automática** de tenants
-- ✅ **Atribuição automática** de roles
+- ✅ **Criação automática de team** (organização) via FilaTeams
+- ✅ **Membership como owner** com role Spatie sincronizada pelo observer
 - ✅ **Sistema de aprovação** via toggle
 - ✅ **Emails de notificação** para admin e usuário
 - ✅ **Sistema de eventos** desacoplado
 - ✅ **Configuração de desenvolvimento** com Mailpit
 
 O sistema está pronto para uso e pode ser facilmente estendido com novas funcionalidades conforme necessário.
+
+## Referências
+
+- [AppServiceProvider — observers e eventos](../04-backend-e-arquitetura/app-service-provider.md)
+- [Stack Tecnológica — FilaTeams](../04-backend-e-arquitetura/stack-tecnologica.md)
+- [Register.php](../../app/Filament/Pages/Auth/Register.php)
+- [MembershipObserver.php](../../app/Observers/MembershipObserver.php)

@@ -2,20 +2,13 @@
 
 namespace App\Filament\Resources\Users\Widgets;
 
-use App\Enums\RoleType;
-use App\Models\User;
+use App\Support\FilamentStatsCache;
 use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Computed;
 
 /**
- * @property-read Builder $baseQuery
- * @property-read int $totalUsers
- * @property-read int $suspendedUsers
- * @property-read int $verifiedUsers
- * @property-read int $unapprovedUsers
  * @property-read array $summary
  * @property-read array $percentages
  */
@@ -26,65 +19,27 @@ class UsersStats extends BaseWidget
     protected ?string $pollingInterval = null;
 
     #[Computed]
-    protected function baseQuery()
-    {
-        return User::query()
-            ->whereDoesntHave('roles', function ($query): void {
-                $query->where('name', RoleType::ADMIN->value);
-            });
-    }
-
-    #[Computed]
-    protected function totalUsers(): int
-    {
-        return $this->baseQuery->count();
-    }
-
-    #[Computed]
-    protected function suspendedUsers(): int
-    {
-        return (clone $this->baseQuery)
-            ->where('is_suspended', true)
-            ->count();
-    }
-
-    #[Computed]
-    protected function verifiedUsers(): int
-    {
-        return (clone $this->baseQuery)
-            ->whereNotNull('email_verified_at')
-            ->count();
-    }
-
-    #[Computed]
-    protected function unapprovedUsers(): int
-    {
-        return (clone $this->baseQuery)
-            ->where('is_suspended', false)
-            ->where('is_approved', false)
-            ->count();
-    }
-
-    #[Computed]
     protected function summary(): array
     {
+        $stats = FilamentStatsCache::users();
+
         return [
-            'total' => $this->totalUsers,
-            'suspended' => $this->suspendedUsers,
-            'verified' => $this->verifiedUsers,
-            'unapproved' => $this->unapprovedUsers,
+            'total' => $stats['total'],
+            'suspended' => $stats['suspended'],
+            'verified' => $stats['verified'],
+            'unapproved' => $stats['unapproved'],
         ];
     }
 
     #[Computed]
     protected function percentages(): array
     {
-        $total = $this->totalUsers;
+        $total = $this->summary['total'];
 
         return [
-            'verified' => $total > 0 ? round(($this->verifiedUsers / $total) * 100, 1) : 0,
-            'suspended' => $total > 0 ? round(($this->suspendedUsers / $total) * 100, 1) : 0,
-            'unapproved' => $total > 0 ? round(($this->unapprovedUsers / $total) * 100, 1) : 0,
+            'verified' => $total > 0 ? round(($this->summary['verified'] / $total) * 100, 1) : 0,
+            'suspended' => $total > 0 ? round(($this->summary['suspended'] / $total) * 100, 1) : 0,
+            'unapproved' => $total > 0 ? round(($this->summary['unapproved'] / $total) * 100, 1) : 0,
         ];
     }
 

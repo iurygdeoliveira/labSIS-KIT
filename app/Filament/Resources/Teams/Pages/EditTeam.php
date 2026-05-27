@@ -103,6 +103,7 @@ class EditTeam extends EditRecord
         return $record;
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

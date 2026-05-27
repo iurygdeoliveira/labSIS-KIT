@@ -3,7 +3,7 @@
 ## 📋 Índice
 
 - [Introdução](#introdução)
-- [O que é `#[Computed]` no Livewire v3](#o-que-é-computed-no-livewire-v3)
+- [O que é `#[Computed]` no Livewire v4](#o-que-é-computed-no-livewire-v4)
 - [Quando usar](#quando-usar)
 - [Como funciona a invalidação](#como-funciona-a-invalidação)
 - [Implementação no Projeto](#implementação-no-projeto)
@@ -15,9 +15,9 @@
 
 ## Introdução
 
-O atributo `#[Computed]` do Livewire v3 permite declarar propriedades computadas que são memoizadas durante um ciclo de renderização do componente. Isso evita recomputações desnecessárias quando o mesmo valor é utilizado repetidamente, reduzindo consultas ao banco e operações de transformação.
+O atributo `#[Computed]` do Livewire v4 permite declarar propriedades computadas que são memoizadas durante um ciclo de renderização do componente. Isso evita recomputações desnecessárias quando o mesmo valor é utilizado repetidamente, reduzindo consultas ao banco e operações de transformação.
 
-## O que é `#[Computed]` no Livewire v3
+## O que é `#[Computed]` no Livewire v4
 
 - `#[Computed]` transforma um método em uma propriedade computada.
 - O valor é calculado uma única vez por ciclo de render do componente e reutilizado enquanto não houver mudanças de estado que exijam recomputação.
@@ -47,8 +47,10 @@ public function render()
 
 Use `#[Computed]` quando o mesmo dado é acessado mais de uma vez no mesmo render ou quando a computação é cara. Exemplos do projeto:
 
-- Resumos/contagens: no `UsersStats`, três cards leem o mesmo `summary()` (total, suspensos, verificados). Com `#[Computed]`, o resumo é calculado uma única vez por render e reutilizado.
+- Resumos/contagens: no `UsersStats`, quatro cards leem o mesmo `summary()` e três leem `percentages()`. Com `#[Computed]`, cada resumo é calculado uma única vez por render.
 - Regras derivadas simples: em `EditUser`, `canDelete` decide se o botão de excluir aparece. Se esse mesmo valor for lido em mais de um ponto da página, ele não é recalculado no mesmo render.
+
+> **Nota:** Para agregações de banco (contagens, somas), combine `#[Computed]` com [`FilamentStatsCache`](../../app/Support/FilamentStatsCache.php) — o cache persiste entre requisições; o computed evita recomputação dentro do mesmo render.
 
 ## Como funciona a invalidação
 
@@ -63,10 +65,12 @@ Use `#[Computed]` quando o mesmo dado é acessado mais de uma vez no mesmo rende
 Arquivo: `app/Filament/Resources/Users/Widgets/UsersStats.php`
 
 - Objetivo: exibir métricas no cabeçalho da listagem de usuários.
-- Otimização: o método `summary()` é `#[Computed]`, agregando contagens apenas uma vez por render.
+- Otimização dupla:
+  1. `FilamentStatsCache::users()` centraliza as queries com TTL de 60s (Redis em produção).
+  2. `summary()` e `percentages()` são `#[Computed]`, evitando recomputação no mesmo render.
 
 ```php
-use App\Models\User;
+use App\Support\FilamentStatsCache;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Livewire\Attributes\Computed;
@@ -76,30 +80,37 @@ class UsersStats extends BaseWidget
     #[Computed]
     protected function summary(): array
     {
-        $totalUsers = User::query()->count();
-        $suspendedUsers = User::query()->where('is_suspended', true)->count();
-        $verifiedUsers = User::query()->whereNotNull('email_verified_at')->count();
+        $stats = FilamentStatsCache::users();
 
         return [
-            'total' => $totalUsers,
-            'suspended' => $suspendedUsers,
-            'verified' => $verifiedUsers,
+            'total' => $stats['total'],
+            'suspended' => $stats['suspended'],
+            'verified' => $stats['verified'],
+            'unapproved' => $stats['unapproved'],
+        ];
+    }
+
+    #[Computed]
+    protected function percentages(): array
+    {
+        $total = $this->summary['total'];
+
+        return [
+            'verified' => $total > 0 ? round(($this->summary['verified'] / $total) * 100, 1) : 0,
+            'suspended' => $total > 0 ? round(($this->summary['suspended'] / $total) * 100, 1) : 0,
+            'unapproved' => $total > 0 ? round(($this->summary['unapproved'] / $total) * 100, 1) : 0,
         ];
     }
 
     protected function getStats(): array
     {
-        $summary = $this->summary; // memoizado no mesmo render
+        $summary = $this->summary;       // memoizado no mesmo render
+        $percentages = $this->percentages; // memoizado no mesmo render
 
         return [
-            Stat::make('Usuários', (string) $summary['total'])
-                ->icon('heroicon-c-user-group'),
-            Stat::make('Suspensos', (string) $summary['suspended'])
-                ->color('danger')
-                ->icon('heroicon-c-no-symbol'),
-            Stat::make('Verificados', (string) $summary['verified'])
-                ->color('success')
-                ->icon('heroicon-c-check-badge'),
+            Stat::make('Total de Usuários', number_format($summary['total']))
+                ->description('Cadastrados no sistema'),
+            // ...
         ];
     }
 }
@@ -159,7 +170,20 @@ class EditUser extends EditRecord
 }
 ```
 
+## Boas práticas
+
+- Use `#[Computed]` para transformações derivadas do estado do componente (percentuais, flags booleanas).
+- Use `FilamentStatsCache` para agregações de banco compartilhadas entre widgets, badges e tabs.
+- Não confunda os dois: computed não substitui cache entre requisições.
+
+## Problemas comuns
+
+- **Queries repetidas entre renders**: `#[Computed]` não ajuda — use cache com observers.
+- **Acesso como método vs propriedade**: leia `$this->summary`, não `$this->summary()`.
+
 ## Referências
 
 - Laravel News — Livewire Computed: `https://laravel-news.com/livewire-computed`
-- Documentação Livewire (v3) — Computed: `https://livewire.laravel.com/docs/data/computed`
+- Documentação Livewire (v4) — Computed: `https://livewire.laravel.com/docs/computed-properties`
+- [Cache e Redis no Projeto](./cache-e-redis.md)
+- [Performance no Filament](./filament-performance.md)

@@ -23,6 +23,7 @@ class PermissionsCluster extends Cluster
 
     protected static ?int $navigationSort = 2;
 
+    #[\Override]
     public static function canAccess(): bool
     {
         $user = Filament::auth()->user();

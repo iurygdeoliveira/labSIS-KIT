@@ -29,14 +29,14 @@ class TeamFactory extends Factory
 
     public function personal(): static
     {
-        return $this->state(fn () => [
+        return $this->state(fn (): array => [
             'is_personal' => true,
         ]);
     }
 
     public function inactive(): static
     {
-        return $this->state(fn () => [
+        return $this->state(fn (): array => [
             'is_active' => false,
         ]);
     }

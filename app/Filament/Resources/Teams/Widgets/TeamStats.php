@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Teams\Widgets;
 
-use App\Models\Team;
+use App\Support\FilamentStatsCache;
 use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -18,24 +18,13 @@ class TeamStats extends BaseWidget
     #[Computed]
     protected function summary(): array
     {
-        $totalTeams = Team::query()->count('*');
-        $activeTeams = Team::query()->where('is_active', true)->count('*');
-        $inactiveTeams = max($totalTeams - $activeTeams, 0);
-
-        $totalUsersLinked = Team::query()
-            ->withCount('members')
-            ->get()
-            ->sum('members_count');
-
-        $avgUsersPerTeam = $totalTeams > 0
-            ? round($totalUsersLinked / $totalTeams, 1)
-            : 0;
+        $stats = FilamentStatsCache::teams();
 
         return [
-            'total' => $totalTeams,
-            'active' => $activeTeams,
-            'inactive' => $inactiveTeams,
-            'avgUsers' => $avgUsersPerTeam,
+            'total' => $stats['total'],
+            'active' => $stats['active_flag'],
+            'inactive' => $stats['inactive_flag'],
+            'avgUsers' => $stats['avg_users_per_team'],
         ];
     }
 

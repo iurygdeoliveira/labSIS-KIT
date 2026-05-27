@@ -49,10 +49,11 @@ O sistema de roles e permissões foi projetado para funcionar em um ambiente **m
 - **`app/Enums/RoleType.php`**: enum que define as roles disponíveis no sistema (`Admin`, `Owner`, `User`).
 - **`app/Enums/Permission.php`**: enum que define e padroniza todas as permissions do sistema (`create`, `view`, `update`, `delete`).
 - **`app/Models/User.php`**: modelo do usuário com trait `HasRoles` e lógica de acesso aos painéis.
-- **`app/Models/Tenant.php`**: modelo do tenant com relacionamentos para usuários e mídias.
-- **`app/Models/TenantUser.php`**: modelo pivot para relacionamento many-to-many entre usuários e tenants.
-- **`app/Models/Role.php`**: modelo de role estendido do Spatie com relacionamento para tenant.
-- **`app/Tenancy/SpatieTeamResolver.php`**: resolver customizado para definir o team_id baseado no tenant atual.
+- **`app/Models/Team.php`**: organização (team) — model de tenant no Filament/FilaTeams.
+- **`app/Models/Membership.php`**: pivot usuário ↔ team com role (`owner` / `member`); sincronizada com Spatie via `MembershipObserver`.
+- **`app/Models/Role.php`**: modelo de role estendido do Spatie com contexto por `team_id`.
+- **`app/Observers/MembershipObserver.php`**: sincroniza pivot FilaTeams → `model_has_roles`.
+- **`app/Tenancy/SpatieTeamResolver.php`**: resolver customizado para definir o `team_id` baseado no team ativo do Filament.
 
 ### Policies de Autorização
 
@@ -137,19 +138,19 @@ O modelo `User` implementa múltiplas interfaces e traits:
 
 Métodos importantes:
 - `canAccessPanel()`: Controla acesso aos painéis baseado em roles
-- `isOwnerOfTenant()`: Verifica se é Owner de um tenant específico
-- `isUserOfTenant()`: Verifica se é User de um tenant específico
-- `assignRoleInTenant()`: Atribui role no contexto de um tenant
+- `isOwnerOfTeam(Team $team)`: Verifica se é Owner de um team específico
+- `isUserOfTeam(Team $team)`: Verifica se é User de um team específico
+- `assignRoleInTeam(Role $role, Team $team)`: Atribui role no contexto de um team
 
 **Arquivo**: `app/Models/User.php`
 
-### 4. Modelos de Tenant
+### 4. Models de Team e Membership
 
-- **`Tenant`**: Representa uma organização/empresa no sistema
-- **`TenantUser`**: Modelo pivot para relacionamento many-to-many
-- **`Role`**: Estende o modelo do Spatie com relacionamento para tenant
+- **`Team`**: Representa uma organização no sistema (tenant Filament)
+- **`Membership`**: Pivot FilaTeams (`team_id`, `user_id`, `role`) — fonte do pivot; Spatie é sincronizado pelo observer
+- **`Role`**: Estende o modelo do Spatie com contexto por `team_id`
 
-**Arquivos**: `app/Models/Tenant.php`, `app/Models/TenantUser.php`, `app/Models/Role.php`
+**Arquivos**: `app/Models/Team.php`, `app/Models/Membership.php`, `app/Models/Role.php`
 
 ### 5. Resolver de Team
 
@@ -177,9 +178,9 @@ public function before(User $user): ?bool
         return true;
     }
 
-    // Owner tem acesso total no tenant atual
-    $currentTenant = Filament::getTenant();
-    if ($currentTenant instanceof Tenant && $user->isOwnerOfTenant($currentTenant)) {
+    // Owner tem acesso total no team atual (tenant Filament)
+    $currentTeam = Filament::getTenant();
+    if ($currentTeam instanceof Team && $user->isOwnerOfTeam($currentTeam)) {
         return true;
     }
 

@@ -9,6 +9,7 @@ use App\Enums\RoleType;
 use App\Models\Membership;
 use App\Models\Team;
 use App\Models\User;
+use App\Support\FilamentStatsCache;
 use Spatie\Permission\PermissionRegistrar;
 
 /**
@@ -23,6 +24,7 @@ class MembershipObserver
     public function created(Membership $membership): void
     {
         $this->applyRole($membership);
+        $this->forgetStatsCaches();
     }
 
     public function updated(Membership $membership): void
@@ -32,39 +34,39 @@ class MembershipObserver
         }
 
         $this->applyRole($membership);
+        $this->forgetStatsCaches();
     }
 
     public function deleted(Membership $membership): void
     {
-        $user = $membership->user;
-        $team = $membership->team;
+        [$user, $team] = $this->resolveMembershipActors($membership);
 
-        if (! $user instanceof User || ! $team instanceof Team) {
+        if ($user === null || $team === null) {
             return;
         }
 
         $user->removeAllOwnerRolesFromTeam($team);
         $user->removeAllUserRolesFromTeam($team);
 
-        app(PermissionRegistrar::class)->forgetCachedPermissions();
+        resolve(PermissionRegistrar::class)->forgetCachedPermissions();
+        $this->forgetStatsCaches();
+    }
+
+    private function forgetStatsCaches(): void
+    {
+        FilamentStatsCache::forgetTeams();
+        FilamentStatsCache::forgetUsers();
     }
 
     private function applyRole(Membership $membership): void
     {
-        $user = $membership->user;
-        $team = $membership->team;
+        [$user, $team] = $this->resolveMembershipActors($membership);
 
-        if (! $user instanceof User || ! $team instanceof Team) {
+        if ($user === null || $team === null) {
             return;
         }
 
-        $pivotRole = $membership->role instanceof AppTeamRole
-            ? $membership->role
-            : AppTeamRole::tryFrom((string) $membership->role);
-
-        if (! $pivotRole instanceof AppTeamRole) {
-            return;
-        }
+        $pivotRole = $membership->role;
 
         $user->removeAllOwnerRolesFromTeam($team);
         $user->removeAllUserRolesFromTeam($team);
@@ -76,7 +78,18 @@ class MembershipObserver
 
         $user->assignRoleInTeam($spatieRole, $team);
 
-        app(PermissionRegistrar::class)->forgetCachedPermissions();
+        resolve(PermissionRegistrar::class)->forgetCachedPermissions();
+    }
+
+    /**
+     * @return array{0: User|null, 1: Team|null}
+     */
+    private function resolveMembershipActors(Membership $membership): array
+    {
+        return [
+            User::query()->find($membership->user_id),
+            Team::query()->find($membership->team_id),
+        ];
     }
 
     private function guard(): string

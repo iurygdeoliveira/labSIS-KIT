@@ -6,10 +6,10 @@ namespace App\Models;
 
 use App\Traits\UuidTrait;
 use Carbon\CarbonImmutable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Attributes\Appends;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 /**
  * @property int $id
  * @property string $uuid
@@ -38,32 +38,32 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @mixin \Eloquent
  */
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+#[Appends([
+    'file_type',
+    'human_size',
+])]
+#[Fillable([
+    'uuid',
+    'name',
+    'video',
+    'mime_type',
+    'size',
+    'team_id',
+])]
+#[Table(name: 'media_items')]
+#[WithoutTimestamps]
 class MediaItem extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, UuidTrait;
-
-    protected $table = 'media_items';
-
-    public $timestamps = false;
-
-    protected $fillable = [
-        'uuid',
-        'name',
-        'video',
-        'mime_type',
-        'size',
-        'team_id',
-    ];
-
-    protected $appends = [
-        'file_type',
-        'human_size',
-    ];
 
     public function registerMediaCollections(): void
     {
@@ -142,6 +142,26 @@ class MediaItem extends Model implements HasMedia
     public function video(): HasOne
     {
         return $this->hasOne(Video::class);
+    }
+
+    /**
+     * Retorna o registro de vídeo quando {@see $video} (flag) é true.
+     *
+     * Necessário porque a coluna booleana `video` colide com a relação homônima.
+     */
+    public function linkedVideo(): ?Video
+    {
+        if (! $this->video) {
+            return null;
+        }
+
+        if ($this->relationLoaded('video')) {
+            $related = $this->getRelation('video');
+
+            return $related instanceof Video ? $related : null;
+        }
+
+        return $this->video()->first();
     }
 
     /**

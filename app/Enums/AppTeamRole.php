@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Enums;
 
 use BackedEnum;
-use Illuminate\Contracts\Support\Htmlable;
 use LaravelDaily\FilaTeams\Contracts\TeamRoleContract;
 
 /**
@@ -34,21 +33,27 @@ enum AppTeamRole: string implements TeamRoleContract
     }
 
     /**
-     * @return array<int, array{value: string, label: string}>
+     * @return list<array{value: string, label: string}>
      */
     public static function assignable(): array
     {
-        return collect(self::cases())
-            ->reject(fn (self $role): bool => $role === self::OWNER)
-            ->map(fn (self $role): array => [
+        $assignable = [];
+
+        foreach (self::cases() as $role) {
+            if ($role === self::OWNER) {
+                continue;
+            }
+
+            $assignable[] = [
                 'value' => $role->value,
-                'label' => (string) $role->getLabel(),
-            ])
-            ->values()
-            ->toArray();
+                'label' => $role->getLabel(),
+            ];
+        }
+
+        return $assignable;
     }
 
-    public function getLabel(): string|Htmlable|null
+    public function getLabel(): string
     {
         return match ($this) {
             self::OWNER => RoleType::OWNER->getLabel(),
@@ -78,7 +83,7 @@ enum AppTeamRole: string implements TeamRoleContract
     public function hasPermission(string $permission): bool
     {
         return in_array($permission, array_map(
-            static fn (mixed $p): string => $p instanceof BackedEnum ? $p->value : (string) $p,
+            static fn (mixed $p): string => $p instanceof BackedEnum ? $p->value : $p,
             $this->permissions()
         ), strict: true);
     }

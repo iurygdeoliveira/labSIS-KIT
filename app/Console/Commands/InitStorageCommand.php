@@ -5,25 +5,15 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use Aws\S3\S3Client;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
+#[Description('Initialize S3 storage directories and configurations')]
+#[Signature('storage:init')]
 class InitStorageCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'storage:init';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Initialize S3 storage directories and configurations';
-
     /**
      * Execute the console command.
      */

@@ -33,13 +33,14 @@ class AuthenticationLogTable
     {
         $type = (string) ($record->authenticatable_type ?? '');
         $id = $record->authenticatable_id;
-        if ($type !== User::class || $id === null || $id === '') {
+        if ($type !== User::class || $id === '') {
             return 'Desconhecido';
         }
 
         $key = $type.':'.$id;
         if (! array_key_exists($key, self::$userDisplayNameCache)) {
-            self::$userDisplayNameCache[$key] = User::query()->find($id)?->name ?? 'Desconhecido';
+            $user = User::query()->find($id);
+            self::$userDisplayNameCache[$key] = $user !== null ? $user->name : 'Desconhecido';
         }
 
         return self::$userDisplayNameCache[$key];
@@ -56,7 +57,7 @@ class AuthenticationLogTable
             TextColumn::make('user_display')
                 ->label('Usuário')
                 ->getStateUsing(fn (AuthenticationLog $record): string => self::userDisplayNameForLog($record))
-                ->searchable(isGlobal: false, isIndividual: true, query: function (Builder $query, string $search): Builder {
+                ->searchable(query: function (Builder $query, string $search): Builder {
                     $ids = User::query()
                         ->where(function (Builder $q) use ($search): void {
                             $like = '%'.addcslashes($search, '%_\\').'%';
@@ -68,7 +69,7 @@ class AuthenticationLogTable
 
                     return $query->whereIn('authenticatable_id', $ids)
                         ->where('authenticatable_type', User::class);
-                }),
+                }, isIndividual: true, isGlobal: false),
 
             TextColumn::make('ip_address')
                 ->label('IP')
@@ -122,17 +123,15 @@ class AuthenticationLogTable
 
                     return $indicators;
                 })
-                ->query(function (Builder $query, array $data): Builder {
-                    return $query
-                        ->when(
-                            $data['from'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('login_at', '>=', $date),
-                        )
-                        ->when(
-                            $data['until'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('login_at', '<=', $date),
-                        );
-                }),
+                ->query(fn (Builder $query, array $data): Builder => $query
+                    ->when(
+                        $data['from'],
+                        fn (Builder $query, $date): Builder => $query->whereDate('login_at', '>=', $date),
+                    )
+                    ->when(
+                        $data['until'],
+                        fn (Builder $query, $date): Builder => $query->whereDate('login_at', '<=', $date),
+                    )),
         ];
     }
 }

@@ -19,6 +19,7 @@ class ViewMedia extends ViewRecord
 
     protected static string $resource = MediaResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

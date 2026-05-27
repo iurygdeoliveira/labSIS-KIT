@@ -52,12 +52,13 @@ class TeamSyncMiddleware
         $currentTeam = Filament::getTenant();
 
         if ($currentTeam === null) {
+            /** @var Team|null $fallback */
             $fallback = $user->teams()
                 ->where('is_active', true)
                 ->orderBy('name', 'asc')
                 ->first();
 
-            if ($fallback instanceof Team) {
+            if ($fallback !== null) {
                 $this->applyTeam($user, $fallback->getKey());
 
                 return $next($request);
@@ -77,7 +78,7 @@ class TeamSyncMiddleware
         if ($teamId !== 0) {
             $user->unsetRelation('roles');
             $user->unsetRelation('permissions');
-            app(PermissionRegistrar::class)->forgetCachedPermissions();
+            resolve(PermissionRegistrar::class)->forgetCachedPermissions();
         }
     }
 }

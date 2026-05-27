@@ -21,39 +21,44 @@ Como o projeto roda via Sail, todos os comandos devem ser prefixados com `./vend
 ### Rodar um arquivo específico
 
 ```bash
-./vendor/bin/sail artisan test tests/Feature/AuthenticationTest.php
+./vendor/bin/sail artisan test tests/Feature/FilamentStatsCacheTest.php
+./vendor/bin/sail artisan test tests/Feature/PanelAccessTest.php
 ```
 
 ### Rodar testes filtrando por nome
 
 ```bash
-./vendor/bin/sail artisan test --filter="pode redefinir a senha"
+./vendor/bin/sail artisan test --filter="redirecionado para o painel"
+./vendor/bin/sail artisan test --filter="FilamentStatsCache"
 ```
 
 ## 📂 Estrutura de Testes
 
--   `tests/Feature`: Testes de integração que verificam fluxos completos (ex: Login, Registro, Reset de Senha).
+-   `tests/Feature`: Testes de integração que verificam fluxos completos (ex: acesso a painéis, cache de stats Filament).
 -   `tests/Unit`: Testes unitários para classes isoladas (Services, Helpers, etc).
+
+### Testes Feature atuais
+
+| Arquivo | Cobertura |
+|---------|-----------|
+| `PanelAccessTest.php` | Regras de acesso aos painéis admin e user |
+| `FilamentStatsCacheTest.php` | Cache de agregações (`FilamentStatsCache`) e invalidação via `UserObserver` |
 
 ## 📝 Convenções
 
 -   **Idioma**: Os nomes dos testes devem ser escritos em **Português do Brasil**.
 -   **Sintaxe**: Utilize a sintaxe `describe()` e `it()` do Pest para melhor legibilidade.
 
-### Exemplo de Teste
+### Exemplo de Teste (real — `PanelAccessTest`)
 
 ```php
-describe('Fluxo de Autenticação', function () {
-    it('usuário aprovado pode fazer login', function () {
-        $user = User::factory()->create(['is_approved' => true]);
+describe('Acesso aos Painéis', function (): void {
+    it('usuário admin pode acessar o painel administrativo', function (): void {
+        $admin = User::where('email', 'admin@labsis.dev.br')->firstOrFail();
 
-        Livewire::test(Login::class)
-            ->fillForm([
-                'email' => $user->email,
-                'password' => 'password',
-            ])
-            ->call('authenticate')
-            ->assertRedirect('/');
+        $this->actingAs($admin)
+            ->get('/admin')
+            ->assertSuccessful();
     });
 });
 ```
@@ -62,5 +67,5 @@ describe('Fluxo de Autenticação', function () {
 
 Para detalhes específicos sobre cada conjunto de testes, consulte os documentos abaixo:
 
--   **[02 - Testes de Autenticação](./02-autenticacao.md)**: Login, registro e redefinição de senha.
--   **[03 - Controle de Acesso](./03-acesso-paineis.md)**: Regras de permissão por painel, tenants e redirecionamentos.
+-   **[02 - Testes de Autenticação](./02-autenticacao.md)**: Cobertura atual, lacunas e redirecionamentos parciais via `PanelAccessTest`.
+-   **[03 - Controle de Acesso](./03-acesso-paineis.md)**: Regras de permissão por painel, teams e redirecionamentos.

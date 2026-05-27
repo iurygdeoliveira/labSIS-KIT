@@ -66,6 +66,7 @@ class EditMedia extends EditRecord
         return null;
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

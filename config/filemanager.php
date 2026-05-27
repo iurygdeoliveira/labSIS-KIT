@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+use MWGuerra\FileManager\Models\FileSystemItem;
+use MWGuerra\FileManager\Policies\FileSystemItemPolicy;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +110,7 @@ return [
     | 'model' => \App\Models\CustomFileModel::class,
     |
     */
-    'model' => \MWGuerra\FileManager\Models\FileSystemItem::class,
+    'model' => FileSystemItem::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -278,7 +282,7 @@ return [
         ],
 
         // The policy class to use (can be overridden with custom implementation)
-        'policy' => \MWGuerra\FileManager\Policies\FileSystemItemPolicy::class,
+        'policy' => FileSystemItemPolicy::class,
     ],
 
     /*

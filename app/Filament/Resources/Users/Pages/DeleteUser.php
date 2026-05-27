@@ -17,6 +17,7 @@ class DeleteUser extends ViewRecord
 
     protected static string $resource = UserResource::class;
 
+    #[\Override]
     public function mount(int|string $record): void
     {
         parent::mount($record);
@@ -30,6 +31,7 @@ class DeleteUser extends ViewRecord
         return 'filament.resources.users.pages.delete-user';
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

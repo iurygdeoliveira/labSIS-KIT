@@ -13,8 +13,8 @@ Isso permite que atacantes manipulem essas referências (por exemplo, alterando 
 Para blindar o sistema contra IDOR, adotamos uma abordagem em camadas:
 
 1.  **Ofuscação de IDs (UUIDs)**: Substituição de chaves primárias incrementais (ex: `1`, `2`, `3`) por Identificadores Únicos Universais (UUIDs) aleatórios (ex: `a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11`). Isso torna a enumeração de recursos matematicamente inviável.
-2.  **Autorização Robusta (Policies)**: Verificação estrita de propriedade e permissões em todas as camadas de acesso (Policies do Laravel), garantindo que, mesmo se um UUID for descoberto, o acesso seja negado se o usuário não tiver permissão sobre aquele recurso específico ou Tenant.
-3.  **Escopo de Tenant**: Garantia de que todas as consultas são filtradas pelo Tenant ativo do usuário.
+2.  **Autorização Robusta (Policies)**: Verificação estrita de propriedade e permissões em todas as camadas de acesso (Policies do Laravel), garantindo que, mesmo se um identificador for descoberto, o acesso seja negado se o usuário não tiver permissão sobre aquele recurso ou **team** ativo.
+3.  **Escopo de Team**: Garantia de que consultas no painel `user` respeitam o team ativo do Filament (`Filament::getTenant()` → `App\Models\Team`).
 
 ## Implementação Técnica
 
@@ -61,7 +61,7 @@ Schema::create('media_items', function (Blueprint $table) {
 
 ### 3. Policies e Controle de Acesso
 
-Além da ofuscação, as Policies verificam se o usuário tem permissão para interagir com o recurso dentro do contexto do seu Tenant.
+Além da ofuscação, as Policies verificam se o usuário tem permissão para interagir com o recurso dentro do contexto do **team** ativo.
 
 **Exemplo (`App\Policies\MediaItemPolicy.php`):**
 
@@ -73,7 +73,7 @@ public function view(User $user, MediaItem $record): bool
 }
 ```
 
-O Filament aplica escopos globais de Tenant automaticamente (`TenantScope`), assegurando que `MediaItem::find($uuid)` só retorne resultados que pertençam ao Tenant do usuário atual.
+No painel `user`, o Filament restringe Resources ao tenant/team ativo da sessão, assegurando que registros de outros teams não sejam listados ou editados. Policies complementam com checagens em `MediaItemPolicy`, `UserPolicy`, etc.
 
 ## Resultados Esperados
 

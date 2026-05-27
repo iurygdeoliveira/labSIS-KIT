@@ -38,11 +38,11 @@ class TeamInfolist
                     ->components([
                         TextEntry::make('users_total')
                             ->label('Total de Usuários')
-                            ->state(fn ($record): int => (int) $record->members()->count()),
+                            ->state(fn ($record): int => $record->members->count()),
 
                         TextEntry::make('users_list')
                             ->label('Usuários')
-                            ->state(fn ($record): string => $record->members()->orderBy('name')->pluck('name')->implode(', ') ?: '-')
+                            ->state(fn ($record): string => $record->members->pluck('name')->implode(', ') ?: '-')
                             ->columnSpanFull(),
                     ])
                     ->columns(2),

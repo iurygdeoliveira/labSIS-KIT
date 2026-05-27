@@ -24,7 +24,7 @@ class MediaInfolist
                         // Evita colisão entre atributo booleano 'video' e relacionamento 'video()'
                         TextEntry::make('video_title')
                             ->label('Titulo do Video')
-                            ->state(fn ($record): ?string => $record->video()->value('title'))
+                            ->state(fn ($record): ?string => $record->linkedVideo()?->title)
                             ->visible(fn ($record): bool => (bool) $record->video),
 
                         TextEntry::make('human_size')
@@ -33,7 +33,7 @@ class MediaInfolist
 
                         TextEntry::make('video_duration')
                             ->label('Duração do Vídeo')
-                            ->state(fn ($record): ?int => $record->video()->value('duration_seconds'))
+                            ->state(fn ($record): ?int => $record->linkedVideo()?->duration_seconds)
                             ->formatStateUsing(fn ($state): string => self::formatVideoDuration($state))
                             ->visible(fn ($record): bool => (bool) $record->video),
 
@@ -76,7 +76,7 @@ class MediaInfolist
     private static function resolveMediaActionConfig($record): array
     {
         if ((bool) $record->video) {
-            $url = $record->video()->value('url');
+            $url = $record->linkedVideo()?->url;
 
             return [
                 'label' => 'Assistir',
@@ -124,7 +124,7 @@ class MediaInfolist
     private static function resolveCreatedAt($record): ?string
     {
         if ((bool) $record->video) {
-            $createdAt = $record->video()->value('created_at');
+            $createdAt = $record->linkedVideo()?->created_at;
 
             return $createdAt ? AppDateTime::parse($createdAt)->format('d/m/Y H:i') : null;
         }

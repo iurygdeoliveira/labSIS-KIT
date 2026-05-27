@@ -191,6 +191,10 @@ class UsersTable
         $lines = [];
 
         foreach ($teams as $team) {
+            if (! $team instanceof Team) {
+                continue;
+            }
+
             $roles = $record->rolesWithTeams
                 ->where('team_id', $team->id);
 

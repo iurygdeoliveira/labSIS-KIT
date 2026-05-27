@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Media\Pages;
 
 use App\Filament\Resources\Media\MediaResource;
@@ -16,6 +18,7 @@ class ListMedia extends ListRecords
 
     public $defaultAction = 'onboarding';
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

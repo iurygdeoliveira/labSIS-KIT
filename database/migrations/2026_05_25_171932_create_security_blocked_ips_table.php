@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('security_blocked_ips', function (Blueprint $table) {
+        Schema::create('security_blocked_ips', function (Blueprint $table): void {
             $table->id();
             $table->string('ip_address', 45)->index();
             $table->string('reason');

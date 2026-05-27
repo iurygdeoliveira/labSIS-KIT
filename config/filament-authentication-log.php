@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Filament\Resources\Authentication\CustomAuthenticationLogResource;
 use App\Models\User;
 
 return [
     // 'user-resource' => \App\Filament\Resources\UserResource::class,
     'resources' => [
-        'AutenticationLogResource' => \App\Filament\Resources\Authentication\CustomAuthenticationLogResource::class,
+        'AutenticationLogResource' => CustomAuthenticationLogResource::class,
     ],
 
     'authenticable-resources' => [

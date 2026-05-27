@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use MongoDB\Laravel\Connection;
 
 /**
  * Comando personalizado para limpar PostgreSQL e MongoDB simultaneamente.
@@ -18,22 +21,10 @@ use Illuminate\Support\Facades\DB;
  * Útil para resetar completamente o ambiente de desenvolvimento,
  * incluindo logs de autenticação armazenados no MongoDB.
  */
+#[Description('Drop PostgreSQL and MongoDB databases, then migrate PostgreSQL')]
+#[Signature('migrate:fresh-all {--seed : Seed the database after migrating}')]
 class FreshAll extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'migrate:fresh-all {--seed : Seed the database after migrating}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Drop PostgreSQL and MongoDB databases, then migrate PostgreSQL';
-
     /**
      * Execute the console command.
      */
@@ -43,7 +34,7 @@ class FreshAll extends Command
         $this->info('🗑️  Dropping MongoDB database...');
 
         try {
-            /** @var \MongoDB\Laravel\Connection $connection */
+            /** @var Connection $connection */
             $connection = DB::connection('mongodb');
             $connection->getDatabase()->drop();
             $this->info('✅ MongoDB cleared!');

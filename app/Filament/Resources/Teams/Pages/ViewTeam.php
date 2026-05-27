@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Teams\Pages;
 
 use App\Filament\Resources\Teams\TeamResource;
 use App\Models\Team;
+use App\Models\User;
 use App\Traits\Filament\HasBackButtonAction;
 use Filament\Resources\Pages\ViewRecord;
 use Livewire\Attributes\Computed;
@@ -37,7 +38,7 @@ class ViewTeam extends ViewRecord
         }
 
         $users = $record->members;
-        $ownerCount = $users->filter(fn ($user) => $user->isOwnerOfTeam($record))->count();
+        $ownerCount = $users->filter(fn (User $user): bool => $user->isOwnerOfTeam($record))->count();
 
         return [
             'user_count' => $users->count(),
@@ -69,6 +70,7 @@ class ViewTeam extends ViewRecord
         ];
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

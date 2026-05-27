@@ -4,7 +4,7 @@
 
 Este projeto utiliza **arquitetura híbrida** com PostgreSQL e MongoDB para otimizar performance e escalabilidade:
 
-- **PostgreSQL**: Dados relacionais críticos (Users, Tenants, Permissions)
+- **PostgreSQL**: Dados relacionais críticos (Users, Teams, Permissions)
 - **MongoDB**: Logs de auditoria e dados que crescem rapidamente
 
 ## ⚙️ Configuração
@@ -122,7 +122,7 @@ TextColumn::make('authenticatable_id')
 
 | Caso de Uso               | Razão                                    |
 | ------------------------- | ---------------------------------------- |
-| **Users, Tenants, Roles** | Integridade referencial, transações ACID |
+| **Users, Teams, Roles** | Integridade referencial, transações ACID |
 | **Permissions, Teams**    | Relacionamentos complexos (N:N)          |
 | **Media, Posts**          | Dados estruturados com foreign keys      |
 | **Dados financeiros**     | Precisão e consistência críticas         |

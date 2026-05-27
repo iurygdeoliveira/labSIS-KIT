@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources\Users\Pages;
 
-use App\Enums\RoleType;
 use App\Filament\Resources\Users\UserResource;
 use App\Filament\Resources\Users\Widgets\UsersStats;
-use App\Models\User;
+use App\Support\FilamentStatsCache;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -37,13 +36,11 @@ class ListUsers extends ListRecords
         return [
             'aprovados' => Tab::make('Aprovados')
                 ->modifyQueryUsing(fn ($query) => $query->where('is_approved', true))
-                ->badge(fn (): string => (string) User::query()->where('is_approved', true)
-                    ->withoutRole(RoleType::ADMIN->value)->count('*')),
+                ->badge(fn (): string => (string) FilamentStatsCache::usersTabBadges()['approved']),
 
             'aguardando' => Tab::make('Não aprovados')
                 ->modifyQueryUsing(fn ($query) => $query->where('is_approved', false))
-                ->badge(fn (): string => (string) User::query()->where('is_approved', false)
-                    ->withoutRole(RoleType::ADMIN->value)->count('*'))
+                ->badge(fn (): string => (string) FilamentStatsCache::usersTabBadges()['unapproved'])
                 ->badgeColor('danger'),
         ];
     }

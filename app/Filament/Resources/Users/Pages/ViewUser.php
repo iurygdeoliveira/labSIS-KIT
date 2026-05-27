@@ -87,6 +87,7 @@ class ViewUser extends ViewRecord
         ];
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

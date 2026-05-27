@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Media\Actions;
 
 use App\Filament\Resources\Media\MediaResource;

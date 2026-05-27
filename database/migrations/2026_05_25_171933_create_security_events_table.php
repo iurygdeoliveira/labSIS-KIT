@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('security_events', function (Blueprint $table) {
+        Schema::create('security_events', function (Blueprint $table): void {
             $table->uuid('id')->primary();
             $table->string('type');
             $table->string('ip_address', 45);

@@ -15,6 +15,8 @@ use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -103,6 +105,25 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin \Eloquent
  */
+#[Fillable([
+    'uuid',
+    'name',
+    'email',
+    'password',
+    'email_verified_at',
+    'is_suspended',
+    'suspended_at',
+    'suspension_reason',
+    'is_approved',
+    'approved_by',
+    'remember_token',
+])]
+#[Hidden([
+    'password',
+    'app_authentication_secret',
+    'app_authentication_recovery_codes',
+    'remember_token',
+])]
 class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasMedia, HasTeamMembership, MustVerifyEmail
 {
     use AppAuthenticationRecoveryCodes;
@@ -117,31 +138,11 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     private ?Collection $cachedTenants = null;
 
-    protected $fillable = [
-        'uuid',
-        'name',
-        'email',
-        'password',
-        'email_verified_at',
-        'is_suspended',
-        'suspended_at',
-        'suspension_reason',
-        'is_approved',
-        'approved_by',
-        'remember_token',
-    ];
-
-    protected $hidden = [
-        'password',
-        'app_authentication_secret',
-        'app_authentication_recovery_codes',
-        'remember_token',
-    ];
-
     // ==========================================
     // Setup & Configuration
     // ==========================================
 
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -302,6 +303,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         return (bool) $this->is_approved;
     }
 
+    #[\Override]
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
