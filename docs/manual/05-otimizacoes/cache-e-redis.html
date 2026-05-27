@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cache e Redis no Projeto — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes" open><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="cache-e-redis.html" class="is-active">Cache e Redis no Projeto</a></li>
+<li><a href="cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="filament-performance.html">Performance no Filament</a></li>
+<li><a href="laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Otimizações</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Cache e Redis no Projeto</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">05 — Otimizações</p>
+<h1 class="doc-title">Cache e Redis no Projeto</h1>
+</header>
+<div class="prose-content">
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#introdução">Introdução</a></li>
+<li><a href="#por-que-usar-cache">Por que usar Cache?</a></li>
+<li><a href="#driver-e-configuração-redis">Driver e Configuração (Redis)</a></li>
+<li><a href="#arquitetura-no-projeto">Arquitetura no Projeto</a></li>
+<li><a href="#filamentstatscache">FilamentStatsCache</a></li>
+<li><a href="#serviço-de-metadados-de-vídeo-youtube">Serviço de Metadados de Vídeo (YouTube)</a></li>
+<li><a href="#widget-de-estatísticas-systemstats">Widget de Estatísticas (SystemStats)</a></li>
+<li><a href="#páginas-de-mídia-filament">Páginas de Mídia (Filament)</a></li>
+<li><a href="#observers-para-invalidação">Observers para Invalidação</a></li>
+<li><a href="#implementação">Implementação</a></li>
+<li><a href="#chaves-e-ttls">Chaves e TTLs</a></li>
+<li><a href="#exemplos-de-código">Exemplos de Código</a></li>
+<li><a href="#testes-e-validação">Testes e Validação</a></li>
+<li><a href="#boas-práticas">Boas Práticas</a></li>
+<li><a href="#problemas-comuns">Problemas Comuns</a></li>
+<li><a href="#conclusão">Conclusão</a></li>
+</ul>
+<h2 id="introdução">Introdução</h2>
+<p>Este documento descreve como o <strong>cache</strong> foi implementado no projeto utilizando <strong>Redis</strong> como store principal. O objetivo é reduzir latência de chamadas externas, aliviar carga em agregações e oferecer uma experiência mais responsiva no painel administrativo.</p>
+<h2 id="por-que-usar-cache">Por que usar Cache?</h2>
+<ul>
+<li>Reduzir chamadas externas repetitivas (ex.: YouTube oEmbed/HTML).</li>
+<li>Diminuir tempo de renderização em telas com <strong>count/sum</strong> intensivos.</li>
+<li>Evitar recomputar valores de curta duração (ex.: URLs temporárias).</li>
+<li>Melhorar a sensação de performance no dashboard e listagens.</li>
+</ul>
+<h2 id="driver-e-configuração-redis">Driver e Configuração (Redis)</h2>
+<ul>
+<li><code>config/cache.php</code>: <code>default =&gt; redis</code> (padrão do projeto).</li>
+<li><code>config/database.php</code> possui blocos <code>redis.default</code> e <code>redis.cache</code>.</li>
+<li>Exemplo de variáveis <code>.env</code>:</li>
+</ul>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">env</span></div><pre><code>CACHE_STORE=redis
+REDIS_CLIENT=phpredis
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+REDIS_DB=0
+REDIS_CACHE_DB=1</code></pre></div>
+<p>Sail já disponibiliza um serviço <code>redis</code> no <code>docker-compose.yml</code> do projeto.</p>
+<h2 id="exemplos-de-uso-de-cache-no-projeto">Exemplos de uso de cache no Projeto</h2>
+<h3>FilamentStatsCache</h3>
+<ul>
+<li>Arquivo: <code>app/Support/FilamentStatsCache.php</code></li>
+<li>Centraliza agregações do painel Filament (usuários, teams, mídia, badges de tabs).</li>
+<li>Usa o store definido em <code>config(&#x27;cache.default&#x27;)</code> (Redis em produção; <code>array</code> nos testes).</li>
+<li>Consumido por: <code>SystemStats</code>, <code>UsersStats</code>, <code>MediaStats</code>, <code>TeamStats</code> e badges em <code>ListUsers</code>.</li>
+</ul>
+<h3>Serviço de Metadados de Vídeo (YouTube)</h3>
+<ul>
+<li>Arquivo: <code>app/Services/VideoMetadataService.php</code></li>
+<li>O <code>getYoutubeTitle()</code> e o <code>getYoutubeMetadata()</code> utilizam <code>Cache::store(&#x27;redis&#x27;)-&gt;remember()</code> com TTL de 6 horas para evitar chamadas repetidas ao YouTube (oEmbed e leitura de HTML).</li>
+<li>Chaves por URL para evitar colisões e facilitar a invalidação:</li>
+<li><code>video:title:{sha1(url)}</code></li>
+<li><code>video:meta:{sha1(url)}</code></li>
+<li>Onde é usado: criação de mídias com URL do YouTube em <code>app/Filament/Resources/Media/Pages/CreateMedia.php</code> (após salvar o <code>Video</code>, os metadados são buscados e podem vir do cache).</li>
+<li>Invalidação automática: <code>VideoObserver</code> remove as chaves acima quando o <code>Video</code> é criado/atualizado/excluído.</li>
+</ul>
+<h3>Widget de Estatísticas (SystemStats)</h3>
+<ul>
+<li>Arquivo: <code>app/Filament/Widgets/SystemStats.php</code></li>
+<li>Delega agregações para <code>FilamentStatsCache</code> com TTL de 60 segundos.</li>
+<li>Chaves utilizadas:</li>
+<li><code>stats:teams</code></li>
+<li><code>stats:users</code></li>
+<li><code>stats:media</code></li>
+<li><code>stats:users:tabs</code> (badges das tabs em <code>ListUsers</code>)</li>
+</ul>
+<h3>Páginas de Mídia (Filament)</h3>
+<ul>
+<li>Arquivos: <code>app/Filament/Resources/Media/MediaResource.php</code> e <code>app/Filament/Resources/Media/Tables/MediaTable.php</code></li>
+<li>Estratégia principal: evitar N+1 via <code>with([&#x27;video&#x27;, &#x27;team&#x27;, &#x27;media&#x27;])</code> e usar <code>$record-&gt;linkedVideo()?-&gt;title</code> ao invés de <code>-&gt;value()</code> em runtime.</li>
+<li><strong>Atenção:</strong> <code>MediaItem</code> possui coluna booleana <code>video</code> e relação <code>video()</code> — em colunas <code>state()</code> use sempre <code>linkedVideo()</code> para acessar o model <code>Video</code>.</li>
+<li>Benefício: reduz drasticamente consultas por linha na tabela e elimina a necessidade de cachear propriedades simples que já vêm carregadas.</li>
+<li>Observação: caso surja necessidade futura, é possível adicionar accessors com <code>remember()</code> de curto prazo (ex.: 5 min), porém a solução preferida continua sendo eager loading.</li>
+</ul>
+<h3>Observers para Invalidação</h3>
+<table class="data"><thead><tr>
+<th>Observer</th>
+<th>Invalida</th>
+</tr></thead><tbody>
+<tr>
+<td><code>UserObserver</code></td>
+<td><code>stats:users</code>, <code>stats:users:tabs</code></td>
+</tr>
+<tr>
+<td><code>TeamObserver</code></td>
+<td><code>stats:teams</code></td>
+</tr>
+<tr>
+<td><code>VideoObserver</code></td>
+<td><code>stats:media</code>, <code>video:meta:<em></code>, <code>video:title:</em></code></td>
+</tr>
+<tr>
+<td><code>MediaItemObserver</code></td>
+<td><code>stats:media</code></td>
+</tr>
+<tr>
+<td><code>MembershipObserver</code></td>
+<td><code>stats:users</code>, <code>stats:users:tabs</code>, <code>stats:teams</code></td>
+</tr>
+</tbody></table>
+<p>Registro: <code>app/Providers/AppServiceProvider.php</code> (método <code>configObservers()</code>).</p>
+<h3>Exemplos de Código</h3>
+<p>Agregações do dashboard via <code>FilamentStatsCache</code>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use App\Support\FilamentStatsCache;
+
+$users = FilamentStatsCache::users();
+$badges = FilamentStatsCache::usersTabBadges();</code></pre></div>
+<p>Invalidação via Observer:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>FilamentStatsCache::forgetUsers();
+FilamentStatsCache::forgetTeams();
+FilamentStatsCache::forgetMedia();</code></pre></div>
+<p>Cache de metadados (YouTube):</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use Illuminate\Support\Facades\Cache;
+
+$cacheKey = &#x27;video:meta:&#x27;.sha1($videoUrl);
+$meta = Cache::store(&#x27;redis&#x27;)-&gt;remember($cacheKey, 6 * 3600, function () use ($videoUrl) {
+    return [
+        &#x27;title&#x27; =&gt; &#x27;...&#x27;,
+        &#x27;durationSeconds&#x27; =&gt; 123,
+        &#x27;durationIso8601&#x27; =&gt; &#x27;PT2M3S&#x27;,
+    ];
+});</code></pre></div>
+<h2 id="boas-práticas">Boas Práticas</h2>
+<ul>
+<li>Prefira <code>remember()</code> a <code>get()/put()</code> manuais.</li>
+<li>Evite <code>Cache::flush()</code> global; invalide chaves específicas.</li>
+<li>Defina TTLs coerentes com o frescor exigido pelo negócio.</li>
+<li>Use chaves determinísticas (ex.: <code>sha1(url)</code> para URLs).</li>
+<li>Centralize invalidações com <strong>Observers</strong> próximos ao domínio.</li>
+<li>Para novos Resources Filament, consulte <a href="../../../manual/05-otimizacoes/filament-performance.html">Performance no Filament</a>.</li>
+</ul>
+<h2 id="problemas-comuns">Problemas Comuns</h2>
+<ul>
+<li>“Stale data” por TTL longo sem invalidação de escrita → use observers.</li>
+<li>N+1 em listagens confundido com necessidade de cache → primeiro aplique eager loading.</li>
+<li>Conflitos de chave em ambientes compartilhados → use prefixos (já configurados em <code>config/cache.php</code>).</li>
+</ul>
+<h2 id="conclusão">Conclusão</h2>
+<p>O uso de cache com Redis neste projeto reduz latência, evita recomputações e melhora a experiência do usuário. Com chaves previsíveis, TTLs adequados e invalidação cirúrgica via observers, mantemos dados frescos e performance consistente no ecossistema Filament.</p>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="../../app/Support/FilamentStatsCache.php">FilamentStatsCache</a></li>
+<li><a href="../../../manual/05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../../app/Services/VideoMetadataService.php">Service: VideoMetadataService</a></li>
+<li><a href="../../app/Filament/Widgets/SystemStats.php">Widget: SystemStats</a></li>
+<li><a href="../../app/Observers/VideoObserver.php">Observer: VideoObserver</a></li>
+<li><a href="../../app/Filament/Resources/Media/MediaResource.php">Resource: MediaResource</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-next" href="cloudflare-page-cache.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Otimização de Cache de Página com Cloudflare</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#introdução" data-toc-target="introdução">Introdução</a></li>
+<li><a class="doc-toc-link" href="#por-que-usar-cache" data-toc-target="por-que-usar-cache">Por que usar Cache?</a></li>
+<li><a class="doc-toc-link" href="#driver-e-configuração-redis" data-toc-target="driver-e-configuração-redis">Driver e Configuração (Redis)</a></li>
+<li><a class="doc-toc-link" href="#exemplos-de-uso-de-cache-no-projeto" data-toc-target="exemplos-de-uso-de-cache-no-projeto">Exemplos de uso de cache no Projeto</a></li>
+<li><a class="doc-toc-link" href="#boas-práticas" data-toc-target="boas-práticas">Boas Práticas</a></li>
+<li><a class="doc-toc-link" href="#problemas-comuns" data-toc-target="problemas-comuns">Problemas Comuns</a></li>
+<li><a class="doc-toc-link" href="#conclusão" data-toc-target="conclusão">Conclusão</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Cache e Redis no Projeto
+
+## 📋 Índice
+
+- [Introdução](#introdução)
+- [Por que usar Cache?](#por-que-usar-cache)
+- [Driver e Configuração (Redis)](#driver-e-configuração-redis)
+- [Arquitetura no Projeto](#arquitetura-no-projeto)
+  - [FilamentStatsCache](#filamentstatscache)
+  - [Serviço de Metadados de Vídeo (YouTube)](#serviço-de-metadados-de-vídeo-youtube)
+  - [Widget de Estatísticas (SystemStats)](#widget-de-estatísticas-systemstats)
+  - [Páginas de Mídia (Filament)](#páginas-de-mídia-filament)
+  - [Observers para Invalidação](#observers-para-invalidação)
+- [Implementação](#implementação)
+  - [Chaves e TTLs](#chaves-e-ttls)
+  - [Exemplos de Código](#exemplos-de-código)
+- [Testes e Validação](#testes-e-validação)
+- [Boas Práticas](#boas-práticas)
+- [Problemas Comuns](#problemas-comuns)
+- [Conclusão](#conclusão)
+
+## Introdução
+
+Este documento descreve como o **cache** foi implementado no projeto utilizando **Redis** como store principal. O objetivo é reduzir latência de chamadas externas, aliviar carga em agregações e oferecer uma experiência mais responsiva no painel administrativo.
+
+## Por que usar Cache?
+
+- Reduzir chamadas externas repetitivas (ex.: YouTube oEmbed/HTML).
+- Diminuir tempo de renderização em telas com **count/sum** intensivos.
+- Evitar recomputar valores de curta duração (ex.: URLs temporárias).
+- Melhorar a sensação de performance no dashboard e listagens.
+
+## Driver e Configuração (Redis)
+
+- `config/cache.php`: `default => redis` (padrão do projeto).
+- `config/database.php` possui blocos `redis.default` e `redis.cache`.
+- Exemplo de variáveis `.env`:
+
+```env
+CACHE_STORE=redis
+REDIS_CLIENT=phpredis
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+REDIS_DB=0
+REDIS_CACHE_DB=1
+```
+
+Sail já disponibiliza um serviço `redis` no `docker-compose.yml` do projeto.
+
+## Exemplos de uso de cache no Projeto
+
+### FilamentStatsCache
+
+- Arquivo: `app/Support/FilamentStatsCache.php`
+- Centraliza agregações do painel Filament (usuários, teams, mídia, badges de tabs).
+- Usa o store definido em `config('cache.default')` (Redis em produção; `array` nos testes).
+- Consumido por: `SystemStats`, `UsersStats`, `MediaStats`, `TeamStats` e badges em `ListUsers`.
+
+### Serviço de Metadados de Vídeo (YouTube)
+
+- Arquivo: `app/Services/VideoMetadataService.php`
+- O `getYoutubeTitle()` e o `getYoutubeMetadata()` utilizam `Cache::store('redis')->remember()` com TTL de 6 horas para evitar chamadas repetidas ao YouTube (oEmbed e leitura de HTML).
+- Chaves por URL para evitar colisões e facilitar a invalidação:
+  - `video:title:{sha1(url)}`
+  - `video:meta:{sha1(url)}`
+- Onde é usado: criação de mídias com URL do YouTube em `app/Filament/Resources/Media/Pages/CreateMedia.php` (após salvar o `Video`, os metadados são buscados e podem vir do cache).
+- Invalidação automática: `VideoObserver` remove as chaves acima quando o `Video` é criado/atualizado/excluído.
+
+### Widget de Estatísticas (SystemStats)
+
+- Arquivo: `app/Filament/Widgets/SystemStats.php`
+- Delega agregações para `FilamentStatsCache` com TTL de 60 segundos.
+- Chaves utilizadas:
+  - `stats:teams`
+  - `stats:users`
+  - `stats:media`
+  - `stats:users:tabs` (badges das tabs em `ListUsers`)
+
+### Páginas de Mídia (Filament)
+
+- Arquivos: `app/Filament/Resources/Media/MediaResource.php` e `app/Filament/Resources/Media/Tables/MediaTable.php`
+- Estratégia principal: evitar N+1 via `with(['video', 'team', 'media'])` e usar `$record->linkedVideo()?->title` ao invés de `->value()` em runtime.
+- **Atenção:** `MediaItem` possui coluna booleana `video` e relação `video()` — em colunas `state()` use sempre `linkedVideo()` para acessar o model `Video`.
+- Benefício: reduz drasticamente consultas por linha na tabela e elimina a necessidade de cachear propriedades simples que já vêm carregadas.
+- Observação: caso surja necessidade futura, é possível adicionar accessors com `remember()` de curto prazo (ex.: 5 min), porém a solução preferida continua sendo eager loading.
+
+### Observers para Invalidação
+
+| Observer | Invalida |
+|----------|----------|
+| `UserObserver` | `stats:users`, `stats:users:tabs` |
+| `TeamObserver` | `stats:teams` |
+| `VideoObserver` | `stats:media`, `video:meta:*`, `video:title:*` |
+| `MediaItemObserver` | `stats:media` |
+| `MembershipObserver` | `stats:users`, `stats:users:tabs`, `stats:teams` |
+
+Registro: `app/Providers/AppServiceProvider.php` (método `configObservers()`).
+
+### Exemplos de Código
+
+Agregações do dashboard via `FilamentStatsCache`:
+
+```php
+use App\Support\FilamentStatsCache;
+
+$users = FilamentStatsCache::users();
+$badges = FilamentStatsCache::usersTabBadges();
+```
+
+Invalidação via Observer:
+
+```php
+FilamentStatsCache::forgetUsers();
+FilamentStatsCache::forgetTeams();
+FilamentStatsCache::forgetMedia();
+```
+
+Cache de metadados (YouTube):
+
+```php
+use Illuminate\Support\Facades\Cache;
+
+$cacheKey = 'video:meta:'.sha1($videoUrl);
+$meta = Cache::store('redis')->remember($cacheKey, 6 * 3600, function () use ($videoUrl) {
+    return [
+        'title' => '...',
+        'durationSeconds' => 123,
+        'durationIso8601' => 'PT2M3S',
+    ];
+});
+```
+
+## Boas Práticas
+
+- Prefira `remember()` a `get()/put()` manuais.
+- Evite `Cache::flush()` global; invalide chaves específicas.
+- Defina TTLs coerentes com o frescor exigido pelo negócio.
+- Use chaves determinísticas (ex.: `sha1(url)` para URLs).
+- Centralize invalidações com **Observers** próximos ao domínio.
+- Para novos Resources Filament, consulte [Performance no Filament](./filament-performance.md).
+
+## Problemas Comuns
+
+- “Stale data” por TTL longo sem invalidação de escrita → use observers.
+- N+1 em listagens confundido com necessidade de cache → primeiro aplique eager loading.
+- Conflitos de chave em ambientes compartilhados → use prefixos (já configurados em `config/cache.php`).
+
+## Conclusão
+
+O uso de cache com Redis neste projeto reduz latência, evita recomputações e melhora a experiência do usuário. Com chaves previsíveis, TTLs adequados e invalidação cirúrgica via observers, mantemos dados frescos e performance consistente no ecossistema Filament.
+
+## Referências
+
+- [FilamentStatsCache](../../app/Support/FilamentStatsCache.php)
+- [Performance no Filament](./filament-performance.md)
+- [Service: VideoMetadataService](../../app/Services/VideoMetadataService.php)
+- [Widget: SystemStats](../../app/Filament/Widgets/SystemStats.php)
+- [Observer: VideoObserver](../../app/Observers/VideoObserver.php)
+- [Resource: MediaResource](../../app/Filament/Resources/Media/MediaResource.php)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Prevenção Contra IDOR (Insecure Direct Object Reference) — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca" open><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="prevencao-idor.html" class="is-active">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Autenticação e Segurança</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Prevenção Contra IDOR (Insecure Direct Object Reference)</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">02 — Autenticação e Segurança</p>
+<h1 class="doc-title">Prevenção Contra IDOR (Insecure Direct Object Reference)</h1>
+</header>
+<div class="prose-content">
+<p>Esta seção documenta a estratégia de segurança adotada no projeto para mitigar vulnerabilidades de Referência Direta a Objetos Insegura (IDOR).</p>
+<h2 id="o-que-é-idor">O que é IDOR?</h2>
+<p>O <strong>IDOR (Insecure Direct Object Reference)</strong> ocorre quando uma aplicação expõe uma referência direta a um objeto de implementação interna, como um arquivo ou chave de banco de dados (ID sequencial), sem um mecanismo de controle de acesso ou verificação de autorização adequada.</p>
+<p>Isso permite que atacantes manipulem essas referências (por exemplo, alterando um ID na URL de <code>/api/users/123</code> para <code>/api/users/124</code>) para acessar dados não autorizados. Se a aplicação confiar apenas na entrada do usuário para recuperar o objeto, o atacante pode acessar, modificar ou excluir dados de outros usuários.</p>
+<h2 id="estratégia-de-mitigação-no-projeto">Estratégia de Mitigação no Projeto</h2>
+<p>Para blindar o sistema contra IDOR, adotamos uma abordagem em camadas:</p>
+<ol>
+<li><strong>Ofuscação de IDs (UUIDs)</strong>: Substituição de chaves primárias incrementais (ex: <code>1</code>, <code>2</code>, <code>3</code>) por Identificadores Únicos Universais (UUIDs) aleatórios (ex: <code>a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11</code>). Isso torna a enumeração de recursos matematicamente inviável.</li>
+<li><strong>Autorização Robusta (Policies)</strong>: Verificação estrita de propriedade e permissões em todas as camadas de acesso (Policies do Laravel), garantindo que, mesmo se um identificador for descoberto, o acesso seja negado se o usuário não tiver permissão sobre aquele recurso ou <strong>team</strong> ativo.</li>
+<li><strong>Escopo de Team</strong>: Garantia de que consultas no painel <code>user</code> respeitam o team ativo do Filament (<code>Filament::getTenant()</code> → <code>App\Models\Team</code>).</li>
+</ol>
+<h2 id="implementação-técnica">Implementação Técnica</h2>
+<h3>1. Adoção de UUIDs</h3>
+<p>Utilizamos um <code>UuidTrait</code> customizado que gera automaticamente um UUID v4 ao criar um novo registro e define o UUID como a chave de rota padrão (<code>getRouteKeyName</code>).</p>
+<p><strong>Exemplo no Modelo (<code>App\Models\MediaItem.php</code>):</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>namespace App\Models;
+
+use App\Traits\UuidTrait;
+use Illuminate\Database\Eloquent\Model;
+
+class MediaItem extends Model
+{
+    use UuidTrait; // &lt;--- Habilita geração automática e Route Binding via UUID
+
+    protected $fillable = [
+        &#x27;uuid&#x27;,
+        &#x27;name&#x27;,
+        // ...
+    ];
+}</code></pre></div>
+<p>Isso garante que rotas geradas pelo Filament ou controllers utilizem o UUID automaticamente: <code>https://app.example.com/admin/media/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11/edit</code>.</p>
+<h3>2. Estrutura do Banco de Dados</h3>
+<p>As tabelas sensíveis foram migradas para incluir uma coluna UUID indexada e única.</p>
+<p><strong>Exemplo de Migração (<code>database/migrations/...create_media_items_table.php</code>):</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>Schema::create(&#x27;media_items&#x27;, function (Blueprint $table) {
+    $table-&gt;id(); // ID interno (ainda usado para FKs por performance)
+    $table-&gt;uuid(&#x27;uuid&#x27;)-&gt;unique(); // ID público (usado nas URLs)
+    $table-&gt;string(&#x27;name&#x27;);
+    // ...
+});</code></pre></div>
+<h3>3. Policies e Controle de Acesso</h3>
+<p>Além da ofuscação, as Policies verificam se o usuário tem permissão para interagir com o recurso dentro do contexto do <strong>team</strong> ativo.</p>
+<p><strong>Exemplo (<code>App\Policies\MediaItemPolicy.php</code>):</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>public function view(User $user, MediaItem $record): bool
+{
+    // Verifica se o usuário tem permissão E se o recurso pertence ao escopo acessível
+    return $user-&gt;can(Permission::VIEW-&gt;for(&#x27;media&#x27;));
+}</code></pre></div>
+<p>No painel <code>user</code>, o Filament restringe Resources ao tenant/team ativo da sessão, assegurando que registros de outros teams não sejam listados ou editados. Policies complementam com checagens em <code>MediaItemPolicy</code>, <code>UserPolicy</code>, etc.</p>
+<h2 id="resultados-esperados">Resultados Esperados</h2>
+<ol>
+<li><strong>Segurança por Design</strong>: O sistema falha de forma segura (404 Not Found) se um UUID inválido ou pertencente a outro tenant for acessado.</li>
+<li><strong>Proteção de Dados Sensíveis</strong>: As referências internas do banco de dados (IDs numéricos) permanecem ocultas do usuário final, sendo usadas apenas internamente para chaves estrangeiras (preservando performance de JOINs).</li>
+</ol>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="/app/Traits/UuidTrait.php">Trait: UuidTrait</a></li>
+<li><a href="/app/Models/MediaItem.php">Model: MediaItem</a></li>
+<li><a href="/app/Policies/MediaItemPolicy.php">Policy: MediaItemPolicy</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="login-unificado.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Sistema de Login Unificado (Filament + Laravel)</span></a><a class="doc-pagination-card doc-pagination-next" href="roles-e-permissions.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Sistema de Roles e Permissions</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#o-que-é-idor" data-toc-target="o-que-é-idor">O que é IDOR?</a></li>
+<li><a class="doc-toc-link" href="#estratégia-de-mitigação-no-projeto" data-toc-target="estratégia-de-mitigação-no-projeto">Estratégia de Mitigação no Projeto</a></li>
+<li><a class="doc-toc-link" href="#implementação-técnica" data-toc-target="implementação-técnica">Implementação Técnica</a></li>
+<li><a class="doc-toc-link" href="#resultados-esperados" data-toc-target="resultados-esperados">Resultados Esperados</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Prevenção Contra IDOR (Insecure Direct Object Reference)
+
+Esta seção documenta a estratégia de segurança adotada no projeto para mitigar vulnerabilidades de Referência Direta a Objetos Insegura (IDOR).
+
+## O que é IDOR?
+
+O **IDOR (Insecure Direct Object Reference)** ocorre quando uma aplicação expõe uma referência direta a um objeto de implementação interna, como um arquivo ou chave de banco de dados (ID sequencial), sem um mecanismo de controle de acesso ou verificação de autorização adequada.
+
+Isso permite que atacantes manipulem essas referências (por exemplo, alterando um ID na URL de `/api/users/123` para `/api/users/124`) para acessar dados não autorizados. Se a aplicação confiar apenas na entrada do usuário para recuperar o objeto, o atacante pode acessar, modificar ou excluir dados de outros usuários.
+
+## Estratégia de Mitigação no Projeto
+
+Para blindar o sistema contra IDOR, adotamos uma abordagem em camadas:
+
+1.  **Ofuscação de IDs (UUIDs)**: Substituição de chaves primárias incrementais (ex: `1`, `2`, `3`) por Identificadores Únicos Universais (UUIDs) aleatórios (ex: `a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11`). Isso torna a enumeração de recursos matematicamente inviável.
+2.  **Autorização Robusta (Policies)**: Verificação estrita de propriedade e permissões em todas as camadas de acesso (Policies do Laravel), garantindo que, mesmo se um identificador for descoberto, o acesso seja negado se o usuário não tiver permissão sobre aquele recurso ou **team** ativo.
+3.  **Escopo de Team**: Garantia de que consultas no painel `user` respeitam o team ativo do Filament (`Filament::getTenant()` → `App\Models\Team`).
+
+## Implementação Técnica
+
+### 1. Adoção de UUIDs
+
+Utilizamos um `UuidTrait` customizado que gera automaticamente um UUID v4 ao criar um novo registro e define o UUID como a chave de rota padrão (`getRouteKeyName`).
+
+**Exemplo no Modelo (`App\Models\MediaItem.php`):**
+
+```php
+namespace App\Models;
+
+use App\Traits\UuidTrait;
+use Illuminate\Database\Eloquent\Model;
+
+class MediaItem extends Model
+{
+    use UuidTrait; // <--- Habilita geração automática e Route Binding via UUID
+
+    protected $fillable = [
+        'uuid',
+        'name',
+        // ...
+    ];
+}
+```
+
+Isso garante que rotas geradas pelo Filament ou controllers utilizem o UUID automaticamente: `https://app.example.com/admin/media/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11/edit`.
+
+### 2. Estrutura do Banco de Dados
+
+As tabelas sensíveis foram migradas para incluir uma coluna UUID indexada e única.
+
+**Exemplo de Migração (`database/migrations/...create_media_items_table.php`):**
+
+```php
+Schema::create('media_items', function (Blueprint $table) {
+    $table->id(); // ID interno (ainda usado para FKs por performance)
+    $table->uuid('uuid')->unique(); // ID público (usado nas URLs)
+    $table->string('name');
+    // ...
+});
+```
+
+### 3. Policies e Controle de Acesso
+
+Além da ofuscação, as Policies verificam se o usuário tem permissão para interagir com o recurso dentro do contexto do **team** ativo.
+
+**Exemplo (`App\Policies\MediaItemPolicy.php`):**
+
+```php
+public function view(User $user, MediaItem $record): bool
+{
+    // Verifica se o usuário tem permissão E se o recurso pertence ao escopo acessível
+    return $user->can(Permission::VIEW->for('media'));
+}
+```
+
+No painel `user`, o Filament restringe Resources ao tenant/team ativo da sessão, assegurando que registros de outros teams não sejam listados ou editados. Policies complementam com checagens em `MediaItemPolicy`, `UserPolicy`, etc.
+
+## Resultados Esperados
+
+2.  **Segurança por Design**: O sistema falha de forma segura (404 Not Found) se um UUID inválido ou pertencente a outro tenant for acessado.
+3.  **Proteção de Dados Sensíveis**: As referências internas do banco de dados (IDs numéricos) permanecem ocultas do usuário final, sendo usadas apenas internamente para chaves estrangeiras (preservando performance de JOINs).
+
+## Referências
+
+- [Trait: UuidTrait](/app/Traits/UuidTrait.php)
+- [Model: MediaItem](/app/Models/MediaItem.php)
+- [Policy: MediaItemPolicy](/app/Policies/MediaItemPolicy.php)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

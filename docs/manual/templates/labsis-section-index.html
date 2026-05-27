@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual-section">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>{{SECTION_LABEL}} — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="{{ASSETS}}labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+{{SIDEBAR}}
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout docs-layout--single">
+<article class="docs-main">
+{{BREADCRUMB}}
+<header class="doc-header">
+<p class="doc-eyebrow">Capítulo</p>
+<h1 class="doc-title">{{SECTION_SHORT}}</h1>
+<p class="doc-lead">{{DOC_COUNT}} documentos neste capítulo</p>
+</header>
+<ul class="doc-list">
+{{DOC_LIST}}
+</ul>
+</article>
+</div>
+</div>
+
+<script src="{{ASSETS}}labsis-manual.js"></script>
+</body>
+</html>

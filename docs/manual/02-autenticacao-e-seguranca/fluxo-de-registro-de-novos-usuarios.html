@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fluxo de Registro de Novos Usuários — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca" open><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="fluxo-de-registro-de-novos-usuarios.html" class="is-active">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Autenticação e Segurança</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Fluxo de Registro de Novos Usuários</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">02 — Autenticação e Segurança</p>
+<h1 class="doc-title">Fluxo de Registro de Novos Usuários</h1>
+</header>
+<div class="prose-content">
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#visão-geral">Visão Geral</a></li>
+<li><a href="#arquitetura-do-sistema">Arquitetura do Sistema</a></li>
+<li><a href="#fluxo-de-registro">Fluxo de Registro</a></li>
+<li><a href="#sistema-de-eventos">Sistema de Eventos</a></li>
+<li><a href="#templates-de-email">Templates de Email</a></li>
+<li><a href="#configuração-de-email">Configuração de Email</a></li>
+<li><a href="#aprovação-de-usuários">Aprovação de Usuários</a></li>
+<li><a href="#verificação-do-sistema">Verificação do Sistema</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#conclusão">Conclusão</a></li>
+</ul>
+<h2 id="visão-geral">Visão Geral</h2>
+<p>O sistema implementa um fluxo simplificado de registro de usuários com criação automática de <strong>teams</strong> (organizações via <code>laraveldaily/filateams</code>), associação via <code>Membership</code>, sincronização de roles Spatie e envio de emails de notificação. O sistema utiliza eventos e listeners do Laravel para garantir desacoplamento e facilidade de manutenção.</p>
+<div class="callout callout-info"><p><strong>Terminologia:</strong> O formulário ainda expõe o campo <code>tenant_name</code> com rótulo &quot;Nome do Tenant&quot; na UI, mas o dado persiste no model <code>App\Models\Team</code> (tabela <code>teams</code>). No código, &quot;tenant&quot; na interface equivale a <strong>team</strong> no domínio.</p></div>
+<h2 id="arquitetura-do-sistema">Arquitetura do Sistema</h2>
+<h3>Componentes Principais</h3>
+<ol>
+<li><strong>Página de Registro Personalizada</strong> (<code>app/Filament/Pages/Auth/Register.php</code>)</li>
+<li><strong>Models de multi-team</strong> (<code>Team</code>, <code>Membership</code> — FilaTeams)</li>
+<li><strong>Sistema de Eventos</strong> (Events e Listeners)</li>
+<li><strong>Templates de Email</strong> (Blade templates)</li>
+<li><strong>Configuração de Email</strong> (Mailpit para desenvolvimento)</li>
+<li><strong>Sistema de Aprovação</strong> (Toggle na tabela de usuários)</li>
+<li><strong>MembershipObserver</strong> — sincroniza role Spatie ao criar membership</li>
+</ol>
+<h3>Arquivos Utilizados</h3>
+<ul>
+<li><strong><code>app/Filament/Pages/Auth/Register.php</code></strong> — Página de registro personalizada</li>
+<li><strong><code>app/Models/Team.php</code></strong> — Organização (team) criada no cadastro</li>
+<li><strong><code>app/Models/Membership.php</code></strong> — Pivot usuário ↔ team com role (<code>owner</code> / <code>member</code>)</li>
+<li><strong><code>app/Enums/AppTeamRole.php</code></strong> — Roles do pivot FilaTeams</li>
+<li><strong><code>app/Observers/MembershipObserver.php</code></strong> — Sincroniza Spatie Permission por team</li>
+<li><strong><code>app/Events/UserRegistered.php</code></strong> — Evento disparado no registro</li>
+<li><strong><code>app/Events/UserApproved.php</code></strong> — Evento disparado na aprovação</li>
+<li><strong><code>app/Listeners/NotifyAdminNewUser.php</code></strong> — Listener para notificar admin</li>
+<li><strong><code>app/Listeners/SendUserApprovedEmail.php</code></strong> — Listener para notificar usuário aprovado</li>
+<li><strong><code>app/Mail/NewUserNotificationMail.php</code></strong> — Email para administrador</li>
+<li><strong><code>app/Mail/UserApprovedMail.php</code></strong> — Email para usuário aprovado</li>
+<li><strong><code>app/Providers/AppServiceProvider.php</code></strong> — Registro de listeners e observers</li>
+<li><strong><code>app/Filament/Resources/Users/Tables/UsersTable.php</code></strong> — Toggle de aprovação</li>
+</ul>
+<h2 id="fluxo-de-registro">Fluxo de Registro</h2>
+<h3>1. Acesso à Página de Registro</h3>
+<p><strong>URL:</strong> <code>/register</code></p>
+<p><strong>Provider:</strong> <code>AuthPanelProvider</code> (não o AdminPanelProvider)</p>
+<p>O sistema utiliza o <code>AuthPanelProvider</code> para gerenciar o registro, que está configurado para:</p>
+<ul>
+<li>Path: <code>/</code> (raiz)</li>
+<li>ID: <code>auth</code></li>
+<li>Habilita registro com <code>-&gt;registration()</code></li>
+</ul>
+<h3>2. Formulário de Registro</h3>
+<p>O formulário personalizado (<code>Register.php</code>) inclui:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use App\Models\Team;
+use App\Models\User;
+
+public function form(Schema $schema): Schema
+{
+    return $schema
+        -&gt;schema([
+            TextInput::make(&#x27;name&#x27;)
+                -&gt;label(&#x27;Nome completo&#x27;)
+                -&gt;required()
+                -&gt;maxLength(255),
+            TextInput::make(&#x27;email&#x27;)
+                -&gt;label(&#x27;E-mail&#x27;)
+                -&gt;email()
+                -&gt;required()
+                -&gt;maxLength(255)
+                -&gt;unique(User::class),
+            TextInput::make(&#x27;password&#x27;)
+                -&gt;label(&#x27;Senha&#x27;)
+                -&gt;password()
+                -&gt;required()
+                -&gt;minLength(8)
+                -&gt;confirmed()
+                -&gt;revealable()
+                -&gt;dehydrateStateUsing(fn (string $state): string =&gt; Hash::make($state)),
+            TextInput::make(&#x27;password_confirmation&#x27;)
+                -&gt;label(&#x27;Confirmar senha&#x27;)
+                -&gt;password()
+                -&gt;required()
+                -&gt;revealable()
+                -&gt;dehydrated(false),
+            TextInput::make(&#x27;tenant_name&#x27;)
+                -&gt;label(&#x27;Nome do Tenant&#x27;)
+                -&gt;required()
+                -&gt;maxLength(255)
+                -&gt;unique(Team::class, &#x27;name&#x27;),
+        ])
+        -&gt;columns(1);
+}</code></pre></div>
+<p><strong>Validações:</strong></p>
+<ul>
+<li>Email único na tabela <code>users</code></li>
+<li>Nome da organização único na tabela <code>teams</code> (campo de formulário: <code>tenant_name</code>)</li>
+<li>Senha com confirmação</li>
+<li>Todos os campos obrigatórios</li>
+</ul>
+<h3>3. Processo de Criação</h3>
+<p>Quando o usuário submete o formulário, o método <code>handleRegistration()</code> executa:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>protected function handleRegistration(array $data): Model
+{
+    try {
+        $userData = $this-&gt;prepareUserData($data);
+        $teamData = $this-&gt;prepareTeamData($data);
+
+        $user = $this-&gt;createUser($userData);
+        $team = $this-&gt;createTeam($teamData);
+
+        $this-&gt;associateUserWithTeam($user, $team);
+
+        event(new UserRegistered($user));
+
+        $this-&gt;showSuccessNotification();
+
+        return $user;
+    } catch (QueryException $e) {
+        $this-&gt;handleDatabaseException($e);
+        throw $e;
+    } catch (Exception $e) {
+        $this-&gt;handleGenericException($e);
+        throw $e;
+    }
+}</code></pre></div>
+<p><strong>Dados do Usuário:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>protected function prepareUserData(array $data): array
+{
+    return [
+        &#x27;name&#x27; =&gt; $data[&#x27;name&#x27;],
+        &#x27;email&#x27; =&gt; $data[&#x27;email&#x27;],
+        &#x27;password&#x27; =&gt; $data[&#x27;password&#x27;],
+        &#x27;is_suspended&#x27; =&gt; true,
+        &#x27;is_approved&#x27; =&gt; false,
+        &#x27;email_verified_at&#x27; =&gt; null,
+    ];
+}</code></pre></div>
+<p><strong>Dados do Team:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>protected function prepareTeamData(array $data): array
+{
+    return [
+        &#x27;name&#x27; =&gt; $data[&#x27;tenant_name&#x27;],
+        &#x27;is_personal&#x27; =&gt; false,
+        &#x27;is_active&#x27; =&gt; true,
+    ];
+}</code></pre></div>
+<p><strong>Associação usuário ↔ team:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use App\Enums\AppTeamRole;
+use App\Models\Membership;
+
+protected function associateUserWithTeam(User $user, Team $team): void
+{
+    Membership::create([
+        &#x27;team_id&#x27; =&gt; $team-&gt;id,
+        &#x27;user_id&#x27; =&gt; $user-&gt;id,
+        &#x27;role&#x27; =&gt; AppTeamRole::OWNER-&gt;value,
+    ]);
+
+    $user-&gt;forceFill([&#x27;current_team_id&#x27; =&gt; $team-&gt;id])-&gt;save();
+}</code></pre></div>
+<p>O <code>MembershipObserver</code> reage à criação do membership e atribui automaticamente a role Spatie de <strong>owner</strong> daquele team (<code>RoleType::ensureOwnerRoleForTeam</code>). Não é necessário chamar <code>assignRole</code> manualmente no fluxo de registro.</p>
+<h3>4. Status do Usuário</h3>
+<p><strong>Comportamento Importante</strong>: O usuário é criado <strong>suspenso e não aprovado</strong>:</p>
+<ul>
+<li>✅ O usuário pode fazer login em <code>http://localhost/login</code></li>
+<li>❌ O usuário <strong>não pode</strong> acessar os painéis <code>admin</code> ou <code>user</code></li>
+<li>🔔 Uma notificação de <strong>perigo</strong> é exibida informando que precisa de aprovação</li>
+<li>📧 Um email é enviado para o administrador</li>
+</ul>
+<h2 id="sistema-de-eventos">Sistema de Eventos</h2>
+<h3>Eventos Disparados</h3>
+<h4>1. <code>UserRegistered</code> (Registro)</h4>
+<p><strong>Arquivo:</strong> <code>app/Events/UserRegistered.php</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&lt;?php
+
+declare(strict_types=1);
+
+namespace App\Events;
+
+use App\Models\User;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class UserRegistered
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public function __construct(
+        public User $user,
+        public ?string $password = null
+    ) {}
+}</code></pre></div>
+<p><strong>Listeners:</strong></p>
+<ul>
+<li><code>NotifyAdminNewUser</code> - Envia email para administrador</li>
+</ul>
+<h4>2. <code>UserApproved</code> (Aprovação)</h4>
+<p><strong>Arquivo:</strong> <code>app/Events/UserApproved.php</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&lt;?php
+
+declare(strict_types=1);
+
+namespace App\Events;
+
+use App\Models\User;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class UserApproved
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public function __construct(
+        public User $user
+    ) {}
+}</code></pre></div>
+<p><strong>Listeners:</strong></p>
+<ul>
+<li><code>SendUserApprovedEmail</code> - Envia email para usuário aprovado</li>
+</ul>
+<h3>Registro de Listeners</h3>
+<p><strong>Arquivo:</strong> <code>app/Providers/AppServiceProvider.php</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use Illuminate\Support\Facades\Event;
+
+private function configEvents(): void
+{
+    // Registrar listeners manualmente para evitar duplicação
+    Event::listen(UserRegistered::class, NotifyAdminNewUser::class);
+    Event::listen(UserApproved::class, SendUserApprovedEmail::class);
+}</code></pre></div>
+<h3>Listeners Implementados</h3>
+<h4>1. <code>NotifyAdminNewUser</code></h4>
+<p><strong>Arquivo:</strong> <code>app/Listeners/NotifyAdminNewUser.php</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&lt;?php
+
+declare(strict_types=1);
+
+namespace App\Listeners;
+
+use App\Events\UserRegistered;
+use App\Mail\NewUserNotificationMail;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+
+class NotifyAdminNewUser
+{
+    public function handle(UserRegistered $event): void
+    {
+        // Buscar apenas o admin específico
+        $admin = User::where(&#x27;email&#x27;, &#x27;admin@labsis.dev.br&#x27;)-&gt;first();
+
+        if ($admin) {
+            Mail::to($admin-&gt;email)-&gt;send(new NewUserNotificationMail($admin, $event-&gt;user));
+        }
+    }
+}</code></pre></div>
+<p><strong>Funcionalidade:</strong></p>
+<ul>
+<li>Busca o administrador específico (admin@labsis.dev.br)</li>
+<li>Envia notificação com dados do novo usuário</li>
+<li>Inclui link para visualizar o usuário</li>
+</ul>
+<h4>2. <code>SendUserApprovedEmail</code></h4>
+<p><strong>Arquivo:</strong> <code>app/Listeners/SendUserApprovedEmail.php</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&lt;?php
+
+declare(strict_types=1);
+
+namespace App\Listeners;
+
+use App\Events\UserApproved;
+use App\Mail\UserApprovedMail;
+use Illuminate\Support\Facades\Mail;
+
+class SendUserApprovedEmail
+{
+    public function handle(UserApproved $event): void
+    {
+        Mail::to($event-&gt;user-&gt;email)-&gt;send(new UserApprovedMail($event-&gt;user));
+    }
+}</code></pre></div>
+<p><strong>Funcionalidade:</strong></p>
+<ul>
+<li>Envia email de aprovação para o usuário</li>
+<li>Inclui credenciais de acesso</li>
+<li>Inclui link para login</li>
+</ul>
+<h2 id="templates-de-email">Templates de Email</h2>
+<h3>1. Email para Administrador</h3>
+<p><strong>Arquivo:</strong> <code>resources/views/emails/admin/new-user.blade.php</code></p>
+<p><strong>Conteúdo:</strong></p>
+<ul>
+<li>Dados do novo usuário</li>
+<li>Data de cadastro</li>
+<li>Status de verificação de email</li>
+<li>Link para visualizar o usuário</li>
+</ul>
+<h3>2. Email de Aprovação</h3>
+<p><strong>Arquivo:</strong> <code>resources/views/emails/user-approved.blade.php</code></p>
+<p><strong>Conteúdo:</strong></p>
+<ul>
+<li>Saudação personalizada</li>
+<li>Informação de aprovação</li>
+<li>Credenciais de acesso</li>
+<li>Link para login</li>
+</ul>
+<h2 id="configuração-de-email">Configuração de Email</h2>
+<h3>Desenvolvimento (Mailpit)</h3>
+<p><strong>Arquivo:</strong> <code>docker-compose.yml</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">yaml</span></div><pre><code>mailpit:
+    image: &#x27;axllent/mailpit:latest&#x27;
+    ports:
+        - &#x27;${FORWARD_MAILPIT_PORT:-1025}:1025&#x27;    # SMTP
+        - &#x27;${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025&#x27;  # Web UI
+    networks:
+        - sail</code></pre></div>
+<p><strong>Acesso:</strong></p>
+<ul>
+<li><strong>SMTP:</strong> <code>localhost:1025</code></li>
+<li><strong>Web UI:</strong> <code>http://localhost:8025</code></li>
+</ul>
+<h3>Configuração do Laravel</h3>
+<p><strong>Arquivo:</strong> <code>.env</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">env</span></div><pre><code>MAIL_MAILER=smtp
+MAIL_HOST=mailpit
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_FROM_ADDRESS=&quot;hello@example.com&quot;
+MAIL_FROM_NAME=&quot;${APP_NAME}&quot;</code></pre></div>
+<h2 id="aprovação-de-usuários">Aprovação de Usuários</h2>
+<h3>Toggle de Aprovação</h3>
+<p><strong>Arquivo:</strong> <code>app/Filament/Resources/Users/Tables/UsersTable.php</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>private static function getApprovalColumn(): ToggleColumn
+{
+    return ToggleColumn::make(&#x27;is_approved&#x27;)
+        -&gt;onColor(&#x27;primary&#x27;)
+        -&gt;offColor(&#x27;danger&#x27;)
+        -&gt;onIcon(Heroicon::Check)
+        -&gt;offIcon(Heroicon::XMark)
+        -&gt;label(&#x27;Aprovar&#x27;)
+        -&gt;afterStateUpdated(function (User $record, $state): void {
+            if ($state) {
+                $record-&gt;is_suspended = false;
+
+                if (! $record-&gt;hasVerifiedEmail()) {
+                    $record-&gt;markEmailAsVerified();
+                }
+
+                $record-&gt;save();
+
+                event(new UserApproved($record));
+            }
+        });
+}</code></pre></div>
+<h3>Processo de Aprovação</h3>
+<ol>
+<li><strong>Admin acessa</strong> a lista de usuários</li>
+<li><strong>Ativa o toggle</strong> de aprovação</li>
+<li><strong>Sistema remove</strong> a suspensão</li>
+<li><strong>Verifica email</strong> automaticamente</li>
+<li><strong>Dispara evento</strong> <code>UserApproved</code></li>
+<li><strong>Email é enviado</strong> para o usuário</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3>Problemas Comuns</h3>
+<ol>
+<li><strong>Emails duplicados</strong></li>
+</ol>
+<ul>
+<li>Verificar se há listeners duplicados registrados</li>
+<li>Limpar cache: <code>php artisan config:clear &amp;&amp; php artisan event:clear</code></li>
+</ul>
+<ol>
+<li><strong>Emails não enviados</strong></li>
+</ol>
+<ul>
+<li>Verificar configuração do Mailpit</li>
+<li>Verificar se eventos estão registrados</li>
+<li>Verificar logs do Laravel</li>
+</ul>
+<ol>
+<li><strong>Usuário não aprovado</strong></li>
+</ol>
+<ul>
+<li>Verificar se o toggle está funcionando</li>
+<li>Verificar se o evento está sendo disparado</li>
+</ul>
+<ol>
+<li><strong>Role Spatie não atribuída após registro</strong></li>
+</ol>
+<ul>
+<li>Confirmar que <code>MembershipObserver</code> está registrado em <code>AppServiceProvider::configObservers()</code></li>
+<li>Verificar registro em <code>App\Models\Membership</code> e <code>\LaravelDaily\FilaTeams\Models\Membership</code></li>
+<li>Conferir pivot <code>team_members</code> com <code>role = owner</code></li>
+</ul>
+<h2 id="conclusão">Conclusão</h2>
+<p>O sistema implementa um fluxo simplificado e eficiente de registro de usuários com:</p>
+<ul>
+<li>✅ <strong>Registro simplificado</strong> com validações adequadas</li>
+<li>✅ <strong>Criação automática de team</strong> (organização) via FilaTeams</li>
+<li>✅ <strong>Membership como owner</strong> com role Spatie sincronizada pelo observer</li>
+<li>✅ <strong>Sistema de aprovação</strong> via toggle</li>
+<li>✅ <strong>Emails de notificação</strong> para admin e usuário</li>
+<li>✅ <strong>Sistema de eventos</strong> desacoplado</li>
+<li>✅ <strong>Configuração de desenvolvimento</strong> com Mailpit</li>
+</ul>
+<p>O sistema está pronto para uso e pode ser facilmente estendido com novas funcionalidades conforme necessário.</p>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="../../../manual/04-backend-e-arquitetura/app-service-provider.html">AppServiceProvider — observers e eventos</a></li>
+<li><a href="../../../manual/04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica — FilaTeams</a></li>
+<li><a href="../../app/Filament/Pages/Auth/Register.php">Register.php</a></li>
+<li><a href="../../app/Observers/MembershipObserver.php">MembershipObserver.php</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="customizacao-emails.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Customização de E-mails e Fluxo de Reset de Senha</span></a><a class="doc-pagination-card doc-pagination-next" href="fortalecimento-de-senha.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Fortalecimento de Senha (Password Hardening)</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#visão-geral" data-toc-target="visão-geral">Visão Geral</a></li>
+<li><a class="doc-toc-link" href="#arquitetura-do-sistema" data-toc-target="arquitetura-do-sistema">Arquitetura do Sistema</a></li>
+<li><a class="doc-toc-link" href="#fluxo-de-registro" data-toc-target="fluxo-de-registro">Fluxo de Registro</a></li>
+<li><a class="doc-toc-link" href="#sistema-de-eventos" data-toc-target="sistema-de-eventos">Sistema de Eventos</a></li>
+<li><a class="doc-toc-link" href="#templates-de-email" data-toc-target="templates-de-email">Templates de Email</a></li>
+<li><a class="doc-toc-link" href="#configuração-de-email" data-toc-target="configuração-de-email">Configuração de Email</a></li>
+<li><a class="doc-toc-link" href="#aprovação-de-usuários" data-toc-target="aprovação-de-usuários">Aprovação de Usuários</a></li>
+<li><a class="doc-toc-link" href="#troubleshooting" data-toc-target="troubleshooting">Troubleshooting</a></li>
+<li><a class="doc-toc-link" href="#conclusão" data-toc-target="conclusão">Conclusão</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Fluxo de Registro de Novos Usuários
+
+## 📋 Índice
+
+- [Visão Geral](#visão-geral)
+- [Arquitetura do Sistema](#arquitetura-do-sistema)
+- [Fluxo de Registro](#fluxo-de-registro)
+- [Sistema de Eventos](#sistema-de-eventos)
+- [Templates de Email](#templates-de-email)
+- [Configuração de Email](#configuração-de-email)
+- [Aprovação de Usuários](#aprovação-de-usuários)
+- [Verificação do Sistema](#verificação-do-sistema)
+- [Troubleshooting](#troubleshooting)
+- [Conclusão](#conclusão)
+
+## Visão Geral
+
+O sistema implementa um fluxo simplificado de registro de usuários com criação automática de **teams** (organizações via `laraveldaily/filateams`), associação via `Membership`, sincronização de roles Spatie e envio de emails de notificação. O sistema utiliza eventos e listeners do Laravel para garantir desacoplamento e facilidade de manutenção.
+
+> **Terminologia:** O formulário ainda expõe o campo `tenant_name` com rótulo "Nome do Tenant" na UI, mas o dado persiste no model `App\Models\Team` (tabela `teams`). No código, "tenant" na interface equivale a **team** no domínio.
+
+## Arquitetura do Sistema
+
+### Componentes Principais
+
+1. **Página de Registro Personalizada** (`app/Filament/Pages/Auth/Register.php`)
+2. **Models de multi-team** (`Team`, `Membership` — FilaTeams)
+3. **Sistema de Eventos** (Events e Listeners)
+4. **Templates de Email** (Blade templates)
+5. **Configuração de Email** (Mailpit para desenvolvimento)
+6. **Sistema de Aprovação** (Toggle na tabela de usuários)
+7. **MembershipObserver** — sincroniza role Spatie ao criar membership
+
+### Arquivos Utilizados
+
+- **`app/Filament/Pages/Auth/Register.php`** — Página de registro personalizada
+- **`app/Models/Team.php`** — Organização (team) criada no cadastro
+- **`app/Models/Membership.php`** — Pivot usuário ↔ team com role (`owner` / `member`)
+- **`app/Enums/AppTeamRole.php`** — Roles do pivot FilaTeams
+- **`app/Observers/MembershipObserver.php`** — Sincroniza Spatie Permission por team
+- **`app/Events/UserRegistered.php`** — Evento disparado no registro
+- **`app/Events/UserApproved.php`** — Evento disparado na aprovação
+- **`app/Listeners/NotifyAdminNewUser.php`** — Listener para notificar admin
+- **`app/Listeners/SendUserApprovedEmail.php`** — Listener para notificar usuário aprovado
+- **`app/Mail/NewUserNotificationMail.php`** — Email para administrador
+- **`app/Mail/UserApprovedMail.php`** — Email para usuário aprovado
+- **`app/Providers/AppServiceProvider.php`** — Registro de listeners e observers
+- **`app/Filament/Resources/Users/Tables/UsersTable.php`** — Toggle de aprovação
+
+## Fluxo de Registro
+
+### 1. Acesso à Página de Registro
+
+**URL:** `/register`
+
+**Provider:** `AuthPanelProvider` (não o AdminPanelProvider)
+
+O sistema utiliza o `AuthPanelProvider` para gerenciar o registro, que está configurado para:
+- Path: `/` (raiz)
+- ID: `auth`
+- Habilita registro com `->registration()`
+
+### 2. Formulário de Registro
+
+O formulário personalizado (`Register.php`) inclui:
+
+```php
+use App\Models\Team;
+use App\Models\User;
+
+public function form(Schema $schema): Schema
+{
+    return $schema
+        ->schema([
+            TextInput::make('name')
+                ->label('Nome completo')
+                ->required()
+                ->maxLength(255),
+            TextInput::make('email')
+                ->label('E-mail')
+                ->email()
+                ->required()
+                ->maxLength(255)
+                ->unique(User::class),
+            TextInput::make('password')
+                ->label('Senha')
+                ->password()
+                ->required()
+                ->minLength(8)
+                ->confirmed()
+                ->revealable()
+                ->dehydrateStateUsing(fn (string $state): string => Hash::make($state)),
+            TextInput::make('password_confirmation')
+                ->label('Confirmar senha')
+                ->password()
+                ->required()
+                ->revealable()
+                ->dehydrated(false),
+            TextInput::make('tenant_name')
+                ->label('Nome do Tenant')
+                ->required()
+                ->maxLength(255)
+                ->unique(Team::class, 'name'),
+        ])
+        ->columns(1);
+}
+```
+
+**Validações:**
+- Email único na tabela `users`
+- Nome da organização único na tabela `teams` (campo de formulário: `tenant_name`)
+- Senha com confirmação
+- Todos os campos obrigatórios
+
+### 3. Processo de Criação
+
+Quando o usuário submete o formulário, o método `handleRegistration()` executa:
+
+```php
+protected function handleRegistration(array $data): Model
+{
+    try {
+        $userData = $this->prepareUserData($data);
+        $teamData = $this->prepareTeamData($data);
+
+        $user = $this->createUser($userData);
+        $team = $this->createTeam($teamData);
+
+        $this->associateUserWithTeam($user, $team);
+
+        event(new UserRegistered($user));
+
+        $this->showSuccessNotification();
+
+        return $user;
+    } catch (QueryException $e) {
+        $this->handleDatabaseException($e);
+        throw $e;
+    } catch (Exception $e) {
+        $this->handleGenericException($e);
+        throw $e;
+    }
+}
+```
+
+**Dados do Usuário:**
+
+```php
+protected function prepareUserData(array $data): array
+{
+    return [
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => $data['password'],
+        'is_suspended' => true,
+        'is_approved' => false,
+        'email_verified_at' => null,
+    ];
+}
+```
+
+**Dados do Team:**
+
+```php
+protected function prepareTeamData(array $data): array
+{
+    return [
+        'name' => $data['tenant_name'],
+        'is_personal' => false,
+        'is_active' => true,
+    ];
+}
+```
+
+**Associação usuário ↔ team:**
+
+```php
+use App\Enums\AppTeamRole;
+use App\Models\Membership;
+
+protected function associateUserWithTeam(User $user, Team $team): void
+{
+    Membership::create([
+        'team_id' => $team->id,
+        'user_id' => $user->id,
+        'role' => AppTeamRole::OWNER->value,
+    ]);
+
+    $user->forceFill(['current_team_id' => $team->id])->save();
+}
+```
+
+O `MembershipObserver` reage à criação do membership e atribui automaticamente a role Spatie de **owner** daquele team (`RoleType::ensureOwnerRoleForTeam`). Não é necessário chamar `assignRole` manualmente no fluxo de registro.
+
+### 4. Status do Usuário
+
+**Comportamento Importante**: O usuário é criado **suspenso e não aprovado**:
+- ✅ O usuário pode fazer login em `http://localhost/login`
+- ❌ O usuário **não pode** acessar os painéis `admin` ou `user`
+- 🔔 Uma notificação de **perigo** é exibida informando que precisa de aprovação
+- 📧 Um email é enviado para o administrador
+
+## Sistema de Eventos
+
+### Eventos Disparados
+
+#### 1. `UserRegistered` (Registro)
+**Arquivo:** `app/Events/UserRegistered.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Events;
+
+use App\Models\User;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class UserRegistered
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public function __construct(
+        public User $user,
+        public ?string $password = null
+    ) {}
+}
+```
+
+**Listeners:**
+- `NotifyAdminNewUser` - Envia email para administrador
+
+#### 2. `UserApproved` (Aprovação)
+**Arquivo:** `app/Events/UserApproved.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Events;
+
+use App\Models\User;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class UserApproved
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public function __construct(
+        public User $user
+    ) {}
+}
+```
+
+**Listeners:**
+- `SendUserApprovedEmail` - Envia email para usuário aprovado
+
+### Registro de Listeners
+
+**Arquivo:** `app/Providers/AppServiceProvider.php`
+
+```php
+use Illuminate\Support\Facades\Event;
+
+private function configEvents(): void
+{
+    // Registrar listeners manualmente para evitar duplicação
+    Event::listen(UserRegistered::class, NotifyAdminNewUser::class);
+    Event::listen(UserApproved::class, SendUserApprovedEmail::class);
+}
+```
+
+### Listeners Implementados
+
+#### 1. `NotifyAdminNewUser`
+**Arquivo:** `app/Listeners/NotifyAdminNewUser.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Listeners;
+
+use App\Events\UserRegistered;
+use App\Mail\NewUserNotificationMail;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+
+class NotifyAdminNewUser
+{
+    public function handle(UserRegistered $event): void
+    {
+        // Buscar apenas o admin específico
+        $admin = User::where('email', 'admin@labsis.dev.br')->first();
+
+        if ($admin) {
+            Mail::to($admin->email)->send(new NewUserNotificationMail($admin, $event->user));
+        }
+    }
+}
+```
+
+**Funcionalidade:**
+- Busca o administrador específico (admin@labsis.dev.br)
+- Envia notificação com dados do novo usuário
+- Inclui link para visualizar o usuário
+
+#### 2. `SendUserApprovedEmail`
+**Arquivo:** `app/Listeners/SendUserApprovedEmail.php`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Listeners;
+
+use App\Events\UserApproved;
+use App\Mail\UserApprovedMail;
+use Illuminate\Support\Facades\Mail;
+
+class SendUserApprovedEmail
+{
+    public function handle(UserApproved $event): void
+    {
+        Mail::to($event->user->email)->send(new UserApprovedMail($event->user));
+    }
+}
+```
+
+**Funcionalidade:**
+- Envia email de aprovação para o usuário
+- Inclui credenciais de acesso
+- Inclui link para login
+
+## Templates de Email
+
+### 1. Email para Administrador
+**Arquivo:** `resources/views/emails/admin/new-user.blade.php`
+
+**Conteúdo:**
+- Dados do novo usuário
+- Data de cadastro
+- Status de verificação de email
+- Link para visualizar o usuário
+
+### 2. Email de Aprovação
+**Arquivo:** `resources/views/emails/user-approved.blade.php`
+
+**Conteúdo:**
+- Saudação personalizada
+- Informação de aprovação
+- Credenciais de acesso
+- Link para login
+
+## Configuração de Email
+
+### Desenvolvimento (Mailpit)
+
+**Arquivo:** `docker-compose.yml`
+
+```yaml
+mailpit:
+    image: 'axllent/mailpit:latest'
+    ports:
+        - '${FORWARD_MAILPIT_PORT:-1025}:1025'    # SMTP
+        - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'  # Web UI
+    networks:
+        - sail
+```
+
+**Acesso:**
+- **SMTP:** `localhost:1025`
+- **Web UI:** `http://localhost:8025`
+
+### Configuração do Laravel
+
+**Arquivo:** `.env`
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=mailpit
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+## Aprovação de Usuários
+
+### Toggle de Aprovação
+
+**Arquivo:** `app/Filament/Resources/Users/Tables/UsersTable.php`
+
+```php
+private static function getApprovalColumn(): ToggleColumn
+{
+    return ToggleColumn::make('is_approved')
+        ->onColor('primary')
+        ->offColor('danger')
+        ->onIcon(Heroicon::Check)
+        ->offIcon(Heroicon::XMark)
+        ->label('Aprovar')
+        ->afterStateUpdated(function (User $record, $state): void {
+            if ($state) {
+                $record->is_suspended = false;
+
+                if (! $record->hasVerifiedEmail()) {
+                    $record->markEmailAsVerified();
+                }
+
+                $record->save();
+
+                event(new UserApproved($record));
+            }
+        });
+}
+```
+
+### Processo de Aprovação
+
+1. **Admin acessa** a lista de usuários
+2. **Ativa o toggle** de aprovação
+3. **Sistema remove** a suspensão
+4. **Verifica email** automaticamente
+5. **Dispara evento** `UserApproved`
+6. **Email é enviado** para o usuário
+
+
+## Troubleshooting
+
+### Problemas Comuns
+
+1. **Emails duplicados**
+   - Verificar se há listeners duplicados registrados
+   - Limpar cache: `php artisan config:clear && php artisan event:clear`
+
+2. **Emails não enviados**
+   - Verificar configuração do Mailpit
+   - Verificar se eventos estão registrados
+   - Verificar logs do Laravel
+
+3. **Usuário não aprovado**
+   - Verificar se o toggle está funcionando
+   - Verificar se o evento está sendo disparado
+
+4. **Role Spatie não atribuída após registro**
+   - Confirmar que `MembershipObserver` está registrado em `AppServiceProvider::configObservers()`
+   - Verificar registro em `App\Models\Membership` e `\LaravelDaily\FilaTeams\Models\Membership`
+   - Conferir pivot `team_members` com `role = owner`
+
+
+## Conclusão
+
+O sistema implementa um fluxo simplificado e eficiente de registro de usuários com:
+
+- ✅ **Registro simplificado** com validações adequadas
+- ✅ **Criação automática de team** (organização) via FilaTeams
+- ✅ **Membership como owner** com role Spatie sincronizada pelo observer
+- ✅ **Sistema de aprovação** via toggle
+- ✅ **Emails de notificação** para admin e usuário
+- ✅ **Sistema de eventos** desacoplado
+- ✅ **Configuração de desenvolvimento** com Mailpit
+
+O sistema está pronto para uso e pode ser facilmente estendido com novas funcionalidades conforme necessário.
+
+## Referências
+
+- [AppServiceProvider — observers e eventos](../04-backend-e-arquitetura/app-service-provider.md)
+- [Stack Tecnológica — FilaTeams](../04-backend-e-arquitetura/stack-tecnologica.md)
+- [Register.php](../../app/Filament/Pages/Auth/Register.php)
+- [MembershipObserver.php](../../app/Observers/MembershipObserver.php)</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

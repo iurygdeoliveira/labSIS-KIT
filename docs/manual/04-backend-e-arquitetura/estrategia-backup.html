@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Estratégia de Backup — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura" open><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="estrategia-backup.html" class="is-active">Estratégia de Backup</a></li>
+<li><a href="gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Backend e Arquitetura</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Estratégia de Backup</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">04 — Backend e Arquitetura</p>
+<h1 class="doc-title">Estratégia de Backup</h1>
+</header>
+<div class="prose-content">
+<p>Este documento descreve a estratégia de backup implementada no <strong>labSIS-KIT</strong>, utilizando o pacote <a href="https://github.com/spatie/laravel-backup">Spatie Laravel Backup</a>. A finalidade é garantir a integridade dos dados e a continuidade da operação em caso de falhas críticas.</p>
+<h2 id="visão-geral">📌 Visão Geral</h2>
+<p>A estratégia de backup do kit baseia-se em três pilares:</p>
+<ol>
+<li><strong>Backup de Dados (SQL):</strong> Dump automático do banco de dados principal.</li>
+<li><strong>Backup de Arquivos (Mídias):</strong> Compactação dos arquivos armazenados no <code>storage/app/public</code>.</li>
+<li><strong>Agendamento Automático:</strong> Execução programada via Scheduler do Laravel.</li>
+</ol>
+<h2 id="ferramentas-utilizadas">🛠️ Ferramentas Utilizadas</h2>
+<ul>
+<li><strong>Spatie Laravel Backup:</strong> Motor principal para criação, monitoramento e limpeza de backups.</li>
+<li><strong>Laravel Scheduler:</strong> Orquestrador para disparar os backups em janelas de tempo de baixo tráfego.</li>
+<li><strong>Flysystem (S3/DigitalOcean):</strong> Recomendado para armazenamento geodistante (off-site).</li>
+</ul>
+<h2 id="configuração-de-armazenamento">🗄️ Configuração de Armazenamento</h2>
+<p>Por padrão, o kit está configurado para permitir múltiplos destinos. É <strong>altamente recomendável</strong> que em ambiente de produção o destino seja um armazenamento em nuvem (Amazon S3 ou compatível).</p>
+<h3>Configuração no <code>.env</code> (Recomendado)</h3>
+<p>Para utilizar o driver S3, configure as credenciais:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">env</span></div><pre><code>AWS_ACCESS_KEY_ID=sua_key
+AWS_SECRET_ACCESS_KEY=sua_secret
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=nome-do-bucket
+AWS_ENDPOINT=https://endpoint-do-provedor.com</code></pre></div>
+<p>No arquivo <code>config/backup.php</code>, o disco deve ser apontado:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&#x27;destination&#x27; =&gt; [
+    &#x27;disks&#x27; =&gt; [&#x27;s3&#x27;],
+],</code></pre></div>
+<h2 id="agendamento-automation">⏰ Agendamento (Automation)</h2>
+<p>Os backups estão configurados em <code>routes/console.php</code> para ocorrerem diariamente durante a madrugada (Horário do Servidor):</p>
+<ul>
+<li><strong>01:00 AM:</strong> Limpeza de backups antigos (<code>backup:clean</code>).</li>
+<li><strong>02:00 AM:</strong> Execução do novo backup completo (<code>backup:run</code>).</li>
+</ul>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// routes/console.php
+Schedule::command(&#x27;backup:clean&#x27;)-&gt;daily()-&gt;at(&#x27;01:00&#x27;);
+Schedule::command(&#x27;backup:run&#x27;)-&gt;daily()-&gt;at(&#x27;02:00&#x27;);</code></pre></div>
+<h2 id="regras-de-retenção-cleanup">🧹 Regras de Retenção (Cleanup)</h2>
+<p>Para evitar custos excessivos de armazenamento, o sistema mantém os backups seguindo a estratégia de retenção padrão:</p>
+<ul>
+<li><strong>Backups Diários:</strong> Mantidos por 16 dias.</li>
+<li><strong>Backups Semanais:</strong> Mantidos por 8 semanas.</li>
+<li><strong>Backups Mensais:</strong> Mantidos por 4 meses.</li>
+<li><strong>Backups Anuais:</strong> Mantidos por 2 anos.</li>
+</ul>
+<h2 id="monitoramento-e-alertas">🚨 Monitoramento e Alertas</h2>
+<p>O sistema pode ser configurado para notificar via <strong>E-mail</strong>, <strong>Slack</strong> ou <strong>Discord</strong> em caso de erros na execução.</p>
+<p>Para habilitar notificações, configure o canal desejado no arquivo <code>config/backup.php</code> na seção <code>notifications</code>.</p>
+<h2 id="restore-recuperação">📂 Restore (Recuperação)</h2>
+<p>Em caso de necessidade de restauração:</p>
+<ol>
+<li>Localize o arquivo <code>.zip</code> no seu disco de backup.</li>
+<li>Descompacte o arquivo.</li>
+<li>O dump do banco de dados (SQL) estará na pasta <code>db-dumps</code>.</li>
+<li>Os arquivos estarão na estrutura de diretórios original do projeto.</li>
+</ol>
+<p>---</p>
+<div class="callout callout-info"><p><strong>Atenção:</strong> Embora o MongoDB seja utilizado para logs de auditoria, ele não está incluído no dump SQL padrão. Para estratégias de backup do MongoDB, consulte a <a href="../../../manual/04-backend-e-arquitetura/mongodb-integration.html">documentação de integração do MongoDB</a>.</p></div>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="enums.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Utilizando Enumerações (Enums) no Laravel com Integração ao Filament</span></a><a class="doc-pagination-card doc-pagination-next" href="gestao-de-midia.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Gestao De Midia</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#visão-geral" data-toc-target="visão-geral">📌 Visão Geral</a></li>
+<li><a class="doc-toc-link" href="#ferramentas-utilizadas" data-toc-target="ferramentas-utilizadas">🛠️ Ferramentas Utilizadas</a></li>
+<li><a class="doc-toc-link" href="#configuração-de-armazenamento" data-toc-target="configuração-de-armazenamento">🗄️ Configuração de Armazenamento</a></li>
+<li><a class="doc-toc-link" href="#agendamento-automation" data-toc-target="agendamento-automation">⏰ Agendamento (Automation)</a></li>
+<li><a class="doc-toc-link" href="#regras-de-retenção-cleanup" data-toc-target="regras-de-retenção-cleanup">🧹 Regras de Retenção (Cleanup)</a></li>
+<li><a class="doc-toc-link" href="#monitoramento-e-alertas" data-toc-target="monitoramento-e-alertas">🚨 Monitoramento e Alertas</a></li>
+<li><a class="doc-toc-link" href="#restore-recuperação" data-toc-target="restore-recuperação">📂 Restore (Recuperação)</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Estratégia de Backup
+
+Este documento descreve a estratégia de backup implementada no **labSIS-KIT**, utilizando o pacote [Spatie Laravel Backup](https://github.com/spatie/laravel-backup). A finalidade é garantir a integridade dos dados e a continuidade da operação em caso de falhas críticas.
+
+## 📌 Visão Geral
+
+A estratégia de backup do kit baseia-se em três pilares:
+1.  **Backup de Dados (SQL):** Dump automático do banco de dados principal.
+2.  **Backup de Arquivos (Mídias):** Compactação dos arquivos armazenados no `storage/app/public`.
+3.  **Agendamento Automático:** Execução programada via Scheduler do Laravel.
+
+## 🛠️ Ferramentas Utilizadas
+
+-   **Spatie Laravel Backup:** Motor principal para criação, monitoramento e limpeza de backups.
+-   **Laravel Scheduler:** Orquestrador para disparar os backups em janelas de tempo de baixo tráfego.
+-   **Flysystem (S3/DigitalOcean):** Recomendado para armazenamento geodistante (off-site).
+
+## 🗄️ Configuração de Armazenamento
+
+Por padrão, o kit está configurado para permitir múltiplos destinos. É **altamente recomendável** que em ambiente de produção o destino seja um armazenamento em nuvem (Amazon S3 ou compatível).
+
+### Configuração no `.env` (Recomendado)
+Para utilizar o driver S3, configure as credenciais:
+```env
+AWS_ACCESS_KEY_ID=sua_key
+AWS_SECRET_ACCESS_KEY=sua_secret
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=nome-do-bucket
+AWS_ENDPOINT=https://endpoint-do-provedor.com
+```
+
+No arquivo `config/backup.php`, o disco deve ser apontado:
+```php
+'destination' => [
+    'disks' => ['s3'],
+],
+```
+
+## ⏰ Agendamento (Automation)
+
+Os backups estão configurados em `routes/console.php` para ocorrerem diariamente durante a madrugada (Horário do Servidor):
+
+-   **01:00 AM:** Limpeza de backups antigos (`backup:clean`).
+-   **02:00 AM:** Execução do novo backup completo (`backup:run`).
+
+```php
+// routes/console.php
+Schedule::command('backup:clean')->daily()->at('01:00');
+Schedule::command('backup:run')->daily()->at('02:00');
+```
+
+## 🧹 Regras de Retenção (Cleanup)
+
+Para evitar custos excessivos de armazenamento, o sistema mantém os backups seguindo a estratégia de retenção padrão:
+-   **Backups Diários:** Mantidos por 16 dias.
+-   **Backups Semanais:** Mantidos por 8 semanas.
+-   **Backups Mensais:** Mantidos por 4 meses.
+-   **Backups Anuais:** Mantidos por 2 anos.
+
+## 🚨 Monitoramento e Alertas
+
+O sistema pode ser configurado para notificar via **E-mail**, **Slack** ou **Discord** em caso de erros na execução.
+
+Para habilitar notificações, configure o canal desejado no arquivo `config/backup.php` na seção `notifications`.
+
+## 📂 Restore (Recuperação)
+
+Em caso de necessidade de restauração:
+1.  Localize o arquivo `.zip` no seu disco de backup.
+2.  Descompacte o arquivo.
+3.  O dump do banco de dados (SQL) estará na pasta `db-dumps`.
+4.  Os arquivos estarão na estrutura de diretórios original do projeto.
+
+---
+
+> **Atenção:** Embora o MongoDB seja utilizado para logs de auditoria, ele não está incluído no dump SQL padrão. Para estratégias de backup do MongoDB, consulte a [documentação de integração do MongoDB](mongodb-integration.md).
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

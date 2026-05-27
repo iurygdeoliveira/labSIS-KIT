@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Integração MongoDB - Auditoria e Logs — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura" open><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="mongodb-integration.html" class="is-active">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Backend e Arquitetura</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Integração MongoDB - Auditoria e Logs</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">04 — Backend e Arquitetura</p>
+<h1 class="doc-title">Integração MongoDB - Auditoria e Logs</h1>
+</header>
+<div class="prose-content">
+<h2 id="visão-geral">📋 Visão Geral</h2>
+<p>Este projeto utiliza <strong>arquitetura híbrida</strong> com PostgreSQL e MongoDB para otimizar performance e escalabilidade:</p>
+<ul>
+<li><strong>PostgreSQL</strong>: Dados relacionais críticos (Users, Teams, Permissions)</li>
+<li><strong>MongoDB</strong>: Logs de auditoria e dados que crescem rapidamente</li>
+</ul>
+<h2 id="configuração">⚙️ Configuração</h2>
+<h3>1. Docker Compose</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">yaml</span></div><pre><code># docker-compose.yml
+mongodb:
+    image: &quot;mongo:latest&quot;
+    ports:
+        - &quot;${FORWARD_MONGODB_PORT:-27017}:27017&quot;
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: &quot;${MONGODB_USERNAME:-sail}&quot;
+        MONGO_INITDB_ROOT_PASSWORD: &quot;${MONGODB_PASSWORD:-password}&quot;
+    volumes:
+        - &quot;sail-mongodb:/data/db&quot;
+    networks:
+        - sail</code></pre></div>
+<h3>2. Variáveis de Ambiente</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">ini</span></div><pre><code># .env
+MONGODB_URI=mongodb://sail:password@mongodb:27017
+MONGODB_USERNAME=sail
+MONGODB_PASSWORD=password
+MONGODB_DATABASE=labsis
+FORWARD_MONGODB_PORT=27017</code></pre></div>
+<h3>3. Configuração Laravel</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// config/database.php
+&#x27;mongodb&#x27; =&gt; [
+    &#x27;driver&#x27; =&gt; &#x27;mongodb&#x27;,
+    &#x27;dsn&#x27; =&gt; env(&#x27;MONGODB_URI&#x27;, &#x27;mongodb://localhost:27017&#x27;),
+    &#x27;database&#x27; =&gt; env(&#x27;MONGODB_DATABASE&#x27;, &#x27;labsis&#x27;),
+],</code></pre></div>
+<h2 id="caso-de-uso-logs-de-autenticação">📝 Caso de Uso: Logs de Autenticação</h2>
+<h3>Model MongoDB</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Models/AuthenticationLog.php
+&lt;?php
+
+namespace App\Models;
+
+use MongoDB\Laravel\Eloquent\Model;
+
+class AuthenticationLog extends Model
+{
+    protected $connection = &#x27;mongodb&#x27;;
+    protected $collection = &#x27;authentication_log&#x27;;
+    public $timestamps = false;
+
+    protected function casts(): array
+    {
+        return [
+            &#x27;login_successful&#x27; =&gt; &#x27;boolean&#x27;,
+            &#x27;login_at&#x27; =&gt; &#x27;datetime&#x27;,
+            &#x27;logout_at&#x27; =&gt; &#x27;datetime&#x27;,
+        ];
+    }
+
+    // Relacionamento híbrido com PostgreSQL
+    public function authentications()
+    {
+        return $this-&gt;morphMany(
+            AuthenticationLog::class,
+            &#x27;authenticatable&#x27;
+        )-&gt;latest(&#x27;login_at&#x27;);
+    }
+}</code></pre></div>
+<h3>Estrutura de Documento</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">json</span></div><pre><code>{
+  &quot;_id&quot;: ObjectId(&quot;69693240e77cefee61017852&quot;),
+  &quot;authenticatable_type&quot;: &quot;App\\Models\\User&quot;,
+  &quot;authenticatable_id&quot;: 1,
+  &quot;ip_address&quot;: &quot;192.168.1.100&quot;,
+  &quot;user_agent&quot;: &quot;Mozilla/5.0...&quot;,
+  &quot;login_at&quot;: ISODate(&quot;2026-01-20T00:35:20Z&quot;),
+  &quot;login_successful&quot;: true,
+  &quot;logout_at&quot;: null
+}</code></pre></div>
+<h3>Resource Filament</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Filament/Resources/Authentication/Tables/AuthenticationLogTable.php
+TextColumn::make(&#x27;authenticatable_id&#x27;)
+    -&gt;label(&#x27;Usuário&#x27;)
+    -&gt;formatStateUsing(function ($state, AuthenticationLog $record) {
+        // ⚠️ Carregamento manual para relacionamento híbrido
+        $user = User::find($record-&gt;authenticatable_id);
+
+        return $user?-&gt;name ?? &#x27;Desconhecido&#x27;;
+    })
+    -&gt;searchable(isGlobal: false, isIndividual: true),</code></pre></div>
+<h2 id="quando-usar-cada-banco">🎯 Quando Usar Cada Banco</h2>
+<h3>✅ Use PostgreSQL Para:</h3>
+<table class="data"><thead><tr>
+<th>Caso de Uso</th>
+<th>Razão</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Users, Teams, Roles</strong></td>
+<td>Integridade referencial, transações ACID</td>
+</tr>
+<tr>
+<td><strong>Permissions, Teams</strong></td>
+<td>Relacionamentos complexos (N:N)</td>
+</tr>
+<tr>
+<td><strong>Media, Posts</strong></td>
+<td>Dados estruturados com foreign keys</td>
+</tr>
+<tr>
+<td><strong>Dados financeiros</strong></td>
+<td>Precisão e consistência críticas</td>
+</tr>
+</tbody></table>
+<h3>✅ Use MongoDB Para:</h3>
+<table class="data"><thead><tr>
+<th>Caso de Uso</th>
+<th>Razão</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Logs de Autenticação</strong></td>
+<td>Alto volume de escritas, schema flexível</td>
+</tr>
+<tr>
+<td><strong>Activity Logs</strong></td>
+<td>Crescimento rápido, queries temporais</td>
+</tr>
+<tr>
+<td><strong>Analytics/Métricas</strong></td>
+<td>Agregações complexas, dados não estruturados</td>
+</tr>
+<tr>
+<td><strong>API Request Logs</strong></td>
+<td>Performance em inserções massivas</td>
+</tr>
+</tbody></table>
+<h2 id="benefícios-esperados">💡 Benefícios Esperados</h2>
+<h3>Performance</h3>
+<ul>
+<li><strong>Escritas 3-5x mais rápidas</strong>: MongoDB otimizado para inserções</li>
+<li><strong>Queries temporais eficientes</strong>: Índices em datas (TTL automático)</li>
+<li><strong>Sem bloqueios de tabela</strong>: PostgreSQL não afetado por logs</li>
+</ul>
+<h3>Escalabilidade</h3>
+<ul>
+<li><strong>Schema flexível</strong>: Adicionar campos sem migrations</li>
+<li><strong>Sharding nativo</strong>: Distribuição horizontal quando necessário</li>
+<li><strong>TTL Index</strong>: Auto-deletar logs antigos (ex: após 365 dias)</li>
+</ul>
+<h3>Manutenção</h3>
+<ul>
+<li><strong>Separação de concerns</strong>: Auditoria isolada de dados críticos</li>
+<li><strong>Backups independentes</strong>: Estratégias diferentes por banco</li>
+<li><strong>Migrations independentes</strong>: <code>migrate:fresh</code> não afeta MongoDB</li>
+</ul>
+<h2 id="relacionamentos-híbridos">⚠️ Relacionamentos Híbridos</h2>
+<p>O Laravel <strong>não suporta eager loading</strong> entre PostgreSQL e MongoDB. Solução:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// ❌ NÃO funciona
+TextColumn::make(&#x27;authenticatable.name&#x27;)
+
+// ✅ Funciona - Carregamento manual
+TextColumn::make(&#x27;authenticatable_id&#x27;)
+    -&gt;formatStateUsing(fn ($state, $record) =&gt;
+        User::find($record-&gt;authenticatable_id)?-&gt;name ?? &#x27;Desconhecido&#x27;
+    )</code></pre></div>
+<h2 id="recursos">📚 Recursos</h2>
+<ul>
+<li><a href="https://www.mongodb.com/docs/drivers/php/laravel-mongodb/">MongoDB Laravel Driver</a></li>
+<li><a href="https://laravel.com/docs/12.x/mongodb">Laravel MongoDB</a></li>
+<li><a href="/config/database.php">Config: Database</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="gestao-de-midia.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Gestao De Midia</span></a><a class="doc-pagination-card doc-pagination-next" href="notifications-trait.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">NotificationsTrait - Sistema de Notificações no Filament</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#visão-geral" data-toc-target="visão-geral">📋 Visão Geral</a></li>
+<li><a class="doc-toc-link" href="#configuração" data-toc-target="configuração">⚙️ Configuração</a></li>
+<li><a class="doc-toc-link" href="#caso-de-uso-logs-de-autenticação" data-toc-target="caso-de-uso-logs-de-autenticação">📝 Caso de Uso: Logs de Autenticação</a></li>
+<li><a class="doc-toc-link" href="#quando-usar-cada-banco" data-toc-target="quando-usar-cada-banco">🎯 Quando Usar Cada Banco</a></li>
+<li><a class="doc-toc-link" href="#benefícios-esperados" data-toc-target="benefícios-esperados">💡 Benefícios Esperados</a></li>
+<li><a class="doc-toc-link" href="#relacionamentos-híbridos" data-toc-target="relacionamentos-híbridos">⚠️ Relacionamentos Híbridos</a></li>
+<li><a class="doc-toc-link" href="#recursos" data-toc-target="recursos">📚 Recursos</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Integração MongoDB - Auditoria e Logs
+
+## 📋 Visão Geral
+
+Este projeto utiliza **arquitetura híbrida** com PostgreSQL e MongoDB para otimizar performance e escalabilidade:
+
+- **PostgreSQL**: Dados relacionais críticos (Users, Teams, Permissions)
+- **MongoDB**: Logs de auditoria e dados que crescem rapidamente
+
+## ⚙️ Configuração
+
+### 1. Docker Compose
+
+```yaml
+# docker-compose.yml
+mongodb:
+    image: "mongo:latest"
+    ports:
+        - "${FORWARD_MONGODB_PORT:-27017}:27017"
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: "${MONGODB_USERNAME:-sail}"
+        MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_PASSWORD:-password}"
+    volumes:
+        - "sail-mongodb:/data/db"
+    networks:
+        - sail
+```
+
+### 2. Variáveis de Ambiente
+
+```ini
+# .env
+MONGODB_URI=mongodb://sail:password@mongodb:27017
+MONGODB_USERNAME=sail
+MONGODB_PASSWORD=password
+MONGODB_DATABASE=labsis
+FORWARD_MONGODB_PORT=27017
+```
+
+### 3. Configuração Laravel
+
+```php
+// config/database.php
+'mongodb' => [
+    'driver' => 'mongodb',
+    'dsn' => env('MONGODB_URI', 'mongodb://localhost:27017'),
+    'database' => env('MONGODB_DATABASE', 'labsis'),
+],
+```
+
+## 📝 Caso de Uso: Logs de Autenticação
+
+### Model MongoDB
+
+```php
+// app/Models/AuthenticationLog.php
+<?php
+
+namespace App\Models;
+
+use MongoDB\Laravel\Eloquent\Model;
+
+class AuthenticationLog extends Model
+{
+    protected $connection = 'mongodb';
+    protected $collection = 'authentication_log';
+    public $timestamps = false;
+
+    protected function casts(): array
+    {
+        return [
+            'login_successful' => 'boolean',
+            'login_at' => 'datetime',
+            'logout_at' => 'datetime',
+        ];
+    }
+
+    // Relacionamento híbrido com PostgreSQL
+    public function authentications()
+    {
+        return $this->morphMany(
+            AuthenticationLog::class,
+            'authenticatable'
+        )->latest('login_at');
+    }
+}
+```
+
+### Estrutura de Documento
+
+```json
+{
+  "_id": ObjectId("69693240e77cefee61017852"),
+  "authenticatable_type": "App\\Models\\User",
+  "authenticatable_id": 1,
+  "ip_address": "192.168.1.100",
+  "user_agent": "Mozilla/5.0...",
+  "login_at": ISODate("2026-01-20T00:35:20Z"),
+  "login_successful": true,
+  "logout_at": null
+}
+```
+
+### Resource Filament
+
+```php
+// app/Filament/Resources/Authentication/Tables/AuthenticationLogTable.php
+TextColumn::make('authenticatable_id')
+    ->label('Usuário')
+    ->formatStateUsing(function ($state, AuthenticationLog $record) {
+        // ⚠️ Carregamento manual para relacionamento híbrido
+        $user = User::find($record->authenticatable_id);
+
+        return $user?->name ?? 'Desconhecido';
+    })
+    ->searchable(isGlobal: false, isIndividual: true),
+```
+
+## 🎯 Quando Usar Cada Banco
+
+### ✅ Use PostgreSQL Para:
+
+| Caso de Uso               | Razão                                    |
+| ------------------------- | ---------------------------------------- |
+| **Users, Teams, Roles** | Integridade referencial, transações ACID |
+| **Permissions, Teams**    | Relacionamentos complexos (N:N)          |
+| **Media, Posts**          | Dados estruturados com foreign keys      |
+| **Dados financeiros**     | Precisão e consistência críticas         |
+
+### ✅ Use MongoDB Para:
+
+| Caso de Uso              | Razão                                        |
+| ------------------------ | -------------------------------------------- |
+| **Logs de Autenticação** | Alto volume de escritas, schema flexível     |
+| **Activity Logs**        | Crescimento rápido, queries temporais        |
+| **Analytics/Métricas**   | Agregações complexas, dados não estruturados |
+| **API Request Logs**     | Performance em inserções massivas            |
+
+## 💡 Benefícios Esperados
+
+### Performance
+
+- **Escritas 3-5x mais rápidas**: MongoDB otimizado para inserções
+- **Queries temporais eficientes**: Índices em datas (TTL automático)
+- **Sem bloqueios de tabela**: PostgreSQL não afetado por logs
+
+### Escalabilidade
+
+- **Schema flexível**: Adicionar campos sem migrations
+- **Sharding nativo**: Distribuição horizontal quando necessário
+- **TTL Index**: Auto-deletar logs antigos (ex: após 365 dias)
+
+### Manutenção
+
+- **Separação de concerns**: Auditoria isolada de dados críticos
+- **Backups independentes**: Estratégias diferentes por banco
+- **Migrations independentes**: `migrate:fresh` não afeta MongoDB
+
+## ⚠️ Relacionamentos Híbridos
+
+O Laravel **não suporta eager loading** entre PostgreSQL e MongoDB. Solução:
+
+```php
+// ❌ NÃO funciona
+TextColumn::make('authenticatable.name')
+
+// ✅ Funciona - Carregamento manual
+TextColumn::make('authenticatable_id')
+    ->formatStateUsing(fn ($state, $record) =>
+        User::find($record->authenticatable_id)?->name ?? 'Desconhecido'
+    )
+```
+
+## 📚 Recursos
+
+
+- [MongoDB Laravel Driver](https://www.mongodb.com/docs/drivers/php/laravel-mongodb/)
+- [Laravel MongoDB](https://laravel.com/docs/12.x/mongodb)
+- [Config: Database](/config/database.php)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

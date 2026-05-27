@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Scripts do Composer e Inicialização de Storage — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura" open><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="scripts-composer.html" class="is-active">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Backend e Arquitetura</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Scripts do Composer e Inicialização de Storage</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">04 — Backend e Arquitetura</p>
+<h1 class="doc-title">Scripts do Composer e Inicialização de Storage</h1>
+</header>
+<div class="prose-content">
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#introdução">Introdução</a></li>
+<li><a href="#scripts-disponíveis">Scripts Disponíveis</a></li>
+<li><a href="#setup">setup</a></li>
+<li><a href="#reset">reset</a></li>
+<li><a href="#deploy">deploy</a></li>
+<li><a href="#inicialização-otimizada-de-storage-s3minio">Inicialização Otimizada de Storage (S3/MinIO)</a></li>
+<li><a href="#o-problema-anterior">O Problema Anterior</a></li>
+<li><a href="#a-solução-storageinit">A Solução: <code>storage:init</code></a></li>
+</ul>
+<h2 id="introdução">Introdução</h2>
+<p>Para padronizar e automatizar o ciclo de vida da aplicação (instalação, reset de ambiente e deploy), utilizamos scripts personalizados no <code>composer.json</code>. Isso elimina a necessidade de scripts shell externos (como o antigo <code>reset.sh</code>) e centraliza a execução de comandos críticos.</p>
+<p>Além disso, introduzimos uma estratégia otimizada para a inicialização de buckets S3/MinIO, removendo latência das requisições web.</p>
+<h2 id="scripts-disponíveis">Scripts Disponíveis</h2>
+<p>Os scripts podem ser executados via <code>composer run &lt;nome-do-script&gt;</code>. Em ambiente de desenvolvimento com Sail, utilize <code>./vendor/bin/sail composer run &lt;nome-do-script&gt;</code>.</p>
+<h3><code>setup</code></h3>
+<p>Responsável pela configuração inicial do projeto. Deve ser executado logo após clonar o repositório.</p>
+<p><strong>O que ele faz:</strong></p>
+<ol>
+<li>Instala dependências PHP (<code>composer install</code>).</li>
+<li>Cria o arquivo <code>.env</code> caso não exista.</li>
+<li>Gera a chave da aplicação (<code>key:generate</code>).</li>
+<li>Executa migrações de banco de dados (<code>migrate</code>).</li>
+<li>Inicializa diretórios de storage (<code>storage:init</code>).</li>
+<li>Otimiza componentes e ícones do Filament (<code>filament:optimize</code>).</li>
+<li>Instala e compila assets de frontend (<code>npm install</code> e <code>npm run build</code>).</li>
+</ol>
+<h3><code>reset</code></h3>
+<p>Substituto do antigo <code>reset.sh</code>. Utilizado durante o desenvolvimento para &quot;limpar a casa&quot; e recomeçar do zero.</p>
+<p><strong>O que ele faz:</strong></p>
+<ol>
+<li>Limpa caches do Laravel e do Filament.</li>
+<li>Redescobre pacotes (<code>package:discover</code>).</li>
+<li>Reseta o banco de dados e roda seeds (<code>migrate:fresh --seed</code>).</li>
+<li>Garante a estrutura de storage (<code>storage:init</code>).</li>
+<li>Otimiza componentes e ícones do Filament (<code>filament:optimize</code>).</li>
+<li>Recompila assets (<code>npm run build</code>).</li>
+<li>Executa a suíte de testes (<code>test</code>).</li>
+</ol>
+<h3><code>deploy</code></h3>
+<p>Destinado a ambientes de produção (CI/CD ou servidor final). Executa passos de otimização e deploy seguro.</p>
+<p><strong>O que ele faz:</strong></p>
+<ol>
+<li>Instala dependências de produção (<code>--no-dev</code>).</li>
+<li>Executa migrações (<code>migrate --force</code>).</li>
+<li>Garante estrutura de storage (<code>storage:init</code>).</li>
+<li>Cacheia configurações, eventos, rotas e views.</li>
+<li>Otimiza componentes e ícones do Filament (<code>filament:optimize</code>).</li>
+<li>Compila assets de frontend.</li>
+</ol>
+<h2 id="inicialização-otimizada-de-storage-s3minio">Inicialização Otimizada de Storage (S3/MinIO)</h2>
+<h3>O Problema Anterior</h3>
+<p>Anteriormente, a verificação e criação de diretórios no S3 (<code>audios</code>, <code>images</code>, <code>documents</code>, <code>avatar</code>) ocorria no método <code>boot</code> do <code>AppServiceProvider</code>. Isso significava que <strong>toda requisição web</strong> fazia chamadas de rede para o S3 para verificar a existência dessas pastas, adicionando uma latência significativa (200ms a 1s) no carregamento das páginas.</p>
+<h3>A Solução: <code>storage:init</code></h3>
+<p>Extraímos essa lógica para um comando Artisan dedicado: <code>storage:init</code>.</p>
+<p>Este comando:</p>
+<ol>
+<li>Verifica se as credenciais do S3 estão configuradas.</li>
+<li>Cria os diretórios necessários no bucket.</li>
+<li>Adiciona arquivos <code>.keep</code> para garantir a persistência das pastas.</li>
+</ol>
+<p><strong>Integração:</strong> O comando <code>storage:init</code> foi adicionado aos scripts <code>setup</code>, <code>reset</code> e <code>deploy</code> no <code>composer.json</code>. Dessa forma, garantimos que a estrutura de armazenamento esteja correta apenas nos momentos necessários (instalação ou deploy), eliminando completamente o overhead durante a navegação dos usuários.</p>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="/app/Console/Commands/InitStorageCommand.php">Command: InitStorageCommand</a></li>
+<li><a href="/composer.json">Config: composer.json</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="regras-de-negocio.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Regras de Negócio: labSIS-KIT</span></a><a class="doc-pagination-card doc-pagination-next" href="stack-tecnologica.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Stack Tecnológica e Versões</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#introdução" data-toc-target="introdução">Introdução</a></li>
+<li><a class="doc-toc-link" href="#scripts-disponíveis" data-toc-target="scripts-disponíveis">Scripts Disponíveis</a></li>
+<li><a class="doc-toc-link" href="#inicialização-otimizada-de-storage-s3minio" data-toc-target="inicialização-otimizada-de-storage-s3minio">Inicialização Otimizada de Storage (S3/MinIO)</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Scripts do Composer e Inicialização de Storage
+
+## 📋 Índice
+
+-   [Introdução](#introdução)
+-   [Scripts Disponíveis](#scripts-disponíveis)
+    -   [setup](#setup)
+    -   [reset](#reset)
+    -   [deploy](#deploy)
+-   [Inicialização Otimizada de Storage (S3/MinIO)](#inicialização-otimizada-de-storage-s3minio)
+    -   [O Problema Anterior](#o-problema-anterior)
+    -   [A Solução: `storage:init`](#a-solução-storageinit)
+
+## Introdução
+
+Para padronizar e automatizar o ciclo de vida da aplicação (instalação, reset de ambiente e deploy), utilizamos scripts personalizados no `composer.json`. Isso elimina a necessidade de scripts shell externos (como o antigo `reset.sh`) e centraliza a execução de comandos críticos.
+
+Além disso, introduzimos uma estratégia otimizada para a inicialização de buckets S3/MinIO, removendo latência das requisições web.
+
+## Scripts Disponíveis
+
+Os scripts podem ser executados via `composer run <nome-do-script>`. Em ambiente de desenvolvimento com Sail, utilize `./vendor/bin/sail composer run <nome-do-script>`.
+
+### `setup`
+
+Responsável pela configuração inicial do projeto. Deve ser executado logo após clonar o repositório.
+
+**O que ele faz:**
+
+1.  Instala dependências PHP (`composer install`).
+2.  Cria o arquivo `.env` caso não exista.
+3.  Gera a chave da aplicação (`key:generate`).
+4.  Executa migrações de banco de dados (`migrate`).
+5.  Inicializa diretórios de storage (`storage:init`).
+6.  Otimiza componentes e ícones do Filament (`filament:optimize`).
+7.  Instala e compila assets de frontend (`npm install` e `npm run build`).
+
+### `reset`
+
+Substituto do antigo `reset.sh`. Utilizado durante o desenvolvimento para "limpar a casa" e recomeçar do zero.
+
+**O que ele faz:**
+
+1.  Limpa caches do Laravel e do Filament.
+2.  Redescobre pacotes (`package:discover`).
+3.  Reseta o banco de dados e roda seeds (`migrate:fresh --seed`).
+4.  Garante a estrutura de storage (`storage:init`).
+5.  Otimiza componentes e ícones do Filament (`filament:optimize`).
+6.  Recompila assets (`npm run build`).
+7.  Executa a suíte de testes (`test`).
+
+### `deploy`
+
+Destinado a ambientes de produção (CI/CD ou servidor final). Executa passos de otimização e deploy seguro.
+
+**O que ele faz:**
+
+1.  Instala dependências de produção (`--no-dev`).
+2.  Executa migrações (`migrate --force`).
+3.  Garante estrutura de storage (`storage:init`).
+4.  Cacheia configurações, eventos, rotas e views.
+5.  Otimiza componentes e ícones do Filament (`filament:optimize`).
+6.  Compila assets de frontend.
+
+## Inicialização Otimizada de Storage (S3/MinIO)
+
+### O Problema Anterior
+
+Anteriormente, a verificação e criação de diretórios no S3 (`audios`, `images`, `documents`, `avatar`) ocorria no método `boot` do `AppServiceProvider`. Isso significava que **toda requisição web** fazia chamadas de rede para o S3 para verificar a existência dessas pastas, adicionando uma latência significativa (200ms a 1s) no carregamento das páginas.
+
+### A Solução: `storage:init`
+
+Extraímos essa lógica para um comando Artisan dedicado: `storage:init`.
+
+Este comando:
+
+1.  Verifica se as credenciais do S3 estão configuradas.
+2.  Cria os diretórios necessários no bucket.
+3.  Adiciona arquivos `.keep` para garantir a persistência das pastas.
+
+**Integração:**
+O comando `storage:init` foi adicionado aos scripts `setup`, `reset` e `deploy` no `composer.json`. Dessa forma, garantimos que a estrutura de armazenamento esteja correta apenas nos momentos necessários (instalação ou deploy), eliminando completamente o overhead durante a navegação dos usuários.
+
+## Referências
+
+- [Command: InitStorageCommand](/app/Console/Commands/InitStorageCommand.php)
+- [Config: composer.json](/composer.json)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

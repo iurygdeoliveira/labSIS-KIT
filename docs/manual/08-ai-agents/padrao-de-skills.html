@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Padrão de Nomenclatura de Skills: Action-Object — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents" open><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="padrao-de-skills.html" class="is-active">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">AI Agents</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Padrão de Nomenclatura de Skills: Action-Object</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">08 — AI Agents</p>
+<h1 class="doc-title">Padrão de Nomenclatura de Skills: Action-Object</h1>
+</header>
+<div class="prose-content">
+<p>Este documento define a estratégia <strong>&quot;Action-Object&quot;</strong> (Ação-Objeto) adotada neste projeto para maximizar a eficiência e a &quot;taxa de ativação&quot; das Skills pelos Agentes de IA.</p>
+<h2 id="filosofia-user-intent-mapping">Filosofia: User Intent Mapping</h2>
+<p>Pretende-se garantir que um Agente utilize uma ferramenta específica sem instrução explícita é alinhar o nome da ferramenta com a <strong>Linguagem Natural de Comando</strong> do usuário.</p>
+<p>Quando um usuário solicita algo, ele geralmente usa um verbo imperativo seguido de um objeto.</p>
+<div class="callout callout-info"><p>&quot;User: <strong>Crie</strong> um <strong>Model</strong> para Produto.&quot;</p></div>
+<p>Se a skill se chamar <code>laravel-model-scaffold</code>, o agente precisa fazer uma inferência de dois passos:</p>
+<ol>
+<li>&quot;Crie um model&quot; significa &quot;scaffold&quot;.</li>
+<li>&quot;laravel-model-scaffold&quot; parece relevante.</li>
+</ol>
+<p>Se a skill se chamar <code>scaffold-model</code>, a conexão é direta e neuralmente mais forte para o LLM.</p>
+<h2 id="o-padrão-verbo-objeto">O Padrão: <code>&lt;VERBO&gt;-&lt;OBJETO&gt;</code></h2>
+<p>Todas as skills devem seguir rigorosamente o formato:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">text</span></div><pre><code>[action]-[target]</code></pre></div>
+<h3>Exemplos de Mapeamento</h3>
+<table class="data"><thead><tr>
+<th>Intenção do Usuário (Prompt)</th>
+<th>Skill (Action-Object)</th>
+<th>Nome Antigo (Evitar)</th>
+</tr></thead><tbody>
+<tr>
+<td>&quot;Crie um model...&quot;, &quot;Gere...&quot;</td>
+<td><code>scaffold-model</code></td>
+<td><code>laravel-model-scaffold</code></td>
+</tr>
+<tr>
+<td>&quot;Verifique a segurança...&quot;, &quot;Audit...&quot;</td>
+<td><code>audit-security</code></td>
+<td><code>security-audit</code></td>
+</tr>
+<tr>
+<td>&quot;Estilize o botão...&quot;, &quot;CSS...&quot;</td>
+<td><code>style-components</code></td>
+<td><code>css-component-builder</code></td>
+</tr>
+<tr>
+<td>&quot;Teste o browser...&quot;, &quot;Debug...&quot;</td>
+<td><code>debug-browser-tests</code></td>
+<td><code>browser-test-debugger</code></td>
+</tr>
+<tr>
+<td>&quot;Documente isso...&quot;, &quot;Escreva docs...&quot;</td>
+<td><code>write-documentation</code></td>
+<td><code>documentation-writer</code></td>
+</tr>
+<tr>
+<td>&quot;Otimize a performance...&quot;, &quot;Lento...&quot;</td>
+<td><code>optimize-performance</code></td>
+<td><code>performance-optimizer</code></td>
+</tr>
+<tr>
+<td>&quot;Commita...&quot;, &quot;Git push...&quot;</td>
+<td><code>manage-git</code></td>
+<td><code>git-workflow</code></td>
+</tr>
+</tbody></table>
+<h2 id="categorias-de-ações-comuns">Categorias de Ações Comuns</h2>
+<h3>Scaffold (Criação Estrutural)</h3>
+<p>Usado para geração de código boilerplate, arquivos e estruturas.</p>
+<ul>
+<li><code>scaffold-model</code></li>
+<li><code>scaffold-controller</code></li>
+<li><code>scaffold-migration</code></li>
+<li><code>scaffold-policy</code></li>
+<li><code>scaffold-filament-resource</code></li>
+<li><code>scaffold-enum</code></li>
+<li><code>scaffold-exception</code></li>
+<li><code>scaffold-event</code></li>
+</ul>
+<h3>Manage (Gestão/Operação)</h3>
+<p>Usado para processos contínuos ou operações de manutenção.</p>
+<ul>
+<li><code>manage-git</code></li>
+<li><code>manage-seeders</code></li>
+</ul>
+<h3>Audit/Optimize/Debug (Qualidade)</h3>
+<p>Usado para tarefas de análise e melhoria.</p>
+<ul>
+<li><code>audit-security</code></li>
+<li><code>optimize-performance</code></li>
+<li><code>debug-browser-tests</code></li>
+</ul>
+<h3>Write (Documentação)</h3>
+<p>Usado para geração de conteúdo textual.</p>
+<ul>
+<li><code>write-documentation</code></li>
+</ul>
+<h2 id="benefícios-esperados">Benefícios Esperados</h2>
+<ol>
+<li><strong>Redução de Alucinação</strong>: O agente não precisa &quot;adivinhar&quot; qual ferramenta usar.</li>
+<li><strong>Economia de Tokens</strong>: Prompts menores, pois não é necessário explicar qual skill usar.</li>
+<li><strong>Padronização</strong>: Facilita a criação de novas skills seguindo um modelo mental claro.</li>
+</ol>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="laravel-boost.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Laravel Boost - MCP para Laravel</span></a><a class="doc-pagination-card doc-pagination-next" href="protocolo-operacional.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#filosofia-user-intent-mapping" data-toc-target="filosofia-user-intent-mapping">Filosofia: User Intent Mapping</a></li>
+<li><a class="doc-toc-link" href="#o-padrão-verbo-objeto" data-toc-target="o-padrão-verbo-objeto">O Padrão: `&lt;VERBO&gt;-&lt;OBJETO&gt;`</a></li>
+<li><a class="doc-toc-link" href="#categorias-de-ações-comuns" data-toc-target="categorias-de-ações-comuns">Categorias de Ações Comuns</a></li>
+<li><a class="doc-toc-link" href="#benefícios-esperados" data-toc-target="benefícios-esperados">Benefícios Esperados</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Padrão de Nomenclatura de Skills: Action-Object
+
+Este documento define a estratégia **"Action-Object"** (Ação-Objeto) adotada neste projeto para maximizar a eficiência e a "taxa de ativação" das Skills pelos Agentes de IA.
+
+## Filosofia: User Intent Mapping
+
+Pretende-se garantir que um Agente utilize uma ferramenta específica sem instrução explícita é alinhar o nome da ferramenta com a **Linguagem Natural de Comando** do usuário.
+
+Quando um usuário solicita algo, ele geralmente usa um verbo imperativo seguido de um objeto.
+
+> "User: **Crie** um **Model** para Produto."
+
+Se a skill se chamar `laravel-model-scaffold`, o agente precisa fazer uma inferência de dois passos:
+
+1. "Crie um model" significa "scaffold".
+2. "laravel-model-scaffold" parece relevante.
+
+Se a skill se chamar `scaffold-model`, a conexão é direta e neuralmente mais forte para o LLM.
+
+## O Padrão: `<VERBO>-<OBJETO>`
+
+Todas as skills devem seguir rigorosamente o formato:
+
+```text
+[action]-[target]
+```
+
+### Exemplos de Mapeamento
+
+| Intenção do Usuário (Prompt)           | Skill (Action-Object)  | Nome Antigo (Evitar)     |
+| :------------------------------------- | :--------------------- | :----------------------- |
+| "Crie um model...", "Gere..."          | `scaffold-model`       | `laravel-model-scaffold` |
+| "Verifique a segurança...", "Audit..." | `audit-security`       | `security-audit`         |
+| "Estilize o botão...", "CSS..."        | `style-components`     | `css-component-builder`  |
+| "Teste o browser...", "Debug..."       | `debug-browser-tests`  | `browser-test-debugger`  |
+| "Documente isso...", "Escreva docs..." | `write-documentation`  | `documentation-writer`   |
+| "Otimize a performance...", "Lento..." | `optimize-performance` | `performance-optimizer`  |
+| "Commita...", "Git push..."            | `manage-git`           | `git-workflow`           |
+
+## Categorias de Ações Comuns
+
+### Scaffold (Criação Estrutural)
+
+Usado para geração de código boilerplate, arquivos e estruturas.
+
+- `scaffold-model`
+- `scaffold-controller`
+- `scaffold-migration`
+- `scaffold-policy`
+- `scaffold-filament-resource`
+- `scaffold-enum`
+- `scaffold-exception`
+- `scaffold-event`
+
+### Manage (Gestão/Operação)
+
+Usado para processos contínuos ou operações de manutenção.
+
+- `manage-git`
+- `manage-seeders`
+
+### Audit/Optimize/Debug (Qualidade)
+
+Usado para tarefas de análise e melhoria.
+
+- `audit-security`
+- `optimize-performance`
+- `debug-browser-tests`
+
+### Write (Documentação)
+
+Usado para geração de conteúdo textual.
+
+- `write-documentation`
+
+## Benefícios Esperados
+
+1. **Redução de Alucinação**: O agente não precisa "adivinhar" qual ferramenta usar.
+2. **Economia de Tokens**: Prompts menores, pois não é necessário explicar qual skill usar.
+3. **Padronização**: Facilita a criação de novas skills seguindo um modelo mental claro.
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

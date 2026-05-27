@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NotificationsTrait - Sistema de Notificações no Filament — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura" open><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="notifications-trait.html" class="is-active">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Backend e Arquitetura</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">NotificationsTrait - Sistema de Notificações no Filament</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">04 — Backend e Arquitetura</p>
+<h1 class="doc-title">NotificationsTrait - Sistema de Notificações no Filament</h1>
+</header>
+<div class="prose-content">
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#introdução">Introdução</a></li>
+<li><a href="#como-funciona">Como Funciona</a></li>
+<li><a href="#implementação">Implementação</a></li>
+<li><a href="#uso-no-projeto">Uso no Projeto</a></li>
+<li><a href="#problemas-comuns">Problemas Comuns</a></li>
+<li><a href="#conclusão">Conclusão</a></li>
+</ul>
+<h2 id="introdução">Introdução</h2>
+<p>A <code>NotificationsTrait</code> é uma trait personalizada desenvolvida para simplificar e padronizar o uso de notificações no Filament PHP. Ela fornece métodos convenientes para criar notificações de diferentes tipos (success, danger, warning) com configurações pré-definidas de ícones, cores e comportamento.</p>
+<p>Esta trait elimina a necessidade de repetir código para criar notificações similares, mantendo a consistência visual e funcional em toda a aplicação.</p>
+<h2 id="como-funciona">Como Funciona</h2>
+<p>A trait funciona através de um sistema de métodos públicos que encapsulam a lógica de construção de notificações:</p>
+<h3>1. <strong>Métodos Públicos Disponíveis</strong></h3>
+<ul>
+<li><strong><code>notifySuccess()</code></strong> - Cria notificações de sucesso (verde)</li>
+<li><strong><code>notifyDanger()</code></strong> - Cria notificações de perigo/erro (vermelho)</li>
+<li><strong><code>notifyWarning()</code></strong> - Cria notificações de aviso (amarelo)</li>
+</ul>
+<h3>2. <strong>Método Privado de Construção</strong></h3>
+<ul>
+<li><strong><code>buildNotification()</code></strong> - Método interno que configura a notificação com base no tipo</li>
+</ul>
+<h3>3. <strong>Configurações Automáticas</strong></h3>
+<p>Cada tipo de notificação recebe automaticamente:</p>
+<ul>
+<li><strong>Ícone apropriado</strong> do Heroicon</li>
+<li><strong>Cor de fundo</strong> correspondente ao tipo</li>
+<li><strong>Cor do ícone</strong> para melhor contraste</li>
+<li><strong>Duração padrão</strong> de 8 segundos (configurável)</li>
+<li><strong>Opção de persistência</strong> para notificações importantes</li>
+</ul>
+<h2 id="implementação">Implementação</h2>
+<h3>1. <strong>Código da Trait</strong></h3>
+<p>O código da trait está localizado em <code>app/Traits/Filament/NotificationsTrait.php</code>.</p>
+<h3>2. <strong>Parâmetros dos Métodos</strong></h3>
+<h4><strong><code>notifySuccess()</code>, <code>notifyDanger()</code>, <code>notifyWarning()</code></strong></h4>
+<table class="data"><thead><tr>
+<th>Parâmetro</th>
+<th>Tipo</th>
+<th>Padrão</th>
+<th>Descrição</th>
+</tr></thead><tbody>
+<tr>
+<td><code>$title</code></td>
+<td><code>string</code></td>
+<td><strong>Obrigatório</strong></td>
+<td>Título principal da notificação</td>
+</tr>
+<tr>
+<td><code>$body</code></td>
+<td><code>?string</code></td>
+<td><code>null</code></td>
+<td>Texto adicional da notificação (opcional)</td>
+</tr>
+<tr>
+<td><code>$seconds</code></td>
+<td><code>int</code></td>
+<td><code>8</code></td>
+<td>Duração em segundos antes de desaparecer</td>
+</tr>
+<tr>
+<td><code>$persistent</code></td>
+<td><code>bool</code></td>
+<td><code>false</code></td>
+<td>Se a notificação deve persistir até ser fechada manualmente</td>
+</tr>
+</tbody></table>
+<h3>3. <strong>Configurações de Ícones e Cores</strong></h3>
+<table class="data"><thead><tr>
+<th>Tipo</th>
+<th>Ícone</th>
+<th>Cor de Fundo</th>
+<th>Cor do Ícone</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Success</strong></td>
+<td><code>heroicon-s-check-circle</code></td>
+<td><code>primary</code></td>
+<td><code>primary</code></td>
+</tr>
+<tr>
+<td><strong>Danger</strong></td>
+<td><code>heroicon-c-no-symbol</code></td>
+<td><code>danger</code></td>
+<td><code>danger</code></td>
+</tr>
+<tr>
+<td><strong>Warning</strong></td>
+<td><code>heroicon-s-exclamation-triangle</code></td>
+<td><code>warning</code></td>
+<td><code>warning</code></td>
+</tr>
+</tbody></table>
+<h2 id="uso-no-projeto">Uso no Projeto</h2>
+<h3>1. <strong>Implementação em Classes Filament</strong></h3>
+<p>Para usar a trait em qualquer classe Filament:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&lt;?php
+
+namespace App\Filament\Resources\Users\Pages;
+
+use App\Traits\Filament\NotificationsTrait;
+use Filament\Resources\Pages\EditRecord;
+
+class EditUser extends EditRecord
+{
+    use NotificationsTrait;
+
+    // ... resto da classe
+}</code></pre></div>
+<h3>2. <strong>Exemplos de Uso</strong></h3>
+<h4><strong>Notificação de Sucesso Simples</strong></h4>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Notificação básica de sucesso
+$this-&gt;notifySuccess(&#x27;Usuário atualizado com sucesso.&#x27;);
+
+// Com corpo de texto
+$this-&gt;notifySuccess(
+    &#x27;Usuário atualizado com sucesso.&#x27;,
+    &#x27;As alterações foram salvas no banco de dados.&#x27;
+);
+
+// Com duração personalizada (15 segundos)
+$this-&gt;notifySuccess(
+    &#x27;Usuário atualizado com sucesso.&#x27;,
+    &#x27;As alterações foram salvas no banco de dados.&#x27;,
+    15
+);</code></pre></div>
+<h4><strong>Notificação de Perigo</strong></h4>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Notificação de erro
+$this-&gt;notifyDanger(&#x27;Operação não permitida.&#x27;);
+
+// Com corpo explicativo
+$this-&gt;notifyDanger(
+    &#x27;Operação não permitida.&#x27;,
+    &#x27;Você não pode suspender a si mesmo. Alteração revertida.&#x27;
+);
+
+// Persistente (não desaparece automaticamente)
+$this-&gt;notifyDanger(
+    &#x27;Erro crítico detectado.&#x27;,
+    &#x27;Verifique as configurações do sistema.&#x27;,
+    0,
+    true
+);</code></pre></div>
+<h4><strong>Notificação de Aviso</strong></h4>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Aviso simples
+$this-&gt;notifyWarning(&#x27;Atenção aos dados inseridos.&#x27;);
+
+// Com corpo e duração personalizada
+$this-&gt;notifyWarning(
+    &#x27;Atenção aos dados inseridos.&#x27;,
+    &#x27;Alguns campos podem estar incompletos.&#x27;,
+    12
+);</code></pre></div>
+<h3>3. <strong>Exemplo Real do Projeto</strong></h3>
+<p>No arquivo <code>EditUser.php</code>, a trait é utilizada para fornecer feedback ao usuário:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>protected function afterSave(): void
+{
+    // ... lógica de sincronização ...
+
+    // Previne auto-suspensão
+    if ($this-&gt;record-&gt;getKey() === Auth::id() &amp;&amp; $this-&gt;record-&gt;is_suspended) {
+        $this-&gt;record-&gt;forceFill([
+            &#x27;is_suspended&#x27; =&gt; false,
+            &#x27;suspended_at&#x27; =&gt; null,
+        ])-&gt;save();
+
+        // Notificação de perigo com corpo explicativo
+        $this-&gt;notifyDanger(
+            &#x27;Você não pode suspender a si mesmo.&#x27;,
+            &#x27;Alteração revertida automaticamente.&#x27;
+        );
+
+        $this-&gt;redirect($this-&gt;getResource()::getUrl(&#x27;index&#x27;));
+        return;
+    }
+
+    // Notificação de sucesso
+    $this-&gt;notifySuccess(&#x27;Usuário atualizado com sucesso.&#x27;);
+    $this-&gt;redirect($this-&gt;getResource()::getUrl(&#x27;index&#x27;));
+}</code></pre></div>
+<h3>4. <strong>Casos de Uso Comuns</strong></h3>
+<h4><strong>Após Operações CRUD</strong></h4>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Após criar um registro
+$this-&gt;notifySuccess(&#x27;Registro criado com sucesso.&#x27;);
+
+// Após atualizar um registro
+$this-&gt;notifySuccess(&#x27;Registro atualizado com sucesso.&#x27;);
+
+// Após deletar um registro
+$this-&gt;notifySuccess(&#x27;Registro excluído com sucesso.&#x27;);
+
+// Após operação com erro
+$this-&gt;notifyDanger(&#x27;Não foi possível completar a operação.&#x27;);</code></pre></div>
+<h4><strong>Validações e Permissões</strong></h4>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Usuário sem permissão
+$this-&gt;notifyDanger(&#x27;Acesso negado.&#x27;, &#x27;Você não tem permissão para esta ação.&#x27;);
+
+// Dados inválidos
+$this-&gt;notifyWarning(&#x27;Dados inválidos.&#x27;, &#x27;Verifique as informações inseridas.&#x27;);
+
+// Operação bem-sucedida com aviso
+$this-&gt;notifySuccess(&#x27;Operação concluída.&#x27;, &#x27;Algumas configurações foram ajustadas automaticamente.&#x27;);</code></pre></div>
+<h2 id="problemas-comuns">Problemas Comuns</h2>
+<h3>1. <strong>Trait Não Encontrada</strong></h3>
+<p><strong>Problema:</strong> Erro &quot;Class NotificationsTrait not found&quot;</p>
+<p><strong>Solução:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Verifique se o use está correto
+use App\Traits\Filament\NotificationsTrait;
+
+// E se a trait está sendo usada na classe
+use NotificationsTrait;</code></pre></div>
+<h3>2. <strong>Notificação Não Aparece</strong></h3>
+<p><strong>Problema:</strong> Notificação é criada mas não exibida</p>
+<p><strong>Solução:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Certifique-se de que o método send() está sendo chamado
+// A trait já faz isso automaticamente, mas verifique se não há erros de JavaScript
+// Verifique se o Filament está carregando corretamente</code></pre></div>
+<h3>3. <strong>Ícones Não Carregam</strong></h3>
+<p><strong>Problema:</strong> Ícones aparecem quebrados ou não carregam</p>
+<p><strong>Solução:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Verifique se o Heroicon está instalado e configurado
+// Os ícones usados são padrão do Heroicon, certifique-se de que estão disponíveis
+// Verifique se não há conflitos de CSS</code></pre></div>
+<h3>4. <strong>Cores Não Aplicadas</strong></h3>
+<p><strong>Problema:</strong> Notificações aparecem sem as cores corretas</p>
+<p><strong>Solução:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Verifique se o tema do Filament está configurado corretamente
+// As cores são baseadas no sistema de cores do Filament
+// Verifique se não há CSS customizado sobrescrevendo as cores</code></pre></div>
+<h3>5. <strong>Notificação Persistente Não Fecha</strong></h3>
+<p><strong>Problema:</strong> Notificação persistente não pode ser fechada</p>
+<p><strong>Solução:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Use o parâmetro persistent com cuidado
+// Notificações persistentes devem ser fechadas manualmente pelo usuário
+// Para notificações importantes mas não críticas, use duração longa em vez de persistente</code></pre></div>
+<h2 id="conclusão">Conclusão</h2>
+<p>A <code>NotificationsTrait</code> oferece uma solução elegante e eficiente para padronizar notificações no Filament:</p>
+<h3>🎯 <strong>Benefícios Principais:</strong></h3>
+<ul>
+<li>✅ <strong>Código limpo</strong> - Elimina repetição de código</li>
+<li>✅ <strong>Consistência visual</strong> - Padrão uniforme em toda aplicação</li>
+<li>✅ <strong>Fácil manutenção</strong> - Centraliza configurações de notificações</li>
+<li>✅ <strong>Flexibilidade</strong> - Permite personalização quando necessário</li>
+<li>✅ <strong>Integração nativa</strong> - Funciona perfeitamente com o Filament</li>
+</ul>
+<h3>🚀 <strong>Casos de Uso Ideais:</strong></h3>
+<ul>
+<li><strong>Páginas de recursos</strong> (Create, Edit, List)</li>
+<li><strong>Ações personalizadas</strong> (Actions customizadas)</li>
+<li><strong>Validações e permissões</strong> (Feedback de erro)</li>
+<li><strong>Operações CRUD</strong> (Confirmações de sucesso)</li>
+<li><strong>Sistemas de alerta</strong> (Avisos importantes)</li>
+</ul>
+<h3>📚 <strong>Para Mais Informações</strong></h3>
+<p>Para obter informações mais detalhadas sobre notificações no Filament, consulte a documentação oficial:</p>
+<p><strong><a href="https://filamentphp.com/docs/4.x/notifications/overview">Filament Notifications Overview</a></strong></p>
+<p>Esta documentação fornece informações avançadas sobre:</p>
+<ul>
+<li><strong>Tipos de notificações</strong> disponíveis</li>
+<li><strong>Configurações avançadas</strong> de estilo</li>
+<li><strong>Ações em notificações</strong> (botões, links)</li>
+<li><strong>Posicionamento</strong> e alinhamento</li>
+<li><strong>Notificações persistentes</strong> e temporárias</li>
+<li><strong>Integração com JavaScript</strong> e Livewire</li>
+</ul>
+<p>A <code>NotificationsTrait</code> complementa perfeitamente as funcionalidades nativas do Filament, proporcionando uma experiência de desenvolvimento mais fluida e consistente! 🎉✨</p>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="/app/Traits/Filament/NotificationsTrait.php">Trait: NotificationsTrait</a></li>
+<li><a href="https://filamentphp.com/docs/3.x/notifications/overview">Filament Notifications</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="mongodb-integration.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Integração MongoDB - Auditoria e Logs</span></a><a class="doc-pagination-card doc-pagination-next" href="padrao-datetime.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Padronização de Data e Hora</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#introdução" data-toc-target="introdução">Introdução</a></li>
+<li><a class="doc-toc-link" href="#como-funciona" data-toc-target="como-funciona">Como Funciona</a></li>
+<li><a class="doc-toc-link" href="#implementação" data-toc-target="implementação">Implementação</a></li>
+<li><a class="doc-toc-link" href="#uso-no-projeto" data-toc-target="uso-no-projeto">Uso no Projeto</a></li>
+<li><a class="doc-toc-link" href="#problemas-comuns" data-toc-target="problemas-comuns">Problemas Comuns</a></li>
+<li><a class="doc-toc-link" href="#conclusão" data-toc-target="conclusão">Conclusão</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># NotificationsTrait - Sistema de Notificações no Filament
+
+## 📋 Índice
+
+- [Introdução](#introdução)
+- [Como Funciona](#como-funciona)
+- [Implementação](#implementação)
+- [Uso no Projeto](#uso-no-projeto)
+- [Problemas Comuns](#problemas-comuns)
+- [Conclusão](#conclusão)
+
+## Introdução
+
+A `NotificationsTrait` é uma trait personalizada desenvolvida para simplificar e padronizar o uso de notificações no Filament PHP. Ela fornece métodos convenientes para criar notificações de diferentes tipos (success, danger, warning) com configurações pré-definidas de ícones, cores e comportamento.
+
+Esta trait elimina a necessidade de repetir código para criar notificações similares, mantendo a consistência visual e funcional em toda a aplicação.
+
+## Como Funciona
+
+A trait funciona através de um sistema de métodos públicos que encapsulam a lógica de construção de notificações:
+
+### 1. **Métodos Públicos Disponíveis**
+
+- **`notifySuccess()`** - Cria notificações de sucesso (verde)
+- **`notifyDanger()`** - Cria notificações de perigo/erro (vermelho)
+- **`notifyWarning()`** - Cria notificações de aviso (amarelo)
+
+### 2. **Método Privado de Construção**
+
+- **`buildNotification()`** - Método interno que configura a notificação com base no tipo
+
+### 3. **Configurações Automáticas**
+
+Cada tipo de notificação recebe automaticamente:
+- **Ícone apropriado** do Heroicon
+- **Cor de fundo** correspondente ao tipo
+- **Cor do ícone** para melhor contraste
+- **Duração padrão** de 8 segundos (configurável)
+- **Opção de persistência** para notificações importantes
+
+## Implementação
+
+### 1. **Código da Trait**
+
+O código da trait está localizado em `app/Traits/Filament/NotificationsTrait.php`.
+
+### 2. **Parâmetros dos Métodos**
+
+#### **`notifySuccess()`, `notifyDanger()`, `notifyWarning()`**
+
+| Parâmetro | Tipo | Padrão | Descrição |
+|-----------|------|--------|-----------|
+| `$title` | `string` | **Obrigatório** | Título principal da notificação |
+| `$body` | `?string` | `null` | Texto adicional da notificação (opcional) |
+| `$seconds` | `int` | `8` | Duração em segundos antes de desaparecer |
+| `$persistent` | `bool` | `false` | Se a notificação deve persistir até ser fechada manualmente |
+
+### 3. **Configurações de Ícones e Cores**
+
+| Tipo | Ícone | Cor de Fundo | Cor do Ícone |
+|------|-------|---------------|--------------|
+| **Success** | `heroicon-s-check-circle` | `primary` | `primary` |
+| **Danger** | `heroicon-c-no-symbol` | `danger` | `danger` |
+| **Warning** | `heroicon-s-exclamation-triangle` | `warning` | `warning` |
+
+## Uso no Projeto
+
+### 1. **Implementação em Classes Filament**
+
+Para usar a trait em qualquer classe Filament:
+
+```php
+<?php
+
+namespace App\Filament\Resources\Users\Pages;
+
+use App\Traits\Filament\NotificationsTrait;
+use Filament\Resources\Pages\EditRecord;
+
+class EditUser extends EditRecord
+{
+    use NotificationsTrait;
+
+    // ... resto da classe
+}
+```
+
+### 2. **Exemplos de Uso**
+
+#### **Notificação de Sucesso Simples**
+
+```php
+// Notificação básica de sucesso
+$this->notifySuccess('Usuário atualizado com sucesso.');
+
+// Com corpo de texto
+$this->notifySuccess(
+    'Usuário atualizado com sucesso.',
+    'As alterações foram salvas no banco de dados.'
+);
+
+// Com duração personalizada (15 segundos)
+$this->notifySuccess(
+    'Usuário atualizado com sucesso.',
+    'As alterações foram salvas no banco de dados.',
+    15
+);
+```
+
+#### **Notificação de Perigo**
+
+```php
+// Notificação de erro
+$this->notifyDanger('Operação não permitida.');
+
+// Com corpo explicativo
+$this->notifyDanger(
+    'Operação não permitida.',
+    'Você não pode suspender a si mesmo. Alteração revertida.'
+);
+
+// Persistente (não desaparece automaticamente)
+$this->notifyDanger(
+    'Erro crítico detectado.',
+    'Verifique as configurações do sistema.',
+    0,
+    true
+);
+```
+
+#### **Notificação de Aviso**
+
+```php
+// Aviso simples
+$this->notifyWarning('Atenção aos dados inseridos.');
+
+// Com corpo e duração personalizada
+$this->notifyWarning(
+    'Atenção aos dados inseridos.',
+    'Alguns campos podem estar incompletos.',
+    12
+);
+```
+
+### 3. **Exemplo Real do Projeto**
+
+No arquivo `EditUser.php`, a trait é utilizada para fornecer feedback ao usuário:
+
+```php
+protected function afterSave(): void
+{
+    // ... lógica de sincronização ...
+
+    // Previne auto-suspensão
+    if ($this->record->getKey() === Auth::id() && $this->record->is_suspended) {
+        $this->record->forceFill([
+            'is_suspended' => false,
+            'suspended_at' => null,
+        ])->save();
+
+        // Notificação de perigo com corpo explicativo
+        $this->notifyDanger(
+            'Você não pode suspender a si mesmo.',
+            'Alteração revertida automaticamente.'
+        );
+
+        $this->redirect($this->getResource()::getUrl('index'));
+        return;
+    }
+
+    // Notificação de sucesso
+    $this->notifySuccess('Usuário atualizado com sucesso.');
+    $this->redirect($this->getResource()::getUrl('index'));
+}
+```
+
+### 4. **Casos de Uso Comuns**
+
+#### **Após Operações CRUD**
+
+```php
+// Após criar um registro
+$this->notifySuccess('Registro criado com sucesso.');
+
+// Após atualizar um registro
+$this->notifySuccess('Registro atualizado com sucesso.');
+
+// Após deletar um registro
+$this->notifySuccess('Registro excluído com sucesso.');
+
+// Após operação com erro
+$this->notifyDanger('Não foi possível completar a operação.');
+```
+
+#### **Validações e Permissões**
+
+```php
+// Usuário sem permissão
+$this->notifyDanger('Acesso negado.', 'Você não tem permissão para esta ação.');
+
+// Dados inválidos
+$this->notifyWarning('Dados inválidos.', 'Verifique as informações inseridas.');
+
+// Operação bem-sucedida com aviso
+$this->notifySuccess('Operação concluída.', 'Algumas configurações foram ajustadas automaticamente.');
+```
+
+## Problemas Comuns
+
+### 1. **Trait Não Encontrada**
+
+**Problema:** Erro "Class NotificationsTrait not found"
+
+**Solução:**
+```php
+// Verifique se o use está correto
+use App\Traits\Filament\NotificationsTrait;
+
+// E se a trait está sendo usada na classe
+use NotificationsTrait;
+```
+
+### 2. **Notificação Não Aparece**
+
+**Problema:** Notificação é criada mas não exibida
+
+**Solução:**
+```php
+// Certifique-se de que o método send() está sendo chamado
+// A trait já faz isso automaticamente, mas verifique se não há erros de JavaScript
+// Verifique se o Filament está carregando corretamente
+```
+
+### 3. **Ícones Não Carregam**
+
+**Problema:** Ícones aparecem quebrados ou não carregam
+
+**Solução:**
+```php
+// Verifique se o Heroicon está instalado e configurado
+// Os ícones usados são padrão do Heroicon, certifique-se de que estão disponíveis
+// Verifique se não há conflitos de CSS
+```
+
+### 4. **Cores Não Aplicadas**
+
+**Problema:** Notificações aparecem sem as cores corretas
+
+**Solução:**
+```php
+// Verifique se o tema do Filament está configurado corretamente
+// As cores são baseadas no sistema de cores do Filament
+// Verifique se não há CSS customizado sobrescrevendo as cores
+```
+
+### 5. **Notificação Persistente Não Fecha**
+
+**Problema:** Notificação persistente não pode ser fechada
+
+**Solução:**
+```php
+// Use o parâmetro persistent com cuidado
+// Notificações persistentes devem ser fechadas manualmente pelo usuário
+// Para notificações importantes mas não críticas, use duração longa em vez de persistente
+```
+
+## Conclusão
+
+A `NotificationsTrait` oferece uma solução elegante e eficiente para padronizar notificações no Filament:
+
+### 🎯 **Benefícios Principais:**
+
+- ✅ **Código limpo** - Elimina repetição de código
+- ✅ **Consistência visual** - Padrão uniforme em toda aplicação
+- ✅ **Fácil manutenção** - Centraliza configurações de notificações
+- ✅ **Flexibilidade** - Permite personalização quando necessário
+- ✅ **Integração nativa** - Funciona perfeitamente com o Filament
+
+### 🚀 **Casos de Uso Ideais:**
+
+- **Páginas de recursos** (Create, Edit, List)
+- **Ações personalizadas** (Actions customizadas)
+- **Validações e permissões** (Feedback de erro)
+- **Operações CRUD** (Confirmações de sucesso)
+- **Sistemas de alerta** (Avisos importantes)
+
+### 📚 **Para Mais Informações**
+
+Para obter informações mais detalhadas sobre notificações no Filament, consulte a documentação oficial:
+
+**[Filament Notifications Overview](https://filamentphp.com/docs/4.x/notifications/overview)**
+
+Esta documentação fornece informações avançadas sobre:
+- **Tipos de notificações** disponíveis
+- **Configurações avançadas** de estilo
+- **Ações em notificações** (botões, links)
+- **Posicionamento** e alinhamento
+- **Notificações persistentes** e temporárias
+- **Integração com JavaScript** e Livewire
+
+
+A `NotificationsTrait` complementa perfeitamente as funcionalidades nativas do Filament, proporcionando uma experiência de desenvolvimento mais fluida e consistente! 🎉✨
+
+## Referências
+
+- [Trait: NotificationsTrait](/app/Traits/Filament/NotificationsTrait.php)
+- [Filament Notifications](https://filamentphp.com/docs/3.x/notifications/overview)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

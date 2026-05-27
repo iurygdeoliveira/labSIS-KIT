@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Customização da Aparência e Plugins no Filament — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao" open><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="customizando-layout.html" class="is-active">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">UI e Customização</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Customização da Aparência e Plugins no Filament</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">03 — UI e Customização</p>
+<h1 class="doc-title">Customização da Aparência e Plugins no Filament</h1>
+</header>
+<div class="prose-content">
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#introdução">Introdução</a></li>
+<li><a href="#1-utilizando-plugins-de-tema">1. Utilizando Plugins de Tema</a></li>
+<li><a href="#instalação">Instalação</a></li>
+<li><a href="#registro-no-panelprovider">Registro no PanelProvider</a></li>
+<li><a href="#exemplo-easyfooterplugin">Exemplo: EasyFooterPlugin</a></li>
+<li><a href="#2-customização-nativa-de-componentes">2. Customização Nativa de Componentes</a></li>
+<li><a href="#filamentcomponentsconfigurator">FilamentComponentsConfigurator</a></li>
+<li><a href="#3-customização-avançada-com-css">3. Customização Avançada com CSS</a></li>
+<li><a href="#arquivo-themecss">Arquivo <code>theme.css</code></a></li>
+<li><a href="#processo-de-build-vite">Processo de Build (Vite)</a></li>
+<li><a href="#referências">Referências</a></li>
+</ul>
+<h2 id="introdução">Introdução</h2>
+<p>O Filament permite uma flexibilidade enorme na customização visual, evoluindo de configurações simples de cores para um ecossistema robusto baseado em <strong>Plugins</strong>.</p>
+<p>Neste projeto, adotamos uma abordagem híbrida e modular:</p>
+<ol>
+<li><strong>Plugins</strong>: Para funcionalidades visuais complexas e empacotadas (temas, footers, widgets).</li>
+<li><strong>Configurators</strong>: Para padronizar o comportamento e estilo padrão dos componentes nativos.</li>
+<li><strong>CSS Customizado</strong>: Para ajustes finos de design system que o framework não expõe nativamente.</li>
+</ol>
+<h2 id="1-utilizando-plugins-de-tema">1. Utilizando Plugins de Tema</h2>
+<p>A forma mais eficiente de customizar o layout é através de plugins comunitários ou próprios. Eles encapsulam Blade views, CSS e JS em pacotes reutilizáveis.</p>
+<h3>Instalação</h3>
+<p>Geralmente, plugins são instalados via Composer.</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>composer require nome-do-vendor/nome-do-plugin</code></pre></div>
+<h3>Registro no PanelProvider</h3>
+<p>Após instalar, você deve registrar o plugin no seu <code>AdminPanelProvider</code> (ou <code>BasePanelProvider</code> se for compartilhado entre painéis).</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Providers/Filament/AdminPanelProvider.php
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        // ... outras configurações
+        -&gt;plugin(
+            NomeDoPlugin::make()
+                -&gt;opcaoDeConfiguracao()
+        );
+}</code></pre></div>
+<h3>Exemplo: EasyFooterPlugin</h3>
+<p>Neste kit, utilizamos o <code>EasyFooterPlugin</code> para adicionar um rodapé customizado ao painel. Ele está configurado no <code>BasePanelProvider.php</code> através do método auxiliar <code>applySharedPlugins</code>.</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Providers/Filament/BasePanelProvider.php
+
+protected function applySharedPlugins(Panel $panel): Panel
+{
+    return $panel
+        -&gt;plugin(
+            EasyFooterPlugin::make()
+                -&gt;footerEnabled()
+                -&gt;withGithub(showLogo: true, showUrl: true)
+                // ...
+        );
+}</code></pre></div>
+<p>Isso demonstra como &quot;injetar&quot; novas seções de UI sem precisar alterar manualmente as views do esqueleto do Filament.</p>
+<h2 id="2-customização-nativa-de-componentes">2. Customização Nativa de Componentes</h2>
+<p>Para garantir consistência visual em todo o projeto (ex: todas as tabelas terem paginação de 20 itens, todos os inputs traduzirem labels automaticamente), utilizamos uma classe configuradora central.</p>
+<h3>FilamentComponentsConfigurator</h3>
+<p>Localizado em <code>app/Filament/Configurators/FilamentComponentsConfigurator.php</code>, este arquivo define os padrões globais dos componentes usando o método <code>configureUsing</code>.</p>
+<p><strong>Exemplo de uso:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Filament/Configurators/FilamentComponentsConfigurator.php
+
+public static function configure(): void
+{
+    // Força todos os campos a traduzirem suas labels automaticamente
+    Field::configureUsing(function (Field $field): void {
+        $field-&gt;translateLabel();
+    });
+
+    // Centraliza ícones em colunas de tabelas
+    IconColumn::configureUsing(function (IconColumn $iconColumn): void {
+        $iconColumn
+            -&gt;alignment(Alignment::Center)
+            -&gt;verticalAlignment(VerticalAlignment::Center);
+    });
+}</code></pre></div>
+<p>Esta classe é inicializada no <code>bootUsing</code> do <code>AdminPanelProvider</code>, garantindo que as regras sejam aplicadas assim que o painel carrega.</p>
+<h2 id="3-customização-avançada-com-css">3. Customização Avançada com CSS</h2>
+<p>Quando os métodos PHP não são suficientes, recorremos ao CSS customizado. O Filament utiliza Tailwind CSS, e nós temos um arquivo de entrada específico para o tema do admin.</p>
+<h3>Arquivo <code>theme.css</code></h3>
+<p>O arquivo principal está em: <code>resources/css/filament/admin/theme.css</code></p>
+<p>Ele é registrado no painel via método <code>viteTheme()</code>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Providers/Filament/BasePanelProvider.php
+-&gt;viteTheme(&#x27;resources/css/filament/admin/theme.css&#x27;)</code></pre></div>
+<p>Aqui você pode sobrescrever classes do Filament, importar fontes personalizadas ou ajustar variáveis do Tailwind.</p>
+<p><strong>Exemplo:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">css</span></div><pre><code>/* resources/css/filament/admin/theme.css */
+
+@import &#x27;../../../../vendor/filament/filament/resources/css/theme.css&#x27;;
+
+@config &#x27;../../../../tailwind.config.js&#x27;;
+
+/* Customizações específicas */
+.fi-sidebar-item {
+    @apply hover:bg-primary-500/10;
+}</code></pre></div>
+<h3>Processo de Build (Vite)</h3>
+<p>Sempre que alterar o arquivo <code>theme.css</code> ou as configurações do Tailwind, é <strong>obrigatório</strong> recompilar os assets.</p>
+<p><strong>Em desenvolvimento (Hot Reload):</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>npm run dev</code></pre></div>
+<p><strong>Para produção:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>npm run build</code></pre></div>
+<p>---</p>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="/app/Providers/Filament/BasePanelProvider.php">BasePanelProvider (Plugins)</a></li>
+<li><a href="/app/Filament/Configurators/FilamentComponentsConfigurator.php">FilamentComponentsConfigurator (Padrões)</a></li>
+<li><a href="/resources/css/filament/admin/theme.css">Theme CSS</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="customizacao-de-cores.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Customização de Cores e CSS Modular do Filament</span></a><a class="doc-pagination-card doc-pagination-next" href="customizando-logo.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">🎨 Customizando o Logotipo nos Painéis Filament</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#introdução" data-toc-target="introdução">Introdução</a></li>
+<li><a class="doc-toc-link" href="#1-utilizando-plugins-de-tema" data-toc-target="1-utilizando-plugins-de-tema">1. Utilizando Plugins de Tema</a></li>
+<li><a class="doc-toc-link" href="#2-customização-nativa-de-componentes" data-toc-target="2-customização-nativa-de-componentes">2. Customização Nativa de Componentes</a></li>
+<li><a class="doc-toc-link" href="#3-customização-avançada-com-css" data-toc-target="3-customização-avançada-com-css">3. Customização Avançada com CSS</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Customização da Aparência e Plugins no Filament
+
+## 📋 Índice
+
+- [Introdução](#introdução)
+- [1. Utilizando Plugins de Tema](#1-utilizando-plugins-de-tema)
+    - [Instalação](#instalação)
+    - [Registro no PanelProvider](#registro-no-panelprovider)
+    - [Exemplo: EasyFooterPlugin](#exemplo-easyfooterplugin)
+- [2. Customização Nativa de Componentes](#2-customização-nativa-de-componentes)
+    - [FilamentComponentsConfigurator](#filamentcomponentsconfigurator)
+- [3. Customização Avançada com CSS](#3-customização-avançada-com-css)
+    - [Arquivo `theme.css`](#arquivo-themecss)
+    - [Processo de Build (Vite)](#processo-de-build-vite)
+- [Referências](#referências)
+
+## Introdução
+
+O Filament permite uma flexibilidade enorme na customização visual, evoluindo de configurações simples de cores para um ecossistema robusto baseado em **Plugins**.
+
+Neste projeto, adotamos uma abordagem híbrida e modular:
+1. **Plugins**: Para funcionalidades visuais complexas e empacotadas (temas, footers, widgets).
+2. **Configurators**: Para padronizar o comportamento e estilo padrão dos componentes nativos.
+3. **CSS Customizado**: Para ajustes finos de design system que o framework não expõe nativamente.
+
+## 1. Utilizando Plugins de Tema
+
+A forma mais eficiente de customizar o layout é através de plugins comunitários ou próprios. Eles encapsulam Blade views, CSS e JS em pacotes reutilizáveis.
+
+### Instalação
+
+Geralmente, plugins são instalados via Composer.
+
+```bash
+composer require nome-do-vendor/nome-do-plugin
+```
+
+### Registro no PanelProvider
+
+Após instalar, você deve registrar o plugin no seu `AdminPanelProvider` (ou `BasePanelProvider` se for compartilhado entre painéis).
+
+```php
+// app/Providers/Filament/AdminPanelProvider.php
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        // ... outras configurações
+        ->plugin(
+            NomeDoPlugin::make()
+                ->opcaoDeConfiguracao()
+        );
+}
+```
+
+### Exemplo: EasyFooterPlugin
+
+Neste kit, utilizamos o `EasyFooterPlugin` para adicionar um rodapé customizado ao painel. Ele está configurado no `BasePanelProvider.php` através do método auxiliar `applySharedPlugins`.
+
+```php
+// app/Providers/Filament/BasePanelProvider.php
+
+protected function applySharedPlugins(Panel $panel): Panel
+{
+    return $panel
+        ->plugin(
+            EasyFooterPlugin::make()
+                ->footerEnabled()
+                ->withGithub(showLogo: true, showUrl: true)
+                // ...
+        );
+}
+```
+
+Isso demonstra como "injetar" novas seções de UI sem precisar alterar manualmente as views do esqueleto do Filament.
+
+## 2. Customização Nativa de Componentes
+
+Para garantir consistência visual em todo o projeto (ex: todas as tabelas terem paginação de 20 itens, todos os inputs traduzirem labels automaticamente), utilizamos uma classe configuradora central.
+
+### FilamentComponentsConfigurator
+
+Localizado em `app/Filament/Configurators/FilamentComponentsConfigurator.php`, este arquivo define os padrões globais dos componentes usando o método `configureUsing`.
+
+**Exemplo de uso:**
+
+```php
+// app/Filament/Configurators/FilamentComponentsConfigurator.php
+
+public static function configure(): void
+{
+    // Força todos os campos a traduzirem suas labels automaticamente
+    Field::configureUsing(function (Field $field): void {
+        $field->translateLabel();
+    });
+
+    // Centraliza ícones em colunas de tabelas
+    IconColumn::configureUsing(function (IconColumn $iconColumn): void {
+        $iconColumn
+            ->alignment(Alignment::Center)
+            ->verticalAlignment(VerticalAlignment::Center);
+    });
+}
+```
+
+Esta classe é inicializada no `bootUsing` do `AdminPanelProvider`, garantindo que as regras sejam aplicadas assim que o painel carrega.
+
+## 3. Customização Avançada com CSS
+
+Quando os métodos PHP não são suficientes, recorremos ao CSS customizado. O Filament utiliza Tailwind CSS, e nós temos um arquivo de entrada específico para o tema do admin.
+
+### Arquivo `theme.css`
+
+O arquivo principal está em:
+`resources/css/filament/admin/theme.css`
+
+Ele é registrado no painel via método `viteTheme()`:
+
+```php
+// app/Providers/Filament/BasePanelProvider.php
+->viteTheme('resources/css/filament/admin/theme.css')
+```
+
+Aqui você pode sobrescrever classes do Filament, importar fontes personalizadas ou ajustar variáveis do Tailwind.
+
+**Exemplo:**
+```css
+/* resources/css/filament/admin/theme.css */
+
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config '../../../../tailwind.config.js';
+
+/* Customizações específicas */
+.fi-sidebar-item {
+    @apply hover:bg-primary-500/10;
+}
+```
+
+### Processo de Build (Vite)
+
+Sempre que alterar o arquivo `theme.css` ou as configurações do Tailwind, é **obrigatório** recompilar os assets.
+
+**Em desenvolvimento (Hot Reload):**
+```bash
+npm run dev
+```
+
+**Para produção:**
+```bash
+npm run build
+```
+
+---
+
+## Referências
+
+- [BasePanelProvider (Plugins)](/app/Providers/Filament/BasePanelProvider.php)
+- [FilamentComponentsConfigurator (Padrões)](/app/Filament/Configurators/FilamentComponentsConfigurator.php)
+- [Theme CSS](/resources/css/filament/admin/theme.css)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

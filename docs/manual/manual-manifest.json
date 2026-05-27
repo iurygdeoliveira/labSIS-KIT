@@ -1,0 +1,474 @@
+{
+  "generated_at": "2026-05-27",
+  "total_pages": 45,
+  "sections": [
+    {
+      "id": "01-instalacao-e-setup",
+      "label": "01 — Instalação e Setup",
+      "count": 2,
+      "pages": [
+        {
+          "slug": "instalacao-manual",
+          "title": "Instalação manual (clonando o repositório)",
+          "filename": "instalacao-manual.html",
+          "md_source": "docs/01-instalacao-e-setup/instalacao-manual.md",
+          "html_output": "docs/manual/01-instalacao-e-setup/instalacao-manual.html",
+          "section_id": "01-instalacao-e-setup",
+          "section_label": "01 — Instalação e Setup"
+        },
+        {
+          "slug": "instalacao-via-laravel-installer",
+          "title": "Instalação via Laravel Installer",
+          "filename": "instalacao-via-laravel-installer.html",
+          "md_source": "docs/01-instalacao-e-setup/instalacao-via-laravel-installer.md",
+          "html_output": "docs/manual/01-instalacao-e-setup/instalacao-via-laravel-installer.html",
+          "section_id": "01-instalacao-e-setup",
+          "section_label": "01 — Instalação e Setup"
+        }
+      ]
+    },
+    {
+      "id": "02-autenticacao-e-seguranca",
+      "label": "02 — Autenticação e Segurança",
+      "count": 11,
+      "pages": [
+        {
+          "slug": "autenticacao-2fa",
+          "title": "Autenticação de Dois Fatores (2FA) no Filament",
+          "filename": "autenticacao-2fa.html",
+          "md_source": "docs/02-autenticacao-e-seguranca/autenticacao-2fa.md",
+          "html_output": "docs/manual/02-autenticacao-e-seguranca/autenticacao-2fa.html",
+          "section_id": "02-autenticacao-e-seguranca",
+          "section_label": "02 — Autenticação e Segurança"
+        },
+        {
+          "slug": "checklist-de-seguranca",
+          "title": "Checklist de Segurança e Diretrizes de Mitigação",
+          "filename": "checklist-de-seguranca.html",
+          "md_source": "docs/02-autenticacao-e-seguranca/checklist-de-seguranca.md",
+          "html_output": "docs/manual/02-autenticacao-e-seguranca/checklist-de-seguranca.html",
+          "section_id": "02-autenticacao-e-seguranca",
+          "section_label": "02 — Autenticação e Segurança"
+        },
+        {
+          "slug": "content-security-policy",
+          "title": "Content Security Policy (CSP) - Proteção Contra XSS",
+          "filename": "content-security-policy.html",
+          "md_source": "docs/02-autenticacao-e-seguranca/content-security-policy.md",
+          "html_output": "docs/manual/02-autenticacao-e-seguranca/content-security-policy.html",
+          "section_id": "02-autenticacao-e-seguranca",
+          "section_label": "02 — Autenticação e Segurança"
+        },
+        {
+          "slug": "customizacao-emails",
+          "title": "Customização de E-mails e Fluxo de Reset de Senha",
+          "filename": "customizacao-emails.html",
+          "md_source": "docs/02-autenticacao-e-seguranca/customizacao-emails.md",
+          "html_output": "docs/manual/02-autenticacao-e-seguranca/customizacao-emails.html",
+          "section_id": "02-autenticacao-e-seguranca",
+          "section_label": "02 — Autenticação e Segurança"
+        },
+        {
+          "slug": "fluxo-de-registro-de-novos-usuarios",
+          "title": "Fluxo de Registro de Novos Usuários",
+          "filename": "fluxo-de-registro-de-novos-usuarios.html",
+          "md_source": "docs/02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.md",
+          "html_output": "docs/manual/02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html",
+          "section_id": "02-autenticacao-e-seguranca",
+          "section_label": "02 — Autenticação e Segurança"
+        },
+        {
+          "slug": "fortalecimento-de-senha",
+          "title": "Fortalecimento de Senha (Password Hardening)",
+          "filename": "fortalecimento-de-senha.html",
+          "md_source": "docs/02-autenticacao-e-seguranca/fortalecimento-de-senha.md",
+          "html_output": "docs/manual/02-autenticacao-e-seguranca/fortalecimento-de-senha.html",
+          "section_id": "02-autenticacao-e-seguranca",
+          "section_label": "02 — Autenticação e Segurança"
+        },
+        {
+          "slug": "login-unificado",
+          "title": "Sistema de Login Unificado (Filament + Laravel)",
+          "filename": "login-unificado.html",
+          "md_source": "docs/02-autenticacao-e-seguranca/login-unificado.md",
+          "html_output": "docs/manual/02-autenticacao-e-seguranca/login-unificado.html",
+          "section_id": "02-autenticacao-e-seguranca",
+          "section_label": "02 — Autenticação e Segurança"
+        },
+        {
+          "slug": "prevencao-idor",
+          "title": "Prevenção Contra IDOR (Insecure Direct Object Reference)",
+          "filename": "prevencao-idor.html",
+          "md_source": "docs/02-autenticacao-e-seguranca/prevencao-idor.md",
+          "html_output": "docs/manual/02-autenticacao-e-seguranca/prevencao-idor.html",
+          "section_id": "02-autenticacao-e-seguranca",
+          "section_label": "02 — Autenticação e Segurança"
+        },
+        {
+          "slug": "roles-e-permissions",
+          "title": "Sistema de Roles e Permissions",
+          "filename": "roles-e-permissions.html",
+          "md_source": "docs/02-autenticacao-e-seguranca/roles-e-permissions.md",
+          "html_output": "docs/manual/02-autenticacao-e-seguranca/roles-e-permissions.html",
+          "section_id": "02-autenticacao-e-seguranca",
+          "section_label": "02 — Autenticação e Segurança"
+        },
+        {
+          "slug": "suspensao-usuarios",
+          "title": "Sistema de Suspensão de Usuários no Filament",
+          "filename": "suspensao-usuarios.html",
+          "md_source": "docs/02-autenticacao-e-seguranca/suspensao-usuarios.md",
+          "html_output": "docs/manual/02-autenticacao-e-seguranca/suspensao-usuarios.html",
+          "section_id": "02-autenticacao-e-seguranca",
+          "section_label": "02 — Autenticação e Segurança"
+        },
+        {
+          "slug": "tenancy-e-teams",
+          "title": "Tenancy E Teams",
+          "filename": "tenancy-e-teams.html",
+          "md_source": "docs/02-autenticacao-e-seguranca/tenancy-e-teams.md",
+          "html_output": "docs/manual/02-autenticacao-e-seguranca/tenancy-e-teams.html",
+          "section_id": "02-autenticacao-e-seguranca",
+          "section_label": "02 — Autenticação e Segurança"
+        }
+      ]
+    },
+    {
+      "id": "03-ui-e-customizacao",
+      "label": "03 — UI e Customização",
+      "count": 4,
+      "pages": [
+        {
+          "slug": "customizacao-de-cores",
+          "title": "Customização de Cores e CSS Modular do Filament",
+          "filename": "customizacao-de-cores.html",
+          "md_source": "docs/03-ui-e-customizacao/customizacao-de-cores.md",
+          "html_output": "docs/manual/03-ui-e-customizacao/customizacao-de-cores.html",
+          "section_id": "03-ui-e-customizacao",
+          "section_label": "03 — UI e Customização"
+        },
+        {
+          "slug": "customizando-layout",
+          "title": "Customização da Aparência e Plugins no Filament",
+          "filename": "customizando-layout.html",
+          "md_source": "docs/03-ui-e-customizacao/customizando-layout.md",
+          "html_output": "docs/manual/03-ui-e-customizacao/customizando-layout.html",
+          "section_id": "03-ui-e-customizacao",
+          "section_label": "03 — UI e Customização"
+        },
+        {
+          "slug": "customizando-logo",
+          "title": "🎨 Customizando o Logotipo nos Painéis Filament",
+          "filename": "customizando-logo.html",
+          "md_source": "docs/03-ui-e-customizacao/customizando-logo.md",
+          "html_output": "docs/manual/03-ui-e-customizacao/customizando-logo.html",
+          "section_id": "03-ui-e-customizacao",
+          "section_label": "03 — UI e Customização"
+        },
+        {
+          "slug": "widgets-filament",
+          "title": "Widgets no Filament — Métricas e Componentização no Painel",
+          "filename": "widgets-filament.html",
+          "md_source": "docs/03-ui-e-customizacao/widgets-filament.md",
+          "html_output": "docs/manual/03-ui-e-customizacao/widgets-filament.html",
+          "section_id": "03-ui-e-customizacao",
+          "section_label": "03 — UI e Customização"
+        }
+      ]
+    },
+    {
+      "id": "04-backend-e-arquitetura",
+      "label": "04 — Backend e Arquitetura",
+      "count": 11,
+      "pages": [
+        {
+          "slug": "app-service-provider",
+          "title": "Entendendo o AppServiceProvider",
+          "filename": "app-service-provider.html",
+          "md_source": "docs/04-backend-e-arquitetura/app-service-provider.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/app-service-provider.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        },
+        {
+          "slug": "enums",
+          "title": "Utilizando Enumerações (Enums) no Laravel com Integração ao Filament",
+          "filename": "enums.html",
+          "md_source": "docs/04-backend-e-arquitetura/enums.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/enums.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        },
+        {
+          "slug": "estrategia-backup",
+          "title": "Estratégia de Backup",
+          "filename": "estrategia-backup.html",
+          "md_source": "docs/04-backend-e-arquitetura/estrategia-backup.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/estrategia-backup.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        },
+        {
+          "slug": "gestao-de-midia",
+          "title": "Gestao De Midia",
+          "filename": "gestao-de-midia.html",
+          "md_source": "docs/04-backend-e-arquitetura/gestao-de-midia.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/gestao-de-midia.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        },
+        {
+          "slug": "mongodb-integration",
+          "title": "Integração MongoDB - Auditoria e Logs",
+          "filename": "mongodb-integration.html",
+          "md_source": "docs/04-backend-e-arquitetura/mongodb-integration.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/mongodb-integration.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        },
+        {
+          "slug": "notifications-trait",
+          "title": "NotificationsTrait - Sistema de Notificações no Filament",
+          "filename": "notifications-trait.html",
+          "md_source": "docs/04-backend-e-arquitetura/notifications-trait.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/notifications-trait.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        },
+        {
+          "slug": "padrao-datetime",
+          "title": "Padronização de Data e Hora",
+          "filename": "padrao-datetime.html",
+          "md_source": "docs/04-backend-e-arquitetura/padrao-datetime.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/padrao-datetime.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        },
+        {
+          "slug": "regras-de-negocio",
+          "title": "Regras de Negócio: labSIS-KIT",
+          "filename": "regras-de-negocio.html",
+          "md_source": "docs/04-backend-e-arquitetura/regras-de-negocio.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/regras-de-negocio.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        },
+        {
+          "slug": "scripts-composer",
+          "title": "Scripts do Composer e Inicialização de Storage",
+          "filename": "scripts-composer.html",
+          "md_source": "docs/04-backend-e-arquitetura/scripts-composer.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/scripts-composer.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        },
+        {
+          "slug": "stack-tecnologica",
+          "title": "Stack Tecnológica e Versões",
+          "filename": "stack-tecnologica.html",
+          "md_source": "docs/04-backend-e-arquitetura/stack-tecnologica.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/stack-tecnologica.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        },
+        {
+          "slug": "user-model",
+          "title": "Arquitetura do Model User",
+          "filename": "user-model.html",
+          "md_source": "docs/04-backend-e-arquitetura/user-model.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/user-model.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        }
+      ]
+    },
+    {
+      "id": "05-otimizacoes",
+      "label": "05 — Otimizações",
+      "count": 5,
+      "pages": [
+        {
+          "slug": "cache-e-redis",
+          "title": "Cache e Redis no Projeto",
+          "filename": "cache-e-redis.html",
+          "md_source": "docs/05-otimizacoes/cache-e-redis.md",
+          "html_output": "docs/manual/05-otimizacoes/cache-e-redis.html",
+          "section_id": "05-otimizacoes",
+          "section_label": "05 — Otimizações"
+        },
+        {
+          "slug": "cloudflare-page-cache",
+          "title": "Otimização de Cache de Página com Cloudflare",
+          "filename": "cloudflare-page-cache.html",
+          "md_source": "docs/05-otimizacoes/cloudflare-page-cache.md",
+          "html_output": "docs/manual/05-otimizacoes/cloudflare-page-cache.html",
+          "section_id": "05-otimizacoes",
+          "section_label": "05 — Otimizações"
+        },
+        {
+          "slug": "filament-performance",
+          "title": "Performance no Filament",
+          "filename": "filament-performance.html",
+          "md_source": "docs/05-otimizacoes/filament-performance.md",
+          "html_output": "docs/manual/05-otimizacoes/filament-performance.html",
+          "section_id": "05-otimizacoes",
+          "section_label": "05 — Otimizações"
+        },
+        {
+          "slug": "laravel-pulse",
+          "title": "Laravel Pulse",
+          "filename": "laravel-pulse.html",
+          "md_source": "docs/05-otimizacoes/laravel-pulse.md",
+          "html_output": "docs/manual/05-otimizacoes/laravel-pulse.html",
+          "section_id": "05-otimizacoes",
+          "section_label": "05 — Otimizações"
+        },
+        {
+          "slug": "livewire-computed",
+          "title": "Livewire Computed — Otimizando Renderizações com `#[Computed]`",
+          "filename": "livewire-computed.html",
+          "md_source": "docs/05-otimizacoes/livewire-computed.md",
+          "html_output": "docs/manual/05-otimizacoes/livewire-computed.html",
+          "section_id": "05-otimizacoes",
+          "section_label": "05 — Otimizações"
+        }
+      ]
+    },
+    {
+      "id": "06-testes",
+      "label": "06 — Testes",
+      "count": 3,
+      "pages": [
+        {
+          "slug": "01-introducao",
+          "title": "🧪 Testes Automatizados",
+          "filename": "01-introducao.html",
+          "md_source": "docs/06-testes/01-introducao.md",
+          "html_output": "docs/manual/06-testes/01-introducao.html",
+          "section_id": "06-testes",
+          "section_label": "06 — Testes"
+        },
+        {
+          "slug": "02-autenticacao",
+          "title": "🔐 Testes de Autenticação",
+          "filename": "02-autenticacao.html",
+          "md_source": "docs/06-testes/02-autenticacao.md",
+          "html_output": "docs/manual/06-testes/02-autenticacao.html",
+          "section_id": "06-testes",
+          "section_label": "06 — Testes"
+        },
+        {
+          "slug": "03-acesso-paineis",
+          "title": "🛡️ Testes de Controle de Acesso e Redirecionamento",
+          "filename": "03-acesso-paineis.html",
+          "md_source": "docs/06-testes/03-acesso-paineis.md",
+          "html_output": "docs/manual/06-testes/03-acesso-paineis.html",
+          "section_id": "06-testes",
+          "section_label": "06 — Testes"
+        }
+      ]
+    },
+    {
+      "id": "07-qualidade-de-codigo",
+      "label": "07 — Qualidade de Código",
+      "count": 4,
+      "pages": [
+        {
+          "slug": "01-larastan",
+          "title": "Larastan: Garantindo a Integridade Técnica 🛡️",
+          "filename": "01-larastan.html",
+          "md_source": "docs/07-qualidade-de-codigo/01-larastan.md",
+          "html_output": "docs/manual/07-qualidade-de-codigo/01-larastan.html",
+          "section_id": "07-qualidade-de-codigo",
+          "section_label": "07 — Qualidade de Código"
+        },
+        {
+          "slug": "02-rector",
+          "title": "Rector: Automação e Evolução do Código 🚀",
+          "filename": "02-rector.html",
+          "md_source": "docs/07-qualidade-de-codigo/02-rector.md",
+          "html_output": "docs/manual/07-qualidade-de-codigo/02-rector.html",
+          "section_id": "07-qualidade-de-codigo",
+          "section_label": "07 — Qualidade de Código"
+        },
+        {
+          "slug": "03-ide-helper",
+          "title": "Laravel IDE Helper: Autocompletar e Inteligência 🧠",
+          "filename": "03-ide-helper.html",
+          "md_source": "docs/07-qualidade-de-codigo/03-ide-helper.md",
+          "html_output": "docs/manual/07-qualidade-de-codigo/03-ide-helper.html",
+          "section_id": "07-qualidade-de-codigo",
+          "section_label": "07 — Qualidade de Código"
+        },
+        {
+          "slug": "04-filacheck",
+          "title": "Filacheck Pro: Validação de Convenções Filament 🧩",
+          "filename": "04-filacheck.html",
+          "md_source": "docs/07-qualidade-de-codigo/04-filacheck.md",
+          "html_output": "docs/manual/07-qualidade-de-codigo/04-filacheck.html",
+          "section_id": "07-qualidade-de-codigo",
+          "section_label": "07 — Qualidade de Código"
+        }
+      ]
+    },
+    {
+      "id": "08-ai-agents",
+      "label": "08 — AI Agents",
+      "count": 4,
+      "pages": [
+        {
+          "slug": "guia-workflows",
+          "title": "Guia de Workflows do Agente (Gemini)",
+          "filename": "guia-workflows.html",
+          "md_source": "docs/08-ai-agents/guia-workflows.md",
+          "html_output": "docs/manual/08-ai-agents/guia-workflows.html",
+          "section_id": "08-ai-agents",
+          "section_label": "08 — AI Agents"
+        },
+        {
+          "slug": "laravel-boost",
+          "title": "Laravel Boost - MCP para Laravel",
+          "filename": "laravel-boost.html",
+          "md_source": "docs/08-ai-agents/laravel-boost.md",
+          "html_output": "docs/manual/08-ai-agents/laravel-boost.html",
+          "section_id": "08-ai-agents",
+          "section_label": "08 — AI Agents"
+        },
+        {
+          "slug": "padrao-de-skills",
+          "title": "Padrão de Nomenclatura de Skills: Action-Object",
+          "filename": "padrao-de-skills.html",
+          "md_source": "docs/08-ai-agents/padrao-de-skills.md",
+          "html_output": "docs/manual/08-ai-agents/padrao-de-skills.html",
+          "section_id": "08-ai-agents",
+          "section_label": "08 — AI Agents"
+        },
+        {
+          "slug": "protocolo-operacional",
+          "title": "PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS",
+          "filename": "protocolo-operacional.html",
+          "md_source": "docs/08-ai-agents/protocolo-operacional.md",
+          "html_output": "docs/manual/08-ai-agents/protocolo-operacional.html",
+          "section_id": "08-ai-agents",
+          "section_label": "08 — AI Agents"
+        }
+      ]
+    },
+    {
+      "id": "09-roadmap-futuro",
+      "label": "09 — Roadmap futuro",
+      "count": 1,
+      "pages": [
+        {
+          "slug": "plano-laravel-passkeys-labsis",
+          "title": "Plano de Integração — Laravel Passkeys no labSIS-KIT",
+          "filename": "plano-laravel-passkeys-labsis.html",
+          "md_source": "docs/plans/plano-laravel-passkeys-labsis.md",
+          "html_output": "docs/manual/09-roadmap-futuro/plano-laravel-passkeys-labsis.html",
+          "section_id": "09-roadmap-futuro",
+          "section_label": "09 — Roadmap futuro"
+        }
+      ]
+    }
+  ]
+}

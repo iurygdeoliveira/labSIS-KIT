@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Customização de Cores e CSS Modular do Filament — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao" open><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="customizacao-de-cores.html" class="is-active">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">UI e Customização</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Customização de Cores e CSS Modular do Filament</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">03 — UI e Customização</p>
+<h1 class="doc-title">Customização de Cores e CSS Modular do Filament</h1>
+</header>
+<div class="prose-content">
+<p>Este documento é o guia definitivo sobre a gestão de cores e organização CSS do painel Filament Admin deste projeto. Adotamos uma filosofia <strong>CSS-First</strong>, onde as cores são definidas em variáveis CSS e mapeadas nativamente para o Tailwind, removendo a dependência de configurações PHP no <code>AppServiceProvider</code>.</p>
+<h2 id="arquitetura-de-cores">🎨 Arquitetura de Cores</h2>
+<p>A definição de cores foi refatorada para ser modular e suportar nativamente temas claro e escuro, garantindo consistência e facilidade de manutenção.</p>
+<h3>Estrutura de Definição</h3>
+<p>O ponto de entrada para as cores é o arquivo <strong><code>resources/css/filament/admin/components/colors.css</code></strong>, que orquestra a importação de três camadas essenciais localizadas na pasta <code>colors/</code>:</p>
+<ol>
+<li><strong><code>light.css</code></strong> (<code>components/colors/light.css</code>):</li>
+</ol>
+<ul>
+<li>Define as variáveis CSS globais no escopo <code>:root</code>.</li>
+<li>Contém os valores hexadecimais para todas as paletas (Primary, Danger, Warning, Info, Secondary) no modo <strong>Claro</strong>.</li>
+<li>Exemplo: <code>--primary-500: #014029;</code></li>
+</ul>
+<ol>
+<li><strong><code>dark.css</code></strong> (<code>components/colors/dark.css</code>):</li>
+</ol>
+<ul>
+<li>Define as variáveis CSS correspondentes para o escopo <code>.dark</code>.</li>
+<li>Sobrescreve os valores das variáveis para garantir contraste e legibilidade no modo <strong>Escuro</strong>.</li>
+<li>Exemplo: <code>--primary-500: #33a773;</code> (um tom mais claro/brilhante para fundo escuro).</li>
+</ul>
+<ol>
+<li><strong><code>mapping.css</code></strong> (<code>components/colors/mapping.css</code>):</li>
+</ol>
+<ul>
+<li>Utiliza a diretiva <code>@theme</code> do Tailwind CSS v4.</li>
+<li>Mapeia as classes utilitárias do Tailwind (ex: <code>text-primary-500</code>) para usar as variáveis CSS dinâmicas (ex: <code>var(--primary-500)</code>).</li>
+<li>Isso permite que a classe <code>bg-primary-500</code> mude de cor automaticamente quando o usuário alterna entre modo claro e escuro.</li>
+</ul>
+<h3>Paletas de Cores Disponíveis</h3>
+<p>O sistema utiliza 5 cores semânticas principais, cada uma com 11 variantes (50 a 950):</p>
+<ul>
+<li><strong>Primary (Verde Floresta)</strong>: Ações principais, marca, menus ativos.</li>
+<li><strong>Danger (Vermelho)</strong>: Erros, ações destrutivas.</li>
+<li><strong>Warning (Laranja)</strong>: Alertas, atenção.</li>
+<li><strong>Info (Azul)</strong>: Informações, links neutros.</li>
+<li><strong>Secondary (Cinza)</strong>: Estrutura, textos secundários, bordas.</li>
+</ul>
+<p>---</p>
+<h2 id="estrutura-modular-de-componentes">🧩 Estrutura Modular de Componentes</h2>
+<p>Para garantir que o Filament Admin utilize essas cores customizadas sem conflitos, adotamos uma estrutura de <strong>sobreposição de estilos organizada por cor</strong>.</p>
+<p>Todos os componentes customizados estão em: <code>resources/css/filament/admin/components/</code></p>
+<h3>Organização por Diretórios</h3>
+<p>Em vez de grandes arquivos CSS monolíticos, dividimos as estilizações em pastas correspondentes a cada cor semântica. Isso evita que uma alteração no botão &quot;Primary&quot; quebre acidentalmente o botão &quot;Danger&quot;.</p>
+<ul>
+<li><strong><code>primary/</code></strong>: Customizações para componentes Verdes.</li>
+<li><strong><code>danger/</code></strong>: Customizações para componentes Vermelhos.</li>
+<li><strong><code>warning/</code></strong>: Customizações para componentes Laranjas.</li>
+<li><strong><code>info/</code></strong>: Customizações para componentes Azuis.</li>
+<li><strong><code>secondary/</code></strong>: Customizações para componentes Cinzas.</li>
+</ul>
+<h3>Arquivos de Componentes</h3>
+<p>Dentro de cada pasta de cor, existem arquivos específicos para cada elemento da UI:</p>
+<ul>
+<li><code>badges.css</code></li>
+<li><code>buttons.css</code></li>
+<li><code>checkboxes.css</code></li>
+<li><code>icons.css</code></li>
+<li><code>inputs.css</code></li>
+<li><code>links.css</code></li>
+<li><code>stats.css</code> (Widgets de estatísticas)</li>
+<li><code>tabs.css</code></li>
+<li><code>toggles.css</code></li>
+</ul>
+<h3>Exemplo Prático de Isolamento</h3>
+<p>Se você abrir <code>primary/buttons.css</code> e <code>danger/buttons.css</code>, notará que eles visam seletores específicos de cor:</p>
+<p><strong><code>primary/buttons.css</code></strong>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">css</span></div><pre><code>/* Afeta APENAS botões primary */
+.fi-btn.fi-color-primary {
+    /* Estilos específicos do verde */
+}</code></pre></div>
+<p><strong><code>danger/buttons.css</code></strong>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">css</span></div><pre><code>/* Afeta APENAS botões danger */
+.fi-btn.fi-color-danger {
+    /* Estilos específicos do vermelho */
+}</code></pre></div>
+<p>---</p>
+<h2 id="guia-de-customização">🛠️ Guia de Customização</h2>
+<h3>Como Alterar uma Cor do Sistema</h3>
+<p>Se você deseja mudar a cor <strong>Primary</strong> de Verde para Roxo:</p>
+<ol>
+<li>Abra <strong><code>resources/css/filament/admin/components/colors/light.css</code></strong>.</li>
+<li>Localize o bloco &quot;Paleta de cor Primária&quot;.</li>
+<li>Substitua os códigos hexadecimais de <code>--primary-50</code> até <code>--primary-950</code> pelos novos tons de roxo.</li>
+<li>Abra <strong><code>resources/css/filament/admin/components/colors/dark.css</code></strong>.</li>
+<li>Faça o mesmo, escolhendo tons de roxo adequados para fundo escuro.</li>
+<li>Execute <code>vendor/bin/sail npm run build</code>.</li>
+</ol>
+<p><strong>Resultado</strong>: Todo o painel, incluindo botões, textos e fundos que usam <code>primary</code>, mudará para Roxo automaticamente.</p>
+<h3>Como Customizar um Componente Específico</h3>
+<p>Se você deseja arredondar mais as bordas dos <strong>Botões de Perigo (Danger)</strong>:</p>
+<ol>
+<li>Vá para <strong><code>resources/css/filament/admin/components/danger/buttons.css</code></strong>.</li>
+<li>Adicione a propriedade <code>border-radius</code>:</li>
+</ol>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">css</span></div><pre><code>    .fi-btn.fi-color-danger {
+        border-radius: 9999px !important; /* Pílula */
+    }</code></pre></div>
+<ol>
+<li>Execute <code>vendor/bin/sail npm run build</code>.</li>
+</ol>
+<p><strong>Resultado</strong>: Apenas os botões vermelhos serão arredondados; os verdes e outros permanecerão padrão.</p>
+<p>---</p>
+<h2 id="visão-geral-da-árvore-de-arquivos">📂 Visão Geral da Árvore de Arquivos</h2>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">text</span></div><pre><code>resources/css/filament/admin/
+├── theme.css                   # 🏁 Arquivo raiz (importa tudo)
+│
+└── components/
+    ├── colors.css              # 🎨 Gerenciador de cores
+    │
+    ├── colors/                 # 🌈 Definições base
+    │   ├── light.css           # Variáveis Modo Claro
+    │   ├── dark.css            # Variáveis Modo Escuro
+    │   └── mapping.css         # Integração Tailwind v4
+    │
+    ├── primary/                # 🌲 Customizações Verde
+    │   ├── buttons.css
+    │   ├── inputs.css
+    │   └── ...
+    │
+    ├── danger/                 # 🔴 Customizações Vermelho
+    │   └── ...
+    │
+    ├── sidebar.css             # 🗄️ Estilos Específicos da Sidebar
+    └── login.css               # 🔐 Estilos da Página de Login</code></pre></div>
+<h2 id="benefícios-desta-estrutura">✅ Benefícios Desta Estrutura</h2>
+<ol>
+<li><strong>Suporte Robusto ao Dark Mode</strong>: As cores mudam automaticamente sem necessidade de classes extras como <code>dark:bg-green-900</code>. O CSS cuida disso via variáveis.</li>
+<li><strong>Segurança na Manutenção</strong>: Alterar o estilo de um erro (danger) nunca vai &quot;quebrar&quot; o estilo de um sucesso (primary).</li>
+<li><strong>Organização Mental</strong>: Sabe exatamente onde ir. Quer mexer na cor? Pasta <code>colors</code>. Quer mexer no botão? Pasta do componente.</li>
+<li><strong>Performance</strong>: CSS nativo é mais rápido que processamento JS em runtime.</li>
+</ol>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="/resources/css/filament/admin/components/colors.css">CSS: Colors</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-next" href="customizando-layout.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Customização da Aparência e Plugins no Filament</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#arquitetura-de-cores" data-toc-target="arquitetura-de-cores">🎨 Arquitetura de Cores</a></li>
+<li><a class="doc-toc-link" href="#estrutura-modular-de-componentes" data-toc-target="estrutura-modular-de-componentes">🧩 Estrutura Modular de Componentes</a></li>
+<li><a class="doc-toc-link" href="#guia-de-customização" data-toc-target="guia-de-customização">🛠️ Guia de Customização</a></li>
+<li><a class="doc-toc-link" href="#visão-geral-da-árvore-de-arquivos" data-toc-target="visão-geral-da-árvore-de-arquivos">📂 Visão Geral da Árvore de Arquivos</a></li>
+<li><a class="doc-toc-link" href="#benefícios-desta-estrutura" data-toc-target="benefícios-desta-estrutura">✅ Benefícios Desta Estrutura</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Customização de Cores e CSS Modular do Filament
+
+Este documento é o guia definitivo sobre a gestão de cores e organização CSS do painel Filament Admin deste projeto. Adotamos uma filosofia **CSS-First**, onde as cores são definidas em variáveis CSS e mapeadas nativamente para o Tailwind, removendo a dependência de configurações PHP no `AppServiceProvider`.
+
+## 🎨 Arquitetura de Cores
+
+A definição de cores foi refatorada para ser modular e suportar nativamente temas claro e escuro, garantindo consistência e facilidade de manutenção.
+
+### Estrutura de Definição
+
+O ponto de entrada para as cores é o arquivo **`resources/css/filament/admin/components/colors.css`**, que orquestra a importação de três camadas essenciais localizadas na pasta `colors/`:
+
+1.  **`light.css`** (`components/colors/light.css`):
+
+    -   Define as variáveis CSS globais no escopo `:root`.
+    -   Contém os valores hexadecimais para todas as paletas (Primary, Danger, Warning, Info, Secondary) no modo **Claro**.
+    -   Exemplo: `--primary-500: #014029;`
+
+2.  **`dark.css`** (`components/colors/dark.css`):
+
+    -   Define as variáveis CSS correspondentes para o escopo `.dark`.
+    -   Sobrescreve os valores das variáveis para garantir contraste e legibilidade no modo **Escuro**.
+    -   Exemplo: `--primary-500: #33a773;` (um tom mais claro/brilhante para fundo escuro).
+
+3.  **`mapping.css`** (`components/colors/mapping.css`):
+    -   Utiliza a diretiva `@theme` do Tailwind CSS v4.
+    -   Mapeia as classes utilitárias do Tailwind (ex: `text-primary-500`) para usar as variáveis CSS dinâmicas (ex: `var(--primary-500)`).
+    -   Isso permite que a classe `bg-primary-500` mude de cor automaticamente quando o usuário alterna entre modo claro e escuro.
+
+### Paletas de Cores Disponíveis
+
+O sistema utiliza 5 cores semânticas principais, cada uma com 11 variantes (50 a 950):
+
+-   **Primary (Verde Floresta)**: Ações principais, marca, menus ativos.
+-   **Danger (Vermelho)**: Erros, ações destrutivas.
+-   **Warning (Laranja)**: Alertas, atenção.
+-   **Info (Azul)**: Informações, links neutros.
+-   **Secondary (Cinza)**: Estrutura, textos secundários, bordas.
+
+---
+
+## 🧩 Estrutura Modular de Componentes
+
+Para garantir que o Filament Admin utilize essas cores customizadas sem conflitos, adotamos uma estrutura de **sobreposição de estilos organizada por cor**.
+
+Todos os componentes customizados estão em: `resources/css/filament/admin/components/`
+
+### Organização por Diretórios
+
+Em vez de grandes arquivos CSS monolíticos, dividimos as estilizações em pastas correspondentes a cada cor semântica. Isso evita que uma alteração no botão "Primary" quebre acidentalmente o botão "Danger".
+
+-   **`primary/`**: Customizações para componentes Verdes.
+-   **`danger/`**: Customizações para componentes Vermelhos.
+-   **`warning/`**: Customizações para componentes Laranjas.
+-   **`info/`**: Customizações para componentes Azuis.
+-   **`secondary/`**: Customizações para componentes Cinzas.
+
+### Arquivos de Componentes
+
+Dentro de cada pasta de cor, existem arquivos específicos para cada elemento da UI:
+
+-   `badges.css`
+-   `buttons.css`
+-   `checkboxes.css`
+-   `icons.css`
+-   `inputs.css`
+-   `links.css`
+-   `stats.css` (Widgets de estatísticas)
+-   `tabs.css`
+-   `toggles.css`
+
+### Exemplo Prático de Isolamento
+
+Se você abrir `primary/buttons.css` e `danger/buttons.css`, notará que eles visam seletores específicos de cor:
+
+**`primary/buttons.css`**:
+
+```css
+/* Afeta APENAS botões primary */
+.fi-btn.fi-color-primary {
+    /* Estilos específicos do verde */
+}
+```
+
+**`danger/buttons.css`**:
+
+```css
+/* Afeta APENAS botões danger */
+.fi-btn.fi-color-danger {
+    /* Estilos específicos do vermelho */
+}
+```
+
+---
+
+## 🛠️ Guia de Customização
+
+### Como Alterar uma Cor do Sistema
+
+Se você deseja mudar a cor **Primary** de Verde para Roxo:
+
+1.  Abra **`resources/css/filament/admin/components/colors/light.css`**.
+2.  Localize o bloco "Paleta de cor Primária".
+3.  Substitua os códigos hexadecimais de `--primary-50` até `--primary-950` pelos novos tons de roxo.
+4.  Abra **`resources/css/filament/admin/components/colors/dark.css`**.
+5.  Faça o mesmo, escolhendo tons de roxo adequados para fundo escuro.
+6.  Execute `vendor/bin/sail npm run build`.
+
+**Resultado**: Todo o painel, incluindo botões, textos e fundos que usam `primary`, mudará para Roxo automaticamente.
+
+### Como Customizar um Componente Específico
+
+Se você deseja arredondar mais as bordas dos **Botões de Perigo (Danger)**:
+
+1.  Vá para **`resources/css/filament/admin/components/danger/buttons.css`**.
+2.  Adicione a propriedade `border-radius`:
+    ```css
+    .fi-btn.fi-color-danger {
+        border-radius: 9999px !important; /* Pílula */
+    }
+    ```
+3.  Execute `vendor/bin/sail npm run build`.
+
+**Resultado**: Apenas os botões vermelhos serão arredondados; os verdes e outros permanecerão padrão.
+
+---
+
+## 📂 Visão Geral da Árvore de Arquivos
+
+```text
+resources/css/filament/admin/
+├── theme.css                   # 🏁 Arquivo raiz (importa tudo)
+│
+└── components/
+    ├── colors.css              # 🎨 Gerenciador de cores
+    │
+    ├── colors/                 # 🌈 Definições base
+    │   ├── light.css           # Variáveis Modo Claro
+    │   ├── dark.css            # Variáveis Modo Escuro
+    │   └── mapping.css         # Integração Tailwind v4
+    │
+    ├── primary/                # 🌲 Customizações Verde
+    │   ├── buttons.css
+    │   ├── inputs.css
+    │   └── ...
+    │
+    ├── danger/                 # 🔴 Customizações Vermelho
+    │   └── ...
+    │
+    ├── sidebar.css             # 🗄️ Estilos Específicos da Sidebar
+    └── login.css               # 🔐 Estilos da Página de Login
+```
+
+## ✅ Benefícios Desta Estrutura
+
+1.  **Suporte Robusto ao Dark Mode**: As cores mudam automaticamente sem necessidade de classes extras como `dark:bg-green-900`. O CSS cuida disso via variáveis.
+2.  **Segurança na Manutenção**: Alterar o estilo de um erro (danger) nunca vai "quebrar" o estilo de um sucesso (primary).
+3.  **Organização Mental**: Sabe exatamente onde ir. Quer mexer na cor? Pasta `colors`. Quer mexer no botão? Pasta do componente.
+4.  **Performance**: CSS nativo é mais rápido que processamento JS em runtime.
+
+## Referências
+
+- [CSS: Colors](/resources/css/filament/admin/components/colors.css)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

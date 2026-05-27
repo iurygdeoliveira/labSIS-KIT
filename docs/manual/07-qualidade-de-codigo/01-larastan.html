@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Larastan: Garantindo a Integridade Técnica 🛡️ — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo" open><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="01-larastan.html" class="is-active">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Qualidade de Código</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Larastan: Garantindo a Integridade Técnica 🛡️</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">07 — Qualidade de Código</p>
+<h1 class="doc-title">Larastan: Garantindo a Integridade Técnica 🛡️</h1>
+</header>
+<div class="prose-content">
+<p>O Larastan é uma ferramenta de análise estática para o ecossistema Laravel, construída sobre o PHPStan. No <strong>labSIS-KIT</strong>, ele desempenha um papel fundamental na manutenção de uma base de código robusta, livre de bugs silenciosos e preparada para escalabilidade.</p>
+<h2 id="por-que-o-larastan-é-vital">Por que o Larastan é Vital?</h2>
+<p>Diferente de testes automatizados que validam o _comportamento_ em tempo de execução, o Larastan valida a _estrutura_ do código sem executá-lo. Isso traz benefícios imediatos:</p>
+<ol>
+<li><strong>Detecção de Bugs antes da Produção</strong>: Identifica acessos a propriedades inexistentes, chamadas de métodos em objetos nulos e incompatibilidades de tipos que causariam erros fatais em runtime.</li>
+<li><strong>Documentação de Tipagem</strong>: Obriga o desenvolvedor a declarar explicitamente o que cada método recebe e retorna, tornando o código autoexplicativo.</li>
+<li><strong>Refatoração Segura</strong>: Ao alterar o nome de um método ou propriedade, o Larastan aponta instantaneamente todos os lugares que &quot;quebraram&quot;, garantindo que nenhuma ponta fique solta.</li>
+<li><strong>Padronização para SaaS</strong>: Em sistemas multi-team complexos, a certeza de que um objeto é realmente um <code>User</code> ou um <code>Team</code> evita vazamentos de dados e falhas de autorização.</li>
+</ol>
+<p>---</p>
+<h2 id="como-utilizar-no-labsis-kit">Como Utilizar no labSIS-KIT</h2>
+<h3>1. Executando a Análise</h3>
+<p>Para rodar a verificação completa em todo o projeto, utilize o comando:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>./vendor/bin/sail php ./vendor/bin/phpstan analyse</code></pre></div>
+<p>_Dica: Você pode rodar em arquivos específicos para agilizar: <code>./vendor/bin/sail php ./vendor/bin/phpstan analyse app/Models/User.php</code>._</p>
+<h3>2. Alcançando a &quot;Análise Limpa&quot;</h3>
+<p>O objetivo do projeto é sempre manter <strong>zero erros</strong>. Sempre que criar um novo Model, Controller ou Página do Filament, rode a análise.</p>
+<h3>3. Técnicas Utilizadas no Projeto</h3>
+<h4>Tipagem Forte em Recordes (Filament)</h4>
+<p>Ao trabalhar com páginas de visualização ou edição do Filament, o Larastan pode não saber exatamente qual o tipo do <code>$record</code>. Use <code>instanceof</code> para garantir a tipagem:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>public function afterSave(): void
+{
+    $record = $this-&gt;getRecord();
+
+    if ($record instanceof \App\Models\User) {
+        // Agora o Larastan sabe que $record tem o método teams()
+        $record-&gt;teams()-&gt;sync(...);
+    }
+}</code></pre></div>
+<h4>PHPDoc para Propriedades Computadas</h4>
+<p>Sinalize propriedades que não são óbvias para o analisador:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>/**
+ * @property-read \App\Models\User|null $record
+ * @property-read bool $canSuspend
+ */
+class ViewUser extends ViewRecord { ... }</code></pre></div>
+<h4>Tipos Genéricos em Relações</h4>
+<p>No Model, informe ao Larastan o que as relações retornam:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>/**
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany&lt;\App\Models\Team, \App\Models\User&gt;
+ */
+public function teams(): BelongsToMany { ... }</code></pre></div>
+<p>---</p>
+<h2 id="configuração">Configuração</h2>
+<p>A configuração do Larastan reside no arquivo <code>phpstan.neon</code> na raiz do projeto. Nela, definimos o nível de rigor (Level 5 ou superior) e os diretórios analisados.</p>
+<div class="callout callout-info"><p>[!IMPORTANT] Use o <code>@phpstan-ignore</code> apenas em casos extremos onde a ferramenta apresenta um falso positivo e você tem certeza absoluta da segurança do código. Sempre adicione um comentário explicando o motivo.</p></div>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="../../phpstan.neon">Configuração: PHPStan</a></li>
+<li><a href="../../app/Models/User.php">Model: User</a></li>
+<li><a href="../../../manual/07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-next" href="02-rector.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Rector: Automação e Evolução do Código 🚀</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#por-que-o-larastan-é-vital" data-toc-target="por-que-o-larastan-é-vital">Por que o Larastan é Vital?</a></li>
+<li><a class="doc-toc-link" href="#como-utilizar-no-labsis-kit" data-toc-target="como-utilizar-no-labsis-kit">Como Utilizar no labSIS-KIT</a></li>
+<li><a class="doc-toc-link" href="#configuração" data-toc-target="configuração">Configuração</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Larastan: Garantindo a Integridade Técnica 🛡️
+
+O Larastan é uma ferramenta de análise estática para o ecossistema Laravel, construída sobre o PHPStan. No **labSIS-KIT**, ele desempenha um papel fundamental na manutenção de uma base de código robusta, livre de bugs silenciosos e preparada para escalabilidade.
+
+## Por que o Larastan é Vital?
+
+Diferente de testes automatizados que validam o _comportamento_ em tempo de execução, o Larastan valida a _estrutura_ do código sem executá-lo. Isso traz benefícios imediatos:
+
+1. **Detecção de Bugs antes da Produção**: Identifica acessos a propriedades inexistentes, chamadas de métodos em objetos nulos e incompatibilidades de tipos que causariam erros fatais em runtime.
+2. **Documentação de Tipagem**: Obriga o desenvolvedor a declarar explicitamente o que cada método recebe e retorna, tornando o código autoexplicativo.
+3. **Refatoração Segura**: Ao alterar o nome de um método ou propriedade, o Larastan aponta instantaneamente todos os lugares que "quebraram", garantindo que nenhuma ponta fique solta.
+4. **Padronização para SaaS**: Em sistemas multi-team complexos, a certeza de que um objeto é realmente um `User` ou um `Team` evita vazamentos de dados e falhas de autorização.
+
+---
+
+## Como Utilizar no labSIS-KIT
+
+### 1. Executando a Análise
+
+Para rodar a verificação completa em todo o projeto, utilize o comando:
+
+```bash
+./vendor/bin/sail php ./vendor/bin/phpstan analyse
+```
+
+_Dica: Você pode rodar em arquivos específicos para agilizar: `./vendor/bin/sail php ./vendor/bin/phpstan analyse app/Models/User.php`._
+
+### 2. Alcançando a "Análise Limpa"
+
+O objetivo do projeto é sempre manter **zero erros**. Sempre que criar um novo Model, Controller ou Página do Filament, rode a análise.
+
+### 3. Técnicas Utilizadas no Projeto
+
+#### Tipagem Forte em Recordes (Filament)
+
+Ao trabalhar com páginas de visualização ou edição do Filament, o Larastan pode não saber exatamente qual o tipo do `$record`. Use `instanceof` para garantir a tipagem:
+
+```php
+public function afterSave(): void
+{
+    $record = $this->getRecord();
+
+    if ($record instanceof \App\Models\User) {
+        // Agora o Larastan sabe que $record tem o método teams()
+        $record->teams()->sync(...);
+    }
+}
+```
+
+#### PHPDoc para Propriedades Computadas
+
+Sinalize propriedades que não são óbvias para o analisador:
+
+```php
+/**
+ * @property-read \App\Models\User|null $record
+ * @property-read bool $canSuspend
+ */
+class ViewUser extends ViewRecord { ... }
+```
+
+#### Tipos Genéricos em Relações
+
+No Model, informe ao Larastan o que as relações retornam:
+
+```php
+/**
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Team, \App\Models\User>
+ */
+public function teams(): BelongsToMany { ... }
+```
+
+---
+
+## Configuração
+
+A configuração do Larastan reside no arquivo `phpstan.neon` na raiz do projeto. Nela, definimos o nível de rigor (Level 5 ou superior) e os diretórios analisados.
+
+> [!IMPORTANT]
+> Use o `@phpstan-ignore` apenas em casos extremos onde a ferramenta apresenta um falso positivo e você tem certeza absoluta da segurança do código. Sempre adicione um comentário explicando o motivo.
+
+## Referências
+
+- [Configuração: PHPStan](../../phpstan.neon)
+- [Model: User](../../app/Models/User.php)
+- [Filacheck Pro](./04-filacheck.md)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

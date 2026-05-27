@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Stack Tecnológica e Versões — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura" open><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="stack-tecnologica.html" class="is-active">Stack Tecnológica e Versões</a></li>
+<li><a href="user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Backend e Arquitetura</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Stack Tecnológica e Versões</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">04 — Backend e Arquitetura</p>
+<h1 class="doc-title">Stack Tecnológica e Versões</h1>
+</header>
+<div class="prose-content">
+<div class="callout callout-info"><p><strong>Nota</strong>: Este projeto utiliza versões &quot;Bleeding Edge&quot; (mais recentes disponíveis) para garantir longevidade e performance máxima.</p></div>
+<h2 id="core-stack">Core Stack</h2>
+<table class="data"><thead><tr>
+<th>Componente</th>
+<th>Versão</th>
+<th>Notas</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>PHP</strong></td>
+<td><code>8.5</code></td>
+<td>Requer novos recursos de linguagem.</td>
+</tr>
+<tr>
+<td><strong>Laravel</strong></td>
+<td><code>13.x</code></td>
+<td>Framework base.</td>
+</tr>
+<tr>
+<td><strong>Filament</strong></td>
+<td><code>5.x</code></td>
+<td>Painel Administrativo e TALL Stack wrapper.</td>
+</tr>
+<tr>
+<td><strong>Livewire</strong></td>
+<td><code>4.x</code></td>
+<td>Camada de interatividade reativa.</td>
+</tr>
+<tr>
+<td><strong>Tailwind CSS</strong></td>
+<td><code>4.0</code></td>
+<td>Motor de estilização (config via CSS nativo).</td>
+</tr>
+</tbody></table>
+<h2 id="backend-e-dados">🗄️ Backend e Dados</h2>
+<ul>
+<li><strong>Banco de Dados Relacional</strong>: PostgreSQL (Recomendado) ou MySQL 8+.</li>
+<li><strong>Banco de Dados NoSQL</strong>: MongoDB Atlas Local (para logs de auditoria e dados não estruturados).</li>
+<li><strong>ORM</strong>: Eloquent com suporte nativo a UUIDs.</li>
+<li><strong>MongoDB Driver</strong>: <code>mongodb/laravel-mongodb</code> v5.5 (integração oficial MongoDB).</li>
+<li><strong>Tenancy</strong>: Multi-teams via <code>laraveldaily/filateams</code> (coluna <code>team_id</code>) com isolamento lógico via Scopes e Spatie Permission.</li>
+<li><strong>Cache/Queue</strong>: Redis (Recomendado para produção) ou Database (Dev).</li>
+</ul>
+<h2 id="segurança-e-auth">🛡️ Segurança e Auth</h2>
+<ul>
+<li><strong>Laravel Sanctum</strong>: Autenticação API e SPA.</li>
+<li><strong>Spatie Permission</strong>: RBAC (Roles e Permissions) granular.</li>
+<li><strong>Authentication Log</strong>: Model customizado <code>App\Models\AuthenticationLog</code> persistido em <strong>MongoDB</strong> (eventos <code>Login</code>, <code>Logout</code> e <code>Failed</code> registrados via listener).</li>
+</ul>
+<h2 id="frontend-e-ui">🎨 Frontend e UI</h2>
+<ul>
+<li><strong>Flux UI</strong>: Componentes Livewire modernos (<code>livewire/flux</code>).</li>
+<li><strong>Filament Theme</strong>: Sistema customizado em <code>resources/css/filament/admin/</code>.</li>
+<li>Suporte nativo a <strong>Dark Mode</strong>.</li>
+<li>Arquitetura de cores CSS Variables (<code>colors.css</code>, <code>mapping.css</code>).</li>
+</ul>
+<h2 id="qualidade-e-testes">🧪 Qualidade e Testes</h2>
+<ul>
+<li><strong>Pest PHP</strong>: v4.x (Testes Unitários e Feature).</li>
+<li><strong>Larastan</strong>: v3.x (Análise estática nível 5).</li>
+<li><strong>Filacheck Pro</strong>: Validação de convenções Filament v5 (<code>laraveldaily/filacheck-pro</code>).</li>
+<li><strong>Laravel Pint</strong>: Padronização de código (PSR-12 expandido).</li>
+<li><strong>Rector</strong>: Upgrades automáticos e refatoração segura.</li>
+</ul>
+<h2 id="infraestrutura-dev">🐳 Infraestrutura (Dev)</h2>
+<ul>
+<li><strong>Laravel Sail</strong>: Ambiente Dockerizado padronizado.</li>
+<li>Serviços: <code>laravel.test</code> (App), <code>pgsql</code>, <code>redis</code>, <code>mailpit</code>, <code>minio</code> (S3 local).</li>
+</ul>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="../../composer.json">Config: composer.json</a></li>
+<li><a href="../../composer.lock">Lock: composer.lock</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="scripts-composer.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Scripts do Composer e Inicialização de Storage</span></a><a class="doc-pagination-card doc-pagination-next" href="user-model.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Arquitetura do Model User</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#core-stack" data-toc-target="core-stack">Core Stack</a></li>
+<li><a class="doc-toc-link" href="#backend-e-dados" data-toc-target="backend-e-dados">🗄️ Backend e Dados</a></li>
+<li><a class="doc-toc-link" href="#segurança-e-auth" data-toc-target="segurança-e-auth">🛡️ Segurança e Auth</a></li>
+<li><a class="doc-toc-link" href="#frontend-e-ui" data-toc-target="frontend-e-ui">🎨 Frontend e UI</a></li>
+<li><a class="doc-toc-link" href="#qualidade-e-testes" data-toc-target="qualidade-e-testes">🧪 Qualidade e Testes</a></li>
+<li><a class="doc-toc-link" href="#infraestrutura-dev" data-toc-target="infraestrutura-dev">🐳 Infraestrutura (Dev)</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Stack Tecnológica e Versões
+
+> **Nota**: Este projeto utiliza versões "Bleeding Edge" (mais recentes disponíveis) para garantir longevidade e performance máxima.
+
+## Core Stack
+
+| Componente       | Versão | Notas                                         |
+| ---------------- | ------ | --------------------------------------------- |
+| **PHP**          | `8.5`  | Requer novos recursos de linguagem.           |
+| **Laravel**      | `13.x` | Framework base.                               |
+| **Filament**     | `5.x`  | Painel Administrativo e TALL Stack wrapper.   |
+| **Livewire**     | `4.x`  | Camada de interatividade reativa.             |
+| **Tailwind CSS** | `4.0`  | Motor de estilização (config via CSS nativo). |
+
+## 🗄️ Backend e Dados
+
+-   **Banco de Dados Relacional**: PostgreSQL (Recomendado) ou MySQL 8+.
+-   **Banco de Dados NoSQL**: MongoDB Atlas Local (para logs de auditoria e dados não estruturados).
+-   **ORM**: Eloquent com suporte nativo a UUIDs.
+-   **MongoDB Driver**: `mongodb/laravel-mongodb` v5.5 (integração oficial MongoDB).
+-   **Tenancy**: Multi-teams via `laraveldaily/filateams` (coluna `team_id`) com isolamento lógico via Scopes e Spatie Permission.
+-   **Cache/Queue**: Redis (Recomendado para produção) ou Database (Dev).
+
+## 🛡️ Segurança e Auth
+
+-   **Laravel Sanctum**: Autenticação API e SPA.
+-   **Spatie Permission**: RBAC (Roles e Permissions) granular.
+-   **Authentication Log**: Model customizado `App\Models\AuthenticationLog` persistido em **MongoDB** (eventos `Login`, `Logout` e `Failed` registrados via listener).
+
+## 🎨 Frontend e UI
+
+-   **Flux UI**: Componentes Livewire modernos (`livewire/flux`).
+-   **Filament Theme**: Sistema customizado em `resources/css/filament/admin/`.
+    -   Suporte nativo a **Dark Mode**.
+    -   Arquitetura de cores CSS Variables (`colors.css`, `mapping.css`).
+
+## 🧪 Qualidade e Testes
+
+-   **Pest PHP**: v4.x (Testes Unitários e Feature).
+-   **Larastan**: v3.x (Análise estática nível 5).
+-   **Filacheck Pro**: Validação de convenções Filament v5 (`laraveldaily/filacheck-pro`).
+-   **Laravel Pint**: Padronização de código (PSR-12 expandido).
+-   **Rector**: Upgrades automáticos e refatoração segura.
+
+## 🐳 Infraestrutura (Dev)
+
+-   **Laravel Sail**: Ambiente Dockerizado padronizado.
+    -   Serviços: `laravel.test` (App), `pgsql`, `redis`, `mailpit`, `minio` (S3 local).
+
+## Referências
+
+- [Config: composer.json](../../composer.json)
+- [Lock: composer.lock](../../composer.lock)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

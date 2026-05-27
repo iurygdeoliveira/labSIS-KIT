@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Plano de Integração — Laravel Passkeys no labSIS-KIT — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro" open><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="plano-laravel-passkeys-labsis.html" class="is-active">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Roadmap futuro</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Plano de Integração — Laravel Passkeys no labSIS-KIT</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">09 — Roadmap futuro</p>
+<h1 class="doc-title">Plano de Integração — Laravel Passkeys no labSIS-KIT</h1>
+</header>
+<div class="prose-content">
+<div class="callout callout-info"><p>Autenticação passwordless via WebAuthn com o pacote oficial <strong><code>laravel/passkeys</code></strong>, integrado ao fluxo multi-painel Filament existente (auth, admin, user), respeitando aprovação manual, suspensão, MFA TOTP e auditoria de segurança.</p></div>
+<h2 id="meta">Meta</h2>
+<table class="data"><thead><tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Pacote</strong></td>
+<td><code>laravel/passkeys</code> (<a href="https://github.com/laravel/passkeys-server">passkeys-server</a>)</td>
+</tr>
+<tr>
+<td><strong>Cliente JS</strong></td>
+<td><code>@laravel/passkeys</code> (npm)</td>
+</tr>
+<tr>
+<td><strong>Compatibilidade</strong></td>
+<td>Laravel 13 ✅ · PHP 8.5 ✅ · Filament 5 ✅</td>
+</tr>
+<tr>
+<td><strong>Escopo</strong></td>
+<td>Painel Auth (<code>/login</code>), perfil Filament, regras de negócio labSIS</td>
+</tr>
+<tr>
+<td><strong>Fora de escopo (v1)</strong></td>
+<td>API Sanctum, substituição total do fluxo de aprovação admin</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h2 id="1-visão-geral">1. Visão Geral</h2>
+<h3>1.1 O que é Laravel Passkeys</h3>
+<p>Pacote <strong>first-party</strong> da equipe Laravel para autenticação <strong>passwordless</strong> usando <strong>WebAuthn/Passkeys</strong>:</p>
+<ul>
+<li>Login com <strong>biometria</strong> (Touch ID, Face ID, Windows Hello)</li>
+<li>Login com <strong>PIN do dispositivo</strong> ou <strong>chave de segurança</strong> (YubiKey)</li>
+<li><strong>Sem envio de e-mail</strong> no momento do login</li>
+<li><strong>Sem link mágico</strong> — a prova de identidade ocorre no navegador + dispositivo</li>
+</ul>
+<h3>1.2 O que Passkeys <strong>NÃO</strong> é</h3>
+<table class="data"><thead><tr>
+<th>Mecanismo</th>
+<th>Como funciona</th>
+<th>Passkey?</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Senha tradicional</strong></td>
+<td>Usuário digita e-mail + senha</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>Link mágico por e-mail</strong></td>
+<td>E-mail com URL de acesso único</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>TOTP (Google Authenticator)</strong></td>
+<td>Código de 6 dígitos temporário</td>
+<td>❌ (complementar)</td>
+</tr>
+<tr>
+<td><strong>Passkey (WebAuthn)</strong></td>
+<td>Biometria/PIN no dispositivo</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<p><strong>Resposta direta:</strong> após registrar uma passkey, o usuário <strong>pode acessar o painel sem digitar senha</strong>, mas <strong>não recebe e-mail com link de acesso</strong>. A autenticação é local ao dispositivo.</p>
+<h3>1.3 Stack de auth atual no labSIS-KIT</h3>
+<table class="data"><thead><tr>
+<th>Componente</th>
+<th>Estado atual</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Painel Auth</strong></td>
+<td><code>/login</code>, <code>/register</code> — login unificado</td>
+</tr>
+<tr>
+<td><strong>MFA TOTP</strong></td>
+<td><code>AppAuthentication::make()-&gt;recoverable()</code> em todos os painéis</td>
+</tr>
+<tr>
+<td><strong>Aprovação manual</strong></td>
+<td><code>is_approved</code>, <code>is_suspended</code> no registro</td>
+</tr>
+<tr>
+<td><strong>Redirecionamento</strong></td>
+<td><code>LoginResponse</code> → admin / user / home por role</td>
+</tr>
+<tr>
+<td><strong>Filament Security</strong></td>
+<td>Event log, honeypot, e-mail descartável (config)</td>
+</tr>
+<tr>
+<td><strong>Auditoria</strong></td>
+<td><code>AuthenticationLog</code> (MongoDB) em Login/Logout/Failed</td>
+</tr>
+<tr>
+<td><strong>Passkeys</strong></td>
+<td>❌ Não instalado</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h2 id="2-ganhos-possíveis-todos-os-cenários">2. Ganhos Possíveis (todos os cenários)</h2>
+<h3>2.1 Experiência do usuário</h3>
+<table class="data"><thead><tr>
+<th>Ganho</th>
+<th>Descrição</th>
+<th>Beneficiário</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Login passwordless</strong></td>
+<td>Entrada com biometria em 1–2 segundos</td>
+<td>Admins, owners, usuários frequentes</td>
+</tr>
+<tr>
+<td><strong>Sem memorizar senha</strong></td>
+<td>Reduz fricção no acesso diário</td>
+<td>Todos os perfis aprovados</td>
+</tr>
+<tr>
+<td><strong>Múltiplos dispositivos</strong></td>
+<td>MacBook + iPhone + YubiKey registrados</td>
+<td>Usuários mobile + desktop</td>
+</tr>
+<tr>
+<td><strong>Autofill do navegador</strong></td>
+<td>Chrome/Safari sugerem passkey automaticamente</td>
+<td>UX nativa moderna</td>
+</tr>
+<tr>
+<td><strong>Self-service de dispositivos</strong></td>
+<td>Revogar passkey perdida no perfil Filament</td>
+<td>Reduz tickets de suporte</td>
+</tr>
+</tbody></table>
+<h3>2.2 Segurança</h3>
+<table class="data"><thead><tr>
+<th>Ganho</th>
+<th>Descrição</th>
+<th>Impacto</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Anti-phishing</strong></td>
+<td>Credencial amarrada ao domínio (<code>labsis.dev.br</code>)</td>
+<td>Ataques de clone de login falham</td>
+</tr>
+<tr>
+<td><strong>Sem senha reutilizada</strong></td>
+<td>Não há senha a vazar em breach externo</td>
+<td>Reduz credential stuffing</td>
+</tr>
+<tr>
+<td><strong>Resistente a keyloggers</strong></td>
+<td>Biometria não trafega como texto digitado</td>
+<td>Proteção em endpoints públicos</td>
+</tr>
+<tr>
+<td><strong>Política por autenticador</strong></td>
+<td>Restringir a platform keys (só biometria local)</td>
+<td>Admins com política mais rígida</td>
+</tr>
+<tr>
+<td><strong><code>authorizeLoginUsing</code></strong></td>
+<td>Bloquear suspensos/não aprovados no fluxo passkey</td>
+<td>Paridade com <code>Login.php</code> customizado</td>
+</tr>
+<tr>
+<td><strong>Eventos nativos</strong></td>
+<td><code>PasskeyRegistered</code>, <code>PasskeyVerified</code>, <code>PasskeyDeleted</code></td>
+<td>Integração com logs existentes</td>
+</tr>
+<tr>
+<td><strong>Reauth bound ao user</strong></td>
+<td>Confirmar ações críticas sem redigitar senha</td>
+<td>Exclusão de team, alteração de RBAC</td>
+</tr>
+<tr>
+<td><strong>Throttle nativo</strong></td>
+<td><code>throttle:6,1</code> nas rotas passkey</td>
+<td>Proteção contra brute force</td>
+</tr>
+</tbody></table>
+<h3>2.3 Operacional e arquitetura</h3>
+<table class="data"><thead><tr>
+<th>Ganho</th>
+<th>Descrição</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Pacote oficial Laravel</strong></td>
+<td>Alinhado ao ecossistema L13, mantido pela equipe core</td>
+</tr>
+<tr>
+<td><strong><code>PasskeyLoginResponse</code></strong></td>
+<td>Reutilizar lógica de <code>LoginResponse</code> pós-passkey</td>
+</tr>
+<tr>
+<td><strong>Actions substituíveis</strong></td>
+<td>Customizar <code>GenerateRegistrationOptions</code>, <code>VerifyPasskey</code></td>
+</tr>
+<tr>
+<td><strong>Compatível com Filament Security</strong></td>
+<td>Event log de login falho continua; passkey adiciona novos eventos</td>
+</tr>
+<tr>
+<td><strong>Senha como fallback</strong></td>
+<td>Recuperação, registro de passkey, usuários sem dispositivo compatível</td>
+</tr>
+<tr>
+<td><strong>Plugin Filament (comunidade)</strong></td>
+<td><code>adriaanzon/filament-passkeys</code> sobre <code>laravel/passkeys</code></td>
+</tr>
+</tbody></table>
+<h3>2.4 O que <strong>não muda</strong> automaticamente</h3>
+<ul>
+<li>Fluxo de <strong>aprovação manual</strong> de novos usuários</li>
+<li><strong>RBAC</strong> FilaTeams + Spatie Permission por team</li>
+<li><strong>Filament Security</strong> (camadas de registro e event log)</li>
+<li><strong>Tokens Sanctum</strong> para API</li>
+<li><strong>MFA TOTP</strong> — permanece até decisão explícita de substituir ou combinar</li>
+</ul>
+<p>---</p>
+<h2 id="3-arquitetura-proposta">3. Arquitetura Proposta</h2>
+<h3>3.1 Componentes do pacote oficial</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>┌─────────────────────────────────────────────────────────────┐
+│  Browser: @laravel/passkeys (npm)                           │
+│  Passkeys.verify() · Passkeys.register({ name })              │
+└──────────────────────────┬──────────────────────────────────┘
+                           │ WebAuthn
+┌──────────────────────────▼──────────────────────────────────┐
+│  laravel/passkeys                                           │
+│  GET  /passkeys/login/options                               │
+│  POST /passkeys/login                                       │
+│  GET/POST/DELETE /user/passkeys/*                           │
+│  GET/POST /passkeys/confirm/*                               │
+└──────────────────────────┬──────────────────────────────────┘
+                           │
+┌──────────────────────────▼──────────────────────────────────┐
+│  labSIS-KIT                                                 │
+│  User + PasskeyAuthenticatable + PasskeyUser                │
+│  Passkeys::authorizeLoginUsing() → isSuspended/isApproved   │
+│  PasskeyLoginResponse → LoginResponse (admin/user/home)     │
+│  Events → AuthenticationLog + SecurityEvent (opcional)      │
+└─────────────────────────────────────────────────────────────┘</code></pre></div>
+<h3>3.2 Fluxo de primeira configuração</h3>
+<ol>
+<li>Usuário entra com <strong>e-mail + senha</strong> (fluxo atual).</li>
+<li>Passa aprovação, suspensão, MFA TOTP se ativo.</li>
+<li>No <strong>perfil Filament</strong>, registra passkey (ex.: &quot;MacBook Pro&quot;).</li>
+<li>Navegador solicita biometria/PIN <strong>uma vez</strong> para gravar credencial.</li>
+<li>Por padrão, registro exige <strong><code>password.confirm</code></strong>.</li>
+</ol>
+<h3>3.3 Fluxo de login subsequente (passwordless)</h3>
+<ol>
+<li>Usuário abre <code>/login</code>.</li>
+<li>Clica <strong>&quot;Entrar com Passkey&quot;</strong> (ou autofill do navegador).</li>
+<li>Biometria/PIN — <strong>sem digitar senha</strong>.</li>
+<li><code>authorizeLoginUsing</code> valida suspensão/aprovação.</li>
+<li>MFA TOTP — <strong>depende do cenário escolhido</strong> (ver seção 6).</li>
+<li><code>PasskeyLoginResponse</code> redireciona para painel correto.</li>
+</ol>
+<h3>3.4 Integração Filament</h3>
+<table class="data"><thead><tr>
+<th>Painel</th>
+<th>Alteração</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>AuthPanelProvider</strong></td>
+<td>Botão passkey na login + rotas <code>Route::passkeys()</code></td>
+</tr>
+<tr>
+<td><strong>BasePanelProvider</strong></td>
+<td>Seção passkeys no perfil (ou plugin AdriaanZon)</td>
+</tr>
+<tr>
+<td><strong>AppServiceProvider</strong></td>
+<td><code>authorizeLoginUsing</code>, <code>PasskeyLoginResponse</code>, listeners de eventos</td>
+</tr>
+<tr>
+<td><strong>User model</strong></td>
+<td><code>PasskeyUser</code> + <code>PasskeyAuthenticatable</code></td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h2 id="4-milestones-de-implementação">4. Milestones de Implementação</h2>
+<h3>M1 — Fundação (backend)</h3>
+<p><strong>Entrada:</strong> <code>composer.json</code>, <code>User.php</code>, migrations</p>
+<p><strong>Saída:</strong> Pacote instalado, tabela <code>passkeys</code>, trait no User</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>composer require laravel/passkeys
+php artisan vendor:publish --tag=passkeys-migrations
+php artisan migrate
+php artisan vendor:publish --tag=passkeys-config
+npm install @laravel/passkeys</code></pre></div>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use Laravel\Passkeys\Contracts\PasskeyUser;
+use Laravel\Passkeys\PasskeyAuthenticatable;
+
+class User extends Authenticatable implements PasskeyUser, /* interfaces existentes */ {
+    use PasskeyAuthenticatable;
+}</code></pre></div>
+<p><strong>Verificação:</strong> <code>php artisan route:list --path=passkeys</code> lista rotas; migration OK.</p>
+<p>---</p>
+<h3>M2 — Regras de negócio labSIS</h3>
+<p><strong>Entrada:</strong> <code>AppServiceProvider.php</code></p>
+<p><strong>Saída:</strong> Paridade com <code>Login.php</code> customizado</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>Passkeys::authorizeLoginUsing(function (Request $request, PasskeyUser $user, Passkey $passkey): bool {
+    if ($user-&gt;isSuspended()) {
+        throw ValidationException::withMessages([
+            &#x27;credential&#x27; =&gt; [&#x27;Sua conta está suspensa.&#x27;],
+        ]);
+    }
+    if (! $user-&gt;isApproved()) {
+        throw ValidationException::withMessages([
+            &#x27;credential&#x27; =&gt; [&#x27;Sua conta aguarda aprovação do administrador.&#x27;],
+        ]);
+    }
+    return true;
+});</code></pre></div>
+<p><strong>Verificação:</strong> Usuário suspenso/não aprovado não autentica via passkey.</p>
+<p>---</p>
+<h3>M3 — Redirecionamento multi-painel</h3>
+<p><strong>Entrada:</strong> <code>LoginResponse.php</code></p>
+<p><strong>Saída:</strong> <code>PasskeyLoginResponse</code> com mesma lógica admin/user/home</p>
+<p><strong>Verificação:</strong> Após passkey login, admin vai para <code>/admin</code>, owner para <code>/user/{slug}</code>.</p>
+<p>---</p>
+<h3>M4 — UI no login e perfil</h3>
+<p><strong>Entrada:</strong> View login Filament, perfil Filament, Vite</p>
+<p><strong>Saída:</strong> Botão &quot;Entrar com Passkey&quot; + gestão de dispositivos no perfil</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">js</span></div><pre><code>import { Passkeys } from &#x27;@laravel/passkeys&#x27;
+await Passkeys.verify()           // login
+await Passkeys.register({ name: &#x27;MacBook&#x27; })  // registro (autenticado)</code></pre></div>
+<p><strong>Alternativa:</strong> <code>composer require adriaanzon/filament-passkeys</code> + <code>FilamentPasskeysPlugin</code>.</p>
+<p><strong>Verificação:</strong> Login passwordless funciona em HTTPS; perfil lista/revoga passkeys.</p>
+<p>---</p>
+<h3>M5 — Auditoria e eventos</h3>
+<p><strong>Entrada:</strong> <code>AppServiceProvider</code>, listeners</p>
+<p><strong>Saída:</strong> <code>PasskeyVerified</code> → <code>AuthenticationLog</code>; opcional → <code>SecurityEvent</code></p>
+<p><strong>Verificação:</strong> Log de passkey login aparece no admin.</p>
+<p>---</p>
+<h3>M6 — MFA: decisão de produto</h3>
+<p><strong>Entrada:</strong> <code>BasePanelProvider</code>, <code>AuthPanelProvider</code></p>
+<p><strong>Saída:</strong> Cenário escolhido (ver seção 6) documentado e implementado</p>
+<p><strong>Verificação:</strong> Testes Pest cobrem login passkey + MFA conforme cenário.</p>
+<p>---</p>
+<h2 id="5-configuração-recomendada">5. Configuração Recomendada</h2>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// config/passkeys.php (publicado)
+return [
+    &#x27;relying_party_id&#x27; =&gt; parse_url(config(&#x27;app.url&#x27;), PHP_URL_HOST),
+    &#x27;allowed_origins&#x27; =&gt; [config(&#x27;app.url&#x27;)],
+    &#x27;user_handle_secret&#x27; =&gt; env(&#x27;PASSKEYS_USER_HANDLE_SECRET&#x27;, config(&#x27;app.key&#x27;)),
+    &#x27;timeout&#x27; =&gt; 60000,
+    &#x27;guard&#x27; =&gt; &#x27;web&#x27;,
+    &#x27;middleware&#x27; =&gt; [&#x27;web&#x27;],
+    &#x27;management_middleware&#x27; =&gt; [&#x27;password.confirm&#x27;],
+    &#x27;throttle&#x27; =&gt; &#x27;throttle:6,1&#x27;,
+    &#x27;redirect&#x27; =&gt; &#x27;/&#x27;, // substituir por PasskeyLoginResponse customizado
+];</code></pre></div>
+<h3>Variáveis <code>.env</code></h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">env</span></div><pre><code>APP_URL=https://labsis.dev.br
+PASSKEYS_USER_HANDLE_SECRET=   # opcional; default app.key</code></pre></div>
+<p>---</p>
+<h2 id="6-cenários-de-produto-escolher-um">6. Cenários de Produto (escolher um)</h2>
+<table class="data"><thead><tr>
+<th>Cenário</th>
+<th>Senha no login</th>
+<th>Passkey login</th>
+<th>MFA TOTP</th>
+<th>Recomendado para</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>A — Passwordless + TOTP fallback</strong></td>
+<td>Opcional</td>
+<td>Sim</td>
+<td>Sim (quem não tem passkey)</td>
+<td>Rollout gradual</td>
+</tr>
+<tr>
+<td><strong>B — Passkey substitui TOTP</strong></td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Não</td>
+<td>Admins técnicos</td>
+</tr>
+<tr>
+<td><strong>C — Passkey como 2º fator</strong></td>
+<td>Sim</td>
+<td>Não (só MFA)</td>
+<td>Substituído por passkey</td>
+<td>Máxima segurança com senha</td>
+</tr>
+<tr>
+<td><strong>D — Passwordless total</strong></td>
+<td>Fallback apenas</td>
+<td>Sim</td>
+<td>Não</td>
+<td>UX máxima, admins only v1</td>
+</tr>
+</tbody></table>
+<p><strong>Recomendação labSIS (v1):</strong> Cenário <strong>A</strong> — passwordless no login + TOTP recoverable como fallback + registro de passkey só para usuários <strong>aprovados</strong>.</p>
+<p>---</p>
+<h2 id="7-matriz-de-riscos">7. Matriz de Riscos</h2>
+<table class="data"><thead><tr>
+<th>Risco</th>
+<th>Severidade</th>
+<th>Mitigação</th>
+</tr></thead><tbody>
+<tr>
+<td>WebAuthn exige HTTPS</td>
+<td><strong>Alta</strong></td>
+<td><code>URL::forceHttps()</code> em prod; Valet secure / cert local em dev</td>
+</tr>
+<tr>
+<td><code>APP_URL</code> incorreto</td>
+<td><strong>Alta</strong></td>
+<td>Validar host = relying party id</td>
+</tr>
+<tr>
+<td>Passkey bypassa aprovação</td>
+<td><strong>Alta</strong></td>
+<td><code>authorizeLoginUsing</code> obrigatório</td>
+</tr>
+<tr>
+<td>Usuário perde dispositivo</td>
+<td><strong>Média</strong></td>
+<td>Senha + recovery TOTP + admin revoga passkeys</td>
+</tr>
+<tr>
+<td>Pacote v0.2.x imaturo</td>
+<td><strong>Média</strong></td>
+<td>Pin versão; testes Pest; monitorar changelog</td>
+</tr>
+<tr>
+<td>Conflito rotas <code>/passkeys</code></td>
+<td><strong>Baixa</strong></td>
+<td>Landing em <code>/</code>, login em <code>/login</code> — sem conflito</td>
+</tr>
+<tr>
+<td>MFA duplicado (passkey + TOTP)</td>
+<td><strong>Média</strong></td>
+<td><code>managementOnly()</code> ou cenário A documentado</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h2 id="8-pré-requisitos-técnicos">8. Pré-requisitos Técnicos</h2>
+<table class="data"><thead><tr>
+<th>Requisito</th>
+<th>labSIS-KIT</th>
+</tr></thead><tbody>
+<tr>
+<td>Laravel 13</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>PHP 8.2+</td>
+<td>✅ (8.5)</td>
+</tr>
+<tr>
+<td>Colunas <code>name</code>, <code>email</code> no User</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Filament <code>-&gt;profile()</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>HTTPS produção</td>
+<td>✅ (<code>AppServiceProvider</code>)</td>
+</tr>
+<tr>
+<td>HTTPS desenvolvimento</td>
+<td>⚠️ Configurar para testar passkeys</td>
+</tr>
+<tr>
+<td>npm / Vite</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h2 id="9-comparação-oficial-vs-alternativas">9. Comparação: Oficial vs Alternativas</h2>
+<table class="data"><thead><tr>
+<th></th>
+<th><strong>laravel/passkeys</strong></th>
+<th>spatie/laravel-passkeys</th>
+</tr></thead><tbody>
+<tr>
+<td>Mantenedor</td>
+<td>Laravel (Taylor Otwell)</td>
+<td>Spatie</td>
+</tr>
+<tr>
+<td>Cliente JS</td>
+<td><code>@laravel/passkeys</code></td>
+<td>Livewire components</td>
+</tr>
+<tr>
+<td>Hook pós-login</td>
+<td><code>authorizeLoginUsing()</code></td>
+<td>Manual</td>
+</tr>
+<tr>
+<td>Reauth / 2FA step</td>
+<td><code>VerifyPasskey</code> user-bound</td>
+<td>Menos explícito</td>
+</tr>
+<tr>
+<td>Plugin Filament</td>
+<td>adriaanzon/filament-passkeys</td>
+<td>marcelweidum/filament-passkeys</td>
+</tr>
+<tr>
+<td>Maturidade</td>
+<td>v0.2.x</td>
+<td>v1.7.x</td>
+</tr>
+</tbody></table>
+<p><strong>Decisão:</strong> usar pacote <strong>oficial</strong> por alinhamento Laravel 13 e hooks nativos para regras labSIS.</p>
+<p>---</p>
+<h2 id="10-testes-propostos">10. Testes Propostos</h2>
+<table class="data"><thead><tr>
+<th>Teste</th>
+<th>Tipo</th>
+<th>Critério</th>
+</tr></thead><tbody>
+<tr>
+<td>Usuário aprovado autentica via passkey</td>
+<td>Feature</td>
+<td>Redirect correto</td>
+</tr>
+<tr>
+<td>Usuário suspenso bloqueado</td>
+<td>Feature</td>
+<td>ValidationException</td>
+</tr>
+<tr>
+<td>Usuário não aprovado bloqueado</td>
+<td>Feature</td>
+<td>ValidationException</td>
+</tr>
+<tr>
+<td>Registro passkey exige senha</td>
+<td>Feature</td>
+<td>password.confirm</td>
+</tr>
+<tr>
+<td>Revogar passkey impede login</td>
+<td>Feature</td>
+<td>401/422</td>
+</tr>
+<tr>
+<td>Evento PasskeyVerified dispara log</td>
+<td>Feature</td>
+<td>AuthenticationLog entry</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h2 id="11-perguntas-em-aberto">11. Perguntas em Aberto</h2>
+<ol>
+<li><strong>Cenário MFA:</strong> A (gradual) ou B (substituir TOTP para admins)?</li>
+<li><strong>Escopo v1:</strong> Todos os usuários ou só role <code>admin</code>?</li>
+<li><strong>Plugin Filament:</strong> UI customizada ou <code>adriaanzon/filament-passkeys</code>?</li>
+<li><strong>HTTPS local:</strong> Sail com cert ou Valet secure para dev?</li>
+<li><strong>Forçar passkey:</strong> Admins obrigados a registrar passkey em X dias?</li>
+</ol>
+<p>---</p>
+<h2 id="12-referências">12. Referências</h2>
+<ul>
+<li><a href="https://github.com/laravel/passkeys-server">laravel/passkeys-server</a> — pacote oficial</li>
+<li><a href="https://github.com/laravel/passkeys">@laravel/passkeys</a> — cliente npm</li>
+<li><a href="https://filamentphp.com/plugins/adriaanzon-passkeys">adriaanzon/filament-passkeys</a> — plugin Filament v5</li>
+<li><code>docs/02-autenticacao-e-seguranca/login-unificado.md</code></li>
+<li><code>docs/02-autenticacao-e-seguranca/autenticacao-2fa.md</code></li>
+<li><code>app/Filament/Pages/Auth/Login.php</code></li>
+<li><code>app/Http/Responses/LoginResponse.php</code></li>
+</ul>
+<p>---</p>
+<h2 id="13-resumo-executivo">13. Resumo Executivo</h2>
+<table class="data"><thead><tr>
+<th>Pergunta</th>
+<th>Resposta</th>
+</tr></thead><tbody>
+<tr>
+<td>Preciso digitar senha após adaptar?</td>
+<td><strong>Não</strong>, se registrar passkey e usar login passwordless</td>
+</tr>
+<tr>
+<td>Recebo e-mail com link de acesso?</td>
+<td><strong>Não</strong> — passkey usa biometria do dispositivo</td>
+</tr>
+<tr>
+<td>Aprovação admin continua?</td>
+<td><strong>Sim</strong> — <code>authorizeLoginUsing</code> mantém regras</td>
+</tr>
+<tr>
+<td>TOTP continua?</td>
+<td><strong>Depende do cenário</strong> — recomendado manter como fallback na v1</td>
+</tr>
+<tr>
+<td>Esforço estimado</td>
+<td>M1–M4: ~2–3 dias; M5–M6: +1 dia com testes</td>
+</tr>
+</tbody></table>
+<p><strong>Próximo passo:</strong> implementar M1 + M2 + M3 (backend + regras + redirect), depois M4 (UI login/perfil).</p>
+</div>
+
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#meta" data-toc-target="meta">Meta</a></li>
+<li><a class="doc-toc-link" href="#1-visão-geral" data-toc-target="1-visão-geral">1. Visão Geral</a></li>
+<li><a class="doc-toc-link" href="#2-ganhos-possíveis-todos-os-cenários" data-toc-target="2-ganhos-possíveis-todos-os-cenários">2. Ganhos Possíveis (todos os cenários)</a></li>
+<li><a class="doc-toc-link" href="#3-arquitetura-proposta" data-toc-target="3-arquitetura-proposta">3. Arquitetura Proposta</a></li>
+<li><a class="doc-toc-link" href="#4-milestones-de-implementação" data-toc-target="4-milestones-de-implementação">4. Milestones de Implementação</a></li>
+<li><a class="doc-toc-link" href="#5-configuração-recomendada" data-toc-target="5-configuração-recomendada">5. Configuração Recomendada</a></li>
+<li><a class="doc-toc-link" href="#6-cenários-de-produto-escolher-um" data-toc-target="6-cenários-de-produto-escolher-um">6. Cenários de Produto (escolher um)</a></li>
+<li><a class="doc-toc-link" href="#7-matriz-de-riscos" data-toc-target="7-matriz-de-riscos">7. Matriz de Riscos</a></li>
+<li><a class="doc-toc-link" href="#8-pré-requisitos-técnicos" data-toc-target="8-pré-requisitos-técnicos">8. Pré-requisitos Técnicos</a></li>
+<li><a class="doc-toc-link" href="#9-comparação-oficial-vs-alternativas" data-toc-target="9-comparação-oficial-vs-alternativas">9. Comparação: Oficial vs Alternativas</a></li>
+<li><a class="doc-toc-link" href="#10-testes-propostos" data-toc-target="10-testes-propostos">10. Testes Propostos</a></li>
+<li><a class="doc-toc-link" href="#11-perguntas-em-aberto" data-toc-target="11-perguntas-em-aberto">11. Perguntas em Aberto</a></li>
+<li><a class="doc-toc-link" href="#12-referências" data-toc-target="12-referências">12. Referências</a></li>
+<li><a class="doc-toc-link" href="#13-resumo-executivo" data-toc-target="13-resumo-executivo">13. Resumo Executivo</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown">---
+title: Plano de Integração — Laravel Passkeys no labSIS-KIT
+artifact-type: implementation-plan
+source-skill: markdown-to-html-artifact
+lang: pt-BR
+project: labSIS-KIT
+stack: Laravel 13 · Filament 5 · FilaTeams · Filament Security
+package: laravel/passkeys
+repository: https://github.com/laravel/passkeys-server
+---
+
+# Plano de Integração — Laravel Passkeys no labSIS-KIT
+
+> Autenticação passwordless via WebAuthn com o pacote oficial **`laravel/passkeys`**, integrado ao fluxo multi-painel Filament existente (auth, admin, user), respeitando aprovação manual, suspensão, MFA TOTP e auditoria de segurança.
+
+## Meta
+
+| Campo | Valor |
+|-------|-------|
+| **Pacote** | `laravel/passkeys` ([passkeys-server](https://github.com/laravel/passkeys-server)) |
+| **Cliente JS** | `@laravel/passkeys` (npm) |
+| **Compatibilidade** | Laravel 13 ✅ · PHP 8.5 ✅ · Filament 5 ✅ |
+| **Escopo** | Painel Auth (`/login`), perfil Filament, regras de negócio labSIS |
+| **Fora de escopo (v1)** | API Sanctum, substituição total do fluxo de aprovação admin |
+
+---
+
+## 1. Visão Geral
+
+### 1.1 O que é Laravel Passkeys
+
+Pacote **first-party** da equipe Laravel para autenticação **passwordless** usando **WebAuthn/Passkeys**:
+
+- Login com **biometria** (Touch ID, Face ID, Windows Hello)
+- Login com **PIN do dispositivo** ou **chave de segurança** (YubiKey)
+- **Sem envio de e-mail** no momento do login
+- **Sem link mágico** — a prova de identidade ocorre no navegador + dispositivo
+
+### 1.2 O que Passkeys **NÃO** é
+
+| Mecanismo | Como funciona | Passkey? |
+|-----------|---------------|----------|
+| **Senha tradicional** | Usuário digita e-mail + senha | ❌ |
+| **Link mágico por e-mail** | E-mail com URL de acesso único | ❌ |
+| **TOTP (Google Authenticator)** | Código de 6 dígitos temporário | ❌ (complementar) |
+| **Passkey (WebAuthn)** | Biometria/PIN no dispositivo | ✅ |
+
+**Resposta direta:** após registrar uma passkey, o usuário **pode acessar o painel sem digitar senha**, mas **não recebe e-mail com link de acesso**. A autenticação é local ao dispositivo.
+
+### 1.3 Stack de auth atual no labSIS-KIT
+
+| Componente | Estado atual |
+|------------|--------------|
+| **Painel Auth** | `/login`, `/register` — login unificado |
+| **MFA TOTP** | `AppAuthentication::make()->recoverable()` em todos os painéis |
+| **Aprovação manual** | `is_approved`, `is_suspended` no registro |
+| **Redirecionamento** | `LoginResponse` → admin / user / home por role |
+| **Filament Security** | Event log, honeypot, e-mail descartável (config) |
+| **Auditoria** | `AuthenticationLog` (MongoDB) em Login/Logout/Failed |
+| **Passkeys** | ❌ Não instalado |
+
+---
+
+## 2. Ganhos Possíveis (todos os cenários)
+
+### 2.1 Experiência do usuário
+
+| Ganho | Descrição | Beneficiário |
+|-------|-----------|--------------|
+| **Login passwordless** | Entrada com biometria em 1–2 segundos | Admins, owners, usuários frequentes |
+| **Sem memorizar senha** | Reduz fricção no acesso diário | Todos os perfis aprovados |
+| **Múltiplos dispositivos** | MacBook + iPhone + YubiKey registrados | Usuários mobile + desktop |
+| **Autofill do navegador** | Chrome/Safari sugerem passkey automaticamente | UX nativa moderna |
+| **Self-service de dispositivos** | Revogar passkey perdida no perfil Filament | Reduz tickets de suporte |
+
+### 2.2 Segurança
+
+| Ganho | Descrição | Impacto |
+|-------|-----------|---------|
+| **Anti-phishing** | Credencial amarrada ao domínio (`labsis.dev.br`) | Ataques de clone de login falham |
+| **Sem senha reutilizada** | Não há senha a vazar em breach externo | Reduz credential stuffing |
+| **Resistente a keyloggers** | Biometria não trafega como texto digitado | Proteção em endpoints públicos |
+| **Política por autenticador** | Restringir a platform keys (só biometria local) | Admins com política mais rígida |
+| **`authorizeLoginUsing`** | Bloquear suspensos/não aprovados no fluxo passkey | Paridade com `Login.php` customizado |
+| **Eventos nativos** | `PasskeyRegistered`, `PasskeyVerified`, `PasskeyDeleted` | Integração com logs existentes |
+| **Reauth bound ao user** | Confirmar ações críticas sem redigitar senha | Exclusão de team, alteração de RBAC |
+| **Throttle nativo** | `throttle:6,1` nas rotas passkey | Proteção contra brute force |
+
+### 2.3 Operacional e arquitetura
+
+| Ganho | Descrição |
+|-------|-----------|
+| **Pacote oficial Laravel** | Alinhado ao ecossistema L13, mantido pela equipe core |
+| **`PasskeyLoginResponse`** | Reutilizar lógica de `LoginResponse` pós-passkey |
+| **Actions substituíveis** | Customizar `GenerateRegistrationOptions`, `VerifyPasskey` |
+| **Compatível com Filament Security** | Event log de login falho continua; passkey adiciona novos eventos |
+| **Senha como fallback** | Recuperação, registro de passkey, usuários sem dispositivo compatível |
+| **Plugin Filament (comunidade)** | `adriaanzon/filament-passkeys` sobre `laravel/passkeys` |
+
+### 2.4 O que **não muda** automaticamente
+
+- Fluxo de **aprovação manual** de novos usuários
+- **RBAC** FilaTeams + Spatie Permission por team
+- **Filament Security** (camadas de registro e event log)
+- **Tokens Sanctum** para API
+- **MFA TOTP** — permanece até decisão explícita de substituir ou combinar
+
+---
+
+## 3. Arquitetura Proposta
+
+### 3.1 Componentes do pacote oficial
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Browser: @laravel/passkeys (npm)                           │
+│  Passkeys.verify() · Passkeys.register({ name })              │
+└──────────────────────────┬──────────────────────────────────┘
+                           │ WebAuthn
+┌──────────────────────────▼──────────────────────────────────┐
+│  laravel/passkeys                                           │
+│  GET  /passkeys/login/options                               │
+│  POST /passkeys/login                                       │
+│  GET/POST/DELETE /user/passkeys/*                           │
+│  GET/POST /passkeys/confirm/*                               │
+└──────────────────────────┬──────────────────────────────────┘
+                           │
+┌──────────────────────────▼──────────────────────────────────┐
+│  labSIS-KIT                                                 │
+│  User + PasskeyAuthenticatable + PasskeyUser                │
+│  Passkeys::authorizeLoginUsing() → isSuspended/isApproved   │
+│  PasskeyLoginResponse → LoginResponse (admin/user/home)     │
+│  Events → AuthenticationLog + SecurityEvent (opcional)      │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 3.2 Fluxo de primeira configuração
+
+1. Usuário entra com **e-mail + senha** (fluxo atual).
+2. Passa aprovação, suspensão, MFA TOTP se ativo.
+3. No **perfil Filament**, registra passkey (ex.: "MacBook Pro").
+4. Navegador solicita biometria/PIN **uma vez** para gravar credencial.
+5. Por padrão, registro exige **`password.confirm`**.
+
+### 3.3 Fluxo de login subsequente (passwordless)
+
+1. Usuário abre `/login`.
+2. Clica **"Entrar com Passkey"** (ou autofill do navegador).
+3. Biometria/PIN — **sem digitar senha**.
+4. `authorizeLoginUsing` valida suspensão/aprovação.
+5. MFA TOTP — **depende do cenário escolhido** (ver seção 6).
+6. `PasskeyLoginResponse` redireciona para painel correto.
+
+### 3.4 Integração Filament
+
+| Painel | Alteração |
+|--------|-----------|
+| **AuthPanelProvider** | Botão passkey na login + rotas `Route::passkeys()` |
+| **BasePanelProvider** | Seção passkeys no perfil (ou plugin AdriaanZon) |
+| **AppServiceProvider** | `authorizeLoginUsing`, `PasskeyLoginResponse`, listeners de eventos |
+| **User model** | `PasskeyUser` + `PasskeyAuthenticatable` |
+
+---
+
+## 4. Milestones de Implementação
+
+### M1 — Fundação (backend)
+
+**Entrada:** `composer.json`, `User.php`, migrations  
+**Saída:** Pacote instalado, tabela `passkeys`, trait no User
+
+```bash
+composer require laravel/passkeys
+php artisan vendor:publish --tag=passkeys-migrations
+php artisan migrate
+php artisan vendor:publish --tag=passkeys-config
+npm install @laravel/passkeys
+```
+
+```php
+use Laravel\Passkeys\Contracts\PasskeyUser;
+use Laravel\Passkeys\PasskeyAuthenticatable;
+
+class User extends Authenticatable implements PasskeyUser, /* interfaces existentes */ {
+    use PasskeyAuthenticatable;
+}
+```
+
+**Verificação:** `php artisan route:list --path=passkeys` lista rotas; migration OK.
+
+---
+
+### M2 — Regras de negócio labSIS
+
+**Entrada:** `AppServiceProvider.php`  
+**Saída:** Paridade com `Login.php` customizado
+
+```php
+Passkeys::authorizeLoginUsing(function (Request $request, PasskeyUser $user, Passkey $passkey): bool {
+    if ($user->isSuspended()) {
+        throw ValidationException::withMessages([
+            'credential' => ['Sua conta está suspensa.'],
+        ]);
+    }
+    if (! $user->isApproved()) {
+        throw ValidationException::withMessages([
+            'credential' => ['Sua conta aguarda aprovação do administrador.'],
+        ]);
+    }
+    return true;
+});
+```
+
+**Verificação:** Usuário suspenso/não aprovado não autentica via passkey.
+
+---
+
+### M3 — Redirecionamento multi-painel
+
+**Entrada:** `LoginResponse.php`  
+**Saída:** `PasskeyLoginResponse` com mesma lógica admin/user/home
+
+**Verificação:** Após passkey login, admin vai para `/admin`, owner para `/user/{slug}`.
+
+---
+
+### M4 — UI no login e perfil
+
+**Entrada:** View login Filament, perfil Filament, Vite  
+**Saída:** Botão "Entrar com Passkey" + gestão de dispositivos no perfil
+
+```js
+import { Passkeys } from '@laravel/passkeys'
+await Passkeys.verify()           // login
+await Passkeys.register({ name: 'MacBook' })  // registro (autenticado)
+```
+
+**Alternativa:** `composer require adriaanzon/filament-passkeys` + `FilamentPasskeysPlugin`.
+
+**Verificação:** Login passwordless funciona em HTTPS; perfil lista/revoga passkeys.
+
+---
+
+### M5 — Auditoria e eventos
+
+**Entrada:** `AppServiceProvider`, listeners  
+**Saída:** `PasskeyVerified` → `AuthenticationLog`; opcional → `SecurityEvent`
+
+**Verificação:** Log de passkey login aparece no admin.
+
+---
+
+### M6 — MFA: decisão de produto
+
+**Entrada:** `BasePanelProvider`, `AuthPanelProvider`  
+**Saída:** Cenário escolhido (ver seção 6) documentado e implementado
+
+**Verificação:** Testes Pest cobrem login passkey + MFA conforme cenário.
+
+---
+
+## 5. Configuração Recomendada
+
+```php
+// config/passkeys.php (publicado)
+return [
+    'relying_party_id' => parse_url(config('app.url'), PHP_URL_HOST),
+    'allowed_origins' => [config('app.url')],
+    'user_handle_secret' => env('PASSKEYS_USER_HANDLE_SECRET', config('app.key')),
+    'timeout' => 60000,
+    'guard' => 'web',
+    'middleware' => ['web'],
+    'management_middleware' => ['password.confirm'],
+    'throttle' => 'throttle:6,1',
+    'redirect' => '/', // substituir por PasskeyLoginResponse customizado
+];
+```
+
+### Variáveis `.env`
+
+```env
+APP_URL=https://labsis.dev.br
+PASSKEYS_USER_HANDLE_SECRET=   # opcional; default app.key
+```
+
+---
+
+## 6. Cenários de Produto (escolher um)
+
+| Cenário | Senha no login | Passkey login | MFA TOTP | Recomendado para |
+|---------|----------------|---------------|----------|------------------|
+| **A — Passwordless + TOTP fallback** | Opcional | Sim | Sim (quem não tem passkey) | Rollout gradual |
+| **B — Passkey substitui TOTP** | Sim | Sim | Não | Admins técnicos |
+| **C — Passkey como 2º fator** | Sim | Não (só MFA) | Substituído por passkey | Máxima segurança com senha |
+| **D — Passwordless total** | Fallback apenas | Sim | Não | UX máxima, admins only v1 |
+
+**Recomendação labSIS (v1):** Cenário **A** — passwordless no login + TOTP recoverable como fallback + registro de passkey só para usuários **aprovados**.
+
+---
+
+## 7. Matriz de Riscos
+
+| Risco | Severidade | Mitigação |
+|-------|------------|-----------|
+| WebAuthn exige HTTPS | **Alta** | `URL::forceHttps()` em prod; Valet secure / cert local em dev |
+| `APP_URL` incorreto | **Alta** | Validar host = relying party id |
+| Passkey bypassa aprovação | **Alta** | `authorizeLoginUsing` obrigatório |
+| Usuário perde dispositivo | **Média** | Senha + recovery TOTP + admin revoga passkeys |
+| Pacote v0.2.x imaturo | **Média** | Pin versão; testes Pest; monitorar changelog |
+| Conflito rotas `/passkeys` | **Baixa** | Landing em `/`, login em `/login` — sem conflito |
+| MFA duplicado (passkey + TOTP) | **Média** | `managementOnly()` ou cenário A documentado |
+
+---
+
+## 8. Pré-requisitos Técnicos
+
+| Requisito | labSIS-KIT |
+|-----------|------------|
+| Laravel 13 | ✅ |
+| PHP 8.2+ | ✅ (8.5) |
+| Colunas `name`, `email` no User | ✅ |
+| Filament `->profile()` | ✅ |
+| HTTPS produção | ✅ (`AppServiceProvider`) |
+| HTTPS desenvolvimento | ⚠️ Configurar para testar passkeys |
+| npm / Vite | ✅ |
+
+---
+
+## 9. Comparação: Oficial vs Alternativas
+
+| | **laravel/passkeys** | spatie/laravel-passkeys |
+|--|---------------------|-------------------------|
+| Mantenedor | Laravel (Taylor Otwell) | Spatie |
+| Cliente JS | `@laravel/passkeys` | Livewire components |
+| Hook pós-login | `authorizeLoginUsing()` | Manual |
+| Reauth / 2FA step | `VerifyPasskey` user-bound | Menos explícito |
+| Plugin Filament | adriaanzon/filament-passkeys | marcelweidum/filament-passkeys |
+| Maturidade | v0.2.x | v1.7.x |
+
+**Decisão:** usar pacote **oficial** por alinhamento Laravel 13 e hooks nativos para regras labSIS.
+
+---
+
+## 10. Testes Propostos
+
+| Teste | Tipo | Critério |
+|-------|------|----------|
+| Usuário aprovado autentica via passkey | Feature | Redirect correto |
+| Usuário suspenso bloqueado | Feature | ValidationException |
+| Usuário não aprovado bloqueado | Feature | ValidationException |
+| Registro passkey exige senha | Feature | password.confirm |
+| Revogar passkey impede login | Feature | 401/422 |
+| Evento PasskeyVerified dispara log | Feature | AuthenticationLog entry |
+
+---
+
+## 11. Perguntas em Aberto
+
+1. **Cenário MFA:** A (gradual) ou B (substituir TOTP para admins)?
+2. **Escopo v1:** Todos os usuários ou só role `admin`?
+3. **Plugin Filament:** UI customizada ou `adriaanzon/filament-passkeys`?
+4. **HTTPS local:** Sail com cert ou Valet secure para dev?
+5. **Forçar passkey:** Admins obrigados a registrar passkey em X dias?
+
+---
+
+## 12. Referências
+
+- [laravel/passkeys-server](https://github.com/laravel/passkeys-server) — pacote oficial
+- [@laravel/passkeys](https://github.com/laravel/passkeys) — cliente npm
+- [adriaanzon/filament-passkeys](https://filamentphp.com/plugins/adriaanzon-passkeys) — plugin Filament v5
+- `docs/02-autenticacao-e-seguranca/login-unificado.md`
+- `docs/02-autenticacao-e-seguranca/autenticacao-2fa.md`
+- `app/Filament/Pages/Auth/Login.php`
+- `app/Http/Responses/LoginResponse.php`
+
+---
+
+## 13. Resumo Executivo
+
+| Pergunta | Resposta |
+|----------|----------|
+| Preciso digitar senha após adaptar? | **Não**, se registrar passkey e usar login passwordless |
+| Recebo e-mail com link de acesso? | **Não** — passkey usa biometria do dispositivo |
+| Aprovação admin continua? | **Sim** — `authorizeLoginUsing` mantém regras |
+| TOTP continua? | **Depende do cenário** — recomendado manter como fallback na v1 |
+| Esforço estimado | M1–M4: ~2–3 dias; M5–M6: +1 dia com testes |
+
+**Próximo passo:** implementar M1 + M2 + M3 (backend + regras + redirect), depois M4 (UI login/perfil).
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

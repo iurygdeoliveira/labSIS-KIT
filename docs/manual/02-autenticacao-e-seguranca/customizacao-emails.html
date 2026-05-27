@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Customização de E-mails e Fluxo de Reset de Senha — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca" open><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="customizacao-emails.html" class="is-active">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Autenticação e Segurança</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Customização de E-mails e Fluxo de Reset de Senha</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">02 — Autenticação e Segurança</p>
+<h1 class="doc-title">Customização de E-mails e Fluxo de Reset de Senha</h1>
+</header>
+<div class="prose-content">
+<p>O LabSIS KIT possui um sistema robusto para customização de templates de e-mail, garantindo que todas as comunicações enviadas pelo sistema sigam a identidade visual do projeto.</p>
+<h2 id="estrutura-de-templates">Estrutura de Templates</h2>
+<p>Os templates de e-mail estão localizados em <code>resources/views/vendor/mail/html</code>.</p>
+<h3>Layout Base (<code>website-layout.blade.php</code>)</h3>
+<p>Foi criado um layout base que replica a identidade visual do website (Header e Footer). Todos os e-mails do sistema devem estender este layout para manter a consistência.</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">blade</span></div><pre><code>@component(&#x27;vendor.mail.html.website-layout&#x27;)
+    {{-- Conteúdo do e-mail --}}
+@endcomponent</code></pre></div>
+<h3>Template de Redefinição de Senha (<code>password-reset.blade.php</code>)</h3>
+<p>Este template sobrescreve o padrão do Laravel para fornecer uma experiência mais personalizada. Ele aceita as seguintes variáveis:</p>
+<ul>
+<li><code>$user</code>: O modelo do usuário (para personalização, ex: <code>Olá, {{ $user-&gt;name }}</code>).</li>
+<li><code>$token</code>: O token de redefinição.</li>
+<li><code>$url</code>: A URL _assinada_ para redefinição de senha.</li>
+</ul>
+<h2 id="fluxo-de-envio-reset-de-senha">Fluxo de Envio (Reset de Senha)</h2>
+<p>O fluxo padrão do Filament para reset de senha foi customizado para garantir o uso do nosso template e notificação.</p>
+<h3>1. Notificação Customizada</h3>
+<p>Criamos a classe <code>App\Notifications\Auth\ResetPasswordNotification</code> que estende a notificação padrão do Laravel/Filament. Ela foi ajustada para:</p>
+<ol>
+<li>Utilizar a view <code>vendor.mail.html.password-reset</code>.</li>
+<li>Aceitar uma propriedade pública <code>$url</code> (necessária para links assinados corretamente).</li>
+</ol>
+<h3>2. Sobrescrita da Página de Solicitação</h3>
+<p>No painel administrativo, a página de solicitação de reset (<code>App\Filament\Pages\Auth\RequestPasswordReset</code>) sobrescreve o método <code>request()</code> padrão.</p>
+<p>Isso é necessário porque o Filament, por padrão, instancia uma notificação interna que não utiliza nosso template customizado. Nossa implementação:</p>
+<ol>
+<li>Gera a URL de reset assinada corretamente usando <code>Filament::getResetPasswordUrl($token, $user)</code>.</li>
+<li>Instancia nossa <code>ResetPasswordNotification</code>.</li>
+<li>Injecta a URL gerada na notificação.</li>
+<li>Envia a notificação para o usuário.</li>
+</ol>
+<p><strong>Trecho de código (RequestPasswordReset.php):</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>$notification = new \App\Notifications\Auth\ResetPasswordNotification($token);
+$notification-&gt;url = \Filament\Facades\Filament::getResetPasswordUrl($token, $user);
+
+$user-&gt;notify($notification);</code></pre></div>
+<h2 id="visualização-de-templates-preview">Visualização de Templates (Preview)</h2>
+<p>O LabSIS KIT inclui uma funcionalidade para visualizar e testar os templates de e-mail diretamente pelo painel administrativo.</p>
+<ul>
+<li><strong>Acesso:</strong> Menu <code>Emails</code> -&gt; <code>Preview</code>.</li>
+<li><strong>Funcionalidade:</strong> O preview utiliza os dados do usuário logado para renderizar o template em tempo real, permitindo verificar a formatação, variáveis e layout sem precisar disparar um e-mail real.</li>
+</ul>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="/resources/views/vendor/mail/html/website-layout.blade.php">View: Website Layout</a></li>
+<li><a href="/resources/views/vendor/mail/html/password-reset.blade.php">View: Password Reset</a></li>
+<li><a href="/app/Notifications/Auth/ResetPasswordNotification.php">Notification: ResetPasswordNotification</a></li>
+<li><a href="/app/Filament/Pages/Auth/RequestPasswordReset.php">Page: RequestPasswordReset</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="content-security-policy.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Content Security Policy (CSP) - Proteção Contra XSS</span></a><a class="doc-pagination-card doc-pagination-next" href="fluxo-de-registro-de-novos-usuarios.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Fluxo de Registro de Novos Usuários</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#estrutura-de-templates" data-toc-target="estrutura-de-templates">Estrutura de Templates</a></li>
+<li><a class="doc-toc-link" href="#fluxo-de-envio-reset-de-senha" data-toc-target="fluxo-de-envio-reset-de-senha">Fluxo de Envio (Reset de Senha)</a></li>
+<li><a class="doc-toc-link" href="#visualização-de-templates-preview" data-toc-target="visualização-de-templates-preview">Visualização de Templates (Preview)</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Customização de E-mails e Fluxo de Reset de Senha
+
+O LabSIS KIT possui um sistema robusto para customização de templates de e-mail, garantindo que todas as comunicações enviadas pelo sistema sigam a identidade visual do projeto.
+
+## Estrutura de Templates
+
+Os templates de e-mail estão localizados em `resources/views/vendor/mail/html`.
+
+### Layout Base (`website-layout.blade.php`)
+
+Foi criado um layout base que replica a identidade visual do website (Header e Footer). Todos os e-mails do sistema devem estender este layout para manter a consistência.
+
+```blade
+@component('vendor.mail.html.website-layout')
+    {{-- Conteúdo do e-mail --}}
+@endcomponent
+```
+
+### Template de Redefinição de Senha (`password-reset.blade.php`)
+
+Este template sobrescreve o padrão do Laravel para fornecer uma experiência mais personalizada. Ele aceita as seguintes variáveis:
+
+-   `$user`: O modelo do usuário (para personalização, ex: `Olá, {{ $user->name }}`).
+-   `$token`: O token de redefinição.
+-   `$url`: A URL _assinada_ para redefinição de senha.
+
+## Fluxo de Envio (Reset de Senha)
+
+O fluxo padrão do Filament para reset de senha foi customizado para garantir o uso do nosso template e notificação.
+
+### 1. Notificação Customizada
+
+Criamos a classe `App\Notifications\Auth\ResetPasswordNotification` que estende a notificação padrão do Laravel/Filament. Ela foi ajustada para:
+
+1.  Utilizar a view `vendor.mail.html.password-reset`.
+2.  Aceitar uma propriedade pública `$url` (necessária para links assinados corretamente).
+
+### 2. Sobrescrita da Página de Solicitação
+
+No painel administrativo, a página de solicitação de reset (`App\Filament\Pages\Auth\RequestPasswordReset`) sobrescreve o método `request()` padrão.
+
+Isso é necessário porque o Filament, por padrão, instancia uma notificação interna que não utiliza nosso template customizado. Nossa implementação:
+
+1.  Gera a URL de reset assinada corretamente usando `Filament::getResetPasswordUrl($token, $user)`.
+2.  Instancia nossa `ResetPasswordNotification`.
+3.  Injecta a URL gerada na notificação.
+4.  Envia a notificação para o usuário.
+
+**Trecho de código (RequestPasswordReset.php):**
+
+```php
+$notification = new \App\Notifications\Auth\ResetPasswordNotification($token);
+$notification->url = \Filament\Facades\Filament::getResetPasswordUrl($token, $user);
+
+$user->notify($notification);
+```
+
+## Visualização de Templates (Preview)
+
+O LabSIS KIT inclui uma funcionalidade para visualizar e testar os templates de e-mail diretamente pelo painel administrativo.
+
+-   **Acesso:** Menu `Emails` -> `Preview`.
+-   **Funcionalidade:** O preview utiliza os dados do usuário logado para renderizar o template em tempo real, permitindo verificar a formatação, variáveis e layout sem precisar disparar um e-mail real.
+
+## Referências
+
+- [View: Website Layout](/resources/views/vendor/mail/html/website-layout.blade.php)
+- [View: Password Reset](/resources/views/vendor/mail/html/password-reset.blade.php)
+- [Notification: ResetPasswordNotification](/app/Notifications/Auth/ResetPasswordNotification.php)
+- [Page: RequestPasswordReset](/app/Filament/Pages/Auth/RequestPasswordReset.php)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

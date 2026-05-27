@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Performance no Filament — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes" open><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="filament-performance.html" class="is-active">Performance no Filament</a></li>
+<li><a href="laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Otimizações</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Performance no Filament</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">05 — Otimizações</p>
+<h1 class="doc-title">Performance no Filament</h1>
+</header>
+<div class="prose-content">
+<p>Guia de otimizações para Resources, Tables e Widgets do painel administrativo, baseado nas práticas do ecossistema Filament/Laravel Daily e no que já está implementado neste projeto.</p>
+<h2 id="índice">Índice</h2>
+<ul>
+<li><a href="#badges-e-contagens-repetidas">Badges e contagens repetidas</a></li>
+<li><a href="#n1-oculto-em-colunas-com-state">N+1 oculto em colunas com state()</a></li>
+<li><a href="#colunas-agregadas-sortáveis">Colunas agregadas sortáveis</a></li>
+<li><a href="#implementação-neste-projeto">Implementação neste projeto</a></li>
+<li><a href="#checklist-para-novos-resources">Checklist para novos Resources</a></li>
+<li><a href="#referências">Referências</a></li>
+</ul>
+<h2 id="badges-e-contagens-repetidas">Badges e contagens repetidas</h2>
+<h3>Problema</h3>
+<p><code>getNavigationBadge()</code> e <code>Tab::badge()</code> com <code>COUNT(*)</code> executam queries <strong>a cada navegação ou render</strong> da página. Em tabelas grandes, isso degrada a performance mesmo com poucos usuários simultâneos.</p>
+<h3>Solução</h3>
+<ol>
+<li>Centralizar contagens em <a href="../../app/Support/FilamentStatsCache.php"><code>app/Support/FilamentStatsCache.php</code></a>.</li>
+<li>Usar o store definido em <code>config(&#x27;cache.default&#x27;)</code> com <code>remember()</code> e TTL curto (60s neste projeto). Em produção o default é Redis; nos testes, <code>array</code>.</li>
+<li>Invalidar via <strong>Observers</strong> quando os dados mudarem — nunca depender só de TTL longo.</li>
+</ol>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Exemplo: badge de tab em ListUsers
+-&gt;badge(fn (): string =&gt; (string) FilamentStatsCache::usersTabBadges()[&#x27;approved&#x27;])</code></pre></div>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Exemplo: invalidação no UserObserver
+FilamentStatsCache::forgetUsers();</code></pre></div>
+<h3>Quando NÃO cachear</h3>
+<ul>
+<li>Contagens que precisam ser <strong>exatas em tempo real</strong> (ex.: fila de jobs crítica).</li>
+<li>Tabelas pequenas (&lt; 100 registros) onde o custo do cache supera o benefício.</li>
+</ul>
+<h2 id="n1-oculto-em-colunas-com-state">N+1 oculto em colunas com state()</h2>
+<h3>Problema</h3>
+<p>Colunas dot-notation (<code>publisher.name</code>, <code>team.name</code>) recebem eager load automático do Filament. Colunas com <code>-&gt;state(fn ($record) =&gt; ...)</code> que acessam relações <strong>não</strong> recebem esse tratamento.</p>
+<p>Sintomas comuns neste projeto:</p>
+<ul>
+<li><code>$record-&gt;getFirstMedia(&#x27;media&#x27;)</code> na listagem de mídias.</li>
+<li><code>$record-&gt;video()-&gt;value(&#x27;title&#x27;)</code> em vez de <code>$record-&gt;linkedVideo()?-&gt;title</code>.</li>
+<li><code>Team::query()-&gt;whereKey($id)-&gt;value(&#x27;name&#x27;)</code> por linha.</li>
+</ul>
+<h3>Solução</h3>
+<p>Eager load explícito em <code>getEloquentQuery()</code> ou <code>modifyQueryUsing()</code>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>public static function getEloquentQuery(): Builder
+{
+    return parent::getEloquentQuery()-&gt;with([
+        &#x27;video&#x27;,
+        &#x27;team&#x27;,
+        &#x27;media&#x27; =&gt; fn ($query) =&gt; $query-&gt;where(&#x27;collection_name&#x27;, &#x27;media&#x27;),
+    ]);
+}</code></pre></div>
+<p>Use sempre a relação já carregada nos callbacks <code>state()</code>. Em <code>MediaItem</code>, a coluna booleana <code>video</code> colide com a relação <code>video()</code> — use o helper <code>linkedVideo()</code>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Ruim
+-&gt;state(fn ($record) =&gt; $record-&gt;video()-&gt;value(&#x27;title&#x27;))
+
+// Bom
+-&gt;state(fn ($record) =&gt; $record-&gt;linkedVideo()?-&gt;title)</code></pre></div>
+<h3>Ordenação customizada</h3>
+<p>Quando a coluna usa <code>state()</code> mas precisa ser sortável, prefira JOINs na query (como em <code>MediaTable::sortAttachmentName()</code>) em vez de ordenar em PHP.</p>
+<h2 id="colunas-agregadas-sortáveis">Colunas agregadas sortáveis</h2>
+<h3>Problema</h3>
+<p>Colunas com <code>counts(&#x27;orders&#x27;)</code>, <code>sum(&#x27;orders.total&#x27;)</code> ou similares exibem bem, mas <strong><code>-&gt;sortable()</code> dispara subqueries caras</strong> — centenas de ms em tabelas grandes.</p>
+<h3>Solução preventiva</h3>
+<p>Para métricas que precisam ser ordenáveis ou filtráveis:</p>
+<ol>
+<li>Adicionar coluna física na tabela (<code>users.orders_count</code>, <code>users.lifetime_spent</code>).</li>
+<li>Atualizar via Observer/Event quando o dado subjacente mudar.</li>
+<li>Exibir e ordenar pela coluna denormalizada — nunca pela agregação live.</li>
+</ol>
+<p><strong>Não implemente agregações live sortáveis</strong> em produtos derivados deste starter kit sem avaliar volume de dados.</p>
+<h2 id="implementação-neste-projeto">Implementação neste projeto</h2>
+<table class="data"><thead><tr>
+<th>Artefato</th>
+<th>Papel</th>
+</tr></thead><tbody>
+<tr>
+<td><a href="../../app/Support/FilamentStatsCache.php"><code>FilamentStatsCache</code></a></td>
+<td>Agregações via <code>config(&#x27;cache.default&#x27;)</code>, TTL e métodos <code>users()</code>, <code>teams()</code>, <code>media()</code>, <code>usersTabBadges()</code></td>
+</tr>
+<tr>
+<td><a href="../../app/Observers/UserObserver.php"><code>UserObserver</code></a></td>
+<td>Invalida <code>stats:users</code> e <code>stats:users:tabs</code></td>
+</tr>
+<tr>
+<td><a href="../../app/Observers/TeamObserver.php"><code>TeamObserver</code></a></td>
+<td>Invalida <code>stats:teams</code></td>
+</tr>
+<tr>
+<td><a href="../../app/Observers/VideoObserver.php"><code>VideoObserver</code></a></td>
+<td>Invalida <code>stats:media</code> e cache de metadados YouTube</td>
+</tr>
+<tr>
+<td><a href="../../app/Observers/MediaItemObserver.php"><code>MediaItemObserver</code></a></td>
+<td>Invalida <code>stats:media</code></td>
+</tr>
+<tr>
+<td><a href="../../app/Observers/MembershipObserver.php"><code>MembershipObserver</code></a></td>
+<td>Invalida stats de users e teams</td>
+</tr>
+<tr>
+<td><a href="../../app/Filament/Widgets/SystemStats.php"><code>SystemStats</code></a></td>
+<td>Dashboard admin — consome <code>FilamentStatsCache</code></td>
+</tr>
+<tr>
+<td><a href="../../app/Filament/Resources/Users/Pages/ListUsers.php"><code>ListUsers</code></a></td>
+<td>Tabs com badges cacheados</td>
+</tr>
+<tr>
+<td><a href="../../app/Filament/Resources/Media/MediaResource.php"><code>MediaResource</code></a></td>
+<td>Eager load de <code>video</code>, <code>team</code>, <code>media</code></td>
+</tr>
+</tbody></table>
+<p>Chaves de cache utilizadas (store: <code>config(&#x27;cache.default&#x27;)</code>):</p>
+<ul>
+<li><code>stats:users</code></li>
+<li><code>stats:users:tabs</code></li>
+<li><code>stats:teams</code></li>
+<li><code>stats:media</code></li>
+</ul>
+<p>TTL padrão: <strong>60 segundos</strong>.</p>
+<p>Testes: <a href="../../tests/Feature/FilamentStatsCacheTest.php"><code>tests/Feature/FilamentStatsCacheTest.php</code></a> valida reutilização e invalidação via <code>UserObserver</code>.</p>
+<h2 id="checklist-para-novos-resources">Checklist para novos Resources</h2>
+<p>Antes de abrir PR com Resource/Table/Widget Filament:</p>
+<div class="check-item"><span class="check-icon" aria-hidden="true">○</span><span>Todo <code>getNavigationBadge()</code> ou <code>Tab::badge()</code> com COUNT usa cache + observer?</span></div>
+<div class="check-item"><span class="check-icon" aria-hidden="true">○</span><span>Todo <code>-&gt;state()</code> que acessa relação tem <code>with()</code> correspondente na query?</span></div>
+<div class="check-item"><span class="check-icon" aria-hidden="true">○</span><span>Nenhuma coluna agregada (<code>counts</code>, <code>sum</code>, <code>avg</code>) está <code>sortable()</code> sem coluna denormalizada?</span></div>
+<div class="check-item"><span class="check-icon" aria-hidden="true">○</span><span>Widgets de stats reutilizam <code>FilamentStatsCache</code> em vez de queries soltas?</span></div>
+<div class="check-item"><span class="check-icon" aria-hidden="true">○</span><span>Invalidação de cache cobre create/update/delete dos models afetados?</span></div>
+<div class="check-item"><span class="check-icon" aria-hidden="true">○</span><span>Testou com Debugbar ou Query Detector em listagem com 10+ registros?</span></div>
+<h2 id="referências">Referências</h2>
+<ul>
+<li>Vídeo: <a href="https://www.youtube.com/watch?v=eoU6fkxhqmk">3 Filament Performance Tips You May Not Know</a></li>
+<li><a href="../../../manual/05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../../../manual/05-otimizacoes/livewire-computed.html">Livewire Computed</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="cloudflare-page-cache.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Otimização de Cache de Página com Cloudflare</span></a><a class="doc-pagination-card doc-pagination-next" href="laravel-pulse.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Laravel Pulse</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#badges-e-contagens-repetidas" data-toc-target="badges-e-contagens-repetidas">Badges e contagens repetidas</a></li>
+<li><a class="doc-toc-link" href="#n1-oculto-em-colunas-com-state" data-toc-target="n1-oculto-em-colunas-com-state">N+1 oculto em colunas com state()</a></li>
+<li><a class="doc-toc-link" href="#colunas-agregadas-sortáveis" data-toc-target="colunas-agregadas-sortáveis">Colunas agregadas sortáveis</a></li>
+<li><a class="doc-toc-link" href="#implementação-neste-projeto" data-toc-target="implementação-neste-projeto">Implementação neste projeto</a></li>
+<li><a class="doc-toc-link" href="#checklist-para-novos-resources" data-toc-target="checklist-para-novos-resources">Checklist para novos Resources</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Performance no Filament
+
+Guia de otimizações para Resources, Tables e Widgets do painel administrativo, baseado nas práticas do ecossistema Filament/Laravel Daily e no que já está implementado neste projeto.
+
+## Índice
+
+- [Badges e contagens repetidas](#badges-e-contagens-repetidas)
+- [N+1 oculto em colunas com state()](#n1-oculto-em-colunas-com-state)
+- [Colunas agregadas sortáveis](#colunas-agregadas-sortáveis)
+- [Implementação neste projeto](#implementação-neste-projeto)
+- [Checklist para novos Resources](#checklist-para-novos-resources)
+- [Referências](#referências)
+
+## Badges e contagens repetidas
+
+### Problema
+
+`getNavigationBadge()` e `Tab::badge()` com `COUNT(*)` executam queries **a cada navegação ou render** da página. Em tabelas grandes, isso degrada a performance mesmo com poucos usuários simultâneos.
+
+### Solução
+
+1. Centralizar contagens em [`app/Support/FilamentStatsCache.php`](../../app/Support/FilamentStatsCache.php).
+2. Usar o store definido em `config('cache.default')` com `remember()` e TTL curto (60s neste projeto). Em produção o default é Redis; nos testes, `array`.
+3. Invalidar via **Observers** quando os dados mudarem — nunca depender só de TTL longo.
+
+```php
+// Exemplo: badge de tab em ListUsers
+->badge(fn (): string => (string) FilamentStatsCache::usersTabBadges()['approved'])
+```
+
+```php
+// Exemplo: invalidação no UserObserver
+FilamentStatsCache::forgetUsers();
+```
+
+### Quando NÃO cachear
+
+- Contagens que precisam ser **exatas em tempo real** (ex.: fila de jobs crítica).
+- Tabelas pequenas (< 100 registros) onde o custo do cache supera o benefício.
+
+## N+1 oculto em colunas com state()
+
+### Problema
+
+Colunas dot-notation (`publisher.name`, `team.name`) recebem eager load automático do Filament. Colunas com `->state(fn ($record) => ...)` que acessam relações **não** recebem esse tratamento.
+
+Sintomas comuns neste projeto:
+
+- `$record->getFirstMedia('media')` na listagem de mídias.
+- `$record->video()->value('title')` em vez de `$record->linkedVideo()?->title`.
+- `Team::query()->whereKey($id)->value('name')` por linha.
+
+### Solução
+
+Eager load explícito em `getEloquentQuery()` ou `modifyQueryUsing()`:
+
+```php
+public static function getEloquentQuery(): Builder
+{
+    return parent::getEloquentQuery()->with([
+        'video',
+        'team',
+        'media' => fn ($query) => $query->where('collection_name', 'media'),
+    ]);
+}
+```
+
+Use sempre a relação já carregada nos callbacks `state()`. Em `MediaItem`, a coluna booleana `video` colide com a relação `video()` — use o helper `linkedVideo()`:
+
+```php
+// Ruim
+->state(fn ($record) => $record->video()->value('title'))
+
+// Bom
+->state(fn ($record) => $record->linkedVideo()?->title)
+```
+
+### Ordenação customizada
+
+Quando a coluna usa `state()` mas precisa ser sortável, prefira JOINs na query (como em `MediaTable::sortAttachmentName()`) em vez de ordenar em PHP.
+
+## Colunas agregadas sortáveis
+
+### Problema
+
+Colunas com `counts('orders')`, `sum('orders.total')` ou similares exibem bem, mas **`->sortable()` dispara subqueries caras** — centenas de ms em tabelas grandes.
+
+### Solução preventiva
+
+Para métricas que precisam ser ordenáveis ou filtráveis:
+
+1. Adicionar coluna física na tabela (`users.orders_count`, `users.lifetime_spent`).
+2. Atualizar via Observer/Event quando o dado subjacente mudar.
+3. Exibir e ordenar pela coluna denormalizada — nunca pela agregação live.
+
+**Não implemente agregações live sortáveis** em produtos derivados deste starter kit sem avaliar volume de dados.
+
+## Implementação neste projeto
+
+| Artefato | Papel |
+|----------|-------|
+| [`FilamentStatsCache`](../../app/Support/FilamentStatsCache.php) | Agregações via `config('cache.default')`, TTL e métodos `users()`, `teams()`, `media()`, `usersTabBadges()` |
+| [`UserObserver`](../../app/Observers/UserObserver.php) | Invalida `stats:users` e `stats:users:tabs` |
+| [`TeamObserver`](../../app/Observers/TeamObserver.php) | Invalida `stats:teams` |
+| [`VideoObserver`](../../app/Observers/VideoObserver.php) | Invalida `stats:media` e cache de metadados YouTube |
+| [`MediaItemObserver`](../../app/Observers/MediaItemObserver.php) | Invalida `stats:media` |
+| [`MembershipObserver`](../../app/Observers/MembershipObserver.php) | Invalida stats de users e teams |
+| [`SystemStats`](../../app/Filament/Widgets/SystemStats.php) | Dashboard admin — consome `FilamentStatsCache` |
+| [`ListUsers`](../../app/Filament/Resources/Users/Pages/ListUsers.php) | Tabs com badges cacheados |
+| [`MediaResource`](../../app/Filament/Resources/Media/MediaResource.php) | Eager load de `video`, `team`, `media` |
+
+Chaves de cache utilizadas (store: `config('cache.default')`):
+
+- `stats:users`
+- `stats:users:tabs`
+- `stats:teams`
+- `stats:media`
+
+TTL padrão: **60 segundos**.
+
+Testes: [`tests/Feature/FilamentStatsCacheTest.php`](../../tests/Feature/FilamentStatsCacheTest.php) valida reutilização e invalidação via `UserObserver`.
+
+## Checklist para novos Resources
+
+Antes de abrir PR com Resource/Table/Widget Filament:
+
+- [ ] Todo `getNavigationBadge()` ou `Tab::badge()` com COUNT usa cache + observer?
+- [ ] Todo `->state()` que acessa relação tem `with()` correspondente na query?
+- [ ] Nenhuma coluna agregada (`counts`, `sum`, `avg`) está `sortable()` sem coluna denormalizada?
+- [ ] Widgets de stats reutilizam `FilamentStatsCache` em vez de queries soltas?
+- [ ] Invalidação de cache cobre create/update/delete dos models afetados?
+- [ ] Testou com Debugbar ou Query Detector em listagem com 10+ registros?
+
+## Referências
+
+- Vídeo: [3 Filament Performance Tips You May Not Know](https://www.youtube.com/watch?v=eoU6fkxhqmk)
+- [Cache e Redis no Projeto](./cache-e-redis.md)
+- [Livewire Computed](./livewire-computed.md)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

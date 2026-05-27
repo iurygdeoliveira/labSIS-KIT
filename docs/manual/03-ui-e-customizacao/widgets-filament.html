@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Widgets no Filament — Métricas e Componentização no Painel — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao" open><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="widgets-filament.html" class="is-active">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">UI e Customização</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Widgets no Filament — Métricas e Componentização no Painel</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">03 — UI e Customização</p>
+<h1 class="doc-title">Widgets no Filament — Métricas e Componentização no Painel</h1>
+</header>
+<div class="prose-content">
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#introdução">Introdução</a></li>
+<li><a href="#por-que-usar-widgets">Por que usar Widgets</a></li>
+<li><a href="#widgets-de-stats-no-projeto">Widgets de stats no projeto</a></li>
+<li><a href="#exemplo-usersstats">Exemplo: <code>UsersStats</code></a></li>
+<li><a href="#onde-os-widgets-são-exibidos">Onde os Widgets são exibidos</a></li>
+<li><a href="#passo-a-passo-para-criar-um-widget">Passo a passo para criar um Widget</a></li>
+<li><a href="#referências">Referências</a></li>
+</ul>
+<h2 id="introdução">Introdução</h2>
+<p>Widgets no Filament são componentes reutilizáveis que exibem blocos de informação, como métricas, gráficos e listas. Eles ajudam a destacar indicadores e consolidar lógicas de consulta/transformação de dados em um único lugar, mantendo o código organizado e fácil de manter.</p>
+<h2 id="por-que-usar-widgets">Por que usar Widgets</h2>
+<ul>
+<li><strong>Métricas visíveis</strong>: Exibir números-chave (ex.: total de usuários, itens suspensos, etc.) diretamente no cabeçalho de páginas ou no Dashboard.</li>
+<li><strong>Reuso</strong>: Um mesmo widget pode aparecer na listagem do recurso e no painel principal sem duplicar lógica.</li>
+<li><strong>Performance</strong>: Combine <code>FilamentStatsCache</code> (cache entre requisições) com <code>#[Computed]</code> do Livewire (memoização no mesmo render).</li>
+</ul>
+<h2 id="widgets-de-stats-no-projeto">Widgets de stats no projeto</h2>
+<table class="data"><thead><tr>
+<th>Widget</th>
+<th>Arquivo</th>
+<th>Onde aparece</th>
+</tr></thead><tbody>
+<tr>
+<td><code>SystemStats</code></td>
+<td><code>app/Filament/Widgets/SystemStats.php</code></td>
+<td>Dashboard admin (auto-descoberto)</td>
+</tr>
+<tr>
+<td><code>UsersStats</code></td>
+<td><code>app/Filament/Resources/Users/Widgets/UsersStats.php</code></td>
+<td>Cabeçalho de <code>ListUsers</code></td>
+</tr>
+<tr>
+<td><code>MediaStats</code></td>
+<td><code>app/Filament/Resources/Media/Widgets/MediaStats.php</code></td>
+<td>Cabeçalho de <code>ListMedia</code></td>
+</tr>
+<tr>
+<td><code>TeamStats</code></td>
+<td><code>app/Filament/Resources/Teams/Widgets/TeamStats.php</code></td>
+<td>Cabeçalho de <code>ListTeams</code></td>
+</tr>
+</tbody></table>
+<p>Todos consomem <a href="../../app/Support/FilamentStatsCache.php"><code>FilamentStatsCache</code></a> para evitar queries repetidas. Consulte <a href="../../../manual/05-otimizacoes/cache-e-redis.html">Cache e Redis</a>.</p>
+<h2 id="exemplo-usersstats">Exemplo: <code>UsersStats</code></h2>
+<p>Arquivo: <code>app/Filament/Resources/Users/Widgets/UsersStats.php</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use App\Support\FilamentStatsCache;
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
+use Livewire\Attributes\Computed;
+
+class UsersStats extends BaseWidget
+{
+    #[Computed]
+    protected function summary(): array
+    {
+        $stats = FilamentStatsCache::users();
+
+        return [
+            &#x27;total&#x27; =&gt; $stats[&#x27;total&#x27;],
+            &#x27;suspended&#x27; =&gt; $stats[&#x27;suspended&#x27;],
+            &#x27;verified&#x27; =&gt; $stats[&#x27;verified&#x27;],
+            &#x27;unapproved&#x27; =&gt; $stats[&#x27;unapproved&#x27;],
+        ];
+    }
+
+    #[Computed]
+    protected function percentages(): array
+    {
+        $total = $this-&gt;summary[&#x27;total&#x27;];
+
+        return [
+            &#x27;verified&#x27; =&gt; $total &gt; 0 ? round(($this-&gt;summary[&#x27;verified&#x27;] / $total) * 100, 1) : 0,
+            // ...
+        ];
+    }
+
+    protected function getStats(): array
+    {
+        $summary = $this-&gt;summary;
+        $percentages = $this-&gt;percentages;
+
+        return [
+            Stat::make(&#x27;Total de Usuários&#x27;, number_format($summary[&#x27;total&#x27;]))
+                -&gt;description(&#x27;Cadastrados no sistema&#x27;),
+            Stat::make(&#x27;Usuários Verificados&#x27;, number_format($summary[&#x27;verified&#x27;]))
+                -&gt;description(&quot;{$percentages[&#x27;verified&#x27;]}% do total&quot;),
+            // ...
+        ];
+    }
+}</code></pre></div>
+<h2 id="onde-os-widgets-são-exibidos">Onde os Widgets são exibidos</h2>
+<ol>
+<li><strong>Na listagem do recurso (<code>ListUsers</code>)</strong> — cabeçalho da página:</li>
+</ol>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use App\Filament\Resources\Users\Widgets\UsersStats;
+use Filament\Resources\Pages\ListRecords;
+
+class ListUsers extends ListRecords
+{
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            UsersStats::class,
+        ];
+    }
+}</code></pre></div>
+<ol>
+<li><strong>No painel Admin (Dashboard)</strong> — auto-descoberta de widgets globais:</li>
+</ol>
+<p>Arquivo: <code>app/Providers/Filament/AdminPanelProvider.php</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>$panel = $panel
+    // ...
+    -&gt;discoverWidgets(in: app_path(&#x27;Filament/Widgets&#x27;), for: &#x27;App\\Filament\\Widgets&#x27;);</code></pre></div>
+<p>Widgets em <code>app/Filament/Widgets/</code> (como <code>SystemStats</code>) aparecem automaticamente no Dashboard.</p>
+<h2 id="passo-a-passo-para-criar-um-widget">Passo a passo para criar um Widget</h2>
+<ol>
+<li><strong>Criar a classe do widget</strong></li>
+</ol>
+<ul>
+<li>Extenda <code>StatsOverviewWidget</code> (para cards) ou outra base de widget necessária.</li>
+<li>Encapsule agregações em <code>FilamentStatsCache</code> (ou método dedicado no cache).</li>
+<li>Marque transformações derivadas com <code>#[Computed]</code>.</li>
+</ul>
+<ol>
+<li><strong>Registrar na página do recurso</strong> (opcional)</li>
+</ol>
+<ul>
+<li>Sobrescreva <code>getHeaderWidgets()</code> na página <code>ListRecords</code> do recurso.</li>
+</ul>
+<ol>
+<li><strong>Registrar no painel</strong> (opcional)</li>
+</ol>
+<ul>
+<li>Coloque widgets globais em <code>app/Filament/Widgets/</code> para auto-descoberta, ou registre manualmente em <code>AdminPanelProvider</code>.</li>
+</ul>
+<ol>
+<li><strong>Invalidar cache</strong></li>
+</ol>
+<ul>
+<li>Registre ou atualize Observers que chamam <code>FilamentStatsCache::forget*()</code> quando os dados mudarem.</li>
+</ul>
+<ol>
+<li><strong>Ajustar colunas (responsivo)</strong></li>
+</ol>
+<ul>
+<li>Se precisar controlar a largura/colunas dos cards:</li>
+</ul>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>protected function getColumns(): int|array
+{
+    return [
+        &#x27;sm&#x27; =&gt; 2,
+        &#x27;md&#x27; =&gt; 3,
+        &#x27;xl&#x27; =&gt; 5,
+    ];
+}</code></pre></div>
+<h2 id="referências">Referências</h2>
+<ul>
+<li>Documentação Filament — Widgets: <code>https://filamentphp.com/docs/5.x/widgets/overview</code></li>
+<li><a href="../../app/Filament/Resources/Users/Widgets/UsersStats.php">Widget: UsersStats</a></li>
+<li><a href="../../app/Support/FilamentStatsCache.php">FilamentStatsCache</a></li>
+<li><a href="../../../manual/05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="customizando-logo.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">🎨 Customizando o Logotipo nos Painéis Filament</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#introdução" data-toc-target="introdução">Introdução</a></li>
+<li><a class="doc-toc-link" href="#por-que-usar-widgets" data-toc-target="por-que-usar-widgets">Por que usar Widgets</a></li>
+<li><a class="doc-toc-link" href="#widgets-de-stats-no-projeto" data-toc-target="widgets-de-stats-no-projeto">Widgets de stats no projeto</a></li>
+<li><a class="doc-toc-link" href="#exemplo-usersstats" data-toc-target="exemplo-usersstats">Exemplo: `UsersStats`</a></li>
+<li><a class="doc-toc-link" href="#onde-os-widgets-são-exibidos" data-toc-target="onde-os-widgets-são-exibidos">Onde os Widgets são exibidos</a></li>
+<li><a class="doc-toc-link" href="#passo-a-passo-para-criar-um-widget" data-toc-target="passo-a-passo-para-criar-um-widget">Passo a passo para criar um Widget</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Widgets no Filament — Métricas e Componentização no Painel
+
+## 📋 Índice
+
+- [Introdução](#introdução)
+- [Por que usar Widgets](#por-que-usar-widgets)
+- [Widgets de stats no projeto](#widgets-de-stats-no-projeto)
+- [Exemplo: `UsersStats`](#exemplo-usersstats)
+- [Onde os Widgets são exibidos](#onde-os-widgets-são-exibidos)
+- [Passo a passo para criar um Widget](#passo-a-passo-para-criar-um-widget)
+- [Referências](#referências)
+
+## Introdução
+
+Widgets no Filament são componentes reutilizáveis que exibem blocos de informação, como métricas, gráficos e listas. Eles ajudam a destacar indicadores e consolidar lógicas de consulta/transformação de dados em um único lugar, mantendo o código organizado e fácil de manter.
+
+## Por que usar Widgets
+
+- **Métricas visíveis**: Exibir números-chave (ex.: total de usuários, itens suspensos, etc.) diretamente no cabeçalho de páginas ou no Dashboard.
+- **Reuso**: Um mesmo widget pode aparecer na listagem do recurso e no painel principal sem duplicar lógica.
+- **Performance**: Combine `FilamentStatsCache` (cache entre requisições) com `#[Computed]` do Livewire (memoização no mesmo render).
+
+## Widgets de stats no projeto
+
+| Widget | Arquivo | Onde aparece |
+|--------|---------|--------------|
+| `SystemStats` | `app/Filament/Widgets/SystemStats.php` | Dashboard admin (auto-descoberto) |
+| `UsersStats` | `app/Filament/Resources/Users/Widgets/UsersStats.php` | Cabeçalho de `ListUsers` |
+| `MediaStats` | `app/Filament/Resources/Media/Widgets/MediaStats.php` | Cabeçalho de `ListMedia` |
+| `TeamStats` | `app/Filament/Resources/Teams/Widgets/TeamStats.php` | Cabeçalho de `ListTeams` |
+
+Todos consomem [`FilamentStatsCache`](../../app/Support/FilamentStatsCache.php) para evitar queries repetidas. Consulte [Cache e Redis](../05-otimizacoes/cache-e-redis.md).
+
+## Exemplo: `UsersStats`
+
+Arquivo: `app/Filament/Resources/Users/Widgets/UsersStats.php`
+
+```php
+use App\Support\FilamentStatsCache;
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
+use Livewire\Attributes\Computed;
+
+class UsersStats extends BaseWidget
+{
+    #[Computed]
+    protected function summary(): array
+    {
+        $stats = FilamentStatsCache::users();
+
+        return [
+            'total' => $stats['total'],
+            'suspended' => $stats['suspended'],
+            'verified' => $stats['verified'],
+            'unapproved' => $stats['unapproved'],
+        ];
+    }
+
+    #[Computed]
+    protected function percentages(): array
+    {
+        $total = $this->summary['total'];
+
+        return [
+            'verified' => $total > 0 ? round(($this->summary['verified'] / $total) * 100, 1) : 0,
+            // ...
+        ];
+    }
+
+    protected function getStats(): array
+    {
+        $summary = $this->summary;
+        $percentages = $this->percentages;
+
+        return [
+            Stat::make('Total de Usuários', number_format($summary['total']))
+                ->description('Cadastrados no sistema'),
+            Stat::make('Usuários Verificados', number_format($summary['verified']))
+                ->description("{$percentages['verified']}% do total"),
+            // ...
+        ];
+    }
+}
+```
+
+## Onde os Widgets são exibidos
+
+1. **Na listagem do recurso (`ListUsers`)** — cabeçalho da página:
+
+```php
+use App\Filament\Resources\Users\Widgets\UsersStats;
+use Filament\Resources\Pages\ListRecords;
+
+class ListUsers extends ListRecords
+{
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            UsersStats::class,
+        ];
+    }
+}
+```
+
+2. **No painel Admin (Dashboard)** — auto-descoberta de widgets globais:
+
+Arquivo: `app/Providers/Filament/AdminPanelProvider.php`
+
+```php
+$panel = $panel
+    // ...
+    ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets');
+```
+
+Widgets em `app/Filament/Widgets/` (como `SystemStats`) aparecem automaticamente no Dashboard.
+
+## Passo a passo para criar um Widget
+
+1. **Criar a classe do widget**
+   - Extenda `StatsOverviewWidget` (para cards) ou outra base de widget necessária.
+   - Encapsule agregações em `FilamentStatsCache` (ou método dedicado no cache).
+   - Marque transformações derivadas com `#[Computed]`.
+
+2. **Registrar na página do recurso** (opcional)
+   - Sobrescreva `getHeaderWidgets()` na página `ListRecords` do recurso.
+
+3. **Registrar no painel** (opcional)
+   - Coloque widgets globais em `app/Filament/Widgets/` para auto-descoberta, ou registre manualmente em `AdminPanelProvider`.
+
+4. **Invalidar cache**
+   - Registre ou atualize Observers que chamam `FilamentStatsCache::forget*()` quando os dados mudarem.
+
+5. **Ajustar colunas (responsivo)**
+   - Se precisar controlar a largura/colunas dos cards:
+
+```php
+protected function getColumns(): int|array
+{
+    return [
+        'sm' => 2,
+        'md' => 3,
+        'xl' => 5,
+    ];
+}
+```
+
+## Referências
+
+- Documentação Filament — Widgets: `https://filamentphp.com/docs/5.x/widgets/overview`
+- [Widget: UsersStats](../../app/Filament/Resources/Users/Widgets/UsersStats.php)
+- [FilamentStatsCache](../../app/Support/FilamentStatsCache.php)
+- [Performance no Filament](../05-otimizacoes/filament-performance.md)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sistema de Suspensão de Usuários no Filament — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca" open><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="suspensao-usuarios.html" class="is-active">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Autenticação e Segurança</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Sistema de Suspensão de Usuários no Filament</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">02 — Autenticação e Segurança</p>
+<h1 class="doc-title">Sistema de Suspensão de Usuários no Filament</h1>
+</header>
+<div class="prose-content">
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#introdução">Introdução</a></li>
+<li><a href="#como-funciona-a-suspensão">Como Funciona a Suspensão</a></li>
+<li><a href="#arquitetura-da-implementação">Arquitetura da Implementação</a></li>
+<li><a href="#configuração-do-banco-de-dados">Configuração do Banco de Dados</a></li>
+<li><a href="#modelo-user">Modelo User</a></li>
+<li><a href="#interface-do-filament">Interface do Filament</a></li>
+<li><a href="#lógica-de-negócio">Lógica de Negócio</a></li>
+<li><a href="#segurança-e-validações">Segurança e Validações</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#conclusão">Conclusão</a></li>
+</ul>
+<h2 id="introdução">Introdução</h2>
+<p>Este projeto implementa um sistema completo de <strong>Suspensão de Usuários</strong> no Filament PHP. O sistema permite que administradores suspendam contas de usuários por motivos específicos, impedindo o acesso ao painel administrativo e fornecendo feedback claro sobre o status da conta.</p>
+<h2 id="como-funciona-a-suspensão">Como Funciona a Suspensão</h2>
+<p>A suspensão de usuários funciona através de um sistema de flags e timestamps:</p>
+<ol>
+<li><strong>Flag de Suspensão</strong>: Campo <code>is_suspended</code> (boolean) indica se o usuário está suspenso</li>
+<li><strong>Timestamp de Suspensão</strong>: Campo <code>suspended_at</code> registra quando a suspensão foi aplicada</li>
+<li><strong>Motivo da Suspensão</strong>: Campo <code>suspension_reason</code> armazena o motivo da suspensão</li>
+<li><strong>Bloqueio de Acesso</strong>: Usuários suspensos não conseguem acessar o painel</li>
+</ol>
+<h2 id="arquitetura-da-implementação">Arquitetura da Implementação</h2>
+<h3>1. Estrutura do Banco de Dados</h3>
+<p>A tabela <code>users</code> possui campos específicos para gerenciar suspensões:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// database/migrations/0001_01_01_000000_create_users_table.php
+
+Schema::create(&#x27;users&#x27;, function (Blueprint $table) {
+    // ... outros campos
+    $table-&gt;boolean(&#x27;is_suspended&#x27;)-&gt;default(false);        // Flag de suspensão
+    $table-&gt;timestamp(&#x27;suspended_at&#x27;)-&gt;nullable();          // Data/hora da suspensão
+    $table-&gt;text(&#x27;suspension_reason&#x27;)-&gt;nullable();          // Motivo da suspensão
+    // ... outros campos
+});</code></pre></div>
+<h3>2. Modelo User</h3>
+<p>O modelo <code>User</code> implementa a lógica de suspensão:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Models/User.php
+
+class User extends Authenticatable implements FilamentUser, HasAvatar
+{
+    protected $fillable = [
+        &#x27;uuid&#x27;,
+        &#x27;name&#x27;,
+        &#x27;email&#x27;,
+        &#x27;password&#x27;,
+        &#x27;avatar_url&#x27;,
+        &#x27;email_verified_at&#x27;,
+        &#x27;is_suspended&#x27;,           // Campo de suspensão
+        &#x27;suspended_at&#x27;,           // Data da suspensão
+        &#x27;suspension_reason&#x27;,      // Motivo da suspensão
+        &#x27;remember_token&#x27;,
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            &#x27;password&#x27; =&gt; &#x27;hashed&#x27;,
+            &#x27;is_suspended&#x27; =&gt; &#x27;boolean&#x27;,           // Cast para boolean
+            &#x27;suspended_at&#x27; =&gt; &#x27;datetime:d/m/Y H:i&#x27;, // Cast para datetime
+            // ... outros casts
+        ];
+    }
+
+    // Método para verificar se o usuário está suspenso
+    public function isSuspended(): bool
+    {
+        return $this-&gt;is_suspended;
+    }
+
+    // Controle de acesso ao painel
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if (! $this-&gt;hasVerifiedEmail()) {
+            return false;
+        }
+
+        if ($this-&gt;isSuspended()) {
+            return false;
+        }
+
+        return true;
+    }
+}</code></pre></div>
+<h2 id="interface-do-filament">Interface do Filament</h2>
+<h3>1. Tabela de Usuários</h3>
+<p>A tabela exibe o status de suspensão com badges coloridos:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Filament/Resources/Users/Tables/UsersTable.php
+
+use Filament\Tables\Columns\TextColumn;
+
+class UsersTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            -&gt;columns([
+                ImageColumn::make(&#x27;avatar_url&#x27;)
+                    -&gt;label(&#x27;Avatar&#x27;)
+                    -&gt;circular()
+                    -&gt;defaultImageUrl(fn (User $record): string =&gt; $record-&gt;getFilamentAvatarUrl())
+                    -&gt;extraImgAttributes([&#x27;alt&#x27; =&gt; &#x27;Avatar do usuário&#x27;]),
+                TextColumn::make(&#x27;name&#x27;),
+                TextColumn::make(&#x27;email&#x27;)
+                    -&gt;label(&#x27;Email address&#x27;),
+                TextColumn::make(&#x27;is_suspended&#x27;)
+                    -&gt;label(&#x27;Status&#x27;)
+                    -&gt;formatStateUsing(fn (User $record): string =&gt; 
+                        $record-&gt;is_suspended ? __(&#x27;Suspenso&#x27;) : __(&#x27;Autorizado&#x27;)
+                    )
+                    -&gt;badge()
+                    -&gt;color(fn (User $record): string =&gt; 
+                        $record-&gt;is_suspended ? &#x27;danger&#x27; : &#x27;success&#x27;
+                    )
+                    -&gt;icon(fn (User $record): string =&gt; 
+                        $record-&gt;is_suspended ? &#x27;heroicon-c-no-symbol&#x27; : &#x27;heroicon-c-check&#x27;
+                    )
+                    -&gt;alignCenter(),
+            ]);
+    }
+}</code></pre></div>
+<h3>2. Formulário de Edição</h3>
+<p>O formulário permite gerenciar a suspensão com validações:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Filament/Resources/Users/Schemas/UserForm.php
+
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Get;
+use Illuminate\Support\Facades\Auth;
+
+class UserForm
+{
+    public static function configure(Schema $schema): Schema
+    {
+        return $schema
+            -&gt;components([
+                // ... outros campos
+                
+                Toggle::make(&#x27;is_suspended&#x27;)
+                    -&gt;label(fn (Get $get): string =&gt; 
+                        $get(&#x27;is_suspended&#x27;) ? &#x27;Usuário não autorizado&#x27; : &#x27;Usuário autorizado&#x27;
+                    )
+                    -&gt;onColor(&#x27;danger&#x27;)
+                    -&gt;offColor(&#x27;success&#x27;)
+                    -&gt;onIcon(&#x27;heroicon-c-no-symbol&#x27;)
+                    -&gt;offIcon(&#x27;heroicon-c-check&#x27;)
+                    -&gt;default(fn ($record): bool =&gt; (bool) ($record?-&gt;is_suspended))
+                    -&gt;disabled(fn (?User $record): bool =&gt; 
+                        $record?-&gt;getKey() === Auth::id()
+                    )
+                    -&gt;hint(fn (?User $record): ?string =&gt; 
+                        $record?-&gt;getKey() === Auth::id() 
+                            ? __(&#x27;Você não pode suspender a si mesmo.&#x27;) 
+                            : null
+                    )
+                    -&gt;hintColor(&#x27;danger&#x27;)
+                    -&gt;hidden(fn (string $operation): bool =&gt; $operation === &#x27;create&#x27;),
+                
+                TextInput::make(&#x27;suspension_reason&#x27;)
+                    -&gt;label(&#x27;Motivo da suspensão&#x27;)
+                    -&gt;disabled(fn (?User $record): bool =&gt; 
+                        $record?-&gt;getKey() === Auth::id()
+                    )
+                    -&gt;hidden(fn (string $operation): bool =&gt; $operation === &#x27;create&#x27;),
+            ]);
+    }
+}</code></pre></div>
+<h3>3. Página de Edição</h3>
+<p>A página de edição implementa a lógica de negócio para suspensão:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Filament/Resources/Users/Pages/EditUser.php
+
+use Filament\Actions\DeleteAction;
+use Illuminate\Support\Facades\Auth;
+
+class EditUser extends EditRecord
+{
+    protected function getHeaderActions(): array
+    {
+        $actions = [
+            $this-&gt;getBackButtonAction(),
+            ViewAction::make(),
+        ];
+
+        // Só mostra o botão de deletar se não for o usuário logado
+        if ($this-&gt;record-&gt;getKey() !== Auth::id()) {
+            $actions[] = DeleteAction::make()
+                -&gt;successNotification(Notification::make())
+                -&gt;after(fn () =&gt; $this-&gt;notifySuccess(&#x27;Usuário excluído com sucesso.&#x27;));
+        }
+
+        return $actions;
+    }
+
+    protected function afterSave(): void
+    {
+        // Sincroniza suspended_at com is_suspended
+        if ($this-&gt;record-&gt;is_suspended &amp;&amp; $this-&gt;record-&gt;suspended_at === null) {
+            $this-&gt;record-&gt;suspended_at = now();
+            $this-&gt;record-&gt;save();
+        }
+
+        if (! $this-&gt;record-&gt;is_suspended &amp;&amp; $this-&gt;record-&gt;suspended_at !== null) {
+            $this-&gt;record-&gt;suspended_at = null;
+            $this-&gt;record-&gt;save();
+        }
+
+        // Previne auto-suspensão
+        if ($this-&gt;record-&gt;getKey() === Auth::id() &amp;&amp; $this-&gt;record-&gt;is_suspended) {
+            $this-&gt;record-&gt;forceFill([
+                &#x27;is_suspended&#x27; =&gt; false,
+                &#x27;suspended_at&#x27; =&gt; null,
+            ])-&gt;save();
+
+            $this-&gt;notifyDanger(&#x27;Você não pode suspender a si mesmo. Alteração revertida.&#x27;);
+            $this-&gt;redirect($this-&gt;getResource()::getUrl(&#x27;index&#x27;));
+            return;
+        }
+
+        $this-&gt;notifySuccess(&#x27;Usuário atualizado com sucesso.&#x27;);
+        $this-&gt;redirect($this-&gt;getResource()::getUrl(&#x27;index&#x27;));
+    }
+}</code></pre></div>
+<h3>4. Infolist de Usuário</h3>
+<p>A visualização detalhada organiza as informações de suspensão em abas:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Filament/Resources/Users/Schemas/UserInfolist.php
+
+use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Tabs;
+use Filament\Support\Icons\Heroicon;
+
+class UserInfolist
+{
+    public static function configure(Schema $schema): Schema
+    {
+        return $schema
+            -&gt;components([
+                Tabs::make(&#x27;User Details&#x27;)
+                    -&gt;tabs([
+                        // ... outras abas
+                        
+                        Tab::make(&#x27;Suspensão&#x27;)
+                            -&gt;icon(Heroicon::NoSymbol)
+                            -&gt;schema([
+                                TextEntry::make(&#x27;is_suspended&#x27;)
+                                    -&gt;label(&#x27;Status&#x27;)
+                                    -&gt;formatStateUsing(fn (?bool $state): string =&gt; 
+                                        $state ? __(&#x27;Suspenso&#x27;) : __(&#x27;Autorizado&#x27;)
+                                    )
+                                    -&gt;badge()
+                                    -&gt;color(fn (?bool $state): string =&gt; 
+                                        $state ? &#x27;danger&#x27; : &#x27;success&#x27;
+                                    )
+                                    -&gt;icon(fn (?bool $state): string =&gt; 
+                                        $state ? &#x27;heroicon-c-no-symbol&#x27; : &#x27;heroicon-c-check&#x27;
+                                    ),
+                                TextEntry::make(&#x27;suspended_at&#x27;)
+                                    -&gt;label(&#x27;Suspenso em&#x27;)
+                                    -&gt;dateTime(&#x27;d-m-Y H:i&#x27;)
+                                    -&gt;placeholder(&#x27;-&#x27;),
+                                TextEntry::make(&#x27;suspension_reason&#x27;)
+                                    -&gt;label(&#x27;Motivo da suspensão&#x27;)
+                                    -&gt;placeholder(&#x27;-&#x27;),
+                            ]),
+                    ])-&gt;persistTabInQueryString(),
+            ]);
+    }
+}</code></pre></div>
+<h2 id="lógica-de-negócio">Lógica de Negócio</h2>
+<h3>1. Sincronização Automática</h3>
+<p>O sistema sincroniza automaticamente os campos <code>is_suspended</code> e <code>suspended_at</code>:</p>
+<ul>
+<li><strong>Ao suspender</strong>: Define <code>is_suspended = true</code> e <code>suspended_at = now()</code></li>
+<li><strong>Ao reativar</strong>: Define <code>is_suspended = false</code> e <code>suspended_at = null</code></li>
+</ul>
+<h3>2. Prevenção de Auto-Suspensão</h3>
+<p>Usuários não podem suspender suas próprias contas:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Campo desabilitado para o usuário logado
+-&gt;disabled(fn (?User $record): bool =&gt; $record?-&gt;getKey() === Auth::id())
+
+// Dica explicativa
+-&gt;hint(fn (?User $record): ?string =&gt; 
+    $record?-&gt;getKey() === Auth::id() 
+        ? __(&#x27;Você não pode suspender a si mesmo.&#x27;) 
+        : null
+)</code></pre></div>
+<h3>3. Controle de Acesso</h3>
+<p>Usuários suspensos são automaticamente bloqueados do painel:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>public function canAccessPanel(Panel $panel): bool
+{
+    if ($this-&gt;isSuspended()) {
+        return false;
+    }
+    return true;
+}</code></pre></div>
+<h2 id="segurança-e-validações">Segurança e Validações</h2>
+<h3>1. Validações de Segurança</h3>
+<ul>
+<li>✅ <strong>Auto-suspensão bloqueada</strong>: Usuários não podem suspender a si mesmos</li>
+<li>✅ <strong>Campos protegidos</strong>: Motivo da suspensão fica desabilitado para auto-edição</li>
+<li>✅ <strong>Redirecionamento seguro</strong>: Após edição, usuário é redirecionado para a listagem</li>
+<li>✅ <strong>Notificações claras</strong>: Feedback visual para todas as ações</li>
+</ul>
+<h3>2. Campos Ocultos na Criação</h3>
+<p>Os campos de suspensão só aparecem na edição:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>-&gt;hidden(fn (string $operation): bool =&gt; $operation === &#x27;create&#x27;)</code></pre></div>
+<h3>3. Controle de Ações</h3>
+<p>Botões de ação são condicionais baseados no usuário logado:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Botão de deletar só aparece para outros usuários
+if ($this-&gt;record-&gt;getKey() !== Auth::id()) {
+    $actions[] = DeleteAction::make();
+}</code></pre></div>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3>1. Problemas Comuns</h3>
+<p><strong>Usuário suspenso ainda consegue acessar o painel:</strong></p>
+<ul>
+<li>Verifique se o método <code>canAccessPanel()</code> está sendo chamado</li>
+<li>Confirme se o campo <code>is_suspended</code> está sendo atualizado corretamente</li>
+</ul>
+<p><strong>Campo <code>suspended_at</code> não está sendo preenchido:</strong></p>
+<ul>
+<li>Verifique se o método <code>afterSave()</code> está sendo executado</li>
+<li>Confirme se a lógica de sincronização está funcionando</li>
+</ul>
+<p><strong>Toggle não está funcionando:</strong></p>
+<ul>
+<li>Verifique se o campo está sendo salvo corretamente no banco</li>
+<li>Confirme se não há conflitos de JavaScript</li>
+</ul>
+<h2 id="conclusão">Conclusão</h2>
+<p>O sistema de suspensão de usuários implementado oferece:</p>
+<ul>
+<li>🔒 <strong>Segurança robusta</strong> com validações automáticas</li>
+<li>🎯 <strong>Interface intuitiva</strong> com feedback visual claro</li>
+<li>🛡️ <strong>Proteção contra auto-suspensão</strong> para evitar bloqueios acidentais</li>
+<li>📊 <strong>Organização clara</strong> das informações em abas</li>
+<li>🔄 <strong>Sincronização automática</strong> entre campos relacionados</li>
+<li>🚫 <strong>Bloqueio automático</strong> de usuários suspensos</li>
+</ul>
+<p>Este sistema garante que administradores tenham controle total sobre o acesso dos usuários ao painel, mantendo a segurança e a usabilidade da aplicação.</p>
+<h3>📚 <strong>Para Mais Informações</strong></h3>
+<p>Para obter informações mais detalhadas sobre implementação de suspensão de contas no Laravel, consulte o artigo oficial do Laravel News:</p>
+<p><strong><a href="https://laravel-news.com/implementing-account-suspension-in-laravel">Implementing Account Suspension in Laravel</a></strong></p>
+<p>Este artigo fornece insights adicionais sobre as melhores práticas e padrões recomendados para sistemas de suspensão de usuários.</p>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="/app/Models/User.php">Model: User</a></li>
+<li><a href="/app/Filament/Resources/Users/UsersResource.php">Resource: Users</a></li>
+<li><a href="/database/migrations/0001_01_01_000000_create_users_table.php">Migration: Users Table</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="roles-e-permissions.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Sistema de Roles e Permissions</span></a><a class="doc-pagination-card doc-pagination-next" href="tenancy-e-teams.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Tenancy E Teams</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#introdução" data-toc-target="introdução">Introdução</a></li>
+<li><a class="doc-toc-link" href="#como-funciona-a-suspensão" data-toc-target="como-funciona-a-suspensão">Como Funciona a Suspensão</a></li>
+<li><a class="doc-toc-link" href="#arquitetura-da-implementação" data-toc-target="arquitetura-da-implementação">Arquitetura da Implementação</a></li>
+<li><a class="doc-toc-link" href="#interface-do-filament" data-toc-target="interface-do-filament">Interface do Filament</a></li>
+<li><a class="doc-toc-link" href="#lógica-de-negócio" data-toc-target="lógica-de-negócio">Lógica de Negócio</a></li>
+<li><a class="doc-toc-link" href="#segurança-e-validações" data-toc-target="segurança-e-validações">Segurança e Validações</a></li>
+<li><a class="doc-toc-link" href="#troubleshooting" data-toc-target="troubleshooting">Troubleshooting</a></li>
+<li><a class="doc-toc-link" href="#conclusão" data-toc-target="conclusão">Conclusão</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Sistema de Suspensão de Usuários no Filament
+
+## 📋 Índice
+
+- [Introdução](#introdução)
+- [Como Funciona a Suspensão](#como-funciona-a-suspensão)
+- [Arquitetura da Implementação](#arquitetura-da-implementação)
+- [Configuração do Banco de Dados](#configuração-do-banco-de-dados)
+- [Modelo User](#modelo-user)
+- [Interface do Filament](#interface-do-filament)
+- [Lógica de Negócio](#lógica-de-negócio)
+- [Segurança e Validações](#segurança-e-validações)
+- [Troubleshooting](#troubleshooting)
+- [Conclusão](#conclusão)
+
+## Introdução
+
+Este projeto implementa um sistema completo de **Suspensão de Usuários** no Filament PHP. O sistema permite que administradores suspendam contas de usuários por motivos específicos, impedindo o acesso ao painel administrativo e fornecendo feedback claro sobre o status da conta.
+
+## Como Funciona a Suspensão
+
+A suspensão de usuários funciona através de um sistema de flags e timestamps:
+
+1. **Flag de Suspensão**: Campo `is_suspended` (boolean) indica se o usuário está suspenso
+2. **Timestamp de Suspensão**: Campo `suspended_at` registra quando a suspensão foi aplicada
+3. **Motivo da Suspensão**: Campo `suspension_reason` armazena o motivo da suspensão
+4. **Bloqueio de Acesso**: Usuários suspensos não conseguem acessar o painel
+
+## Arquitetura da Implementação
+
+### 1. Estrutura do Banco de Dados
+
+A tabela `users` possui campos específicos para gerenciar suspensões:
+
+```php
+// database/migrations/0001_01_01_000000_create_users_table.php
+
+Schema::create('users', function (Blueprint $table) {
+    // ... outros campos
+    $table->boolean('is_suspended')->default(false);        // Flag de suspensão
+    $table->timestamp('suspended_at')->nullable();          // Data/hora da suspensão
+    $table->text('suspension_reason')->nullable();          // Motivo da suspensão
+    // ... outros campos
+});
+```
+
+### 2. Modelo User
+
+O modelo `User` implementa a lógica de suspensão:
+
+```php
+// app/Models/User.php
+
+class User extends Authenticatable implements FilamentUser, HasAvatar
+{
+    protected $fillable = [
+        'uuid',
+        'name',
+        'email',
+        'password',
+        'avatar_url',
+        'email_verified_at',
+        'is_suspended',           // Campo de suspensão
+        'suspended_at',           // Data da suspensão
+        'suspension_reason',      // Motivo da suspensão
+        'remember_token',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+            'is_suspended' => 'boolean',           // Cast para boolean
+            'suspended_at' => 'datetime:d/m/Y H:i', // Cast para datetime
+            // ... outros casts
+        ];
+    }
+
+    // Método para verificar se o usuário está suspenso
+    public function isSuspended(): bool
+    {
+        return $this->is_suspended;
+    }
+
+    // Controle de acesso ao painel
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if (! $this->hasVerifiedEmail()) {
+            return false;
+        }
+
+        if ($this->isSuspended()) {
+            return false;
+        }
+
+        return true;
+    }
+}
+```
+
+## Interface do Filament
+
+### 1. Tabela de Usuários
+
+A tabela exibe o status de suspensão com badges coloridos:
+
+```php
+// app/Filament/Resources/Users/Tables/UsersTable.php
+
+use Filament\Tables\Columns\TextColumn;
+
+class UsersTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                ImageColumn::make('avatar_url')
+                    ->label('Avatar')
+                    ->circular()
+                    ->defaultImageUrl(fn (User $record): string => $record->getFilamentAvatarUrl())
+                    ->extraImgAttributes(['alt' => 'Avatar do usuário']),
+                TextColumn::make('name'),
+                TextColumn::make('email')
+                    ->label('Email address'),
+                TextColumn::make('is_suspended')
+                    ->label('Status')
+                    ->formatStateUsing(fn (User $record): string => 
+                        $record->is_suspended ? __('Suspenso') : __('Autorizado')
+                    )
+                    ->badge()
+                    ->color(fn (User $record): string => 
+                        $record->is_suspended ? 'danger' : 'success'
+                    )
+                    ->icon(fn (User $record): string => 
+                        $record->is_suspended ? 'heroicon-c-no-symbol' : 'heroicon-c-check'
+                    )
+                    ->alignCenter(),
+            ]);
+    }
+}
+```
+
+### 2. Formulário de Edição
+
+O formulário permite gerenciar a suspensão com validações:
+
+```php
+// app/Filament/Resources/Users/Schemas/UserForm.php
+
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Get;
+use Illuminate\Support\Facades\Auth;
+
+class UserForm
+{
+    public static function configure(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                // ... outros campos
+                
+                Toggle::make('is_suspended')
+                    ->label(fn (Get $get): string => 
+                        $get('is_suspended') ? 'Usuário não autorizado' : 'Usuário autorizado'
+                    )
+                    ->onColor('danger')
+                    ->offColor('success')
+                    ->onIcon('heroicon-c-no-symbol')
+                    ->offIcon('heroicon-c-check')
+                    ->default(fn ($record): bool => (bool) ($record?->is_suspended))
+                    ->disabled(fn (?User $record): bool => 
+                        $record?->getKey() === Auth::id()
+                    )
+                    ->hint(fn (?User $record): ?string => 
+                        $record?->getKey() === Auth::id() 
+                            ? __('Você não pode suspender a si mesmo.') 
+                            : null
+                    )
+                    ->hintColor('danger')
+                    ->hidden(fn (string $operation): bool => $operation === 'create'),
+                
+                TextInput::make('suspension_reason')
+                    ->label('Motivo da suspensão')
+                    ->disabled(fn (?User $record): bool => 
+                        $record?->getKey() === Auth::id()
+                    )
+                    ->hidden(fn (string $operation): bool => $operation === 'create'),
+            ]);
+    }
+}
+```
+
+### 3. Página de Edição
+
+A página de edição implementa a lógica de negócio para suspensão:
+
+```php
+// app/Filament/Resources/Users/Pages/EditUser.php
+
+use Filament\Actions\DeleteAction;
+use Illuminate\Support\Facades\Auth;
+
+class EditUser extends EditRecord
+{
+    protected function getHeaderActions(): array
+    {
+        $actions = [
+            $this->getBackButtonAction(),
+            ViewAction::make(),
+        ];
+
+        // Só mostra o botão de deletar se não for o usuário logado
+        if ($this->record->getKey() !== Auth::id()) {
+            $actions[] = DeleteAction::make()
+                ->successNotification(Notification::make())
+                ->after(fn () => $this->notifySuccess('Usuário excluído com sucesso.'));
+        }
+
+        return $actions;
+    }
+
+    protected function afterSave(): void
+    {
+        // Sincroniza suspended_at com is_suspended
+        if ($this->record->is_suspended && $this->record->suspended_at === null) {
+            $this->record->suspended_at = now();
+            $this->record->save();
+        }
+
+        if (! $this->record->is_suspended && $this->record->suspended_at !== null) {
+            $this->record->suspended_at = null;
+            $this->record->save();
+        }
+
+        // Previne auto-suspensão
+        if ($this->record->getKey() === Auth::id() && $this->record->is_suspended) {
+            $this->record->forceFill([
+                'is_suspended' => false,
+                'suspended_at' => null,
+            ])->save();
+
+            $this->notifyDanger('Você não pode suspender a si mesmo. Alteração revertida.');
+            $this->redirect($this->getResource()::getUrl('index'));
+            return;
+        }
+
+        $this->notifySuccess('Usuário atualizado com sucesso.');
+        $this->redirect($this->getResource()::getUrl('index'));
+    }
+}
+```
+
+### 4. Infolist de Usuário
+
+A visualização detalhada organiza as informações de suspensão em abas:
+
+```php
+// app/Filament/Resources/Users/Schemas/UserInfolist.php
+
+use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Tabs;
+use Filament\Support\Icons\Heroicon;
+
+class UserInfolist
+{
+    public static function configure(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Tabs::make('User Details')
+                    ->tabs([
+                        // ... outras abas
+                        
+                        Tab::make('Suspensão')
+                            ->icon(Heroicon::NoSymbol)
+                            ->schema([
+                                TextEntry::make('is_suspended')
+                                    ->label('Status')
+                                    ->formatStateUsing(fn (?bool $state): string => 
+                                        $state ? __('Suspenso') : __('Autorizado')
+                                    )
+                                    ->badge()
+                                    ->color(fn (?bool $state): string => 
+                                        $state ? 'danger' : 'success'
+                                    )
+                                    ->icon(fn (?bool $state): string => 
+                                        $state ? 'heroicon-c-no-symbol' : 'heroicon-c-check'
+                                    ),
+                                TextEntry::make('suspended_at')
+                                    ->label('Suspenso em')
+                                    ->dateTime('d-m-Y H:i')
+                                    ->placeholder('-'),
+                                TextEntry::make('suspension_reason')
+                                    ->label('Motivo da suspensão')
+                                    ->placeholder('-'),
+                            ]),
+                    ])->persistTabInQueryString(),
+            ]);
+    }
+}
+```
+
+## Lógica de Negócio
+
+### 1. Sincronização Automática
+
+O sistema sincroniza automaticamente os campos `is_suspended` e `suspended_at`:
+
+- **Ao suspender**: Define `is_suspended = true` e `suspended_at = now()`
+- **Ao reativar**: Define `is_suspended = false` e `suspended_at = null`
+
+### 2. Prevenção de Auto-Suspensão
+
+Usuários não podem suspender suas próprias contas:
+
+```php
+// Campo desabilitado para o usuário logado
+->disabled(fn (?User $record): bool => $record?->getKey() === Auth::id())
+
+// Dica explicativa
+->hint(fn (?User $record): ?string => 
+    $record?->getKey() === Auth::id() 
+        ? __('Você não pode suspender a si mesmo.') 
+        : null
+)
+```
+
+### 3. Controle de Acesso
+
+Usuários suspensos são automaticamente bloqueados do painel:
+
+```php
+public function canAccessPanel(Panel $panel): bool
+{
+    if ($this->isSuspended()) {
+        return false;
+    }
+    return true;
+}
+```
+
+## Segurança e Validações
+
+### 1. Validações de Segurança
+
+- ✅ **Auto-suspensão bloqueada**: Usuários não podem suspender a si mesmos
+- ✅ **Campos protegidos**: Motivo da suspensão fica desabilitado para auto-edição
+- ✅ **Redirecionamento seguro**: Após edição, usuário é redirecionado para a listagem
+- ✅ **Notificações claras**: Feedback visual para todas as ações
+
+### 2. Campos Ocultos na Criação
+
+Os campos de suspensão só aparecem na edição:
+
+```php
+->hidden(fn (string $operation): bool => $operation === 'create')
+```
+
+### 3. Controle de Ações
+
+Botões de ação são condicionais baseados no usuário logado:
+
+```php
+// Botão de deletar só aparece para outros usuários
+if ($this->record->getKey() !== Auth::id()) {
+    $actions[] = DeleteAction::make();
+}
+```
+
+## Troubleshooting
+
+### 1. Problemas Comuns
+
+**Usuário suspenso ainda consegue acessar o painel:**
+- Verifique se o método `canAccessPanel()` está sendo chamado
+- Confirme se o campo `is_suspended` está sendo atualizado corretamente
+
+**Campo `suspended_at` não está sendo preenchido:**
+- Verifique se o método `afterSave()` está sendo executado
+- Confirme se a lógica de sincronização está funcionando
+
+**Toggle não está funcionando:**
+- Verifique se o campo está sendo salvo corretamente no banco
+- Confirme se não há conflitos de JavaScript
+
+## Conclusão
+
+O sistema de suspensão de usuários implementado oferece:
+
+- 🔒 **Segurança robusta** com validações automáticas
+- 🎯 **Interface intuitiva** com feedback visual claro
+- 🛡️ **Proteção contra auto-suspensão** para evitar bloqueios acidentais
+- 📊 **Organização clara** das informações em abas
+- 🔄 **Sincronização automática** entre campos relacionados
+- 🚫 **Bloqueio automático** de usuários suspensos
+
+Este sistema garante que administradores tenham controle total sobre o acesso dos usuários ao painel, mantendo a segurança e a usabilidade da aplicação.
+
+### 📚 **Para Mais Informações**
+
+Para obter informações mais detalhadas sobre implementação de suspensão de contas no Laravel, consulte o artigo oficial do Laravel News:
+
+**[Implementing Account Suspension in Laravel](https://laravel-news.com/implementing-account-suspension-in-laravel)**
+
+Este artigo fornece insights adicionais sobre as melhores práticas e padrões recomendados para sistemas de suspensão de usuários.
+
+## Referências
+
+- [Model: User](/app/Models/User.php)
+- [Resource: Users](/app/Filament/Resources/Users/UsersResource.php)
+- [Migration: Users Table](/database/migrations/0001_01_01_000000_create_users_table.php)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

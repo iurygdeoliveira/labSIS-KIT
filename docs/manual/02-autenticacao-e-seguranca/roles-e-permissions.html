@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sistema de Roles e Permissions — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca" open><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="roles-e-permissions.html" class="is-active">Sistema de Roles e Permissions</a></li>
+<li><a href="suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Autenticação e Segurança</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Sistema de Roles e Permissions</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">02 — Autenticação e Segurança</p>
+<h1 class="doc-title">Sistema de Roles e Permissions</h1>
+</header>
+<div class="prose-content">
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#introdução">Introdução</a></li>
+<li><a href="#por-que-usar-roles-e-permissões">Por que usar Roles e Permissões?</a></li>
+<li><a href="#pacote-utilizado-spatie">Pacote Utilizado (Spatie)</a></li>
+<li><a href="#arquitetura-no-projeto">Arquitetura no Projeto</a></li>
+<li><a href="#sistema-multi-tenant">Sistema Multi-Tenant</a></li>
+<li><a href="#implementação">Implementação</a></li>
+<li><a href="#policies-de-autorização">Policies de Autorização</a></li>
+<li><a href="#gerenciamento-no-filament">Gerenciamento no Filament</a></li>
+<li><a href="#permissionscluster-permissões-por-role">PermissionsCluster (Permissões por Role)</a></li>
+<li><a href="#userrolecluster-funções-por-usuário">UserRoleCluster (Funções por Usuário)</a></li>
+<li><a href="#isolamento-de-dados-por-tenant">Isolamento de Dados por Tenant</a></li>
+<li><a href="#boas-práticas">Boas Práticas</a></li>
+<li><a href="#problemas-comuns">Problemas Comuns</a></li>
+<li><a href="#conclusão">Conclusão</a></li>
+</ul>
+<h2 id="introdução">Introdução</h2>
+<p>Este documento descreve como o sistema de <strong>roles</strong> (papeis) e <strong>permissions</strong> (permissões) foi implementado neste projeto, integrando a experiência de UI/UX do Filament com o controle fino de autorização na aplicação.</p>
+<h2 id="por-que-usar-rolespermissions">Por que usar Roles/Permissions?</h2>
+<p>Sistemas reais possuem diferentes perfis de usuários e responsabilidades. Sem um controle de acesso granular, riscos como ações indevidas, vazamento de informações e inconsistências de negócio tornam-se comuns.</p>
+<p>Com roles e permissions você consegue:</p>
+<ul>
+<li>Garantir que somente usuários autorizados executem ações sensíveis;</li>
+<li>Segregar funções (ex.: Administrador vs Usuário comum);</li>
+<li>Evoluir a segurança de forma incremental sem reescrever a aplicação;</li>
+<li>Integrar facilmente com políticas (Policies) e middlewares de autorização.</li>
+</ul>
+<h2 id="pacote-utilizado-spatie">Pacote Utilizado (Spatie)</h2>
+<p>Utilizamos o pacote <code>spatie/laravel-permission</code>, referência no ecossistema Laravel para gerenciamento de roles e permissions.</p>
+<ul>
+<li><strong>Instalação e orientações oficiais</strong>: consulte a documentação da Spatie para detalhes de instalação e configuração inicial: <code>https://spatie.be/docs/laravel-permission/v6/installation-laravel</code>.</li>
+</ul>
+<p>Após a instalação, o pacote registra tabelas para <code>roles</code>, <code>permissions</code> e pivots que relacionam usuários a essas entidades. Ele também provê traits e APIs simples como <code>assignRole()</code>, <code>hasRole()</code> e <code>can()</code>.</p>
+<h2 id="arquitetura-no-projeto">Arquitetura no Projeto</h2>
+<p>O sistema de roles e permissões foi projetado para funcionar em um ambiente <strong>multi-tenant</strong>, onde cada tenant possui suas próprias roles e permissões isoladas. Os principais arquivos que centralizam a configuração e aplicação das permissões são:</p>
+<h3>Arquivos Centrais</h3>
+<ul>
+<li><strong><code>app/Enums/RoleType.php</code></strong>: enum que define as roles disponíveis no sistema (<code>Admin</code>, <code>Owner</code>, <code>User</code>).</li>
+<li><strong><code>app/Enums/Permission.php</code></strong>: enum que define e padroniza todas as permissions do sistema (<code>create</code>, <code>view</code>, <code>update</code>, <code>delete</code>).</li>
+<li><strong><code>app/Models/User.php</code></strong>: modelo do usuário com trait <code>HasRoles</code> e lógica de acesso aos painéis.</li>
+<li><strong><code>app/Models/Team.php</code></strong>: organização (team) — model de tenant no Filament/FilaTeams.</li>
+<li><strong><code>app/Models/Membership.php</code></strong>: pivot usuário ↔ team com role (<code>owner</code> / <code>member</code>); sincronizada com Spatie via <code>MembershipObserver</code>.</li>
+<li><strong><code>app/Models/Role.php</code></strong>: modelo de role estendido do Spatie com contexto por <code>team_id</code>.</li>
+<li><strong><code>app/Observers/MembershipObserver.php</code></strong>: sincroniza pivot FilaTeams → <code>model_has_roles</code>.</li>
+<li><strong><code>app/Tenancy/SpatieTeamResolver.php</code></strong>: resolver customizado para definir o <code>team_id</code> baseado no team ativo do Filament.</li>
+</ul>
+<h3>Policies de Autorização</h3>
+<ul>
+<li>Na pasta <code>app/Policies</code> encontramos as policies de autorização.</li>
+</ul>
+<h3>Clusters do Filament</h3>
+<ul>
+<li><strong><code>app/Filament/Clusters/Permissions/</code></strong>: cluster para gerenciar permissões por role.</li>
+<li><strong><code>app/Filament/Clusters/UserRole/</code></strong>: cluster para gerenciar as roles atribuídas a cada usuário.</li>
+</ul>
+<h3>Providers de Painel</h3>
+<ul>
+<li><strong><code>app/Providers/Filament/UserPanelProvider.php</code></strong>: configuração do painel de usuários com suporte a multi-tenancy.</li>
+<li><strong><code>app/Providers/Filament/AdminPanelProvider.php</code></strong>: configuração do painel administrativo global.</li>
+</ul>
+<h3>Estratégia de Permissões</h3>
+<ul>
+<li>As permissions são semeadas a partir de <code>app/Enums/Permission.php</code> no <code>UserSeeder</code>.</li>
+<li>Roles são criadas dinamicamente por tenant usando métodos estáticos do <code>RoleType</code>.</li>
+<li>O sistema utiliza hierarquia de autorização: <strong>Admin</strong> (global) → <strong>Owner</strong> (por tenant) → <strong>User</strong> (por tenant).</li>
+<li>Policies implementam lógica de <code>before()</code> para verificar Admin e Owner antes de verificar permissões específicas.</li>
+</ul>
+<h2 id="sistema-multi-tenant">Sistema Multi-Tenant</h2>
+<p>O projeto implementa um sistema multi-tenant onde cada tenant possui suas próprias roles e permissões isoladas. Esta arquitetura permite que diferentes organizações utilizem o sistema de forma independente e segura.</p>
+<h3>Hierarquia de Acesso</h3>
+<ol>
+<li><strong>Admin (Global)</strong>: Acesso total a todos os tenants e recursos</li>
+<li><strong>Owner (Por Tenant)</strong>: Acesso total dentro do tenant específico</li>
+<li><strong>User (Por Tenant)</strong>: Acesso baseado em permissões específicas dentro do tenant</li>
+</ol>
+<h3>Isolamento de Dados</h3>
+<ul>
+<li>Cada tenant possui suas próprias roles (<code>Owner</code>, <code>User</code>) criadas dinamicamente</li>
+<li>Permissões são aplicadas no contexto do tenant atual</li>
+<li>O <code>SpatieTeamResolver</code> garante que as permissões sejam verificadas no tenant correto</li>
+<li>Policies implementam verificação de tenant antes de aplicar permissões</li>
+</ul>
+<h3>Controle de Acesso aos Painéis</h3>
+<ul>
+<li><strong>Admin Panel</strong>: Apenas usuários com role <code>Admin</code> global</li>
+<li><strong>User Panel</strong>: Usuários com role <code>User</code>, <code>Owner</code> em algum tenant, ou vinculados a tenants</li>
+</ul>
+<h2 id="implementação">Implementação</h2>
+<h3>1. Enum de Roles</h3>
+<p>O enum <code>RoleType</code> define três tipos de roles no sistema:</p>
+<ul>
+<li><strong><code>ADMIN</code></strong>: Administrador global com acesso total</li>
+<li><strong><code>OWNER</code></strong>: Proprietário de um tenant específico</li>
+<li><strong><code>USER</code></strong>: Usuário comum de um tenant específico</li>
+</ul>
+<p>O enum inclui métodos estáticos para criação dinâmica de roles:</p>
+<ul>
+<li><code>ensureGlobalRoles()</code>: Cria role Admin global</li>
+<li><code>ensureOwnerRoleForTeam()</code>: Cria role Owner para um tenant específico</li>
+<li><code>ensureUserRoleForTeam()</code>: Cria role User para um tenant específico</li>
+</ul>
+<p><strong>Arquivo</strong>: <code>app/Enums/RoleType.php</code></p>
+<h3>2. Enum de Permissões</h3>
+<p>O enum <code>Permission</code> define as permissões básicas do sistema:</p>
+<ul>
+<li><strong><code>VIEW</code></strong>: Visualizar recursos</li>
+<li><strong><code>CREATE</code></strong>: Criar recursos</li>
+<li><strong><code>UPDATE</code></strong>: Editar recursos</li>
+<li><strong><code>DELETE</code></strong>: Apagar recursos</li>
+</ul>
+<p>O método <code>for(string $resource)</code> gera permissões específicas por recurso (ex.: <code>media.view</code>, <code>users.create</code>).</p>
+<p><strong>Arquivo</strong>: <code>app/Enums/Permission.php</code></p>
+<h3>3. Modelo de Usuário</h3>
+<p>O modelo <code>User</code> implementa múltiplas interfaces e traits:</p>
+<ul>
+<li><code>HasRoles</code>: Trait do Spatie para gerenciamento de roles</li>
+<li><code>HasTenants</code>: Interface do Filament para multi-tenancy</li>
+<li><code>FilamentUser</code>: Interface para controle de acesso aos painéis</li>
+</ul>
+<p>Métodos importantes:</p>
+<ul>
+<li><code>canAccessPanel()</code>: Controla acesso aos painéis baseado em roles</li>
+<li><code>isOwnerOfTeam(Team $team)</code>: Verifica se é Owner de um team específico</li>
+<li><code>isUserOfTeam(Team $team)</code>: Verifica se é User de um team específico</li>
+<li><code>assignRoleInTeam(Role $role, Team $team)</code>: Atribui role no contexto de um team</li>
+</ul>
+<p><strong>Arquivo</strong>: <code>app/Models/User.php</code></p>
+<h3>4. Models de Team e Membership</h3>
+<ul>
+<li><strong><code>Team</code></strong>: Representa uma organização no sistema (tenant Filament)</li>
+<li><strong><code>Membership</code></strong>: Pivot FilaTeams (<code>team_id</code>, <code>user_id</code>, <code>role</code>) — fonte do pivot; Spatie é sincronizado pelo observer</li>
+<li><strong><code>Role</code></strong>: Estende o modelo do Spatie com contexto por <code>team_id</code></li>
+</ul>
+<p><strong>Arquivos</strong>: <code>app/Models/Team.php</code>, <code>app/Models/Membership.php</code>, <code>app/Models/Role.php</code></p>
+<h3>5. Resolver de Team</h3>
+<p>O <code>SpatieTeamResolver</code> define como o Spatie identifica o contexto atual para permissões:</p>
+<ul>
+<li>Usa o tenant atual do Filament como <code>team_id</code></li>
+<li>Fallback para <code>0</code> quando não há tenant selecionado</li>
+<li>Permite override manual para casos específicos</li>
+</ul>
+<p><strong>Arquivo</strong>: <code>app/Tenancy/SpatieTeamResolver.php</code></p>
+<h2 id="policies-de-autorização">Policies de Autorização</h2>
+<p>As policies implementam a lógica de autorização hierárquica do sistema, garantindo que Admin e Owner tenham acesso apropriado antes de verificar permissões específicas.</p>
+<h3>Estrutura das Policies</h3>
+<p>Todas as policies seguem o mesmo padrão:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>public function before(User $user): ?bool
+{
+    // Admin tem acesso total
+    if ($user-&gt;hasRole(RoleType::ADMIN-&gt;value)) {
+        return true;
+    }
+
+    // Owner tem acesso total no team atual (tenant Filament)
+    $currentTeam = Filament::getTenant();
+    if ($currentTeam instanceof Team &amp;&amp; $user-&gt;isOwnerOfTeam($currentTeam)) {
+        return true;
+    }
+
+    // Deixa para os métodos específicos verificarem permissões
+    return null;
+}</code></pre></div>
+<h3>Métodos de Autorização</h3>
+<p>Cada policy implementa os métodos padrão do Laravel:</p>
+<ul>
+<li><code>viewAny()</code>: Listar recursos</li>
+<li><code>view()</code>: Visualizar recurso específico</li>
+<li><code>create()</code>: Criar recursos</li>
+<li><code>update()</code>: Editar recursos</li>
+<li><code>delete()</code>: Apagar recursos</li>
+<li><code>deleteAny()</code>: Apagar múltiplos recursos</li>
+</ul>
+<p>Todos os métodos verificam permissões usando <code>Permission::for($resource)</code>.</p>
+<p><strong>Arquivos</strong>: <code>app/Policies/MediaItemPolicy.php</code>, <code>app/Policies/UserPolicy.php</code></p>
+<h2 id="gerenciamento-no-filament">Gerenciamento no Filament</h2>
+<p>A administração é feita por dois clusters principais: <code>PermissionsCluster</code> (permissões por role) e <code>UserRoleCluster</code> (roles por usuário). Ambos implementam controle de acesso baseado em roles e são visíveis apenas para Admin e Owner.</p>
+<h2 id="isolamento-de-dados-por-tenant">Isolamento de Dados por Tenant</h2>
+<p>O sistema implementa isolamento completo de dados por tenant, garantindo que cada organização veja apenas seus próprios dados e configurações.</p>
+<h2 id="conclusão">Conclusão</h2>
+<p>O sistema de roles e permissões implementado oferece uma solução para controle de acesso em ambiente multi-tenant. A integração entre Spatie Laravel Permission, Filament e o sistema de tenancy garante:</p>
+<ul>
+<li><strong>Segurança</strong>: Isolamento completo de dados entre tenants</li>
+<li><strong>Flexibilidade</strong>: Hierarquia de acesso clara e configurável</li>
+<li><strong>Usabilidade</strong>: Interface intuitiva para gerenciamento de permissões</li>
+<li><strong>Manutenibilidade</strong>: Código organizado e bem documentado</li>
+</ul>
+<p>Os clusters <code>PermissionsCluster</code> e <code>UserRoleCluster</code> proporcionam uma experiência administrativa completa, permitindo que administradores e proprietários gerenciem permissões de forma eficiente e segura, respeitando o isolamento de dados por tenant.</p>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="/app/Enums/RoleType.php">Enum: RoleType</a></li>
+<li><a href="/app/Enums/Permission.php">Enum: Permission</a></li>
+<li><a href="/app/Models/Role.php">Model: Role</a></li>
+<li><a href="/app/Policies/UserPolicy.php">Policy: UserPolicy</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="prevencao-idor.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Prevenção Contra IDOR (Insecure Direct Object Reference)</span></a><a class="doc-pagination-card doc-pagination-next" href="suspensao-usuarios.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Sistema de Suspensão de Usuários no Filament</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#introdução" data-toc-target="introdução">Introdução</a></li>
+<li><a class="doc-toc-link" href="#por-que-usar-rolespermissions" data-toc-target="por-que-usar-rolespermissions">Por que usar Roles/Permissions?</a></li>
+<li><a class="doc-toc-link" href="#pacote-utilizado-spatie" data-toc-target="pacote-utilizado-spatie">Pacote Utilizado (Spatie)</a></li>
+<li><a class="doc-toc-link" href="#arquitetura-no-projeto" data-toc-target="arquitetura-no-projeto">Arquitetura no Projeto</a></li>
+<li><a class="doc-toc-link" href="#sistema-multi-tenant" data-toc-target="sistema-multi-tenant">Sistema Multi-Tenant</a></li>
+<li><a class="doc-toc-link" href="#implementação" data-toc-target="implementação">Implementação</a></li>
+<li><a class="doc-toc-link" href="#policies-de-autorização" data-toc-target="policies-de-autorização">Policies de Autorização</a></li>
+<li><a class="doc-toc-link" href="#gerenciamento-no-filament" data-toc-target="gerenciamento-no-filament">Gerenciamento no Filament</a></li>
+<li><a class="doc-toc-link" href="#isolamento-de-dados-por-tenant" data-toc-target="isolamento-de-dados-por-tenant">Isolamento de Dados por Tenant</a></li>
+<li><a class="doc-toc-link" href="#conclusão" data-toc-target="conclusão">Conclusão</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Sistema de Roles e Permissions
+
+## 📋 Índice
+
+- [Introdução](#introdução)
+- [Por que usar Roles e Permissões?](#por-que-usar-roles-e-permissões)
+- [Pacote Utilizado (Spatie)](#pacote-utilizado-spatie)
+- [Arquitetura no Projeto](#arquitetura-no-projeto)
+- [Sistema Multi-Tenant](#sistema-multi-tenant)
+- [Implementação](#implementação)
+- [Policies de Autorização](#policies-de-autorização)
+- [Gerenciamento no Filament](#gerenciamento-no-filament)
+  - [PermissionsCluster (Permissões por Role)](#permissionscluster-permissões-por-role)
+  - [UserRoleCluster (Funções por Usuário)](#userrolecluster-funções-por-usuário)
+- [Isolamento de Dados por Tenant](#isolamento-de-dados-por-tenant)
+- [Boas Práticas](#boas-práticas)
+- [Problemas Comuns](#problemas-comuns)
+- [Conclusão](#conclusão)
+
+## Introdução
+
+Este documento descreve como o sistema de **roles** (papeis) e **permissions** (permissões) foi implementado neste projeto, integrando a experiência de UI/UX do Filament com o controle fino de autorização na aplicação.
+
+## Por que usar Roles/Permissions?
+
+Sistemas reais possuem diferentes perfis de usuários e responsabilidades. Sem um controle de acesso granular, riscos como ações indevidas, vazamento de informações e inconsistências de negócio tornam-se comuns.
+
+Com roles e permissions você consegue:
+
+- Garantir que somente usuários autorizados executem ações sensíveis;
+- Segregar funções (ex.: Administrador vs Usuário comum);
+- Evoluir a segurança de forma incremental sem reescrever a aplicação;
+- Integrar facilmente com políticas (Policies) e middlewares de autorização.
+
+## Pacote Utilizado (Spatie)
+
+Utilizamos o pacote `spatie/laravel-permission`, referência no ecossistema Laravel para gerenciamento de roles e permissions.
+
+- **Instalação e orientações oficiais**: consulte a documentação da Spatie para detalhes de instalação e configuração inicial: `https://spatie.be/docs/laravel-permission/v6/installation-laravel`.
+
+Após a instalação, o pacote registra tabelas para `roles`, `permissions` e pivots que relacionam usuários a essas entidades. Ele também provê traits e APIs simples como `assignRole()`, `hasRole()` e `can()`.
+
+## Arquitetura no Projeto
+
+O sistema de roles e permissões foi projetado para funcionar em um ambiente **multi-tenant**, onde cada tenant possui suas próprias roles e permissões isoladas. Os principais arquivos que centralizam a configuração e aplicação das permissões são:
+
+### Arquivos Centrais
+
+- **`app/Enums/RoleType.php`**: enum que define as roles disponíveis no sistema (`Admin`, `Owner`, `User`).
+- **`app/Enums/Permission.php`**: enum que define e padroniza todas as permissions do sistema (`create`, `view`, `update`, `delete`).
+- **`app/Models/User.php`**: modelo do usuário com trait `HasRoles` e lógica de acesso aos painéis.
+- **`app/Models/Team.php`**: organização (team) — model de tenant no Filament/FilaTeams.
+- **`app/Models/Membership.php`**: pivot usuário ↔ team com role (`owner` / `member`); sincronizada com Spatie via `MembershipObserver`.
+- **`app/Models/Role.php`**: modelo de role estendido do Spatie com contexto por `team_id`.
+- **`app/Observers/MembershipObserver.php`**: sincroniza pivot FilaTeams → `model_has_roles`.
+- **`app/Tenancy/SpatieTeamResolver.php`**: resolver customizado para definir o `team_id` baseado no team ativo do Filament.
+
+### Policies de Autorização
+
+- Na pasta `app/Policies` encontramos as policies de autorização.
+
+### Clusters do Filament
+
+- **`app/Filament/Clusters/Permissions/`**: cluster para gerenciar permissões por role.
+- **`app/Filament/Clusters/UserRole/`**: cluster para gerenciar as roles atribuídas a cada usuário.
+
+### Providers de Painel
+
+- **`app/Providers/Filament/UserPanelProvider.php`**: configuração do painel de usuários com suporte a multi-tenancy.
+- **`app/Providers/Filament/AdminPanelProvider.php`**: configuração do painel administrativo global.
+
+### Estratégia de Permissões
+
+- As permissions são semeadas a partir de `app/Enums/Permission.php` no `UserSeeder`.
+- Roles são criadas dinamicamente por tenant usando métodos estáticos do `RoleType`.
+- O sistema utiliza hierarquia de autorização: **Admin** (global) → **Owner** (por tenant) → **User** (por tenant).
+- Policies implementam lógica de `before()` para verificar Admin e Owner antes de verificar permissões específicas.
+
+## Sistema Multi-Tenant
+
+O projeto implementa um sistema multi-tenant onde cada tenant possui suas próprias roles e permissões isoladas. Esta arquitetura permite que diferentes organizações utilizem o sistema de forma independente e segura.
+
+### Hierarquia de Acesso
+
+1. **Admin (Global)**: Acesso total a todos os tenants e recursos
+2. **Owner (Por Tenant)**: Acesso total dentro do tenant específico
+3. **User (Por Tenant)**: Acesso baseado em permissões específicas dentro do tenant
+
+### Isolamento de Dados
+
+- Cada tenant possui suas próprias roles (`Owner`, `User`) criadas dinamicamente
+- Permissões são aplicadas no contexto do tenant atual
+- O `SpatieTeamResolver` garante que as permissões sejam verificadas no tenant correto
+- Policies implementam verificação de tenant antes de aplicar permissões
+
+### Controle de Acesso aos Painéis
+
+- **Admin Panel**: Apenas usuários com role `Admin` global
+- **User Panel**: Usuários com role `User`, `Owner` em algum tenant, ou vinculados a tenants
+
+## Implementação
+
+### 1. Enum de Roles
+
+O enum `RoleType` define três tipos de roles no sistema:
+
+- **`ADMIN`**: Administrador global com acesso total
+- **`OWNER`**: Proprietário de um tenant específico
+- **`USER`**: Usuário comum de um tenant específico
+
+O enum inclui métodos estáticos para criação dinâmica de roles:
+- `ensureGlobalRoles()`: Cria role Admin global
+- `ensureOwnerRoleForTeam()`: Cria role Owner para um tenant específico
+- `ensureUserRoleForTeam()`: Cria role User para um tenant específico
+
+**Arquivo**: `app/Enums/RoleType.php`
+
+### 2. Enum de Permissões
+
+O enum `Permission` define as permissões básicas do sistema:
+
+- **`VIEW`**: Visualizar recursos
+- **`CREATE`**: Criar recursos
+- **`UPDATE`**: Editar recursos
+- **`DELETE`**: Apagar recursos
+
+O método `for(string $resource)` gera permissões específicas por recurso (ex.: `media.view`, `users.create`).
+
+**Arquivo**: `app/Enums/Permission.php`
+
+### 3. Modelo de Usuário
+
+O modelo `User` implementa múltiplas interfaces e traits:
+
+- `HasRoles`: Trait do Spatie para gerenciamento de roles
+- `HasTenants`: Interface do Filament para multi-tenancy
+- `FilamentUser`: Interface para controle de acesso aos painéis
+
+Métodos importantes:
+- `canAccessPanel()`: Controla acesso aos painéis baseado em roles
+- `isOwnerOfTeam(Team $team)`: Verifica se é Owner de um team específico
+- `isUserOfTeam(Team $team)`: Verifica se é User de um team específico
+- `assignRoleInTeam(Role $role, Team $team)`: Atribui role no contexto de um team
+
+**Arquivo**: `app/Models/User.php`
+
+### 4. Models de Team e Membership
+
+- **`Team`**: Representa uma organização no sistema (tenant Filament)
+- **`Membership`**: Pivot FilaTeams (`team_id`, `user_id`, `role`) — fonte do pivot; Spatie é sincronizado pelo observer
+- **`Role`**: Estende o modelo do Spatie com contexto por `team_id`
+
+**Arquivos**: `app/Models/Team.php`, `app/Models/Membership.php`, `app/Models/Role.php`
+
+### 5. Resolver de Team
+
+O `SpatieTeamResolver` define como o Spatie identifica o contexto atual para permissões:
+
+- Usa o tenant atual do Filament como `team_id`
+- Fallback para `0` quando não há tenant selecionado
+- Permite override manual para casos específicos
+
+**Arquivo**: `app/Tenancy/SpatieTeamResolver.php`
+
+## Policies de Autorização
+
+As policies implementam a lógica de autorização hierárquica do sistema, garantindo que Admin e Owner tenham acesso apropriado antes de verificar permissões específicas.
+
+### Estrutura das Policies
+
+Todas as policies seguem o mesmo padrão:
+
+```php
+public function before(User $user): ?bool
+{
+    // Admin tem acesso total
+    if ($user->hasRole(RoleType::ADMIN->value)) {
+        return true;
+    }
+
+    // Owner tem acesso total no team atual (tenant Filament)
+    $currentTeam = Filament::getTenant();
+    if ($currentTeam instanceof Team && $user->isOwnerOfTeam($currentTeam)) {
+        return true;
+    }
+
+    // Deixa para os métodos específicos verificarem permissões
+    return null;
+}
+```
+
+### Métodos de Autorização
+
+Cada policy implementa os métodos padrão do Laravel:
+- `viewAny()`: Listar recursos
+- `view()`: Visualizar recurso específico
+- `create()`: Criar recursos
+- `update()`: Editar recursos
+- `delete()`: Apagar recursos
+- `deleteAny()`: Apagar múltiplos recursos
+
+Todos os métodos verificam permissões usando `Permission::for($resource)`.
+
+**Arquivos**: `app/Policies/MediaItemPolicy.php`, `app/Policies/UserPolicy.php`
+
+## Gerenciamento no Filament
+
+A administração é feita por dois clusters principais: `PermissionsCluster` (permissões por role) e `UserRoleCluster` (roles por usuário). Ambos implementam controle de acesso baseado em roles e são visíveis apenas para Admin e Owner.
+
+
+## Isolamento de Dados por Tenant
+
+O sistema implementa isolamento completo de dados por tenant, garantindo que cada organização veja apenas seus próprios dados e configurações.
+
+
+
+## Conclusão
+
+O sistema de roles e permissões implementado oferece uma solução para controle de acesso em ambiente multi-tenant. A integração entre Spatie Laravel Permission, Filament e o sistema de tenancy garante:
+
+- **Segurança**: Isolamento completo de dados entre tenants
+- **Flexibilidade**: Hierarquia de acesso clara e configurável
+- **Usabilidade**: Interface intuitiva para gerenciamento de permissões
+- **Manutenibilidade**: Código organizado e bem documentado
+
+Os clusters `PermissionsCluster` e `UserRoleCluster` proporcionam uma experiência administrativa completa, permitindo que administradores e proprietários gerenciem permissões de forma eficiente e segura, respeitando o isolamento de dados por tenant.
+
+## Referências
+
+- [Enum: RoleType](/app/Enums/RoleType.php)
+- [Enum: Permission](/app/Enums/Permission.php)
+- [Model: Role](/app/Models/Role.php)
+- [Policy: UserPolicy](/app/Policies/UserPolicy.php)
+
+
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

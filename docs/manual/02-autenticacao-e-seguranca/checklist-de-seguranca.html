@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Checklist de Segurança e Diretrizes de Mitigação — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca" open><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="checklist-de-seguranca.html" class="is-active">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Autenticação e Segurança</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Checklist de Segurança e Diretrizes de Mitigação</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">02 — Autenticação e Segurança</p>
+<h1 class="doc-title">Checklist de Segurança e Diretrizes de Mitigação</h1>
+</header>
+<div class="prose-content">
+<p>Este documento descreve uma lista de verificações de segurança essenciais e diretrizes para mitigação de riscos, focada em auxiliar no desenvolvimento seguro de aplicações.</p>
+<h2 id="1-ataques-de-injeção-injection">1. Ataques de Injeção (Injection)</h2>
+<ul>
+<li><strong>O Risco:</strong> Ocorrem quando dados não confiáveis são enviados a um interpretador como parte de um comando ou consulta (ex: SQL, NoSQL, OS). Permite que atacantes acessem, modifiquem ou destruam dados e, em alguns casos, obtenham controle do servidor.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Refatore todo o código de acesso a dados para utilizar exclusivamente consultas parametrizadas (prepared statements) ou um ORM que realize o escape de forma segura. Valide e sanitize rigorosamente todos os inputs do usuário.&quot;</li>
+</ul>
+<h2 id="2-falhas-de-autenticação-broken-authentication">2. Falhas de Autenticação (Broken Authentication)</h2>
+<ul>
+<li><strong>O Risco:</strong> Funções de autenticação e gerenciamento de sessão implementadas incorretamente permitem que atacantes comprometam senhas, chaves ou tokens, possibilitando o acesso não autorizado a contas.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Desenvolva um módulo de autenticação que implemente hashing de senhas adaptativo e salgado (ex: Argon2, Bcrypt), políticas de senhas fortes, proteção contra força bruta (rate limiting) e um gerenciamento seguro de tokens JWT.&quot;</li>
+</ul>
+<h2 id="3-quebra-de-controle-de-acesso-broken-access-control">3. Quebra de Controle de Acesso (Broken Access Control)</h2>
+<ul>
+<li><strong>O Risco:</strong> Falha crítica em sistemas multi-tenant, ocorrendo quando as restrições sobre o que um usuário autenticado pode fazer não são devidamente aplicadas, permitindo que usuários acessem dados de outras contas (IDOR).</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Implemente um middleware de autorização centralizado que verifique, em cada endpoint, se o usuário autenticado possui as permissões necessárias para acessar o recurso específico, aplicando o princípio de negação por padrão.&quot;</li>
+</ul>
+<h2 id="4-configuração-insegura-de-segurança-security-misconfiguration">4. Configuração Insegura de Segurança (Security Misconfiguration)</h2>
+<ul>
+<li><strong>O Risco:</strong> Resulta da falta de &quot;hardening&quot; de segurança na stack tecnológica, incluindo configurações padrão, permissões de nuvem excessivas, mensagens de erro verbosas e cabeçalhos de segurança HTTP ausentes.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Gere um checklist de &#x27;hardening&#x27; para a minha stack de tecnologia ([especificar: ex: Node.js, Nginx, PostgreSQL, Docker]), incluindo a desativação de funcionalidades desnecessárias e a configuração de cabeçalhos de segurança HTTP recomendados.&quot;</li>
+</ul>
+<h2 id="5-uso-de-componentes-com-vulnerabilidades-conhecidas">5. Uso de Componentes com Vulnerabilidades Conhecidas</h2>
+<ul>
+<li><strong>O Risco:</strong> Depender de bibliotecas e frameworks de terceiros com vulnerabilidades publicamente conhecidas (CVEs). Um atacante pode explorar uma falha em uma dependência desatualizada para comprometer toda a aplicação.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Configure um pipeline de CI/CD que inclua uma etapa de Análise de Composição de Software (SCA) usando Snyk ou OWASP Dependency-Check para bloquear a implantação de código com vulnerabilidades críticas.&quot;</li>
+</ul>
+<h2 id="6-cross-site-scripting-xss">6. Cross-Site Scripting (XSS)</h2>
+<ul>
+<li><strong>O Risco:</strong> Permite que um atacante execute scripts maliciosos no navegador da vítima, podendo resultar no roubo de sessões (cookies), desfiguração de sites ou redirecionamento para páginas maliciosas.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Implemente a codificação de saída (output encoding) contextual em todas as variáveis renderizadas no frontend e utilize uma Política de Segurança de Conteúdo (CSP) restritiva para mitigar o impacto de qualquer possível injeção.&quot;</li>
+</ul>
+<h2 id="7-falhas-na-lógica-de-negócio-business-logic-flaws">7. Falhas na Lógica de Negócio (Business Logic Flaws)</h2>
+<ul>
+<li><strong>O Risco:</strong> Abuso das funcionalidades da aplicação de maneiras não previstas, explorando fluxos de trabalho legítimos para obter vantagens indevidas, como a manipulação de preços em um carrinho de compras.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Analise o seguinte fluxo de negócio [descreva o fluxo]. Identifique e liste possíveis cenários de abuso e falhas lógicas que poderiam ser exploradas por um usuário mal-intencionado, pensando em condições de corrida e manipulação de parâmetros.&quot;</li>
+</ul>
+<h2 id="8-server-side-request-forgery-ssrf">8. Server-Side Request Forgery (SSRF)</h2>
+<ul>
+<li><strong>O Risco:</strong> Uma falha que força o servidor da aplicação a fazer requisições HTTP para um domínio arbitrário. Em ambientes de nuvem, pode ser usado para escanear a rede interna ou acessar APIs de metadados e roubar credenciais.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Crie uma função segura para buscar recursos de uma URL fornecida pelo usuário. A função deve validar a URL contra uma lista de permissões (allow-list) de domínios, protocolos e portas, e nunca deve seguir redirecionamentos.&quot;</li>
+</ul>
+<h2 id="9-logging-e-monitoramento-insuficientes">9. Logging e Monitoramento Insuficientes</h2>
+<ul>
+<li><strong>O Risco:</strong> Sem um registro adequado de eventos e um monitoramento ativo, as organizações não conseguem detectar uma violação em tempo hábil, aumentando o tempo de permanência e o dano causado por um atacante.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Defina uma política de logging para a aplicação, especificando quais eventos de segurança devem ser registrados, o formato e as informações a serem incluídas. Integre esses logs a um sistema de SIEM para monitoramento e alerta.&quot;</li>
+</ul>
+<h2 id="10-cross-site-request-forgery-csrf">10. Cross-Site Request Forgery (CSRF)</h2>
+<ul>
+<li><strong>O Risco:</strong> Engana um usuário autenticado para que ele submeta, sem intenção, uma requisição que altera estado (ex: mudar senha, transferir fundos) em uma aplicação onde ele está logado.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Implemente uma defesa contra CSRF utilizando o padrão de token anti-CSRF (Synchronizer Token Pattern) para todas as requisições que alteram estado. Garanta que os cookies de sessão utilizem o atributo SameSite=Strict ou Lax.&quot;</li>
+</ul>
+<h2 id="11-injeção-de-prompt-prompt-injection">11. Injeção de Prompt (Prompt Injection)</h2>
+<ul>
+<li><strong>O Risco:</strong> Específico para aplicações que integram Grandes Modelos de Linguagem (LLMs). Um atacante insere instruções maliciosas no input que são interpretadas pelo LLM como parte do prompt original do sistema.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Desenhe uma arquitetura de defesa em camadas para a integração com o LLM. Isso deve incluir: (1) uma clara separação entre a instrução do sistema e o input do usuário usando delimitadores, (2) validação e sanitização rigorosa do input antes de enviá-lo ao LLM, (3) a aplicação do Princípio do Menor Privilégio nas ferramentas/APIs que o LLM pode invocar, e (4) um monitoramento para detectar outputs anômalos ou inesperados.&quot;</li>
+</ul>
+<h2 id="12-desserialização-insegura-insecure-deserialization">12. Desserialização Insegura (Insecure Deserialization)</h2>
+<ul>
+<li><strong>O Risco:</strong> Ocorre quando dados serializados não confiáveis são desserializados sem validação. Isso pode levar à execução remota de código (RCE), ataques de negação de serviço e bypass de autenticação.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Revise todo o código que realiza desserialização de objetos. Priorize o uso de formatos de dados simples, como JSON, e evite formatos complexos que permitem a instanciação de tipos de objetos arbitrários. Se a desserialização for necessária, implemente verificações de integridade e restrinja os tipos de objetos que podem ser recriados.&quot;</li>
+</ul>
+<h2 id="13-entidades-externas-de-xml-xml-external-entity-xxe">13. Entidades Externas de XML (XML External Entity - XXE)</h2>
+<ul>
+<li><strong>O Risco:</strong> Aplicações que processam XML podem ser vulneráveis a ataques que exploram a especificação de entidades externas no documento.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Configure o parser de XML da aplicação para desabilitar o suporte a Entidades Externas (External DTDs) e DOCTYPEs. Analise o código e me mostre como aplicar essa configuração de segurança para a biblioteca [nome da biblioteca XML, ex: libxml em PHP, ElementTree em Python].&quot;</li>
+</ul>
+<h2 id="14-ausência-de-limitação-de-requisições-rate-limiting">14. Ausência de Limitação de Requisições (Rate Limiting)</h2>
+<ul>
+<li><strong>O Risco:</strong> A falta de controle sobre a frequência com que um usuário ou um IP pode fazer requisições. A ausência de &quot;rate limiting&quot; abre portas para ataques de força bruta e DoS.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Implemente um middleware de &#x27;rate limiting&#x27; usando o algoritmo de Token Bucket. Aplique limites diferentes para endpoints distintos: um limite mais restrito para login e recuperação de senha, e um limite mais geral para o uso da API principal.&quot;</li>
+</ul>
+<h2 id="15-exposição-de-dados-sensíveis-cryptographic-failures">15. Exposição de Dados Sensíveis (Cryptographic Failures)</h2>
+<ul>
+<li><strong>O Risco:</strong> Envolve a proteção inadequada de dados sensíveis, como senhas e tokens.</li>
+<li><strong>Diretriz de Mitigação para IA:</strong> &quot;Analise o código em busca de dados sensíveis armazenados em texto claro, uso de algoritmos criptográficos fracos (como MD5 ou SHA1) e chaves de criptografia hardcoded. Assegure que o TLS esteja configurado corretamente para todos os dados em trânsito.&quot;</li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="autenticacao-2fa.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Autenticação de Dois Fatores (2FA) no Filament</span></a><a class="doc-pagination-card doc-pagination-next" href="content-security-policy.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Content Security Policy (CSP) - Proteção Contra XSS</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#1-ataques-de-injeção-injection" data-toc-target="1-ataques-de-injeção-injection">1. Ataques de Injeção (Injection)</a></li>
+<li><a class="doc-toc-link" href="#2-falhas-de-autenticação-broken-authentication" data-toc-target="2-falhas-de-autenticação-broken-authentication">2. Falhas de Autenticação (Broken Authentication)</a></li>
+<li><a class="doc-toc-link" href="#3-quebra-de-controle-de-acesso-broken-access-control" data-toc-target="3-quebra-de-controle-de-acesso-broken-access-control">3. Quebra de Controle de Acesso (Broken Access Control)</a></li>
+<li><a class="doc-toc-link" href="#4-configuração-insegura-de-segurança-security-misconfiguration" data-toc-target="4-configuração-insegura-de-segurança-security-misconfiguration">4. Configuração Insegura de Segurança (Security Misconfiguration)</a></li>
+<li><a class="doc-toc-link" href="#5-uso-de-componentes-com-vulnerabilidades-conhecidas" data-toc-target="5-uso-de-componentes-com-vulnerabilidades-conhecidas">5. Uso de Componentes com Vulnerabilidades Conhecidas</a></li>
+<li><a class="doc-toc-link" href="#6-cross-site-scripting-xss" data-toc-target="6-cross-site-scripting-xss">6. Cross-Site Scripting (XSS)</a></li>
+<li><a class="doc-toc-link" href="#7-falhas-na-lógica-de-negócio-business-logic-flaws" data-toc-target="7-falhas-na-lógica-de-negócio-business-logic-flaws">7. Falhas na Lógica de Negócio (Business Logic Flaws)</a></li>
+<li><a class="doc-toc-link" href="#8-server-side-request-forgery-ssrf" data-toc-target="8-server-side-request-forgery-ssrf">8. Server-Side Request Forgery (SSRF)</a></li>
+<li><a class="doc-toc-link" href="#9-logging-e-monitoramento-insuficientes" data-toc-target="9-logging-e-monitoramento-insuficientes">9. Logging e Monitoramento Insuficientes</a></li>
+<li><a class="doc-toc-link" href="#10-cross-site-request-forgery-csrf" data-toc-target="10-cross-site-request-forgery-csrf">10. Cross-Site Request Forgery (CSRF)</a></li>
+<li><a class="doc-toc-link" href="#11-injeção-de-prompt-prompt-injection" data-toc-target="11-injeção-de-prompt-prompt-injection">11. Injeção de Prompt (Prompt Injection)</a></li>
+<li><a class="doc-toc-link" href="#12-desserialização-insegura-insecure-deserialization" data-toc-target="12-desserialização-insegura-insecure-deserialization">12. Desserialização Insegura (Insecure Deserialization)</a></li>
+<li><a class="doc-toc-link" href="#13-entidades-externas-de-xml-xml-external-entity-xxe" data-toc-target="13-entidades-externas-de-xml-xml-external-entity-xxe">13. Entidades Externas de XML (XML External Entity - XXE)</a></li>
+<li><a class="doc-toc-link" href="#14-ausência-de-limitação-de-requisições-rate-limiting" data-toc-target="14-ausência-de-limitação-de-requisições-rate-limiting">14. Ausência de Limitação de Requisições (Rate Limiting)</a></li>
+<li><a class="doc-toc-link" href="#15-exposição-de-dados-sensíveis-cryptographic-failures" data-toc-target="15-exposição-de-dados-sensíveis-cryptographic-failures">15. Exposição de Dados Sensíveis (Cryptographic Failures)</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Checklist de Segurança e Diretrizes de Mitigação
+
+Este documento descreve uma lista de verificações de segurança essenciais e diretrizes para mitigação de riscos, focada em auxiliar no desenvolvimento seguro de aplicações.
+
+## 1. Ataques de Injeção (Injection)
+
+-   **O Risco:** Ocorrem quando dados não confiáveis são enviados a um interpretador como parte de um comando ou consulta (ex: SQL, NoSQL, OS). Permite que atacantes acessem, modifiquem ou destruam dados e, em alguns casos, obtenham controle do servidor.
+-   **Diretriz de Mitigação para IA:** "Refatore todo o código de acesso a dados para utilizar exclusivamente consultas parametrizadas (prepared statements) ou um ORM que realize o escape de forma segura. Valide e sanitize rigorosamente todos os inputs do usuário."
+
+## 2. Falhas de Autenticação (Broken Authentication)
+
+-   **O Risco:** Funções de autenticação e gerenciamento de sessão implementadas incorretamente permitem que atacantes comprometam senhas, chaves ou tokens, possibilitando o acesso não autorizado a contas.
+-   **Diretriz de Mitigação para IA:** "Desenvolva um módulo de autenticação que implemente hashing de senhas adaptativo e salgado (ex: Argon2, Bcrypt), políticas de senhas fortes, proteção contra força bruta (rate limiting) e um gerenciamento seguro de tokens JWT."
+
+## 3. Quebra de Controle de Acesso (Broken Access Control)
+
+-   **O Risco:** Falha crítica em sistemas multi-tenant, ocorrendo quando as restrições sobre o que um usuário autenticado pode fazer não são devidamente aplicadas, permitindo que usuários acessem dados de outras contas (IDOR).
+-   **Diretriz de Mitigação para IA:** "Implemente um middleware de autorização centralizado que verifique, em cada endpoint, se o usuário autenticado possui as permissões necessárias para acessar o recurso específico, aplicando o princípio de negação por padrão."
+
+## 4. Configuração Insegura de Segurança (Security Misconfiguration)
+
+-   **O Risco:** Resulta da falta de "hardening" de segurança na stack tecnológica, incluindo configurações padrão, permissões de nuvem excessivas, mensagens de erro verbosas e cabeçalhos de segurança HTTP ausentes.
+-   **Diretriz de Mitigação para IA:** "Gere um checklist de 'hardening' para a minha stack de tecnologia ([especificar: ex: Node.js, Nginx, PostgreSQL, Docker]), incluindo a desativação de funcionalidades desnecessárias e a configuração de cabeçalhos de segurança HTTP recomendados."
+
+## 5. Uso de Componentes com Vulnerabilidades Conhecidas
+
+-   **O Risco:** Depender de bibliotecas e frameworks de terceiros com vulnerabilidades publicamente conhecidas (CVEs). Um atacante pode explorar uma falha em uma dependência desatualizada para comprometer toda a aplicação.
+-   **Diretriz de Mitigação para IA:** "Configure um pipeline de CI/CD que inclua uma etapa de Análise de Composição de Software (SCA) usando Snyk ou OWASP Dependency-Check para bloquear a implantação de código com vulnerabilidades críticas."
+
+## 6. Cross-Site Scripting (XSS)
+
+-   **O Risco:** Permite que um atacante execute scripts maliciosos no navegador da vítima, podendo resultar no roubo de sessões (cookies), desfiguração de sites ou redirecionamento para páginas maliciosas.
+-   **Diretriz de Mitigação para IA:** "Implemente a codificação de saída (output encoding) contextual em todas as variáveis renderizadas no frontend e utilize uma Política de Segurança de Conteúdo (CSP) restritiva para mitigar o impacto de qualquer possível injeção."
+
+## 7. Falhas na Lógica de Negócio (Business Logic Flaws)
+
+-   **O Risco:** Abuso das funcionalidades da aplicação de maneiras não previstas, explorando fluxos de trabalho legítimos para obter vantagens indevidas, como a manipulação de preços em um carrinho de compras.
+-   **Diretriz de Mitigação para IA:** "Analise o seguinte fluxo de negócio [descreva o fluxo]. Identifique e liste possíveis cenários de abuso e falhas lógicas que poderiam ser exploradas por um usuário mal-intencionado, pensando em condições de corrida e manipulação de parâmetros."
+
+## 8. Server-Side Request Forgery (SSRF)
+
+-   **O Risco:** Uma falha que força o servidor da aplicação a fazer requisições HTTP para um domínio arbitrário. Em ambientes de nuvem, pode ser usado para escanear a rede interna ou acessar APIs de metadados e roubar credenciais.
+-   **Diretriz de Mitigação para IA:** "Crie uma função segura para buscar recursos de uma URL fornecida pelo usuário. A função deve validar a URL contra uma lista de permissões (allow-list) de domínios, protocolos e portas, e nunca deve seguir redirecionamentos."
+
+## 9. Logging e Monitoramento Insuficientes
+
+-   **O Risco:** Sem um registro adequado de eventos e um monitoramento ativo, as organizações não conseguem detectar uma violação em tempo hábil, aumentando o tempo de permanência e o dano causado por um atacante.
+-   **Diretriz de Mitigação para IA:** "Defina uma política de logging para a aplicação, especificando quais eventos de segurança devem ser registrados, o formato e as informações a serem incluídas. Integre esses logs a um sistema de SIEM para monitoramento e alerta."
+
+## 10. Cross-Site Request Forgery (CSRF)
+
+-   **O Risco:** Engana um usuário autenticado para que ele submeta, sem intenção, uma requisição que altera estado (ex: mudar senha, transferir fundos) em uma aplicação onde ele está logado.
+-   **Diretriz de Mitigação para IA:** "Implemente uma defesa contra CSRF utilizando o padrão de token anti-CSRF (Synchronizer Token Pattern) para todas as requisições que alteram estado. Garanta que os cookies de sessão utilizem o atributo SameSite=Strict ou Lax."
+
+## 11. Injeção de Prompt (Prompt Injection)
+
+-   **O Risco:** Específico para aplicações que integram Grandes Modelos de Linguagem (LLMs). Um atacante insere instruções maliciosas no input que são interpretadas pelo LLM como parte do prompt original do sistema.
+-   **Diretriz de Mitigação para IA:** "Desenhe uma arquitetura de defesa em camadas para a integração com o LLM. Isso deve incluir: (1) uma clara separação entre a instrução do sistema e o input do usuário usando delimitadores, (2) validação e sanitização rigorosa do input antes de enviá-lo ao LLM, (3) a aplicação do Princípio do Menor Privilégio nas ferramentas/APIs que o LLM pode invocar, e (4) um monitoramento para detectar outputs anômalos ou inesperados."
+
+## 12. Desserialização Insegura (Insecure Deserialization)
+
+-   **O Risco:** Ocorre quando dados serializados não confiáveis são desserializados sem validação. Isso pode levar à execução remota de código (RCE), ataques de negação de serviço e bypass de autenticação.
+-   **Diretriz de Mitigação para IA:** "Revise todo o código que realiza desserialização de objetos. Priorize o uso de formatos de dados simples, como JSON, e evite formatos complexos que permitem a instanciação de tipos de objetos arbitrários. Se a desserialização for necessária, implemente verificações de integridade e restrinja os tipos de objetos que podem ser recriados."
+
+## 13. Entidades Externas de XML (XML External Entity - XXE)
+
+-   **O Risco:** Aplicações que processam XML podem ser vulneráveis a ataques que exploram a especificação de entidades externas no documento.
+-   **Diretriz de Mitigação para IA:** "Configure o parser de XML da aplicação para desabilitar o suporte a Entidades Externas (External DTDs) e DOCTYPEs. Analise o código e me mostre como aplicar essa configuração de segurança para a biblioteca [nome da biblioteca XML, ex: libxml em PHP, ElementTree em Python]."
+
+## 14. Ausência de Limitação de Requisições (Rate Limiting)
+
+-   **O Risco:** A falta de controle sobre a frequência com que um usuário ou um IP pode fazer requisições. A ausência de "rate limiting" abre portas para ataques de força bruta e DoS.
+-   **Diretriz de Mitigação para IA:** "Implemente um middleware de 'rate limiting' usando o algoritmo de Token Bucket. Aplique limites diferentes para endpoints distintos: um limite mais restrito para login e recuperação de senha, e um limite mais geral para o uso da API principal."
+
+## 15. Exposição de Dados Sensíveis (Cryptographic Failures)
+
+-   **O Risco:** Envolve a proteção inadequada de dados sensíveis, como senhas e tokens.
+-   **Diretriz de Mitigação para IA:** "Analise o código em busca de dados sensíveis armazenados em texto claro, uso de algoritmos criptográficos fracos (como MD5 ou SHA1) e chaves de criptografia hardcoded. Assegure que o TLS esteja configurado corretamente para todos os dados em trânsito."
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

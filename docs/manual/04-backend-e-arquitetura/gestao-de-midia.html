@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>gestao-de-midia — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura" open><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="gestao-de-midia.html" class="is-active">Gestao De Midia</a></li>
+<li><a href="mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Backend e Arquitetura</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">gestao-de-midia</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">04 — Backend e Arquitetura</p>
+<h1 class="doc-title">gestao-de-midia</h1>
+</header>
+<div class="prose-content">
+<h2 id="gestão-de-mídias-privadas-e-urls-temporárias-assinadas">Gestão de mídias privadas e URLs temporárias assinadas</h2>
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#gestão-de-mídias-privadas-e-urls-temporárias-assinadas">Gestão de mídias privadas e URLs temporárias assinadas</a></li>
+<li><a href="#por-que-buckets-privados-e-urls-pré-assinadas">Por que buckets privados e URLs pré-assinadas?</a></li>
+<li><a href="#proposta-adotada-neste-projeto">Proposta adotada neste projeto</a></li>
+<li><a href="#configurações-essenciais">Configurações essenciais</a></li>
+<li><a href="#1-disco-s3-privado-e-sem-reescrita-de-host">1) Disco S3 privado e sem reescrita de host</a></li>
+<li><a href="#2-configuração-do-pacote-spatie-media-library">2) Configuração do Pacote Spatie Media Library</a></li>
+<li><a href="#3-appserviceprovider">3) AppServiceProvider</a></li>
+<li><a href="#4-modelo-media-e-mediaitem">4) Modelo Media e MediaItem</a></li>
+<li><a href="#5-modelo-video">5) Modelo Video</a></li>
+<li><a href="#6-serviço-mediaservice">6) Serviço MediaService</a></li>
+<li><a href="#7-serviço-videometadataservice">7) Serviço VideoMetadataService</a></li>
+<li><a href="#8-ui-no-filament">8) UI no Filament</a></li>
+<li><a href="#formulário-de-upload">Formulário de upload</a></li>
+<li><a href="#infolist-e-abrir-mídia">Infolist e abrir mídia</a></li>
+<li><a href="#tabela">Tabela</a></li>
+<li><a href="#minio-bucket-privado">MinIO: bucket privado</a></li>
+<li><a href="#referências">Referências</a></li>
+</ul>
+<h3>Por que buckets privados e URLs pré-assinadas?</h3>
+<p>Manter buckets privados segue o princípio do menor privilégio e evita exposição acidental. Em vez de objetos públicos, usamos URLs pré‑assinadas e temporárias para liberar somente o arquivo necessário, pelo tempo necessário, sem expor credenciais. É possível restringir método (GET/PUT), tipo e tamanho do arquivo; qualquer alteração na URL invalida o acesso (assinatura SigV4). Isso reduz riscos como indexação, hotlink e brute force, diminui a superfície de ataque e favorece a conformidade (ex.: LGPD).</p>
+<h3>Proposta adotada neste projeto</h3>
+<p>Neste projeto, o bucket MinIO <code>labsis</code> permanece privado e sem acesso anônimo. A assinatura de URLs é automática por meio de um gerador customizado do Spatie que sobrescreve <code>getUrl()</code> para sempre retornar <code>temporaryUrl</code> com SigV4. Os uploads realizados via Filament são gravados no disco <code>s3</code> com visibilidade privada. Evitamos qualquer reescrita do host das URLs após a assinatura para impedir erros de <code>SignatureDoesNotMatch</code>. Na interface, a abertura de mídia é exibida somente para tipos suportados (imagem, áudio, vídeo e PDF), enquanto os demais fluxos permanecem via download ou visualização externa.</p>
+<h3>Configurações essenciais</h3>
+<h4>1) Disco S3 privado e sem reescrita de host</h4>
+<p>O arquivo <code>config/filesystems.php</code> centraliza a definição dos discos de armazenamento usados pelo Laravel (Storage) e, por consequência, pelo Spatie Media Library. No contexto deste projeto, o bloco do disco <code>s3</code> aponta o SDK para o MinIO e controla parâmetros críticos: credenciais, bucket, endpoint e modo path‑style, além da visibilidade padrão e das opções de assinatura. Ao manter <code>visibility</code> como <code>private</code>, garantimos que todos os objetos são privados por padrão; ao não definir <code>temporary_url</code>, evitamos reescrever o host após a assinatura, preservando a integridade da assinatura SigV4; e, com <code>use_path_style_endpoint = true</code>, asseguramos compatibilidade com o MinIO. A chave <code>url</code> continua disponível como base para <code>Storage::url()</code> (URLs não assinadas), mas não é utilizada na construção de <code>temporaryUrl()</code>, portanto não interfere nas URLs temporárias assinadas.</p>
+<p>Arquivo: <code>config/filesystems.php</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&#x27;s3&#x27; =&gt; [
+    &#x27;driver&#x27; =&gt; &#x27;s3&#x27;,
+    &#x27;key&#x27; =&gt; env(&#x27;AWS_ACCESS_KEY_ID&#x27;),
+    &#x27;secret&#x27; =&gt; env(&#x27;AWS_SECRET_ACCESS_KEY&#x27;),
+    &#x27;region&#x27; =&gt; env(&#x27;AWS_DEFAULT_REGION&#x27;, &#x27;us-east-1&#x27;),
+    &#x27;bucket&#x27; =&gt; env(&#x27;AWS_BUCKET&#x27;, &#x27;labsis&#x27;),
+    &#x27;url&#x27; =&gt; env(&#x27;AWS_URL&#x27;),
+    &#x27;endpoint&#x27; =&gt; env(&#x27;AWS_ENDPOINT&#x27;, env(&#x27;AWS_URL&#x27;)),
+    // Removido &#x27;temporary_url&#x27; para não trocar host após assinar
+    &#x27;use_path_style_endpoint&#x27; =&gt; env(&#x27;AWS_USE_PATH_STYLE_ENDPOINT&#x27;, true),
+    &#x27;visibility&#x27; =&gt; &#x27;private&#x27;,
+    &#x27;throw&#x27; =&gt; false,
+    &#x27;report&#x27; =&gt; false,
+    &#x27;options&#x27; =&gt; [
+        &#x27;region&#x27; =&gt; env(&#x27;AWS_DEFAULT_REGION&#x27;, &#x27;us-east-1&#x27;),
+        &#x27;signature_version&#x27; =&gt; &#x27;v4&#x27;,
+    ],
+],</code></pre></div>
+<p>Observação importante: a assinatura SigV4 inclui o header <code>host</code>. Para evitar o erro de <code>SignatureDoesNotMatch</code>, o host de URLs temporárias após assinar deve ser o mesmo host do <code>AWS_ENDPOINT</code>.</p>
+<h4>2) Configuração do Pacote Spatie Media Library</h4>
+<p>O arquivo <code>config/media-library.php</code> centraliza a configuração do pacote Spatie Media Library no projeto. Nele definimos o gerador de URLs (<code>url_generator</code>) — que aqui foi substituído por <code>App\Support\MediaLibrary\SignedUrlGenerator</code> para que toda chamada a <code>getUrl()</code> retorne uma URL temporária assinada —, além de pontos como <code>path_generator</code> (organização de pastas), <code>file_namer</code>, drivers e otimizadores de imagem, filas de conversões, tempo padrão de expiração das URLs temporárias (<code>temporary_url_default_lifetime</code>) e caminhos para FFMPEG/FFProbe. Em resumo, é o local único onde ajustamos o comportamento de armazenamento, geração e entrega das mídias.</p>
+<p>Arquivo: <code>config/media-library.php</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&#x27;url_generator&#x27; =&gt; App\Support\MediaLibrary\SignedUrlGenerator::class,</code></pre></div>
+<p>Além do gerador de URLs, este projeto também personaliza outros pontos relevantes do <code>config/media-library.php</code>. O <code>path_generator</code> foi definido como <code>App\Support\MediaLibrary\MediaPathGenerator</code> para organizar pastas de forma previsível por coleção e modelo.</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&#x27;path_generator&#x27; =&gt; App\Support\MediaLibrary\MediaPathGenerator::class,</code></pre></div>
+<p>E, em <code>config/media-library.php</code>, o TTL pode ser ajustado via env:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>&#x27;temporary_url_default_lifetime&#x27; =&gt; env(&#x27;MEDIA_TEMPORARY_URL_DEFAULT_LIFETIME&#x27;, 5),</code></pre></div>
+<h4>3) AppServiceProvider</h4>
+<p>O arquivo <code>app/Providers/AppServiceProvider.php</code> não executa mais a rotina de verificação de armazenamento em cada boot. Anteriormente, a rotina <code>configStorage()</code> causava latência na requisição. Agora, a responsabilidade de assegurar que os diretórios lógicos <code>audios</code>, <code>images</code> e <code>documents</code> existam no disco <code>s3</code> (MinIO) foi delegada ao comando Artisan <code>storage:init</code>. Este comando é executado automaticamente pelos scripts de setup, reset e deploy configurados no <code>composer.json</code> (veja <a href="../../../manual/04-backend-e-arquitetura/scripts-composer.html">Scripts Composer</a>), garantindo a estrutura correta sem onerar a performance da aplicação em tempo de execução. A organização de paths e geração de URLs assinadas continuam, respectivamente, no <code>MediaPathGenerator</code> e <code>SignedUrlGenerator</code>.</p>
+<h4>4) Modelo Media e MediaItem</h4>
+<p>O pacote Spatie Media Library define o modelo Eloquent <code>Spatie\MediaLibrary\MediaCollections\Models\Media</code> (tabela <code>media</code>), responsável por persistir metadados dos arquivos anexados: coleção, disco, nome, nome do arquivo, MIME type, tamanho, conversões, imagens responsivas e propriedades customizadas. Cada registro de <code>media</code> pertence morficamente a um modelo de domínio (neste projeto, <code>App\Models\MediaItem</code>). Esse modelo expõe operações de alto nível, como <code>getUrl()</code> e <code>getTemporaryUrl()</code> (neste projeto, configuradas para sempre retornarem URL temporária assinada), além de integrações com conversões, thumbnails e imagens responsivas quando aplicável. Em suma, ele orquestra o vínculo entre Eloquent e o armazenamento (S3/MinIO), sem conhecer regras de negócio do domínio.</p>
+<p>No domínio da aplicação, <code>App\Models\MediaItem</code> funciona como o agregado que representa uma mídia cadastrada. Ele não substitui o modelo <code>media</code> da Spatie; em vez disso, o utiliza via <code>InteractsWithMedia</code> para anexar exatamente um arquivo à coleção <code>media</code> no disco <code>s3</code> (<code>singleFile()</code>). O <code>MediaItem</code> também oferece atributos derivados úteis à UI, como <code>file_type</code> (que unifica <code>text/*</code> como Documento) e <code>human_size</code>, além de <code>name</code> (que prioriza o nome do anexo) e <code>image_url</code> (URL assinada para pré-visualizações quando houver imagem). Quando a mídia não é um arquivo, mas uma referência externa de vídeo, o relacionamento <code>video()</code> (hasOne) provê os metadados do vídeo vinculados ao mesmo registro de <code>MediaItem</code>.</p>
+<div class="callout callout-info"><p><strong>Colisão <code>video</code>:</strong> O model possui coluna booleana <code>video</code> e relação <code>video()</code>. Em Tables/Infolists do Filament, use <code>linkedVideo()</code> para acessar o model <code>Video</code> sem ambiguidade. A listagem em <code>MediaResource</code> aplica eager load <code>with([&#x27;video&#x27;, &#x27;team&#x27;, &#x27;media&#x27;])</code> — consulte <a href="../../../manual/05-otimizacoes/filament-performance.html">Performance no Filament</a>.</p></div>
+<h4>5) Modelo Video</h4>
+<p>O modelo <code>App\Models\Video</code> guarda os metadados sobre os vídeos externos (provedor, ID do provedor, URL, título e duração em segundos) e pertence a um <code>MediaItem</code>. Essa separação reflete a decisão de produto de não armazenar binários de vídeo no MinIO, mantendo apenas links e metadados de Vídeos no Youtube. A UI do Filament usa essas informações para exibir e abrir o conteúdo de forma adequada quando o item é um vídeo.</p>
+<h4>6) Serviço MediaService</h4>
+<p>O <code>App\Services\MediaService</code> encapsula a lógica de criação e atualização de mídias no domínio. Ao receber um arquivo, cria o <code>MediaItem</code> e anexa o binário por meio do Spatie na coleção <code>media</code> do disco <code>s3</code>, preservando o nome original; ao receber uma URL de vídeo, registra a referência externa no domínio. Na atualização, trata a troca entre arquivo e URL (limpando o anexo quando se passa a usar vídeo e o inverso quando volta a arquivo) e permite ajustar o nome. Também expõe utilitários de consumo: <code>getMediaUrl()</code> retorna a URL de vídeo externa ou, para anexos, uma URL temporária assinada; <code>getMediaPath()</code> retorna o caminho interno no storage; <code>isFile()</code>/<code>isVideoUrl()</code> ajudam no fluxo condicional; e <code>getMediaType()</code> normaliza a tipagem (image, audio, video, document, unknown) para a UI.</p>
+<h4>7) Serviço VideoMetadataService</h4>
+<p>O <code>App\Services\VideoMetadataService</code> enriquece registros de vídeo externo (YouTube) com título e duração. Primeiro tenta obter o título via oEmbed oficial; se indisponível, efetua leitura do HTML com cURL e extrai <code>og:title</code> ou o <code>&lt;title&gt;</code> normalizado. Para a duração, tenta <code>lengthSeconds</code> no JSON do player e, alternativamente, interpreta um valor ISO‑8601 encontrado no HTML, convertendo para segundos. Com esses dados, o projeto persiste metadados suficientes em <code>Video</code> para rotular e exibir vídeos no painel sem armazenar arquivos de mídia pesados e chaves de API de YouTube.</p>
+<h4>8) UI no Filament</h4>
+<p>##### Formulário de upload</p>
+<p>Arquivo: <code>app/Filament/Resources/Media/Schemas/MediaForm.php</code></p>
+<ul>
+<li>Upload privado no S3 (<code>-&gt;disk(&#x27;s3&#x27;)-&gt;visibility(&#x27;private&#x27;)</code>).</li>
+<li>Possui input para mídia e URL de vídeo.</li>
+</ul>
+<p>Trecho relevante do uploader:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>SpatieMediaLibraryFileUpload::make(&#x27;media&#x27;)
+    -&gt;id(&#x27;mediaUpload&#x27;)
+    -&gt;disk(&#x27;s3&#x27;)
+    -&gt;visibility(&#x27;private&#x27;)
+    -&gt;dehydrated(false)
+    -&gt;downloadable(true)
+    -&gt;openable(true)
+    -&gt;previewable(true)
+    -&gt;acceptedFileTypes(MediaAcceptedMime::defaults())
+    -&gt;maxFiles(1)
+    -&gt;maxSize(5120)
+    -&gt;collection(&#x27;media&#x27;)
+    -&gt;required(fn (Get $get): bool =&gt; empty($get(&#x27;video.url&#x27;)))
+    -&gt;disabled(fn ($get) =&gt; ! empty($get(&#x27;video.url&#x27;)))
+    -&gt;afterStateUpdatedJs(self::jsOnMediaUpdated())
+    -&gt;afterStateUpdated(function (mixed $state, Set $set): void {
+        self::handleMediaStateUpdated($state, $set);
+    })
+    -&gt;columnSpanFull();</code></pre></div>
+<p>##### Infolist e abrir mídia</p>
+<p>Arquivo: <code>app/Filament/Resources/Media/Schemas/MediaInfolist.php</code></p>
+<ul>
+<li>Ação <code>MediaAction::make(&#x27;open&#x27;)</code> abre somente tipos suportados pelo pacote.</li>
+<li>A URL vem assinada automaticamente (via gerador custom).</li>
+</ul>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>MediaAction::make(&#x27;open&#x27;)
+    -&gt;label(fn ($record) =&gt; self::resolveMediaActionConfig($record)[&#x27;label&#x27;])
+    -&gt;icon(fn ($record) =&gt; self::resolveMediaActionConfig($record)[&#x27;icon&#x27;])
+    -&gt;media(fn ($record) =&gt; self::resolveMediaActionConfig($record)[&#x27;media&#x27;] ?? &#x27;#&#x27;)
+    -&gt;visible(fn ($record): bool =&gt; self::resolveMediaActionConfig($record)[&#x27;media&#x27;] !== null)</code></pre></div>
+<p>##### Tabela</p>
+<p>Arquivo: <code>app/Filament/Resources/Media/Tables/MediaTable.php</code></p>
+<ul>
+<li>Exibe nome, tipo (badge), criado em.</li>
+<li>Usa <code>file_type</code> já unificado (evita casos não tratados).</li>
+</ul>
+<p>---</p>
+<h3>MinIO: bucket privado</h3>
+<ul>
+<li>Bucket <code>labsis</code> criado previamente.</li>
+<li>Política privada aplicada:</li>
+</ul>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>mc alias set local http://minio:9000 sail password
+mc anonymous set none local/labsis</code></pre></div>
+<p>Observação sobre host: a URL assinada usa o host do <code>AWS_ENDPOINT</code>. Use o mesmo host no navegador (ex.: resolvendo <code>minio</code> no etc/hosts adicionando a entrada <code>127.0.0.1 minio</code>) para evitar erro de assinatura.</p>
+<h3>Referências</h3>
+<ul>
+<li><a href="https://medium.com/geekieeducacao/url-pr%C3%A9-assinada-manipule-arquivos-no-aws-s3-de-forma-segura-e-eficiente-62f93b66bc9b">URL pré‑assinada: manipule arquivos no AWS S3 de forma segura e eficiente</a></li>
+<li><a href="/config/filesystems.php">Config: Filesystems</a></li>
+<li><a href="/config/media-library.php">Config: Media Library</a></li>
+<li><a href="/app/Services/MediaService.php">Service: MediaService</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="estrategia-backup.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Estratégia de Backup</span></a><a class="doc-pagination-card doc-pagination-next" href="mongodb-integration.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Integração MongoDB - Auditoria e Logs</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown">## Gestão de mídias privadas e URLs temporárias assinadas
+
+## 📋 Índice
+
+-   [Gestão de mídias privadas e URLs temporárias assinadas](#gestão-de-mídias-privadas-e-urls-temporárias-assinadas)
+-   [Por que buckets privados e URLs pré-assinadas?](#por-que-buckets-privados-e-urls-pré-assinadas)
+-   [Proposta adotada neste projeto](#proposta-adotada-neste-projeto)
+-   [Configurações essenciais](#configurações-essenciais)
+    -   [1) Disco S3 privado e sem reescrita de host](#1-disco-s3-privado-e-sem-reescrita-de-host)
+    -   [2) Configuração do Pacote Spatie Media Library](#2-configuração-do-pacote-spatie-media-library)
+    -   [3) AppServiceProvider](#3-appserviceprovider)
+    -   [4) Modelo Media e MediaItem](#4-modelo-media-e-mediaitem)
+    -   [5) Modelo Video](#5-modelo-video)
+    -   [6) Serviço MediaService](#6-serviço-mediaservice)
+    -   [7) Serviço VideoMetadataService](#7-serviço-videometadataservice)
+    -   [8) UI no Filament](#8-ui-no-filament)
+        -   [Formulário de upload](#formulário-de-upload)
+        -   [Infolist e abrir mídia](#infolist-e-abrir-mídia)
+        -   [Tabela](#tabela)
+-   [MinIO: bucket privado](#minio-bucket-privado)
+-   [Referências](#referências)
+
+### Por que buckets privados e URLs pré-assinadas?
+
+Manter buckets privados segue o princípio do menor privilégio e evita exposição acidental. Em vez de objetos públicos, usamos URLs pré‑assinadas e temporárias para liberar somente o arquivo necessário, pelo tempo necessário, sem expor credenciais. É possível restringir método (GET/PUT), tipo e tamanho do arquivo; qualquer alteração na URL invalida o acesso (assinatura SigV4). Isso reduz riscos como indexação, hotlink e brute force, diminui a superfície de ataque e favorece a conformidade (ex.: LGPD).
+
+### Proposta adotada neste projeto
+
+Neste projeto, o bucket MinIO `labsis` permanece privado e sem acesso anônimo. A assinatura de URLs é automática por meio de um gerador customizado do Spatie que sobrescreve `getUrl()` para sempre retornar `temporaryUrl` com SigV4. Os uploads realizados via Filament são gravados no disco `s3` com visibilidade privada. Evitamos qualquer reescrita do host das URLs após a assinatura para impedir erros de `SignatureDoesNotMatch`. Na interface, a abertura de mídia é exibida somente para tipos suportados (imagem, áudio, vídeo e PDF), enquanto os demais fluxos permanecem via download ou visualização externa.
+
+### Configurações essenciais
+
+#### 1) Disco S3 privado e sem reescrita de host
+
+O arquivo `config/filesystems.php` centraliza a definição dos discos de armazenamento usados pelo Laravel (Storage) e, por consequência, pelo Spatie Media Library. No contexto deste projeto, o bloco do disco `s3` aponta o SDK para o MinIO e controla parâmetros críticos: credenciais, bucket, endpoint e modo path‑style, além da visibilidade padrão e das opções de assinatura. Ao manter `visibility` como `private`, garantimos que todos os objetos são privados por padrão; ao não definir `temporary_url`, evitamos reescrever o host após a assinatura, preservando a integridade da assinatura SigV4; e, com `use_path_style_endpoint = true`, asseguramos compatibilidade com o MinIO. A chave `url` continua disponível como base para `Storage::url()` (URLs não assinadas), mas não é utilizada na construção de `temporaryUrl()`, portanto não interfere nas URLs temporárias assinadas.
+
+Arquivo: `config/filesystems.php`
+
+```php
+'s3' => [
+    'driver' => 's3',
+    'key' => env('AWS_ACCESS_KEY_ID'),
+    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+    'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+    'bucket' => env('AWS_BUCKET', 'labsis'),
+    'url' => env('AWS_URL'),
+    'endpoint' => env('AWS_ENDPOINT', env('AWS_URL')),
+    // Removido 'temporary_url' para não trocar host após assinar
+    'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', true),
+    'visibility' => 'private',
+    'throw' => false,
+    'report' => false,
+    'options' => [
+        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+        'signature_version' => 'v4',
+    ],
+],
+```
+
+Observação importante: a assinatura SigV4 inclui o header `host`. Para evitar o erro de `SignatureDoesNotMatch`, o host de URLs temporárias após assinar deve ser o mesmo host do `AWS_ENDPOINT`.
+
+#### 2) Configuração do Pacote Spatie Media Library
+
+O arquivo `config/media-library.php` centraliza a configuração do pacote Spatie Media Library no projeto. Nele definimos o gerador de URLs (`url_generator`) — que aqui foi substituído por `App\Support\MediaLibrary\SignedUrlGenerator` para que toda chamada a `getUrl()` retorne uma URL temporária assinada —, além de pontos como `path_generator` (organização de pastas), `file_namer`, drivers e otimizadores de imagem, filas de conversões, tempo padrão de expiração das URLs temporárias (`temporary_url_default_lifetime`) e caminhos para FFMPEG/FFProbe. Em resumo, é o local único onde ajustamos o comportamento de armazenamento, geração e entrega das mídias.
+
+Arquivo: `config/media-library.php`
+
+```php
+'url_generator' => App\Support\MediaLibrary\SignedUrlGenerator::class,
+```
+
+Além do gerador de URLs, este projeto também personaliza outros pontos relevantes do `config/media-library.php`. O `path_generator` foi definido como `App\Support\MediaLibrary\MediaPathGenerator` para organizar pastas de forma previsível por coleção e modelo.
+
+```php
+'path_generator' => App\Support\MediaLibrary\MediaPathGenerator::class,
+```
+
+E, em `config/media-library.php`, o TTL pode ser ajustado via env:
+
+```php
+'temporary_url_default_lifetime' => env('MEDIA_TEMPORARY_URL_DEFAULT_LIFETIME', 5),
+```
+
+#### 3) AppServiceProvider
+
+O arquivo `app/Providers/AppServiceProvider.php` não executa mais a rotina de verificação de armazenamento em cada boot. Anteriormente, a rotina `configStorage()` causava latência na requisição. Agora, a responsabilidade de assegurar que os diretórios lógicos `audios`, `images` e `documents` existam no disco `s3` (MinIO) foi delegada ao comando Artisan `storage:init`. Este comando é executado automaticamente pelos scripts de setup, reset e deploy configurados no `composer.json` (veja [Scripts Composer](./scripts-composer.md)), garantindo a estrutura correta sem onerar a performance da aplicação em tempo de execução. A organização de paths e geração de URLs assinadas continuam, respectivamente, no `MediaPathGenerator` e `SignedUrlGenerator`.
+
+#### 4) Modelo Media e MediaItem
+
+O pacote Spatie Media Library define o modelo Eloquent `Spatie\MediaLibrary\MediaCollections\Models\Media` (tabela `media`), responsável por persistir metadados dos arquivos anexados: coleção, disco, nome, nome do arquivo, MIME type, tamanho, conversões, imagens responsivas e propriedades customizadas. Cada registro de `media` pertence morficamente a um modelo de domínio (neste projeto, `App\Models\MediaItem`). Esse modelo expõe operações de alto nível, como `getUrl()` e `getTemporaryUrl()` (neste projeto, configuradas para sempre retornarem URL temporária assinada), além de integrações com conversões, thumbnails e imagens responsivas quando aplicável. Em suma, ele orquestra o vínculo entre Eloquent e o armazenamento (S3/MinIO), sem conhecer regras de negócio do domínio.
+
+No domínio da aplicação, `App\Models\MediaItem` funciona como o agregado que representa uma mídia cadastrada. Ele não substitui o modelo `media` da Spatie; em vez disso, o utiliza via `InteractsWithMedia` para anexar exatamente um arquivo à coleção `media` no disco `s3` (`singleFile()`). O `MediaItem` também oferece atributos derivados úteis à UI, como `file_type` (que unifica `text/*` como Documento) e `human_size`, além de `name` (que prioriza o nome do anexo) e `image_url` (URL assinada para pré-visualizações quando houver imagem). Quando a mídia não é um arquivo, mas uma referência externa de vídeo, o relacionamento `video()` (hasOne) provê os metadados do vídeo vinculados ao mesmo registro de `MediaItem`.
+
+> **Colisão `video`:** O model possui coluna booleana `video` e relação `video()`. Em Tables/Infolists do Filament, use `linkedVideo()` para acessar o model `Video` sem ambiguidade. A listagem em `MediaResource` aplica eager load `with(['video', 'team', 'media'])` — consulte [Performance no Filament](../05-otimizacoes/filament-performance.md).
+
+#### 5) Modelo Video
+
+O modelo `App\Models\Video` guarda os metadados sobre os vídeos externos (provedor, ID do provedor, URL, título e duração em segundos) e pertence a um `MediaItem`. Essa separação reflete a decisão de produto de não armazenar binários de vídeo no MinIO, mantendo apenas links e metadados de Vídeos no Youtube. A UI do Filament usa essas informações para exibir e abrir o conteúdo de forma adequada quando o item é um vídeo.
+
+#### 6) Serviço MediaService
+
+O `App\Services\MediaService` encapsula a lógica de criação e atualização de mídias no domínio. Ao receber um arquivo, cria o `MediaItem` e anexa o binário por meio do Spatie na coleção `media` do disco `s3`, preservando o nome original; ao receber uma URL de vídeo, registra a referência externa no domínio. Na atualização, trata a troca entre arquivo e URL (limpando o anexo quando se passa a usar vídeo e o inverso quando volta a arquivo) e permite ajustar o nome. Também expõe utilitários de consumo: `getMediaUrl()` retorna a URL de vídeo externa ou, para anexos, uma URL temporária assinada; `getMediaPath()` retorna o caminho interno no storage; `isFile()`/`isVideoUrl()` ajudam no fluxo condicional; e `getMediaType()` normaliza a tipagem (image, audio, video, document, unknown) para a UI.
+
+#### 7) Serviço VideoMetadataService
+
+O `App\Services\VideoMetadataService` enriquece registros de vídeo externo (YouTube) com título e duração. Primeiro tenta obter o título via oEmbed oficial; se indisponível, efetua leitura do HTML com cURL e extrai `og:title` ou o `<title>` normalizado. Para a duração, tenta `lengthSeconds` no JSON do player e, alternativamente, interpreta um valor ISO‑8601 encontrado no HTML, convertendo para segundos. Com esses dados, o projeto persiste metadados suficientes em `Video` para rotular e exibir vídeos no painel sem armazenar arquivos de mídia pesados e chaves de API de YouTube.
+
+#### 8) UI no Filament
+
+##### Formulário de upload
+
+Arquivo: `app/Filament/Resources/Media/Schemas/MediaForm.php`
+
+-   Upload privado no S3 (`->disk('s3')->visibility('private')`).
+-   Possui input para mídia e URL de vídeo.
+
+Trecho relevante do uploader:
+
+```php
+SpatieMediaLibraryFileUpload::make('media')
+    ->id('mediaUpload')
+    ->disk('s3')
+    ->visibility('private')
+    ->dehydrated(false)
+    ->downloadable(true)
+    ->openable(true)
+    ->previewable(true)
+    ->acceptedFileTypes(MediaAcceptedMime::defaults())
+    ->maxFiles(1)
+    ->maxSize(5120)
+    ->collection('media')
+    ->required(fn (Get $get): bool => empty($get('video.url')))
+    ->disabled(fn ($get) => ! empty($get('video.url')))
+    ->afterStateUpdatedJs(self::jsOnMediaUpdated())
+    ->afterStateUpdated(function (mixed $state, Set $set): void {
+        self::handleMediaStateUpdated($state, $set);
+    })
+    ->columnSpanFull();
+```
+
+##### Infolist e abrir mídia
+
+Arquivo: `app/Filament/Resources/Media/Schemas/MediaInfolist.php`
+
+-   Ação `MediaAction::make('open')` abre somente tipos suportados pelo pacote.
+-   A URL vem assinada automaticamente (via gerador custom).
+
+```php
+MediaAction::make('open')
+    ->label(fn ($record) => self::resolveMediaActionConfig($record)['label'])
+    ->icon(fn ($record) => self::resolveMediaActionConfig($record)['icon'])
+    ->media(fn ($record) => self::resolveMediaActionConfig($record)['media'] ?? '#')
+    ->visible(fn ($record): bool => self::resolveMediaActionConfig($record)['media'] !== null)
+```
+
+##### Tabela
+
+Arquivo: `app/Filament/Resources/Media/Tables/MediaTable.php`
+
+-   Exibe nome, tipo (badge), criado em.
+-   Usa `file_type` já unificado (evita casos não tratados).
+
+---
+
+### MinIO: bucket privado
+
+-   Bucket `labsis` criado previamente.
+-   Política privada aplicada:
+
+```bash
+mc alias set local http://minio:9000 sail password
+mc anonymous set none local/labsis
+```
+
+Observação sobre host: a URL assinada usa o host do `AWS_ENDPOINT`. Use o mesmo host no navegador (ex.: resolvendo `minio` no etc/hosts adicionando a entrada `127.0.0.1 minio`) para evitar erro de assinatura.
+
+### Referências
+
+-   [URL pré‑assinada: manipule arquivos no AWS S3 de forma segura e eficiente](https://medium.com/geekieeducacao/url-pr%C3%A9-assinada-manipule-arquivos-no-aws-s3-de-forma-segura-e-eficiente-62f93b66bc9b)
+-   [Config: Filesystems](/config/filesystems.php)
+-   [Config: Media Library](/config/media-library.php)
+-   [Service: MediaService](/app/Services/MediaService.php)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

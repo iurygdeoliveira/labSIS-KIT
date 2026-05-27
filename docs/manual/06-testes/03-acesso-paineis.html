@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🛡️ Testes de Controle de Acesso e Redirecionamento — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes" open><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="03-acesso-paineis.html" class="is-active">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Testes</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">🛡️ Testes de Controle de Acesso e Redirecionamento</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">06 — Testes</p>
+<h1 class="doc-title">🛡️ Testes de Controle de Acesso e Redirecionamento</h1>
+</header>
+<div class="prose-content">
+<p>Este documento detalha os testes de integração responsáveis por verificar as regras de acesso aos diferentes painéis do sistema (Admin, User) e a lógica de redirecionamento inteligente.</p>
+<p>Arquivo: <a href="../../tests/Feature/PanelAccessTest.php"><code>tests/Feature/PanelAccessTest.php</code></a></p>
+<h2 id="estrutura-e-dados">Estrutura e Dados</h2>
+<p>Estes testes utilizam o <strong><code>DatabaseSeeder</code></strong> completo (<code>beforeEach</code>) para garantir um ambiente consistente com roles e permissions reais configuradas pelo <code>UserSeeder</code> — incluindo usuários seed (<code>admin@labsis.dev.br</code>, <code>beltrano@labsis.dev.br</code>, <code>sicrano@labsis.dev.br</code>) e teams (<code>Team A</code>, etc.).</p>
+<h2 id="cenários-cobertos">Cenários Cobertos</h2>
+<h3>1. Visitantes (Guests)</h3>
+<ul>
+<li><strong>Redirecionamento</strong>: Usuários não autenticados que tentam acessar <code>/admin</code> ou <code>/user</code> são redirecionados para <code>/__compat-login</code> (rota de compatibilidade que encaminha para <code>/login</code>).</li>
+</ul>
+<h3>2. Administradores (Admin)</h3>
+<ul>
+<li><strong>Acesso ao painel</strong>: Usuário <code>admin@labsis.dev.br</code> acessa <code>/admin</code> com sucesso (200).</li>
+<li><strong>Listagem de usuários</strong>: Admin acessa <code>/admin/users</code> no Filament.</li>
+<li><strong>Redirecionamento inteligente</strong>: Admin autenticado em <code>/login</code> é redirecionado para <code>/admin</code>.</li>
+</ul>
+<h3>3. Usuários Comuns (User)</h3>
+<ul>
+<li><strong>Bloqueio ao painel Admin</strong>: <code>beltrano@labsis.dev.br</code> recebe <strong>403 Forbidden</strong> ao acessar <code>/admin</code>.</li>
+<li><strong>Acesso ao painel do team</strong>: Usuário acessa <code>/user/{slug}</code> do team (<code>Team A</code> → slug do seed).</li>
+<li><strong>Redirecionamento inteligente</strong>: <code>sicrano@labsis.dev.br</code> autenticado em <code>/login</code> é redirecionado para <code>/user/{slug}</code> do primeiro team retornado por <code>getTenants()</code>.</li>
+</ul>
+<div class="callout callout-info"><p><strong>Terminologia Filament:</strong> a API usa <code>getTenants()</code> e <code>getTenant()</code>, mas o model subjacente é sempre <code>App\Models\Team</code> com identificador de rota <strong><code>slug</code></strong> (não UUID).</p></div>
+<h2 id="middleware-testado">Middleware Testado</h2>
+<p>Estes testes validam indiretamente o funcionamento de:</p>
+<ul>
+<li><a href="../../app/Http/Middleware/RedirectToProperPanelMiddleware.php"><code>RedirectToProperPanelMiddleware</code></a> — redirecionamentos por painel e status</li>
+<li><a href="../../app/Models/User.php"><code>User::canAccessPanel()</code></a> — autorização final nos painéis Filament</li>
+</ul>
+<h2 id="executando-estes-testes">Executando estes testes</h2>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>./vendor/bin/sail artisan test tests/Feature/PanelAccessTest.php</code></pre></div>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="../../tests/Feature/PanelAccessTest.php">Test: PanelAccessTest.php</a></li>
+<li><a href="../../app/Http/Middleware/RedirectToProperPanelMiddleware.php">Middleware: RedirectToProperPanelMiddleware</a></li>
+<li><a href="../../database/seeders/DatabaseSeeder.php">Seeder: DatabaseSeeder</a></li>
+<li><a href="../../../manual/02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy e Teams</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="02-autenticacao.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">🔐 Testes de Autenticação</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#estrutura-e-dados" data-toc-target="estrutura-e-dados">Estrutura e Dados</a></li>
+<li><a class="doc-toc-link" href="#cenários-cobertos" data-toc-target="cenários-cobertos">Cenários Cobertos</a></li>
+<li><a class="doc-toc-link" href="#middleware-testado" data-toc-target="middleware-testado">Middleware Testado</a></li>
+<li><a class="doc-toc-link" href="#executando-estes-testes" data-toc-target="executando-estes-testes">Executando estes testes</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># 🛡️ Testes de Controle de Acesso e Redirecionamento
+
+Este documento detalha os testes de integração responsáveis por verificar as regras de acesso aos diferentes painéis do sistema (Admin, User) e a lógica de redirecionamento inteligente.
+
+Arquivo: [`tests/Feature/PanelAccessTest.php`](../../tests/Feature/PanelAccessTest.php)
+
+## Estrutura e Dados
+
+Estes testes utilizam o **`DatabaseSeeder`** completo (`beforeEach`) para garantir um ambiente consistente com roles e permissions reais configuradas pelo `UserSeeder` — incluindo usuários seed (`admin@labsis.dev.br`, `beltrano@labsis.dev.br`, `sicrano@labsis.dev.br`) e teams (`Team A`, etc.).
+
+## Cenários Cobertos
+
+### 1. Visitantes (Guests)
+
+- **Redirecionamento**: Usuários não autenticados que tentam acessar `/admin` ou `/user` são redirecionados para `/__compat-login` (rota de compatibilidade que encaminha para `/login`).
+
+### 2. Administradores (Admin)
+
+- **Acesso ao painel**: Usuário `admin@labsis.dev.br` acessa `/admin` com sucesso (200).
+- **Listagem de usuários**: Admin acessa `/admin/users` no Filament.
+- **Redirecionamento inteligente**: Admin autenticado em `/login` é redirecionado para `/admin`.
+
+### 3. Usuários Comuns (User)
+
+- **Bloqueio ao painel Admin**: `beltrano@labsis.dev.br` recebe **403 Forbidden** ao acessar `/admin`.
+- **Acesso ao painel do team**: Usuário acessa `/user/{slug}` do team (`Team A` → slug do seed).
+- **Redirecionamento inteligente**: `sicrano@labsis.dev.br` autenticado em `/login` é redirecionado para `/user/{slug}` do primeiro team retornado por `getTenants()`.
+
+> **Terminologia Filament:** a API usa `getTenants()` e `getTenant()`, mas o model subjacente é sempre `App\Models\Team` com identificador de rota **`slug`** (não UUID).
+
+## Middleware Testado
+
+Estes testes validam indiretamente o funcionamento de:
+
+- [`RedirectToProperPanelMiddleware`](../../app/Http/Middleware/RedirectToProperPanelMiddleware.php) — redirecionamentos por painel e status
+- [`User::canAccessPanel()`](../../app/Models/User.php) — autorização final nos painéis Filament
+
+## Executando estes testes
+
+```bash
+./vendor/bin/sail artisan test tests/Feature/PanelAccessTest.php
+```
+
+## Referências
+
+- [Test: PanelAccessTest.php](../../tests/Feature/PanelAccessTest.php)
+- [Middleware: RedirectToProperPanelMiddleware](../../app/Http/Middleware/RedirectToProperPanelMiddleware.php)
+- [Seeder: DatabaseSeeder](../../database/seeders/DatabaseSeeder.php)
+- [Tenancy e Teams](../02-autenticacao-e-seguranca/tenancy-e-teams.md)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

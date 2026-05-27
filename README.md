@@ -29,6 +29,8 @@ Esta documentação foi criada para facilitar o entendimento de como as funciona
 
 Toda a documentação sobre como utilizar os recursos, padrões e arquitetura deste kit está disponível na pasta [`/docs`](/docs). Recomendamos a leitura para todos os desenvolvedores que pretendem utilizar este projeto.
 
+**Manual HTML (navegável no browser):** versão estática com visual LabSIS em [`docs/manual/index.html`](/docs/manual/index.html). Para regenerar após editar os `.md`: `python3 scripts/build-docs-manual.py` (veja [`docs/manual/README.md`](/docs/manual/README.md)).
+
 Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](https://deepwiki.com/iurygdeoliveira/labSIS-SaaS-KIT-V4) e [Context7](https://context7.com/iurygdeoliveira/labsis-saas-kit-v4), que auxiliam o leitor a explorar o código e compreender as implementações por meio de buscas contextuais e respostas explicativas.
 
 ### Autenticação e Segurança
@@ -72,6 +74,7 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 ### Otimizações
 
 - [**Otimização com #[Computed]**](/docs/05-otimizacoes/livewire-computed.md)
+- [**Performance no Filament**](/docs/05-otimizacoes/filament-performance.md)
 - [**Cache e Redis**](/docs/05-otimizacoes/cache-e-redis.md)
 - [**Otimização de Cache de Página com Cloudflare**](/docs/05-otimizacoes/cloudflare-page-cache.md)
 - [**Laravel Pulse**](/docs/05-otimizacoes/laravel-pulse.md)
@@ -80,6 +83,7 @@ Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](htt
 
 - [**Larastan**](/docs/07-qualidade-de-codigo/01-larastan.md)
 - [**Rector**](/docs/07-qualidade-de-codigo/02-rector.md)
+- [**Filacheck Pro**](/docs/07-qualidade-de-codigo/04-filacheck.md)
 - [**IDE Helper**](/docs/07-qualidade-de-codigo/03-ide-helper.md)
 
 ### Testes Automatizados

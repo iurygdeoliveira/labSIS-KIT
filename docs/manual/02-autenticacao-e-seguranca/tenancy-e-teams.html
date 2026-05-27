@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>tenancy-e-teams — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca" open><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="tenancy-e-teams.html" class="is-active">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Autenticação e Segurança</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">tenancy-e-teams</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">02 — Autenticação e Segurança</p>
+<h1 class="doc-title">tenancy-e-teams</h1>
+</header>
+<div class="prose-content">
+<h3>Multi-organização (single database), FilaTeams e “teams” do Spatie Permission</h3>
+<p>Em single database, os dados de todas as organizações vivem nas mesmas tabelas; o isolamento lógico é feito por <strong>chave estrangeira para a organização ativa</strong>. No domínio da aplicação isso é o modelo <strong><code>Team</code></strong> (tabela <code>teams</code>), com vínculo N:N em <strong><code>team_members</code></strong> (pacote <code>laraveldaily/filateams</code>). Exemplos: <code>media_items.team_id</code>, <code>videos.team_id</code> apontam para <code>teams.id</code>.</p>
+<p>O <strong>RBAC</strong> (quem pode o quê) é um problema separado do “dono do registro”. O Spatie Permission com <strong>teams</strong> adiciona <code>team_id</code> em <code>roles</code>, <code>model_has_roles</code> e <code>model_has_permissions</code>. Aqui, <strong><code>team_id</code> referencia <code>teams.id</code></strong> — o mesmo identificador da organização no FilaTeams. Assim, o mesmo usuário pode ser <code>Owner</code> no Team A e apenas <code>User</code> no Team B, com permissões distintas por contexto, sem colisão de nomes de role.</p>
+<p>A <strong>UI de equipes</strong> (switcher no header, criar equipe, <code>/user/{slug}/settings</code> com membros, papéis no pivot, convites com expiração) vem do <strong>FilaTeams</strong>, integrado ao painel Filament <code>user</code> via <code>tenant(Team::class, slugAttribute: &#x27;slug&#x27;)</code>, <code>tenantRegistration</code> e <code>tenantProfile</code>. O Filament continua usando o vocabulário interno <strong><code>tenant</code></strong> na API (<code>getTenant()</code>, parâmetro de rota <code>{tenant:slug}</code>, <code>canAccessTenant(Model $tenant)</code>): na prática o modelo é sempre <strong><code>Team</code></strong>.</p>
+<p>O <strong><code>SpatieTeamResolver</code></strong> liga o tenant Filament ao <code>PermissionRegistrar</code>: no painel <strong>admin</strong> (sem organização selecionada) o contexto global usa <code>team_id = 0</code>. No painel <strong>user</strong>, ao navegar em <code>/user/{slug}/…</code>, o resolver usa o <code>id</code> do <code>Team</code> atual como <code>team_id</code> do Spatie. Checagens como <code>hasRole</code>, <code>can</code> e <code>hasPermissionTo</code> passam a considerar esse contexto.</p>
+<p>O <strong><code>TeamSyncMiddleware</code></strong> alinha o resolver ao <strong>slug</strong> da rota (ou ao primeiro team ativo do usuário), e <strong>invalida</strong> relações em memória (<code>roles</code>, <code>permissions</code>) e o cache do Spatie ao trocar de equipe na mesma requisição — evitando vazamento de permissões entre teams.</p>
+<p>O pivot <strong><code>team_members.role</code></strong> (valores do enum de app <code>AppTeamRole</code>: <code>owner</code>, <code>member</code>) é espelhado para o Spatie pelo <strong><code>MembershipObserver</code></strong>: a fonte de verdade para autorização de negócio continua sendo <strong>Spatie</strong> (<code>RoleType::OWNER</code>, <code>RoleType::USER</code> por <code>team_id</code>).</p>
+<p>Em resumo: <strong><code>team_id</code> em dados de domínio</strong> e <strong><code>team_id</code> no Spatie</strong> apontam para a mesma entidade <strong><code>teams</code></strong>. O FilaTeams cuida de <strong>membros e convites</strong>; o Spatie cuida de <strong>permissões</strong>; o middleware e o resolver mantêm o <strong>contexto</strong> coerente.</p>
+<h2 id="sistema-multi-organização-teams">Sistema multi-organização (teams)</h2>
+<p>Cada <strong>team</strong> representa uma organização com membros, slug único para URLs (<code>/user/{slug}</code>), flag <code>is_active</code> e integração com o painel.</p>
+<h3>Arquitetura</h3>
+<p><strong>Modelos e pacotes principais</strong></p>
+<ul>
+<li><strong><code>App\Models\Team</code></strong>: estende o <code>Team</code> do FilaTeams; campos extras (<code>is_active</code>); relação com mídias/vídeos.</li>
+<li><strong><code>App\Models\User</code></strong>: <code>HasTeams</code> + <code>HasTeamMembership</code> (FilaTeams) + <code>HasRoles</code> (Spatie); implementa os contratos Filament que ainda falam em “tenant” mas operam em <code>Team</code>.</li>
+<li><strong><code>App\Models\Membership</code></strong>: pivot <code>team_members</code> (role no pivot sincronizada com Spatie).</li>
+<li><strong><code>App\Models\Role</code></strong>: roles do Spatie com <code>team_id</code> → <code>teams.id</code>.</li>
+</ul>
+<p><strong>Isolamento</strong></p>
+<ul>
+<li>Papéis e permissões são avaliados no contexto do team atual (<code>team_id</code> do Spatie).</li>
+<li>Dados de domínio ligados à organização usam <code>team_id</code> onde aplicável.</li>
+<li>Policies e queries do painel <code>user</code> devem considerar <code>Filament::getTenant()</code> como instância de <code>Team</code>.</li>
+</ul>
+<h3>Hierarquia de acesso</h3>
+<ol>
+<li><strong>Admin (global)</strong>: <code>team_id = 0</code> no resolver; acesso ao painel admin e a recursos globais conforme role <code>Admin</code>.</li>
+<li><strong>Owner (por team)</strong>: no pivot / Spatie como Owner daquele <code>teams.id</code>; permissões amplas dentro do team (inclui UI FilaTeams de gestão quando autorizado).</li>
+<li><strong>User (por team)</strong>: colaborador com permissões granulares definidas no cluster <strong>Permissions</strong> e nas roles Spatie daquele <code>team_id</code>.</li>
+</ol>
+<h3>Sincronização de contexto Spatie</h3>
+<p>O middleware mantém o resolver alinhado ao team da rota:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>resolve(\App\Tenancy\SpatieTeamResolver::class)-&gt;setPermissionsTeamId($teamId);
+// Em seguida: unset relations + forgetCachedPermissions() quando aplicável</code></pre></div>
+<p>Arquivo de referência: <code>app/Http/Middleware/TeamSyncMiddleware.php</code>.</p>
+<h2 id="controle-de-acesso-aos-painéis">Controle de acesso aos painéis</h2>
+<h3>Método <code>canAccessPanel</code></h3>
+<p>Arquivo: <code>app/Models/User.php</code>.</p>
+<p><strong>Regras resumidas</strong></p>
+<ol>
+<li><strong>Painel <code>auth</code></strong>: sempre permitido (login unificado).</li>
+<li><strong>Suspensos / e-mail não verificado</strong>: bloqueados nos painéis de aplicação.</li>
+<li><strong>Painel <code>admin</code></strong>: apenas role global <code>Admin</code>.</li>
+<li><strong>Painel <code>user</code></strong>: role global <code>User</code>, ou <strong>owner em algum team</strong>, ou <strong>membro de algum team</strong> (<code>teams()</code>).</li>
+</ol>
+<p>A coleção retornada por <code>getTenants()</code> (contrato Filament) é na prática a lista de <strong><code>Team</code></strong> ativos aos quais o usuário pertence.</p>
+<h2 id="referências-no-código">Referências no código</h2>
+<ul>
+<li><a href="/app/Models/Team.php">Model: Team</a></li>
+<li><a href="/app/Tenancy/SpatieTeamResolver.php">Resolver: SpatieTeamResolver</a></li>
+<li><a href="/app/Http/Middleware/TeamSyncMiddleware.php">Middleware: TeamSyncMiddleware</a></li>
+<li><a href="/app/Observers/MembershipObserver.php">Observer: MembershipObserver</a></li>
+<li><a href="/config/filateams.php">Config: filateams</a></li>
+<li><a href="/app/Providers/Filament/UserPanelProvider.php">Painel: UserPanelProvider</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="suspensao-usuarios.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Sistema de Suspensão de Usuários no Filament</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#sistema-multi-organização-teams" data-toc-target="sistema-multi-organização-teams">Sistema multi-organização (teams)</a></li>
+<li><a class="doc-toc-link" href="#controle-de-acesso-aos-painéis" data-toc-target="controle-de-acesso-aos-painéis">Controle de acesso aos painéis</a></li>
+<li><a class="doc-toc-link" href="#referências-no-código" data-toc-target="referências-no-código">Referências no código</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown">### Multi-organização (single database), FilaTeams e “teams” do Spatie Permission
+
+Em single database, os dados de todas as organizações vivem nas mesmas tabelas; o isolamento lógico é feito por **chave estrangeira para a organização ativa**. No domínio da aplicação isso é o modelo **`Team`** (tabela `teams`), com vínculo N:N em **`team_members`** (pacote `laraveldaily/filateams`). Exemplos: `media_items.team_id`, `videos.team_id` apontam para `teams.id`.
+
+O **RBAC** (quem pode o quê) é um problema separado do “dono do registro”. O Spatie Permission com **teams** adiciona `team_id` em `roles`, `model_has_roles` e `model_has_permissions`. Aqui, **`team_id` referencia `teams.id`** — o mesmo identificador da organização no FilaTeams. Assim, o mesmo usuário pode ser `Owner` no Team A e apenas `User` no Team B, com permissões distintas por contexto, sem colisão de nomes de role.
+
+A **UI de equipes** (switcher no header, criar equipe, `/user/{slug}/settings` com membros, papéis no pivot, convites com expiração) vem do **FilaTeams**, integrado ao painel Filament `user` via `tenant(Team::class, slugAttribute: 'slug')`, `tenantRegistration` e `tenantProfile`. O Filament continua usando o vocabulário interno **`tenant`** na API (`getTenant()`, parâmetro de rota `{tenant:slug}`, `canAccessTenant(Model $tenant)`): na prática o modelo é sempre **`Team`**.
+
+O **`SpatieTeamResolver`** liga o tenant Filament ao `PermissionRegistrar`: no painel **admin** (sem organização selecionada) o contexto global usa `team_id = 0`. No painel **user**, ao navegar em `/user/{slug}/…`, o resolver usa o `id` do `Team` atual como `team_id` do Spatie. Checagens como `hasRole`, `can` e `hasPermissionTo` passam a considerar esse contexto.
+
+O **`TeamSyncMiddleware`** alinha o resolver ao **slug** da rota (ou ao primeiro team ativo do usuário), e **invalida** relações em memória (`roles`, `permissions`) e o cache do Spatie ao trocar de equipe na mesma requisição — evitando vazamento de permissões entre teams.
+
+O pivot **`team_members.role`** (valores do enum de app `AppTeamRole`: `owner`, `member`) é espelhado para o Spatie pelo **`MembershipObserver`**: a fonte de verdade para autorização de negócio continua sendo **Spatie** (`RoleType::OWNER`, `RoleType::USER` por `team_id`).
+
+Em resumo: **`team_id` em dados de domínio** e **`team_id` no Spatie** apontam para a mesma entidade **`teams`**. O FilaTeams cuida de **membros e convites**; o Spatie cuida de **permissões**; o middleware e o resolver mantêm o **contexto** coerente.
+
+## Sistema multi-organização (teams)
+
+Cada **team** representa uma organização com membros, slug único para URLs (`/user/{slug}`), flag `is_active` e integração com o painel.
+
+### Arquitetura
+
+**Modelos e pacotes principais**
+
+- **`App\Models\Team`**: estende o `Team` do FilaTeams; campos extras (`is_active`); relação com mídias/vídeos.
+- **`App\Models\User`**: `HasTeams` + `HasTeamMembership` (FilaTeams) + `HasRoles` (Spatie); implementa os contratos Filament que ainda falam em “tenant” mas operam em `Team`.
+- **`App\Models\Membership`**: pivot `team_members` (role no pivot sincronizada com Spatie).
+- **`App\Models\Role`**: roles do Spatie com `team_id` → `teams.id`.
+
+**Isolamento**
+
+- Papéis e permissões são avaliados no contexto do team atual (`team_id` do Spatie).
+- Dados de domínio ligados à organização usam `team_id` onde aplicável.
+- Policies e queries do painel `user` devem considerar `Filament::getTenant()` como instância de `Team`.
+
+### Hierarquia de acesso
+
+1. **Admin (global)**: `team_id = 0` no resolver; acesso ao painel admin e a recursos globais conforme role `Admin`.
+2. **Owner (por team)**: no pivot / Spatie como Owner daquele `teams.id`; permissões amplas dentro do team (inclui UI FilaTeams de gestão quando autorizado).
+3. **User (por team)**: colaborador com permissões granulares definidas no cluster **Permissions** e nas roles Spatie daquele `team_id`.
+
+### Sincronização de contexto Spatie
+
+O middleware mantém o resolver alinhado ao team da rota:
+
+```php
+resolve(\App\Tenancy\SpatieTeamResolver::class)->setPermissionsTeamId($teamId);
+// Em seguida: unset relations + forgetCachedPermissions() quando aplicável
+```
+
+Arquivo de referência: `app/Http/Middleware/TeamSyncMiddleware.php`.
+
+## Controle de acesso aos painéis
+
+### Método `canAccessPanel`
+
+Arquivo: `app/Models/User.php`.
+
+**Regras resumidas**
+
+1. **Painel `auth`**: sempre permitido (login unificado).
+2. **Suspensos / e-mail não verificado**: bloqueados nos painéis de aplicação.
+3. **Painel `admin`**: apenas role global `Admin`.
+4. **Painel `user`**: role global `User`, ou **owner em algum team**, ou **membro de algum team** (`teams()`).
+
+A coleção retornada por `getTenants()` (contrato Filament) é na prática a lista de **`Team`** ativos aos quais o usuário pertence.
+
+## Referências no código
+
+- [Model: Team](/app/Models/Team.php)
+- [Resolver: SpatieTeamResolver](/app/Tenancy/SpatieTeamResolver.php)
+- [Middleware: TeamSyncMiddleware](/app/Http/Middleware/TeamSyncMiddleware.php)
+- [Observer: MembershipObserver](/app/Observers/MembershipObserver.php)
+- [Config: filateams](/config/filateams.php)
+- [Painel: UserPanelProvider](/app/Providers/Filament/UserPanelProvider.php)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

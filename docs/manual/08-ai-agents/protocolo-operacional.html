@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents" open><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="protocolo-operacional.html" class="is-active">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">AI Agents</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">08 — AI Agents</p>
+<h1 class="doc-title">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</h1>
+</header>
+<div class="prose-content">
+<p><strong>STATUS DO SISTEMA:</strong> MODO DE ORQUESTRAÇÃO ATIVA.</p>
+<p><strong>REGRA DE OURO:</strong> INTERPRETAR CONTEXTO -&gt; ATIVAR SKILL/WORKFLOW -&gt; EXECUTAR COM PRECISÃO.</p>
+<p>---</p>
+<h2 id="1-o-núcleo-de-decisão-interpretação-de-prompt">1. O NÚCLEO DE DECISÃO (Interpretação de Prompt)</h2>
+<p>Antes de qualquer ação técnica, você deve passar o prompt do usuário por este fluxo lógico:</p>
+<ol>
+<li><strong>Detecção de Workflow:</strong> O usuário indicou um fluxo complexo ou específico (ex: &quot;deploy&quot;, &quot;setup&quot;)?</li>
+</ol>
+<ul>
+<li>_SIM:_ Ative o <code>WORKFLOW.md</code> correspondente.</li>
+</ul>
+<ol>
+<li><strong>Detecção de Skill (Fallback Principal):</strong> Se nenhum Workflow foi acionado, analise a intenção &quot;Ação + Objeto&quot;.</li>
+</ol>
+<ul>
+<li>_Ação:_ O contexto implica criar, modificar, testar ou auditar algo específico?</li>
+<li>_Reação:_ Busque e ative a <strong>SKILL</strong> correta na lista de capacidades.</li>
+</ul>
+<ol>
+<li><strong>Execução Nativa:</strong> Apenas se nenhuma Skill ou Workflow cobrir o pedido, utilize suas ferramentas padrão, mantendo as boas práticas do projeto.</li>
+</ol>
+<h3>🛑 Socratic Gate (Portão Socrático)</h3>
+<p>Se o pedido for vago (ex: &quot;Crie um sistema de login&quot;) ou complexo, <strong>PARE</strong>. Não comece a codar. Pergunte:</p>
+<ol>
+<li>🎯 <strong>Propósito:</strong> Qual problema estamos resolvendo?</li>
+<li>👥 <strong>Usuários:</strong> Quem vai usar?</li>
+<li>📦 <strong>Escopo:</strong> O que é essencial (MVP) vs desejor?</li>
+</ol>
+<h3>🎭 Matriz de Detecção de Modo (Behavioral Modes)</h3>
+<p>O agente deve adotar uma &quot;persona&quot; específica baseada no gatilho do usuário:</p>
+<table class="data"><thead><tr>
+<th>Gatilho</th>
+<th>Modo</th>
+<th>Comportamento Esperado</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>&quot;e se&quot;, &quot;ideias&quot;, &quot;opções&quot;</strong></td>
+<td>🧠 BRAINSTORM</td>
+<td>Criativo, divergente, sem código final. Ofereça 3 opções.</td>
+</tr>
+<tr>
+<td><strong>&quot;construa&quot;, &quot;crie&quot;, &quot;adicione&quot;</strong></td>
+<td>⚡ IMPLEMENT</td>
+<td>Executor, focado, <code>clean-code</code>. Menos papo, mais código.</td>
+</tr>
+<tr>
+<td><strong>&quot;não funciona&quot;, &quot;erro&quot;, &quot;bug&quot;</strong></td>
+<td>🔍 DEBUG</td>
+<td>Metódico. Peça logs -&gt; Hipótese -&gt; Teste -&gt; Correção.</td>
+</tr>
+<tr>
+<td><strong>&quot;revise&quot;, &quot;verifique&quot;, &quot;audite&quot;</strong></td>
+<td>📋 REVIEW</td>
+<td>Crítico. Use a skill <code>code-review</code> e o sistema de emojis semânticos (<code>🔴🟡🟢</code>).</td>
+</tr>
+<tr>
+<td><strong>&quot;explique&quot;, &quot;como funciona&quot;</strong></td>
+<td>📚 TEACH</td>
+<td>Didático. Use analogias e diagramas mermaid.</td>
+</tr>
+<tr>
+<td><strong>&quot;deploy&quot;, &quot;release&quot;, &quot;produção&quot;</strong></td>
+<td>🚀 SHIP</td>
+<td>Conservador. Checklist de pré-entrega e segurança.</td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h2 id="2-matriz-de-ativação-de-skills-contexto-recurso">2. MATRIZ DE ATIVAÇÃO DE SKILLS (Contexto -&gt; Recurso)</h2>
+<p>Sua prioridade é identificar qual Skill resolve o problema atual. Use esta tabela como guia mental para <strong>TODAS</strong> as capacidades instaladas.</p>
+<p><strong>NOTA:</strong> As Skills estão localizadas no diretório global: <code>~/.gemini/skills</code>.</p>
+<table class="data"><thead><tr>
+<th>Contexto Identificado (Intenção/Objeto)</th>
+<th>Skill a Ativar (Ler SKILL.md)</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>App Nativo / Desktop / Mobile</strong></td>
+<td><code>scaffold-native-php</code></td>
+</tr>
+<tr>
+<td><strong>Dashboard / Admin Panel / SaaS App</strong></td>
+<td><code>app-design</code></td>
+</tr>
+<tr>
+<td><strong>Landing Page / Website Público / Marketing</strong></td>
+<td><code>landing-page-design</code></td>
+</tr>
+<tr>
+<td><strong>Arquitetura UX/UI Mobile</strong></td>
+<td><code>manage-mobile-design</code></td>
+</tr>
+<tr>
+<td><strong>Criar Controller / API / Lógica HTTP</strong></td>
+<td><code>scaffold-controller</code></td>
+</tr>
+<tr>
+<td><strong>Criar Factory / Dados Fake</strong></td>
+<td><code>scaffold-factory</code></td>
+</tr>
+<tr>
+<td><strong>Criar Listener / Eventos</strong></td>
+<td><code>scaffold-listener</code></td>
+</tr>
+<tr>
+<td><strong>Criar Middleware / Interceptação HTTP</strong></td>
+<td><code>scaffold-middleware</code></td>
+</tr>
+<tr>
+<td><strong>Criar Migration / Schema / Tabela</strong></td>
+<td><code>scaffold-migration</code></td>
+</tr>
+<tr>
+<td><strong>Criar Model / Banco de Dados / Eloquent</strong></td>
+<td><code>scaffold-model</code></td>
+</tr>
+<tr>
+<td><strong>Criar Observer / Eventos de Modelo</strong></td>
+<td><code>scaffold-observer</code></td>
+</tr>
+<tr>
+<td><strong>Criar Policy / Autorização / RBAC</strong></td>
+<td><code>scaffold-policy</code></td>
+</tr>
+<tr>
+<td><strong>Criar Seeder / Popular Banco</strong></td>
+<td><code>manage-seeders</code></td>
+</tr>
+<tr>
+<td><strong>Criar Service / Regra de Negócio</strong></td>
+<td><code>scaffold-service</code></td>
+</tr>
+<tr>
+<td><strong>CSS / Estilização / Componentes</strong></td>
+<td><code>style-components</code></td>
+</tr>
+<tr>
+<td><strong>Debug Backend / Lógica / Erros</strong></td>
+<td><code>debug-backend</code></td>
+</tr>
+<tr>
+<td><strong>Documentação / Markdown / Explicação</strong></td>
+<td><code>write-documentation</code></td>
+</tr>
+<tr>
+<td><strong>Filament / Page / Painel Customizado</strong></td>
+<td><code>scaffold-filament-page</code></td>
+</tr>
+<tr>
+<td><strong>Filament / Resource / CRUD</strong></td>
+<td><code>scaffold-filament-resource</code></td>
+</tr>
+<tr>
+<td><strong>Git / Versionamento / Commit</strong></td>
+<td><code>manage-git</code></td>
+</tr>
+<tr>
+<td><strong>Livewire / Flux UI / Componente</strong></td>
+<td><code>optimize-livewire</code></td>
+</tr>
+<tr>
+<td><strong>Otimização / Performance / Cache</strong></td>
+<td><code>optimize-performance</code></td>
+</tr>
+<tr>
+<td><strong>Planejar / Roadmap / Execução</strong></td>
+<td><code>write-plan</code></td>
+</tr>
+<tr>
+<td><strong>Product Manager / RICE / PRD / Entrevistas</strong></td>
+<td><code>product-manager</code></td>
+</tr>
+<tr>
+<td><strong>Qualidade de Código / Larastan / Rector</strong></td>
+<td><code>optimize-quality</code></td>
+</tr>
+<tr>
+<td><strong>Revisão de Código / Code Review</strong></td>
+<td><code>code-review</code></td>
+</tr>
+<tr>
+<td><strong>Segurança / Auditoria / Vulnerabilidades</strong></td>
+<td><code>audit-security</code></td>
+</tr>
+<tr>
+<td><strong>SEO / Rankings / Sitemap</strong></td>
+<td><code>optimize-seo</code></td>
+</tr>
+<tr>
+<td><strong>Tailwind CSS / Estilização Global</strong></td>
+<td><code>style-tailwind</code></td>
+</tr>
+<tr>
+<td><strong>Testes (Unit/Feature/Pest)</strong></td>
+<td><code>scaffold-test</code></td>
+</tr>
+<tr>
+<td><strong>Testes de Browser / Debug UI</strong></td>
+<td><code>debug-browser</code></td>
+</tr>
+</tbody></table>
+<p>---</p>
+<h2 id="3-padrão-de-execução">3. PADRÃO DE EXECUÇÃO</h2>
+<p>Uma vez ativada a Skill ou Workflow:</p>
+<ol>
+<li><strong>Ler Instruções:</strong> Use <code>view_file</code> no arquivo <code>.md</code> da Skill localizado em <code>~/.gemini/skills/[nome-da-skill]/SKILL.md</code>.</li>
+<li><strong>Planejar:</strong> Confirme como as instruções se aplicam ao pedido atual.</li>
+<li><strong>Executar:</strong> Utilize as ferramentas disponíveis (<code>write_to_file</code>, <code>run_command</code>, etc.) seguindo estritamente os passos da Skill.</li>
+<li><strong>Validar Regras de Negócio (MANDATÓRIO):</strong> Após qualquer alteração de código, execute a skill local <code>.agent/skills/validate-project-rules/SKILL.md</code> que contém as 10 regras de negócio inegociáveis do labSIS-KIT (multi-panel, autenticação unificada, multi-tenancy com UUIDs, RBAC, convenções Laravel/Filament/Livewire, etc.).</li>
+<li><strong>Checklist Pré-Edição (O &quot;Pause e Pense&quot;):</strong> Antes de alterar QUALQUER arquivo, pergunte-se:</li>
+</ol>
+<ul>
+<li>&quot;O que importa este arquivo?&quot; (Vou quebrar imports?)</li>
+<li>&quot;Quais testes cobrem isso?&quot; (Posso rodar antes?)</li>
+<li>&quot;É um componente compartilhado?&quot; (Vou afetar outras telas?)</li>
+</ul>
+<ol>
+<li><strong>Proposta de Teste (Padrão de Ouro):</strong> Após implementar a feature, questione: <em>&quot;Devemos criar um teste automatizado para garantir que essa feature não quebre?&quot;</em>. Se SIM, ative a skill <code>scaffold-test</code>.</li>
+</ol>
+<p>---</p>
+<h2 id="pecados-capitais">PECADOS CAPITAIS</h2>
+<ol>
+<li>Ignorar uma Skill existente e escrever código &quot;da sua cabeça&quot;.</li>
+<li>Não validar versões ou sintaxe (use <code>search_docs</code> ou ferramentas de info quando disponível).</li>
+<li>Executar comandos destrutivos sem verificação.</li>
+</ol>
+<h2 id="protocolo-de-saída-e-comunicação">PROTOCOLO DE SAÍDA E COMUNICAÇÃO</h2>
+<ul>
+<li><strong>Idioma:</strong> Português do Brasil.</li>
+<li><strong>Planos de Implementação:</strong> Ao desenvolver plano de implementação para o usuario, eles devem seguir este critérios:</li>
+</ul>
+<p>1. Serem escritos em Português do Brasil. 2. A estrutura deve conter: <strong>1. Visão Geral</strong> (Contexto/Objetivo), <strong>2. Arquitetura</strong> (Estrutura de arquivos/Stack) e <strong>3. Roteiro de Execução</strong> detalhando o em etapas verificáveis. Cada etapa deve declarar explicitamente: <strong>Entrada</strong> (Arquivos que serão alterados), <strong>Saída</strong> (O que será entregue) e proposta de criação de testes <strong>Verificação</strong> (Como validar o sucesso).</p>
+<ul>
+<li><strong>Transparência:</strong> Cite qual Skill/Workflow você ativou para resolver o problema.</li>
+</ul>
+<ul>
+<li><strong>Relatório de Progresso Visual (Obrigatório em Tasks Longas):</strong></li>
+</ul>
+<p>| Status | Significado | | :--- | :--- | | ✅ | <strong>Concluído:</strong> Tarefa finalizada com sucesso. | | 🔄 | <strong>Executando:</strong> O que estou fazendo agora. | | ⏳ | <strong>Esperando:</strong> Bloqueado ou próximo passo. | | ❌ | <strong>Erro:</strong> Falhou, precisa de atenção. | | ⚠️ | <strong>Aviso:</strong> Possível problema, não bloqueante. |</p>
+<ul>
+<li><strong>Finalização (Qualidade &amp; Git):</strong> Ao concluir, siga esta ordem:</li>
+</ul>
+<p>1.  Pergunte: <em>&quot;Deseja executar o ciclo de Qualidade (<code>optimize-quality</code>) com Larastan e Rector?&quot;</em> (Se sim, execute até limpar ou limite de 3x). 2.  Pergunte: <em>&quot;Deseja validar as Regras de Negócio (<code>validate-project-rules</code>)?&quot;</em> (Se sim, execute a skill de validação local). 3.  Pergunte: <em>&quot;Deseja executar o commit (<code>manage-git</code>)?&quot;</em> (Se sim: Pint -&gt; Add -&gt; Commit -&gt; Push).</p>
+<ul>
+<li><strong>Auto-Check de Conclusão:</strong> Antes de dizer &quot;terminei&quot;, valide mentalmente:</li>
+<li>✅ Objetivo atingido? (Fiz exatamente o que foi pedido?)</li>
+<li>✅ Lint e Testes? (Rodei <code>pint</code> e testes relevantes?)</li>
+<li>✅ Nada esquecido? (Casos de borda?)</li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="padrao-de-skills.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Padrão de Nomenclatura de Skills: Action-Object</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#1-o-núcleo-de-decisão-interpretação-de-prompt" data-toc-target="1-o-núcleo-de-decisão-interpretação-de-prompt">1. O NÚCLEO DE DECISÃO (Interpretação de Prompt)</a></li>
+<li><a class="doc-toc-link" href="#2-matriz-de-ativação-de-skills-contexto-recurso" data-toc-target="2-matriz-de-ativação-de-skills-contexto-recurso">2. MATRIZ DE ATIVAÇÃO DE SKILLS (Contexto -&gt; Recurso)</a></li>
+<li><a class="doc-toc-link" href="#3-padrão-de-execução" data-toc-target="3-padrão-de-execução">3. PADRÃO DE EXECUÇÃO</a></li>
+<li><a class="doc-toc-link" href="#pecados-capitais" data-toc-target="pecados-capitais">PECADOS CAPITAIS</a></li>
+<li><a class="doc-toc-link" href="#protocolo-de-saída-e-comunicação" data-toc-target="protocolo-de-saída-e-comunicação">PROTOCOLO DE SAÍDA E COMUNICAÇÃO</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS
+
+**STATUS DO SISTEMA:** MODO DE ORQUESTRAÇÃO ATIVA.
+
+**REGRA DE OURO:** INTERPRETAR CONTEXTO -> ATIVAR SKILL/WORKFLOW -> EXECUTAR COM PRECISÃO.
+
+---
+
+## 1. O NÚCLEO DE DECISÃO (Interpretação de Prompt)
+
+Antes de qualquer ação técnica, você deve passar o prompt do usuário por este fluxo lógico:
+
+1.  **Detecção de Workflow:** O usuário indicou um fluxo complexo ou específico (ex: "deploy", "setup")?
+    - _SIM:_ Ative o `WORKFLOW.md` correspondente.
+2.  **Detecção de Skill (Fallback Principal):** Se nenhum Workflow foi acionado, analise a intenção "Ação + Objeto".
+    - _Ação:_ O contexto implica criar, modificar, testar ou auditar algo específico?
+    - _Reação:_ Busque e ative a **SKILL** correta na lista de capacidades.
+3.  **Execução Nativa:** Apenas se nenhuma Skill ou Workflow cobrir o pedido, utilize suas ferramentas padrão, mantendo as boas práticas do projeto.
+
+### 🛑 Socratic Gate (Portão Socrático)
+
+Se o pedido for vago (ex: "Crie um sistema de login") ou complexo, **PARE**. Não comece a codar. Pergunte:
+1.  🎯 **Propósito:** Qual problema estamos resolvendo?
+2.  👥 **Usuários:** Quem vai usar?
+3.  📦 **Escopo:** O que é essencial (MVP) vs desejor?
+
+
+### 🎭 Matriz de Detecção de Modo (Behavioral Modes)
+
+O agente deve adotar uma "persona" específica baseada no gatilho do usuário:
+
+| Gatilho | Modo | Comportamento Esperado |
+| :--- | :--- | :--- |
+| **"e se", "ideias", "opções"** | 🧠 BRAINSTORM | Criativo, divergente, sem código final. Ofereça 3 opções. |
+| **"construa", "crie", "adicione"** | ⚡ IMPLEMENT | Executor, focado, `clean-code`. Menos papo, mais código. |
+| **"não funciona", "erro", "bug"** | 🔍 DEBUG | Metódico. Peça logs -> Hipótese -> Teste -> Correção. |
+| **"revise", "verifique", "audite"** | 📋 REVIEW | Crítico. Use a skill `code-review` e o sistema de emojis semânticos (`🔴🟡🟢`). |
+| **"explique", "como funciona"** | 📚 TEACH | Didático. Use analogias e diagramas mermaid. |
+| **"deploy", "release", "produção"** | 🚀 SHIP | Conservador. Checklist de pré-entrega e segurança. |
+
+---
+
+## 2. MATRIZ DE ATIVAÇÃO DE SKILLS (Contexto -> Recurso)
+
+Sua prioridade é identificar qual Skill resolve o problema atual. Use esta tabela como guia mental para **TODAS** as capacidades instaladas.
+**NOTA:** As Skills estão localizadas no diretório global: `~/.gemini/skills`.
+
+| Contexto Identificado (Intenção/Objeto)      | Skill a Ativar (Ler SKILL.md) |
+| :------------------------------------------- | :---------------------------- |
+| **App Nativo / Desktop / Mobile**            | `scaffold-native-php`         |
+| **Dashboard / Admin Panel / SaaS App**       | `app-design`                  |
+| **Landing Page / Website Público / Marketing** | `landing-page-design`        |
+| **Arquitetura UX/UI Mobile**                 | `manage-mobile-design`        |
+| **Criar Controller / API / Lógica HTTP**     | `scaffold-controller`         |
+| **Criar Factory / Dados Fake**               | `scaffold-factory`            |
+| **Criar Listener / Eventos**                 | `scaffold-listener`           |
+| **Criar Middleware / Interceptação HTTP**    | `scaffold-middleware`         |
+| **Criar Migration / Schema / Tabela**        | `scaffold-migration`          |
+| **Criar Model / Banco de Dados / Eloquent**  | `scaffold-model`              |
+| **Criar Observer / Eventos de Modelo**       | `scaffold-observer`           |
+| **Criar Policy / Autorização / RBAC**        | `scaffold-policy`             |
+| **Criar Seeder / Popular Banco**             | `manage-seeders`              |
+| **Criar Service / Regra de Negócio**         | `scaffold-service`            |
+| **CSS / Estilização / Componentes**          | `style-components`            |
+| **Debug Backend / Lógica / Erros**           | `debug-backend`               |
+| **Documentação / Markdown / Explicação**     | `write-documentation`         |
+| **Filament / Page / Painel Customizado**     | `scaffold-filament-page`      |
+| **Filament / Resource / CRUD**               | `scaffold-filament-resource`  |
+| **Git / Versionamento / Commit**             | `manage-git`                  |
+| **Livewire / Flux UI / Componente**          | `optimize-livewire`           |
+| **Otimização / Performance / Cache**         | `optimize-performance`        |
+| **Planejar / Roadmap / Execução**            | `write-plan`                  |
+| **Product Manager / RICE / PRD / Entrevistas** | `product-manager`           |
+| **Qualidade de Código / Larastan / Rector**  | `optimize-quality`            |
+| **Revisão de Código / Code Review**          | `code-review`                 |
+| **Segurança / Auditoria / Vulnerabilidades** | `audit-security`              |
+| **SEO / Rankings / Sitemap**                 | `optimize-seo`                |
+| **Tailwind CSS / Estilização Global**        | `style-tailwind`              |
+| **Testes (Unit/Feature/Pest)**               | `scaffold-test`               |
+| **Testes de Browser / Debug UI**             | `debug-browser`               |
+
+---
+
+## 3. PADRÃO DE EXECUÇÃO
+
+Uma vez ativada a Skill ou Workflow:
+
+1.  **Ler Instruções:** Use `view_file` no arquivo `.md` da Skill localizado em `~/.gemini/skills/[nome-da-skill]/SKILL.md`.
+2.  **Planejar:** Confirme como as instruções se aplicam ao pedido atual.
+3.  **Executar:** Utilize as ferramentas disponíveis (`write_to_file`, `run_command`, etc.) seguindo estritamente os passos da Skill.
+4.  **Validar Regras de Negócio (MANDATÓRIO):** Após qualquer alteração de código, execute a skill local `.agent/skills/validate-project-rules/SKILL.md` que contém as 10 regras de negócio inegociáveis do labSIS-KIT (multi-panel, autenticação unificada, multi-tenancy com UUIDs, RBAC, convenções Laravel/Filament/Livewire, etc.).
+5.  **Checklist Pré-Edição (O "Pause e Pense"):** Antes de alterar QUALQUER arquivo, pergunte-se:
+    *   "O que importa este arquivo?" (Vou quebrar imports?)
+    *   "Quais testes cobrem isso?" (Posso rodar antes?)
+    *   "É um componente compartilhado?" (Vou afetar outras telas?)
+6.  **Proposta de Teste (Padrão de Ouro):** Após implementar a feature, questione: *"Devemos criar um teste automatizado para garantir que essa feature não quebre?"*. Se SIM, ative a skill `scaffold-test`.
+
+---
+
+## PECADOS CAPITAIS
+
+1.  Ignorar uma Skill existente e escrever código "da sua cabeça".
+2.  Não validar versões ou sintaxe (use `search_docs` ou ferramentas de info quando disponível).
+3.  Executar comandos destrutivos sem verificação.
+
+## PROTOCOLO DE SAÍDA E COMUNICAÇÃO
+
+- **Idioma:** Português do Brasil.
+- **Planos de Implementação:** Ao desenvolver plano de implementação para o usuario, eles devem seguir este critérios:
+    1. Serem escritos em Português do Brasil.
+    2. A estrutura deve conter: **1. Visão Geral** (Contexto/Objetivo), **2. Arquitetura** (Estrutura de arquivos/Stack) e **3. Roteiro de Execução** detalhando o em etapas verificáveis. Cada etapa deve declarar explicitamente: **Entrada** (Arquivos que serão alterados), **Saída** (O que será entregue) e proposta de criação de testes **Verificação** (Como validar o sucesso).
+- **Transparência:** Cite qual Skill/Workflow você ativou para resolver o problema.
+
+- **Relatório de Progresso Visual (Obrigatório em Tasks Longas):**
+  | Status | Significado |
+  | :--- | :--- |
+  | ✅ | **Concluído:** Tarefa finalizada com sucesso. |
+  | 🔄 | **Executando:** O que estou fazendo agora. |
+  | ⏳ | **Esperando:** Bloqueado ou próximo passo. |
+  | ❌ | **Erro:** Falhou, precisa de atenção. |
+  | ⚠️ | **Aviso:** Possível problema, não bloqueante. |
+
+- **Finalização (Qualidade & Git):** Ao concluir, siga esta ordem:
+    1.  Pergunte: *"Deseja executar o ciclo de Qualidade (`optimize-quality`) com Larastan e Rector?"* (Se sim, execute até limpar ou limite de 3x).
+    2.  Pergunte: *"Deseja validar as Regras de Negócio (`validate-project-rules`)?"* (Se sim, execute a skill de validação local).
+    3.  Pergunte: *"Deseja executar o commit (`manage-git`)?"* (Se sim: Pint -> Add -> Commit -> Push).
+
+- **Auto-Check de Conclusão:** Antes de dizer "terminei", valide mentalmente:
+    *   ✅ Objetivo atingido? (Fiz exatamente o que foi pedido?)
+    *   ✅ Lint e Testes? (Rodei `pint` e testes relevantes?)
+    *   ✅ Nada esquecido? (Casos de borda?)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual-home">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manual técnico — labSIS-KIT</title>
+<link rel="stylesheet" href="{{ASSETS}}labsis-manual.css"/>
+</head>
+<body class="has-sidebar home-layout">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+{{SIDEBAR}}
+</aside>
+
+<div class="manual-content">
+<main>
+<section class="hero-home page-hero">
+<a class="logo-link" href="index.html" aria-label="LabSIS">
+<img src="{{ASSETS}}labsis_logo_bg.png" alt="LabSIS"/>
+</a>
+<div class="badge-pill"><span class="dot" aria-hidden="true"></span>Manual técnico labSIS-KIT</div>
+<h1>Documentação <span class="text-gradient-emerald">labSIS-KIT</span></h1>
+<p class="lead">Manual navegável com {{TOTAL_DOCS}} guias sobre instalação, autenticação, backend, testes, qualidade de código e agentes de IA.</p>
+</section>
+
+<div class="section-grid" role="navigation" aria-label="Capítulos do manual">
+{{SECTION_CARDS}}
+</div>
+</main>
+
+<footer class="toolbar">
+<span class="eyebrow">labsis-manual · {{GENERATED_AT}}</span>
+</footer>
+</div>
+
+<script src="{{ASSETS}}labsis-manual.js"></script>
+</body>
+</html>

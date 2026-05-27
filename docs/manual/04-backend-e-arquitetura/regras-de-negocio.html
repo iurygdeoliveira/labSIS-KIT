@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Regras de Negócio: labSIS-KIT — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura" open><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="regras-de-negocio.html" class="is-active">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Backend e Arquitetura</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Regras de Negócio: labSIS-KIT</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">04 — Backend e Arquitetura</p>
+<h1 class="doc-title">Regras de Negócio: labSIS-KIT</h1>
+</header>
+<div class="prose-content">
+<p>Esta documentação detalha as regras de negócio fundamentais do <strong>labSIS-KIT</strong>, servindo como um referencial para garantir a integridade da arquitetura SaaS e a qualidade educacional do projeto.</p>
+<p>---</p>
+<h2 id="p0-críticas-inegociáveis">🚨 P0: Críticas (Inegociáveis)</h2>
+<p><em>Se estas regras forem violadas, o sistema falha em sua missão de segurança e arquitetura.</em></p>
+<h3>1. Isolamento estrito entre equipes (teams)</h3>
+<ul>
+<li><strong>Objetivo</strong>: Garantir a segurança dos dados em uma arquitetura multi-organização (single database).</li>
+<li><strong>Regra</strong>: Uma equipe (<strong><code>Team</code></strong>) <strong>não</strong> pode acessar dados de outra, seja por manipulação de URL (<code>slug</code>), troca de contexto no Filament ou acesso direto a IDs. O isolamento deve ser garantido em nível lógico (policies, queries escopadas ao <code>Team</code> atual do painel, FKs <code>team_id</code> onde existirem).</li>
+<li><strong>Validação</strong>: Tentativas de acesso <strong>cross-team</strong> devem resultar em <strong>403</strong> (proibido) ou <strong>404</strong> (não encontrado), conforme o caso.</li>
+</ul>
+<h3>2. Polimorfismo de papéis (RBAC por contexto)</h3>
+<ul>
+<li><strong>Objetivo</strong>: Refletir cenários em que um usuário assume funções diferentes conforme a organização.</li>
+<li><strong>Regra</strong>: Um único <code>User</code> pode ter papéis distintos em <strong>teams</strong> diferentes (ex.: <code>Owner</code> na Empresa A e apenas <code>User</code> na Empresa B). As roles Spatie são vinculadas ao <strong><code>team_id</code></strong> (igual a <code>teams.id</code>). O pivot <strong><code>team_members</code></strong> do FilaTeams reflete o papel na UI e é <strong>sincronizado</strong> com o Spatie pelo <code>MembershipObserver</code>.</li>
+<li><strong>Validação</strong>: Verificações <code>can</code>, <code>hasRole</code>, <code>hasPermissionTo</code> devem respeitar o <strong>team ativo</strong> (<code>SpatieTeamResolver</code> + <code>TeamSyncMiddleware</code>).</li>
+</ul>
+<h3>3. Proteção contra destruição (exclusão de organização)</h3>
+<ul>
+<li><strong>Objetivo</strong>: Reduzir perda acidental ou maliciosa de dados ligados a uma equipe.</li>
+<li><strong>Regra</strong>: Ações destrutivas (ex.: exclusão de <strong>Team</strong> no painel admin, exclusão/leave no fluxo FilaTeams) devem seguir <strong>policies</strong>, gates do pacote e regras de negócio explícitas (ex.: não excluir team com membros no recurso admin, quando aplicável). Apenas perfis autorizados executam exclusão; owners/colaboradores não “furam” o isolamento de outras equipes.</li>
+<li><strong>Validação</strong>: UI e endpoints negam operação quando a policy falhar; testes cobrem fluxos críticos de acesso.</li>
+</ul>
+<p>---</p>
+<h2 id="p1-importantes-experiência-do-usuário">⚠️ P1: Importantes (Experiência do Usuário)</h2>
+<p><em>Regras que garantem a fluidez e a percepção de qualidade do kit.</em></p>
+<h3>4. Onboarding &quot;One-Click&quot;</h3>
+<ul>
+<li><strong>Objetivo</strong>: Facilitar a instalação e o primeiro contato de novos desenvolvedores.</li>
+<li><strong>Regra</strong>: O script de instalação (<code>install.php</code>) deve realizar o setup completo, incluindo banco de dados, migrações e seeds essenciais, sem necessidade de intervenções manuais complexas.</li>
+<li><strong>Validação</strong>: O sistema deve estar funcional imediatamente após a execução do script em um ambiente limpo.</li>
+</ul>
+<p>---</p>
+<h2 id="ℹ-p2-desejáveis-evolução-de-escopo">ℹ️ P2: Desejáveis (Evolução de Escopo)</h2>
+<p><em>Funcionalidades planejadas para versões futuras.</em></p>
+<h3>5. Limites de planos (SaaS metrics)</h3>
+<ul>
+<li><strong>Status</strong>: ⏳ Planejado para a V2.</li>
+<li><strong>Objetivo</strong>: Introduzir conceitos de monetização e quotas de uso.</li>
+<li><strong>Regra</strong>: Implementação de restrições baseadas no plano ativo (ex.: limite de usuários cadastrados por team).</li>
+</ul>
+<p>---</p>
+<div class="callout callout-info"><p><strong>Nota</strong>: Estas regras são monitoradas e validadas automaticamente pelos agentes de IA através da skill <code>validate-project-rules</code>.</p></div>
+<h3>Glossário rápido</h3>
+<table class="data"><thead><tr>
+<th>Termo na doc / Filament</th>
+<th>Significado no labSIS-KIT</th>
+</tr></thead><tbody>
+<tr>
+<td>Tenant (API Filament)</td>
+<td>Instância de <strong><code>Team</code></strong> na rota <code>/user/{slug}</code></td>
+</tr>
+<tr>
+<td><code>getTenant()</code></td>
+<td>Retorna o <strong><code>Team</code></strong> atual do painel <code>user</code></td>
+</tr>
+<tr>
+<td><code>team_id</code> (Spatie)</td>
+<td>FK para <strong><code>teams.id</code></strong></td>
+</tr>
+<tr>
+<td><code>team_id</code> (domínio)</td>
+<td>Mesma organização (<code>teams</code>) quando presente em tabelas de negócio</td>
+</tr>
+</tbody></table>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="padrao-datetime.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Padronização de Data e Hora</span></a><a class="doc-pagination-card doc-pagination-next" href="scripts-composer.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Scripts do Composer e Inicialização de Storage</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#p0-críticas-inegociáveis" data-toc-target="p0-críticas-inegociáveis">🚨 P0: Críticas (Inegociáveis)</a></li>
+<li><a class="doc-toc-link" href="#p1-importantes-experiência-do-usuário" data-toc-target="p1-importantes-experiência-do-usuário">⚠️ P1: Importantes (Experiência do Usuário)</a></li>
+<li><a class="doc-toc-link" href="#ℹ-p2-desejáveis-evolução-de-escopo" data-toc-target="ℹ-p2-desejáveis-evolução-de-escopo">ℹ️ P2: Desejáveis (Evolução de Escopo)</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Regras de Negócio: labSIS-KIT
+
+Esta documentação detalha as regras de negócio fundamentais do **labSIS-KIT**, servindo como um referencial para garantir a integridade da arquitetura SaaS e a qualidade educacional do projeto.
+
+---
+
+## 🚨 P0: Críticas (Inegociáveis)
+
+*Se estas regras forem violadas, o sistema falha em sua missão de segurança e arquitetura.*
+
+### 1. Isolamento estrito entre equipes (teams)
+
+- **Objetivo**: Garantir a segurança dos dados em uma arquitetura multi-organização (single database).
+- **Regra**: Uma equipe (**`Team`**) **não** pode acessar dados de outra, seja por manipulação de URL (`slug`), troca de contexto no Filament ou acesso direto a IDs. O isolamento deve ser garantido em nível lógico (policies, queries escopadas ao `Team` atual do painel, FKs `team_id` onde existirem).
+- **Validação**: Tentativas de acesso **cross-team** devem resultar em **403** (proibido) ou **404** (não encontrado), conforme o caso.
+
+### 2. Polimorfismo de papéis (RBAC por contexto)
+
+- **Objetivo**: Refletir cenários em que um usuário assume funções diferentes conforme a organização.
+- **Regra**: Um único `User` pode ter papéis distintos em **teams** diferentes (ex.: `Owner` na Empresa A e apenas `User` na Empresa B). As roles Spatie são vinculadas ao **`team_id`** (igual a `teams.id`). O pivot **`team_members`** do FilaTeams reflete o papel na UI e é **sincronizado** com o Spatie pelo `MembershipObserver`.
+- **Validação**: Verificações `can`, `hasRole`, `hasPermissionTo` devem respeitar o **team ativo** (`SpatieTeamResolver` + `TeamSyncMiddleware`).
+
+### 3. Proteção contra destruição (exclusão de organização)
+
+- **Objetivo**: Reduzir perda acidental ou maliciosa de dados ligados a uma equipe.
+- **Regra**: Ações destrutivas (ex.: exclusão de **Team** no painel admin, exclusão/leave no fluxo FilaTeams) devem seguir **policies**, gates do pacote e regras de negócio explícitas (ex.: não excluir team com membros no recurso admin, quando aplicável). Apenas perfis autorizados executam exclusão; owners/colaboradores não “furam” o isolamento de outras equipes.
+- **Validação**: UI e endpoints negam operação quando a policy falhar; testes cobrem fluxos críticos de acesso.
+
+---
+
+## ⚠️ P1: Importantes (Experiência do Usuário)
+
+*Regras que garantem a fluidez e a percepção de qualidade do kit.*
+
+### 4. Onboarding "One-Click"
+
+- **Objetivo**: Facilitar a instalação e o primeiro contato de novos desenvolvedores.
+- **Regra**: O script de instalação (`install.php`) deve realizar o setup completo, incluindo banco de dados, migrações e seeds essenciais, sem necessidade de intervenções manuais complexas.
+- **Validação**: O sistema deve estar funcional imediatamente após a execução do script em um ambiente limpo.
+
+---
+
+## ℹ️ P2: Desejáveis (Evolução de Escopo)
+
+*Funcionalidades planejadas para versões futuras.*
+
+### 5. Limites de planos (SaaS metrics)
+
+- **Status**: ⏳ Planejado para a V2.
+- **Objetivo**: Introduzir conceitos de monetização e quotas de uso.
+- **Regra**: Implementação de restrições baseadas no plano ativo (ex.: limite de usuários cadastrados por team).
+
+---
+
+> **Nota**: Estas regras são monitoradas e validadas automaticamente pelos agentes de IA através da skill `validate-project-rules`.
+
+### Glossário rápido
+
+| Termo na doc / Filament | Significado no labSIS-KIT |
+|-------------------------|---------------------------|
+| Tenant (API Filament)   | Instância de **`Team`** na rota `/user/{slug}` |
+| `getTenant()`           | Retorna o **`Team`** atual do painel `user` |
+| `team_id` (Spatie)      | FK para **`teams.id`** |
+| `team_id` (domínio)     | Mesma organização (`teams`) quando presente em tabelas de negócio |
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

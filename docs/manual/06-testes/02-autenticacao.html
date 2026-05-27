@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🔐 Testes de Autenticação — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes" open><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="02-autenticacao.html" class="is-active">🔐 Testes de Autenticação</a></li>
+<li><a href="03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Testes</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">🔐 Testes de Autenticação</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">06 — Testes</p>
+<h1 class="doc-title">🔐 Testes de Autenticação</h1>
+</header>
+<div class="prose-content">
+<p>Este documento descreve a <strong>cobertura atual</strong> de testes relacionados a autenticação e cadastro no projeto.</p>
+<div class="callout callout-info"><p><strong>Estado atual:</strong> não existe <code>tests/Feature/AuthenticationTest.php</code>. Fluxos de login Livewire, registro completo e recuperação de senha <strong>ainda não possuem suite dedicada</strong> — parte do comportamento pós-login é coberta indiretamente por <a href="../../tests/Feature/PanelAccessTest.php"><code>PanelAccessTest.php</code></a>.</p></div>
+<h2 id="o-que-está-coberto-hoje">O que está coberto hoje</h2>
+<h3>Redirecionamentos com usuário autenticado (<code>PanelAccessTest</code>)</h3>
+<table class="data"><thead><tr>
+<th>Cenário</th>
+<th>Arquivo</th>
+<th>Descrição</th>
+</tr></thead><tbody>
+<tr>
+<td>Admin acessa <code>/login</code></td>
+<td><code>PanelAccessTest.php</code></td>
+<td>Redireciona para <code>/admin</code></td>
+</tr>
+<tr>
+<td>User com team acessa <code>/login</code></td>
+<td><code>PanelAccessTest.php</code></td>
+<td>Redireciona para <code>/user/{slug}</code> do primeiro team</td>
+</tr>
+<tr>
+<td>Visitante acessa painéis</td>
+<td><code>PanelAccessTest.php</code></td>
+<td>Redireciona para <code>/__compat-login</code> (compat → <code>/login</code>)</td>
+</tr>
+</tbody></table>
+<p>Esses testes validam o fluxo <strong>após</strong> autenticação via <code>actingAs()</code>, não o formulário Livewire de login em si.</p>
+<h3>Cache e side-effects de aprovação (<code>FilamentStatsCacheTest</code>)</h3>
+<table class="data"><thead><tr>
+<th>Cenário</th>
+<th>Descrição</th>
+</tr></thead><tbody>
+<tr>
+<td>Aprovação de usuário</td>
+<td>Atualiza badges em <code>FilamentStatsCache</code> via <code>UserObserver</code></td>
+</tr>
+</tbody></table>
+<p>Relacionado indiretamente ao fluxo de aprovação pós-registro — ver <a href="../../../manual/02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro</a>.</p>
+<h2 id="lacunas-conhecidas-não-automatizadas">Lacunas conhecidas (não automatizadas)</h2>
+<p>Os cenários abaixo estão documentados em <a href="../../../manual/02-autenticacao-e-seguranca/login-unificado.html">Login Unificado</a> e <a href="../../../manual/02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro</a>, mas <strong>não têm teste Feature dedicado</strong>:</p>
+<ul>
+<li>Renderização e submit do formulário Livewire de <strong>login</strong> (<code>App\Filament\Pages\Auth\Login</code>)</li>
+<li>Renderização e submit do formulário de <strong>registro</strong> (criação de <code>User</code>, <code>Team</code>, <code>Membership</code>)</li>
+<li>Credenciais inválidas no login</li>
+<li>Fluxo de <strong>recuperação de senha</strong> (request + reset)</li>
+<li>Usuário suspenso / não aprovado bloqueado nos painéis</li>
+</ul>
+<h2 id="executando-testes-relacionados">Executando testes relacionados</h2>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code># Redirecionamentos pós-auth (parcial)
+./vendor/bin/sail artisan test tests/Feature/PanelAccessTest.php
+
+# Invalidação de cache ao aprovar usuário
+./vendor/bin/sail artisan test tests/Feature/FilamentStatsCacheTest.php
+
+# Filtrar por cenário de login
+./vendor/bin/sail artisan test --filter=&quot;redirecionado para o painel&quot;</code></pre></div>
+<h2 id="sugestão-para-nova-suite-authenticationtest">Sugestão para nova suite <code>AuthenticationTest</code></h2>
+<p>Quando implementar testes de auth completos, prefira <strong>Livewire Testing</strong> contra as pages do <code>AuthPanelProvider</code>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use App\Filament\Pages\Auth\Login;
+use App\Models\User;
+use Livewire\Livewire;
+
+it(&#x27;usuário aprovado autentica via Livewire&#x27;, function (): void {
+    $user = User::factory()-&gt;create([
+        &#x27;is_approved&#x27; =&gt; true,
+        &#x27;is_suspended&#x27; =&gt; false,
+    ]);
+
+    Livewire::test(Login::class)
+        -&gt;fillForm([
+            &#x27;email&#x27; =&gt; $user-&gt;email,
+            &#x27;password&#x27; =&gt; &#x27;password&#x27;,
+        ])
+        -&gt;call(&#x27;authenticate&#x27;)
+        -&gt;assertHasNoFormErrors();
+});</code></pre></div>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="../../tests/Feature/PanelAccessTest.php">PanelAccessTest.php</a></li>
+<li><a href="../../tests/Feature/FilamentStatsCacheTest.php">FilamentStatsCacheTest.php</a></li>
+<li><a href="../../../manual/06-testes/03-acesso-paineis.html">03 - Controle de Acesso</a></li>
+<li><a href="../../../manual/02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro</a></li>
+<li><a href="../../../manual/02-autenticacao-e-seguranca/login-unificado.html">Login Unificado</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="01-introducao.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">🧪 Testes Automatizados</span></a><a class="doc-pagination-card doc-pagination-next" href="03-acesso-paineis.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">🛡️ Testes de Controle de Acesso e Redirecionamento</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#o-que-está-coberto-hoje" data-toc-target="o-que-está-coberto-hoje">O que está coberto hoje</a></li>
+<li><a class="doc-toc-link" href="#lacunas-conhecidas-não-automatizadas" data-toc-target="lacunas-conhecidas-não-automatizadas">Lacunas conhecidas (não automatizadas)</a></li>
+<li><a class="doc-toc-link" href="#executando-testes-relacionados" data-toc-target="executando-testes-relacionados">Executando testes relacionados</a></li>
+<li><a class="doc-toc-link" href="#sugestão-para-nova-suite-authenticationtest" data-toc-target="sugestão-para-nova-suite-authenticationtest">Sugestão para nova suite `AuthenticationTest`</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># 🔐 Testes de Autenticação
+
+Este documento descreve a **cobertura atual** de testes relacionados a autenticação e cadastro no projeto.
+
+> **Estado atual:** não existe `tests/Feature/AuthenticationTest.php`. Fluxos de login Livewire, registro completo e recuperação de senha **ainda não possuem suite dedicada** — parte do comportamento pós-login é coberta indiretamente por [`PanelAccessTest.php`](../../tests/Feature/PanelAccessTest.php).
+
+## O que está coberto hoje
+
+### Redirecionamentos com usuário autenticado (`PanelAccessTest`)
+
+| Cenário | Arquivo | Descrição |
+|---------|---------|-----------|
+| Admin acessa `/login` | `PanelAccessTest.php` | Redireciona para `/admin` |
+| User com team acessa `/login` | `PanelAccessTest.php` | Redireciona para `/user/{slug}` do primeiro team |
+| Visitante acessa painéis | `PanelAccessTest.php` | Redireciona para `/__compat-login` (compat → `/login`) |
+
+Esses testes validam o fluxo **após** autenticação via `actingAs()`, não o formulário Livewire de login em si.
+
+### Cache e side-effects de aprovação (`FilamentStatsCacheTest`)
+
+| Cenário | Descrição |
+|---------|-----------|
+| Aprovação de usuário | Atualiza badges em `FilamentStatsCache` via `UserObserver` |
+
+Relacionado indiretamente ao fluxo de aprovação pós-registro — ver [Fluxo de Registro](../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.md).
+
+## Lacunas conhecidas (não automatizadas)
+
+Os cenários abaixo estão documentados em [Login Unificado](../02-autenticacao-e-seguranca/login-unificado.md) e [Fluxo de Registro](../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.md), mas **não têm teste Feature dedicado**:
+
+- Renderização e submit do formulário Livewire de **login** (`App\Filament\Pages\Auth\Login`)
+- Renderização e submit do formulário de **registro** (criação de `User`, `Team`, `Membership`)
+- Credenciais inválidas no login
+- Fluxo de **recuperação de senha** (request + reset)
+- Usuário suspenso / não aprovado bloqueado nos painéis
+
+## Executando testes relacionados
+
+```bash
+# Redirecionamentos pós-auth (parcial)
+./vendor/bin/sail artisan test tests/Feature/PanelAccessTest.php
+
+# Invalidação de cache ao aprovar usuário
+./vendor/bin/sail artisan test tests/Feature/FilamentStatsCacheTest.php
+
+# Filtrar por cenário de login
+./vendor/bin/sail artisan test --filter="redirecionado para o painel"
+```
+
+## Sugestão para nova suite `AuthenticationTest`
+
+Quando implementar testes de auth completos, prefira **Livewire Testing** contra as pages do `AuthPanelProvider`:
+
+```php
+use App\Filament\Pages\Auth\Login;
+use App\Models\User;
+use Livewire\Livewire;
+
+it('usuário aprovado autentica via Livewire', function (): void {
+    $user = User::factory()->create([
+        'is_approved' => true,
+        'is_suspended' => false,
+    ]);
+
+    Livewire::test(Login::class)
+        ->fillForm([
+            'email' => $user->email,
+            'password' => 'password',
+        ])
+        ->call('authenticate')
+        ->assertHasNoFormErrors();
+});
+```
+
+## Referências
+
+- [PanelAccessTest.php](../../tests/Feature/PanelAccessTest.php)
+- [FilamentStatsCacheTest.php](../../tests/Feature/FilamentStatsCacheTest.php)
+- [03 - Controle de Acesso](./03-acesso-paineis.md)
+- [Fluxo de Registro](../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.md)
+- [Login Unificado](../02-autenticacao-e-seguranca/login-unificado.md)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Autenticação de Dois Fatores (2FA) no Filament — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca" open><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="autenticacao-2fa.html" class="is-active">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Autenticação e Segurança</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Autenticação de Dois Fatores (2FA) no Filament</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">02 — Autenticação e Segurança</p>
+<h1 class="doc-title">Autenticação de Dois Fatores (2FA) no Filament</h1>
+</header>
+<div class="prose-content">
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#introdução">Introdução</a></li>
+<li><a href="#como-funciona-o-2fa">Como Funciona o 2FA</a></li>
+<li><a href="#arquitetura-da-implementação">Arquitetura da Implementação</a></li>
+<li><a href="#configurando-o-2fa-para-um-usuário">Configurando o 2FA para um Usuário</a></li>
+<li><a href="#códigos-de-recuperação">Códigos de Recuperação</a></li>
+<li><a href="#desativando-o-2fa">Desativando o 2FA</a></li>
+<li><a href="#segurança-e-boas-práticas">Segurança e Boas Práticas</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#conclusão">Conclusão</a></li>
+</ul>
+<h2 id="introdução">Introdução</h2>
+<p>Este projeto implementa um sistema completo de <strong>Autenticação de Dois Fatores (2FA)</strong> usando o Filament PHP. O sistema permite que os usuários protejam suas contas com um segundo nível de segurança, além da senha tradicional.</p>
+<h2 id="como-funciona-o-2fa">Como Funciona o 2FA</h2>
+<p>A autenticação de dois fatores funciona em duas etapas:</p>
+<ol>
+<li><strong>Primeira etapa</strong>: Usuário insere email e senha</li>
+<li><strong>Segunda etapa</strong>: Usuário insere um código temporário gerado por um aplicativo de autenticação (Google Authenticator, Authy, etc.)</li>
+</ol>
+<h2 id="arquitetura-da-implementação">Arquitetura da Implementação</h2>
+<h3>1. Modelo User</h3>
+<p>O modelo <code>User</code> implementa as interfaces necessárias para o 2FA:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Models/User.php
+
+use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
+use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
+
+class User extends Authenticatable implements 
+    FilamentUser, 
+    HasAppAuthentication, 
+    HasAppAuthenticationRecovery
+{
+    // ... outras propriedades
+}</code></pre></div>
+<h3>2. Campos do Banco de Dados</h3>
+<p>A tabela <code>users</code> possui campos específicos para o 2FA:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// database/migrations/0001_01_01_000000_create_users_table.php
+
+Schema::create(&#x27;users&#x27;, function (Blueprint $table) {
+    // ... outros campos
+    $table-&gt;text(&#x27;app_authentication_secret&#x27;)-&gt;nullable();        // Chave secreta para 2FA
+    $table-&gt;text(&#x27;app_authentication_recovery_codes&#x27;)-&gt;nullable(); // Códigos de recuperação
+    // ... outros campos
+});</code></pre></div>
+<h3>3. Traits de Autenticação</h3>
+<p>O sistema utiliza dois traits para gerenciar a autenticação:</p>
+<h4>AppAuthenticationSecret</h4>
+<p>Gerencia a chave secreta para geração dos códigos 2FA:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Traits/Filament/AppAuthenticationSecret.php
+
+trait AppAuthenticationSecret
+{
+    public function getAppAuthenticationSecret(): ?string
+    {
+        return $this-&gt;app_authentication_secret;
+    }
+
+    public function saveAppAuthenticationSecret(?string $secret): void
+    {
+        $this-&gt;app_authentication_secret = $secret;
+        $this-&gt;save();
+    }
+
+    public function getAppAuthenticationHolderName(): string
+    {
+        return $this-&gt;email; // Identificador único para o app de autenticação
+    }
+}</code></pre></div>
+<h4>AppAuthenticationRecoveryCodes</h4>
+<p>Gerencia os códigos de recuperação para casos de emergência:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Traits/Filament/AppAuthenticationRecoveryCodes.php
+
+trait AppAuthenticationRecoveryCodes
+{
+    public function getAppAuthenticationRecoveryCodes(): ?array
+    {
+        return $this-&gt;app_authentication_recovery_codes;
+    }
+
+    public function saveAppAuthenticationRecoveryCodes(?array $codes): void
+    {
+        $this-&gt;app_authentication_recovery_codes = $codes;
+        $this-&gt;save();
+    }
+}</code></pre></div>
+<h3>4. Configuração do Painel</h3>
+<p>O <code>AdminPanelProvider</code> configura o 2FA para o painel administrativo:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// app/Providers/Filament/AdminPanelProvider.php
+
+use Filament\Auth\MultiFactor\App\AppAuthentication;
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        // ... outras configurações
+        -&gt;multiFactorAuthentication(
+            AppAuthentication::make()
+                -&gt;recoverable() // Habilita códigos de recuperação
+        )
+        // ... outras configurações
+}</code></pre></div>
+<h2 id="configurando-o-2fa-para-um-usuário">Configurando o 2FA para um Usuário</h2>
+<h3>Passo 1: Acessar o Perfil</h3>
+<ol>
+<li>Faça login no painel administrativo (<code>/admin</code>)</li>
+<li>Clique no seu nome no canto superior direito</li>
+<li>Selecione &quot;Perfil&quot;</li>
+</ol>
+<h3>Passo 2: Ativar a Autenticação de Dois Fatores</h3>
+<ol>
+<li>Na página de perfil, procure pela seção &quot;Autenticação de Dois Fatores&quot;</li>
+<li>Clique em &quot;Ativar&quot;</li>
+<li>Escaneie o QR Code com seu aplicativo de autenticação:</li>
+</ol>
+<ul>
+<li><strong>Google Authenticator</strong> (Android/iOS)</li>
+<li><strong>Authy</strong> (Android/iOS/Desktop)</li>
+<li><strong>Microsoft Authenticator</strong> (Android/iOS)</li>
+<li><strong>1Password</strong> (Desktop/Mobile)</li>
+</ul>
+<h3>Passo 3: Verificar a Ativação</h3>
+<ol>
+<li>Digite o código de 6 dígitos exibido no seu aplicativo</li>
+<li>Clique em &quot;Confirmar&quot;</li>
+<li>O 2FA estará ativo para sua conta</li>
+</ol>
+<h2 id="códigos-de-recuperação">Códigos de Recuperação</h2>
+<h3>O que são?</h3>
+<p>Os códigos de recuperação são uma alternativa de acesso caso você perca seu dispositivo de autenticação ou tenha problemas com o 2FA.</p>
+<h3>Como usar?</h3>
+<ol>
+<li>Na página de login, após inserir email e senha</li>
+<li>Clique em &quot;Usar código de recuperação&quot;</li>
+<li>Digite um dos códigos de recuperação salvos</li>
+<li>Acesse sua conta normalmente</li>
+</ol>
+<h3>Importante!</h3>
+<ul>
+<li><strong>Guarde os códigos em local seguro</strong> (não no mesmo dispositivo do 2FA)</li>
+<li><strong>Cada código só pode ser usado uma vez</strong></li>
+<li><strong>Gere novos códigos</strong> se suspeitar que foram comprometidos</li>
+</ul>
+<h2 id="desativando-o-2fa">Desativando o 2FA</h2>
+<h3>Para desativar:</h3>
+<ol>
+<li>Acesse seu perfil</li>
+<li>Na seção &quot;Autenticação de Dois Fatores&quot;</li>
+<li>Clique em &quot;Desativar&quot;</li>
+<li>Confirme sua senha</li>
+<li>O 2FA será removido da sua conta</li>
+</ol>
+<h2 id="segurança-e-boas-práticas">Segurança e Boas Práticas</h2>
+<h3>Recomendações:</h3>
+<ol>
+<li><strong>Use aplicativos confiáveis</strong>: Google Authenticator, Authy, Microsoft Authenticator</li>
+<li><strong>Não compartilhe códigos</strong>: Mantenha seus códigos 2FA privados</li>
+<li><strong>Backup dos códigos</strong>: Salve os códigos de recuperação em local seguro</li>
+<li><strong>Dispositivo dedicado</strong>: Considere usar um dispositivo específico para 2FA</li>
+<li><strong>Atualizações</strong>: Mantenha seu aplicativo de autenticação atualizado</li>
+</ol>
+<h2 id="problemas-comuns">Problemas Comuns:</h2>
+<ol>
+<li><strong>Código não aceito</strong>:</li>
+</ol>
+<ul>
+<li>Verifique se o relógio do dispositivo está sincronizado</li>
+<li>Aguarde o próximo código (30 segundos)</li>
+<li>Use código de recuperação se necessário</li>
+</ul>
+<ol>
+<li><strong>Aplicativo não funciona</strong>:</li>
+</ol>
+<ul>
+<li>Reinstale o aplicativo</li>
+<li>Verifique permissões de câmera (para QR Code)</li>
+<li>Teste com outro aplicativo</li>
+</ul>
+<ol>
+<li><strong>Perdeu o dispositivo</strong>:</li>
+</ol>
+<ul>
+<li>Use códigos de recuperação</li>
+<li>Entre em contato com o administrador</li>
+<li>Considere resetar a conta se necessário</li>
+</ul>
+<h2 id="conclusão">Conclusão</h2>
+<p>O sistema de 2FA implementado neste projeto oferece uma camada adicional de segurança robusta e confiável. Seguindo as boas práticas e configurações recomendadas, você pode proteger efetivamente as contas dos usuários contra acessos não autorizados.</p>
+<p>Para mais informações sobre o sistema de 2FA do Filament, consulte a <a href="https://filamentphp.com/docs/4.x/users/multi-factor-authentication#introduction">documentação oficial</a>.</p>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="/app/Models/User.php">Model: User</a></li>
+<li><a href="/app/Traits/Filament/AppAuthenticationSecret.php">Trait: AppAuthenticationSecret</a></li>
+<li><a href="/app/Traits/Filament/AppAuthenticationRecoveryCodes.php">Trait: AppAuthenticationRecoveryCodes</a></li>
+<li><a href="/app/Providers/Filament/AdminPanelProvider.php">Provider: AdminPanelProvider</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-next" href="checklist-de-seguranca.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Checklist de Segurança e Diretrizes de Mitigação</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#introdução" data-toc-target="introdução">Introdução</a></li>
+<li><a class="doc-toc-link" href="#como-funciona-o-2fa" data-toc-target="como-funciona-o-2fa">Como Funciona o 2FA</a></li>
+<li><a class="doc-toc-link" href="#arquitetura-da-implementação" data-toc-target="arquitetura-da-implementação">Arquitetura da Implementação</a></li>
+<li><a class="doc-toc-link" href="#configurando-o-2fa-para-um-usuário" data-toc-target="configurando-o-2fa-para-um-usuário">Configurando o 2FA para um Usuário</a></li>
+<li><a class="doc-toc-link" href="#códigos-de-recuperação" data-toc-target="códigos-de-recuperação">Códigos de Recuperação</a></li>
+<li><a class="doc-toc-link" href="#desativando-o-2fa" data-toc-target="desativando-o-2fa">Desativando o 2FA</a></li>
+<li><a class="doc-toc-link" href="#segurança-e-boas-práticas" data-toc-target="segurança-e-boas-práticas">Segurança e Boas Práticas</a></li>
+<li><a class="doc-toc-link" href="#problemas-comuns" data-toc-target="problemas-comuns">Problemas Comuns:</a></li>
+<li><a class="doc-toc-link" href="#conclusão" data-toc-target="conclusão">Conclusão</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Autenticação de Dois Fatores (2FA) no Filament
+
+## 📋 Índice
+
+- [Introdução](#introdução)
+- [Como Funciona o 2FA](#como-funciona-o-2fa)
+- [Arquitetura da Implementação](#arquitetura-da-implementação)
+- [Configurando o 2FA para um Usuário](#configurando-o-2fa-para-um-usuário)
+- [Códigos de Recuperação](#códigos-de-recuperação)
+- [Desativando o 2FA](#desativando-o-2fa)
+- [Segurança e Boas Práticas](#segurança-e-boas-práticas)
+- [Troubleshooting](#troubleshooting)
+- [Conclusão](#conclusão)
+
+## Introdução
+
+Este projeto implementa um sistema completo de **Autenticação de Dois Fatores (2FA)** usando o Filament PHP. O sistema permite que os usuários protejam suas contas com um segundo nível de segurança, além da senha tradicional.
+
+## Como Funciona o 2FA
+
+A autenticação de dois fatores funciona em duas etapas:
+
+1. **Primeira etapa**: Usuário insere email e senha
+2. **Segunda etapa**: Usuário insere um código temporário gerado por um aplicativo de autenticação (Google Authenticator, Authy, etc.)
+
+## Arquitetura da Implementação
+
+### 1. Modelo User
+
+O modelo `User` implementa as interfaces necessárias para o 2FA:
+
+```php
+// app/Models/User.php
+
+use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
+use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
+
+class User extends Authenticatable implements 
+    FilamentUser, 
+    HasAppAuthentication, 
+    HasAppAuthenticationRecovery
+{
+    // ... outras propriedades
+}
+```
+
+### 2. Campos do Banco de Dados
+
+A tabela `users` possui campos específicos para o 2FA:
+
+```php
+// database/migrations/0001_01_01_000000_create_users_table.php
+
+Schema::create('users', function (Blueprint $table) {
+    // ... outros campos
+    $table->text('app_authentication_secret')->nullable();        // Chave secreta para 2FA
+    $table->text('app_authentication_recovery_codes')->nullable(); // Códigos de recuperação
+    // ... outros campos
+});
+```
+
+### 3. Traits de Autenticação
+
+O sistema utiliza dois traits para gerenciar a autenticação:
+
+#### AppAuthenticationSecret
+
+Gerencia a chave secreta para geração dos códigos 2FA:
+
+```php
+// app/Traits/Filament/AppAuthenticationSecret.php
+
+trait AppAuthenticationSecret
+{
+    public function getAppAuthenticationSecret(): ?string
+    {
+        return $this->app_authentication_secret;
+    }
+
+    public function saveAppAuthenticationSecret(?string $secret): void
+    {
+        $this->app_authentication_secret = $secret;
+        $this->save();
+    }
+
+    public function getAppAuthenticationHolderName(): string
+    {
+        return $this->email; // Identificador único para o app de autenticação
+    }
+}
+```
+
+#### AppAuthenticationRecoveryCodes
+
+Gerencia os códigos de recuperação para casos de emergência:
+
+```php
+// app/Traits/Filament/AppAuthenticationRecoveryCodes.php
+
+trait AppAuthenticationRecoveryCodes
+{
+    public function getAppAuthenticationRecoveryCodes(): ?array
+    {
+        return $this->app_authentication_recovery_codes;
+    }
+
+    public function saveAppAuthenticationRecoveryCodes(?array $codes): void
+    {
+        $this->app_authentication_recovery_codes = $codes;
+        $this->save();
+    }
+}
+```
+
+### 4. Configuração do Painel
+
+O `AdminPanelProvider` configura o 2FA para o painel administrativo:
+
+```php
+// app/Providers/Filament/AdminPanelProvider.php
+
+use Filament\Auth\MultiFactor\App\AppAuthentication;
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        // ... outras configurações
+        ->multiFactorAuthentication(
+            AppAuthentication::make()
+                ->recoverable() // Habilita códigos de recuperação
+        )
+        // ... outras configurações
+}
+```
+
+## Configurando o 2FA para um Usuário
+
+### Passo 1: Acessar o Perfil
+
+1. Faça login no painel administrativo (`/admin`)
+2. Clique no seu nome no canto superior direito
+3. Selecione "Perfil"
+
+### Passo 2: Ativar a Autenticação de Dois Fatores
+
+1. Na página de perfil, procure pela seção "Autenticação de Dois Fatores"
+2. Clique em "Ativar"
+3. Escaneie o QR Code com seu aplicativo de autenticação:
+   - **Google Authenticator** (Android/iOS)
+   - **Authy** (Android/iOS/Desktop)
+   - **Microsoft Authenticator** (Android/iOS)
+   - **1Password** (Desktop/Mobile)
+
+### Passo 3: Verificar a Ativação
+
+1. Digite o código de 6 dígitos exibido no seu aplicativo
+2. Clique em "Confirmar"
+3. O 2FA estará ativo para sua conta
+
+## Códigos de Recuperação
+
+### O que são?
+
+Os códigos de recuperação são uma alternativa de acesso caso você perca seu dispositivo de autenticação ou tenha problemas com o 2FA.
+
+### Como usar?
+
+1. Na página de login, após inserir email e senha
+2. Clique em "Usar código de recuperação"
+3. Digite um dos códigos de recuperação salvos
+4. Acesse sua conta normalmente
+
+### Importante!
+
+- **Guarde os códigos em local seguro** (não no mesmo dispositivo do 2FA)
+- **Cada código só pode ser usado uma vez**
+- **Gere novos códigos** se suspeitar que foram comprometidos
+
+## Desativando o 2FA
+
+### Para desativar:
+
+1. Acesse seu perfil
+2. Na seção "Autenticação de Dois Fatores"
+3. Clique em "Desativar"
+4. Confirme sua senha
+5. O 2FA será removido da sua conta
+
+## Segurança e Boas Práticas
+
+### Recomendações:
+
+1. **Use aplicativos confiáveis**: Google Authenticator, Authy, Microsoft Authenticator
+2. **Não compartilhe códigos**: Mantenha seus códigos 2FA privados
+3. **Backup dos códigos**: Salve os códigos de recuperação em local seguro
+4. **Dispositivo dedicado**: Considere usar um dispositivo específico para 2FA
+5. **Atualizações**: Mantenha seu aplicativo de autenticação atualizado
+
+## Problemas Comuns:
+
+1. **Código não aceito**:
+   - Verifique se o relógio do dispositivo está sincronizado
+   - Aguarde o próximo código (30 segundos)
+   - Use código de recuperação se necessário
+
+2. **Aplicativo não funciona**:
+   - Reinstale o aplicativo
+   - Verifique permissões de câmera (para QR Code)
+   - Teste com outro aplicativo
+
+3. **Perdeu o dispositivo**:
+   - Use códigos de recuperação
+   - Entre em contato com o administrador
+   - Considere resetar a conta se necessário
+
+
+## Conclusão
+
+O sistema de 2FA implementado neste projeto oferece uma camada adicional de segurança robusta e confiável. Seguindo as boas práticas e configurações recomendadas, você pode proteger efetivamente as contas dos usuários contra acessos não autorizados.
+
+Para mais informações sobre o sistema de 2FA do Filament, consulte a [documentação oficial](https://filamentphp.com/docs/4.x/users/multi-factor-authentication#introduction).
+
+## Referências
+
+- [Model: User](/app/Models/User.php)
+- [Trait: AppAuthenticationSecret](/app/Traits/Filament/AppAuthenticationSecret.php)
+- [Trait: AppAuthenticationRecoveryCodes](/app/Traits/Filament/AppAuthenticationRecoveryCodes.php)
+- [Provider: AdminPanelProvider](/app/Providers/Filament/AdminPanelProvider.php)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

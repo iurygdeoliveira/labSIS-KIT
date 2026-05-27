@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Arquitetura do Model User — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura" open><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="user-model.html" class="is-active">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Backend e Arquitetura</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Arquitetura do Model User</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">04 — Backend e Arquitetura</p>
+<h1 class="doc-title">Arquitetura do Model User</h1>
+</header>
+<div class="prose-content">
+<p>Este documento detalha a arquitetura, responsabilidades e a lógica interna do model <code>App\Models\User</code>. Como entidade central da aplicação, o Usuário interage com autenticação, multi-tenancy, permissões e armazenamento híbrido de dados.</p>
+<h2 id="1-visão-geral">1. Visão Geral</h2>
+<p>O model <code>User</code> é um model Eloquent padrão armazenado no banco de dados relacional (<strong>PostgreSQL</strong>). Ele implementa interfaces essenciais para o funcionamento do <strong>Filament</strong> e do sistema de autenticação multi-fator da aplicação.</p>
+<h3>Interfaces Principais</h3>
+<ul>
+<li><code>FilamentUser</code>: Permite acesso aos painéis administrativos.</li>
+<li><code>HasTenants</code>: Habilita a lógica de multi-tenancy do Filament.</li>
+<li><code>HasMedia</code>: Integração com Spatie Media Library para avatares.</li>
+<li><code>HasAppAuthentication</code> / <code>HasAppAuthenticationRecovery</code>: Suporte a 2FA customizado.</li>
+</ul>
+<h2 id="2-organização-do-código">2. Organização do Código</h2>
+<p>Para manter a classe legível e manutenível, o código foi organizado em seções lógicas separadas por comentários visuais:</p>
+<ol>
+<li><strong>Setup &amp; Configuration</strong>:</li>
+</ol>
+<ul>
+<li><code>casts</code>: Definição de tipos (ex: senhas hash, campos criptografados).</li>
+<li><code>registerMediaConversions</code>: Configuração de otimizações de imagem e thumbnails (vazio por padrão neste model).</li>
+<li>(Nota: A configuração do disco S3 para avatares é feita diretamente no componente de upload do Filament, não no model via <code>registerMediaCollections</code>).</li>
+</ul>
+<ol>
+<li><strong>Relationships</strong>: Todos os relacionamentos Eloquent (SQL e MongoDB).</li>
+<li><strong>Scopes</strong>: Filtros de consulta reutilizáveis.</li>
+<li><strong>Filament / Access Control</strong>: Métodos para controlar quem pode entrar em qual painel (<code>admin</code>, <code>user</code>) e em qual team (tenant Filament).</li>
+<li><strong>State Checks &amp; Notifications</strong>: Métodos de verificação de estado (<code>isSuspended</code>, <code>isApproved</code>).</li>
+<li><strong>Team &amp; Role Logic</strong>: Lógica de negócio para papéis dentro do contexto de um team.</li>
+</ol>
+<h2 id="3-arquitetura-híbrida-sql-mongodb">3. Arquitetura Híbrida (SQL + MongoDB)</h2>
+<p>Uma das características mais importantes deste model é sua capacidade de se relacionar com logs armazenados no <strong>MongoDB</strong>, mantendo seus dados principais no <strong>PostgreSQL</strong>.</p>
+<h3>Trait <code>HybridRelations</code></h3>
+<p>O model utiliza a trait <code>MongoDB\Laravel\Eloquent\HybridRelations</code>. Isso permite que o Eloquent entenda relacionamentos entre bancos de dados diferentes (SQL Parent -&gt; MongoDB Child).</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use \MongoDB\Laravel\Eloquent\HybridRelations;</code></pre></div>
+<h3>Logs de Autenticação (MongoDB)</h3>
+<p>O projeto utiliza <code>App\Models\AuthenticationLog</code> persistido em <strong>MongoDB</strong>. O relacionamento <code>authentications()</code> no <code>User</code> aponta explicitamente para esse model híbrido:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>public function authentications()
+{
+    return $this-&gt;morphMany(\App\Models\AuthenticationLog::class, &#x27;authenticatable&#x27;)-&gt;latest(&#x27;login_at&#x27;);
+}</code></pre></div>
+<p>Eventos <code>Login</code>, <code>Logout</code> e <code>Failed</code> são registrados via <code>LogAuthenticationActivity</code> em <code>AppServiceProvider</code>.</p>
+<h2 id="4-multi-tenancy-e-permissões">4. Multi-Tenancy e Permissões</h2>
+<p>O sistema utiliza <strong>multi-teams</strong> (FilaTeams + Filament tenant API) onde os papéis Spatie são atribuídos ao usuário _dentro do contexto de um team_ (<code>team_id</code>).</p>
+<h3>Estrutura de Dados</h3>
+<ul>
+<li><strong>Users</strong>: Tabela global.</li>
+<li><strong>Teams</strong>: Tabela global (<code>teams</code>).</li>
+<li><strong>Memberships</strong>: Pivot FilaTeams (<code>team_id</code>, <code>user_id</code>, <code>role</code>).</li>
+<li><strong>Roles</strong>: Spatie Permissions (globais, atribuídas com <code>team_id</code>).</li>
+<li><strong>Pivot (<code>model_has_roles</code>)</strong>: Contém a coluna extra <code>team_id</code>.</li>
+</ul>
+<h3>Métodos de Helper</h3>
+<p>A seção <strong>Team &amp; Role Logic</strong> abstrai a complexidade das queries:</p>
+<ul>
+<li><code>isOwnerOfTeam(Team $team)</code>: Owner no contexto do team.</li>
+<li><code>isUserOfTeam(Team $team)</code>: User no contexto do team.</li>
+<li><code>getRolesForTeam(Team $team)</code>: Roles Spatie naquele team.</li>
+<li><code>assignRoleInTeam(Role $role, Team $team)</code>: Atribui role com <code>team_id</code> correto.</li>
+</ul>
+<p>Toda a lógica cruza <code>user_id</code> + <code>role_id</code> + <code>team_id</code>.</p>
+<h3>Distribuição Natural de Carga (Load Distribution)</h3>
+<p>Uma característica <strong>arquitetural importante</strong> desta estrutura é que ela promove <strong>distribuição natural de carga</strong> sem necessidade de particionamento da tabela <code>users</code>. Isso ocorre porque:</p>
+<h4>1. Separação de Responsabilidades em Tabelas Pivot</h4>
+<p>Ao invés de armazenar todas as permissões diretamente na tabela <code>users</code>, o sistema utiliza <strong>tabelas pivot normalizadas</strong>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">mermaid</span></div><pre><code>graph TD
+    A[users] --&gt; B[memberships / team_members]
+    A --&gt; C[model_has_roles]
+    B --&gt; D[teams]
+    C --&gt; E[roles]</code></pre></div>
+<p><strong>Benefícios de Performance:</strong></p>
+<ul>
+<li><strong>Índices Menores</strong>: Cada pivot tem índices específicos (<code>user_id</code>, <code>tenant_id</code>, <code>role_id</code>, <code>team_id</code>), que são muito mais compactos que um índice composto gigante na tabela <code>users</code>.</li>
+<li><strong>Queries Mais Eficientes</strong>: PostgreSQL consegue otimizar JOINs em tabelas menores com maior eficiência do que escanear uma tabela monolítica com milhões de linhas.</li>
+<li><strong>Cache Hit Rate Maior</strong>: Tabelas pivot frequentemente acessadas (ex: verificação de permissões) cabem inteiramente na memória (Shared Buffers do PostgreSQL), acelerando leituras.</li>
+</ul>
+<h4>2. Exemplo Prático: Query de Autorização</h4>
+<p>Quando o Filament verifica teams acessíveis ao usuário, a consulta envolve <code>teams</code> + pivot de membership (FilaTeams), filtrando por <code>is_active</code>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">sql</span></div><pre><code>SELECT teams.*
+FROM teams
+INNER JOIN team_members ON team_members.team_id = teams.id
+WHERE team_members.user_id = :user_id
+  AND teams.is_active = true;</code></pre></div>
+<p><strong>Por que isso é eficiente?</strong></p>
+<ul>
+<li>Índices em <code>(user_id, team_id)</code> na pivot aceleram lookups por usuário.</li>
+<li>PostgreSQL usa <strong>Index-Only Scan</strong> quando possível em pivots menores.</li>
+</ul>
+<h4>3. Comparação: Monolítico vs. Multi-Tenant Pivot</h4>
+<table class="data"><thead><tr>
+<th>Abordagem</th>
+<th>Estrutura</th>
+<th>Performance em 1M usuários</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Monolítica</strong></td>
+<td><code>users</code> com JSON de <code>tenant_ids</code> e <code>permissions</code></td>
+<td>❌ Índices GIN/JSONB são lentos para queries complexas. Tabela única de 1M+ linhas.</td>
+</tr>
+<tr>
+<td><strong>Multi-Team Pivot</strong> (labSIS-KIT)</td>
+<td><code>users</code> + memberships + <code>model_has_roles</code></td>
+<td>✅ Tabelas especializadas; índices menores e JOINs otimizados.</td>
+</tr>
+<tr>
+<td><strong>Particionamento</strong></td>
+<td><code>users</code> particionada por <code>created_at</code> ou <code>hash(id)</code></td>
+<td>⚠️ Não resolve o problema de RBAC. Complexidade alta sem ganho real para este caso de uso.</td>
+</tr>
+</tbody></table>
+<h4>4. Quando a Distribuição Atual NÃO é Suficiente?</h4>
+<p>A arquitetura pivot atinge seus limites quando:</p>
+<ul>
+<li><strong>Dezenas de milhões de usuários</strong>: A tabela <code>model_has_roles</code> pode crescer desproporcionalmente (ex: 100M+ registros se cada usuário tem múltiplos papéis em múltiplos tenants).</li>
+<li><strong>Queries analíticas pesadas</strong>: Relatórios que precisam agregar dados de todos os tenants simultaneamente podem ser lentos.</li>
+</ul>
+<p><strong>Solução nesses casos:</strong></p>
+<ul>
+<li><strong>Particionamento da pivot <code>model_has_roles</code></strong> por <code>team_id</code> (Range ou Hash).</li>
+<li><strong>Read Replicas</strong> para queries analíticas (separar carga de leitura e escrita).</li>
+<li><strong>Caching de Permissões</strong> com Redis (evitar consultas repetidas ao banco).</li>
+</ul>
+<h2 id="5-integração-com-filament">5. Integração com Filament</h2>
+<p>O método <code>canAccessPanel(Panel $panel)</code> centraliza a lógica de autorização:</p>
+<ul>
+<li><strong>Painel Admin</strong>: Requer role <code>Admin</code> (<code>RoleType::ADMIN</code>).</li>
+<li><strong>Painel User</strong>: Requer role <code>User</code> ou <code>Owner</code> em algum team, ou membership ativo em <code>teams()</code>.</li>
+<li><strong>Bloqueios Globais</strong>: Usuários suspensos ou não aprovados são bloqueados nos painéis operacionais (exceto fluxos do painel <code>auth</code>).</li>
+</ul>
+<h2 id="diagrama-de-relacionamento-simplificado">Diagrama de Relacionamento Simplificado</h2>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">mermaid</span></div><pre><code>classDiagram
+    class User {
+        +id
+        +String email
+        +authentications() [MongoDB]
+        +teams()
+    }
+    class Team {
+        +id
+        +String name
+        +String slug
+    }
+    class Membership {
+        +team_id
+        +user_id
+        +role
+    }
+    class AuthenticationLog {
+        &lt;&lt;MongoDB&gt;&gt;
+        +IP address
+        +UserAgent
+    }
+
+    User &quot;1&quot; --&gt; &quot;*&quot; Membership
+    Team &quot;1&quot; --&gt; &quot;*&quot; Membership
+    User &quot;1&quot; --&gt; &quot;*&quot; AuthenticationLog : MorphMany (Hybrid)</code></pre></div>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="../../app/Models/User.php">Model: User</a></li>
+<li><a href="../../app/Models/Team.php">Model: Team</a></li>
+<li><a href="../../../manual/02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy e Teams</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="stack-tecnologica.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Stack Tecnológica e Versões</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#1-visão-geral" data-toc-target="1-visão-geral">1. Visão Geral</a></li>
+<li><a class="doc-toc-link" href="#2-organização-do-código" data-toc-target="2-organização-do-código">2. Organização do Código</a></li>
+<li><a class="doc-toc-link" href="#3-arquitetura-híbrida-sql-mongodb" data-toc-target="3-arquitetura-híbrida-sql-mongodb">3. Arquitetura Híbrida (SQL + MongoDB)</a></li>
+<li><a class="doc-toc-link" href="#4-multi-tenancy-e-permissões" data-toc-target="4-multi-tenancy-e-permissões">4. Multi-Tenancy e Permissões</a></li>
+<li><a class="doc-toc-link" href="#5-integração-com-filament" data-toc-target="5-integração-com-filament">5. Integração com Filament</a></li>
+<li><a class="doc-toc-link" href="#diagrama-de-relacionamento-simplificado" data-toc-target="diagrama-de-relacionamento-simplificado">Diagrama de Relacionamento Simplificado</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Arquitetura do Model User
+
+Este documento detalha a arquitetura, responsabilidades e a lógica interna do model `App\Models\User`. Como entidade central da aplicação, o Usuário interage com autenticação, multi-tenancy, permissões e armazenamento híbrido de dados.
+
+## 1. Visão Geral
+
+O model `User` é um model Eloquent padrão armazenado no banco de dados relacional (**PostgreSQL**). Ele implementa interfaces essenciais para o funcionamento do **Filament** e do sistema de autenticação multi-fator da aplicação.
+
+### Interfaces Principais
+
+-   `FilamentUser`: Permite acesso aos painéis administrativos.
+-   `HasTenants`: Habilita a lógica de multi-tenancy do Filament.
+-   `HasMedia`: Integração com Spatie Media Library para avatares.
+-   `HasAppAuthentication` / `HasAppAuthenticationRecovery`: Suporte a 2FA customizado.
+
+## 2. Organização do Código
+
+Para manter a classe legível e manutenível, o código foi organizado em seções lógicas separadas por comentários visuais:
+
+1.  **Setup & Configuration**:
+    -   `casts`: Definição de tipos (ex: senhas hash, campos criptografados).
+    -   `registerMediaConversions`: Configuração de otimizações de imagem e thumbnails (vazio por padrão neste model).
+    -   (Nota: A configuração do disco S3 para avatares é feita diretamente no componente de upload do Filament, não no model via `registerMediaCollections`).
+2.  **Relationships**: Todos os relacionamentos Eloquent (SQL e MongoDB).
+3.  **Scopes**: Filtros de consulta reutilizáveis.
+4.  **Filament / Access Control**: Métodos para controlar quem pode entrar em qual painel (`admin`, `user`) e em qual team (tenant Filament).
+5.  **State Checks & Notifications**: Métodos de verificação de estado (`isSuspended`, `isApproved`).
+6.  **Team & Role Logic**: Lógica de negócio para papéis dentro do contexto de um team.
+
+## 3. Arquitetura Híbrida (SQL + MongoDB)
+
+Uma das características mais importantes deste model é sua capacidade de se relacionar com logs armazenados no **MongoDB**, mantendo seus dados principais no **PostgreSQL**.
+
+### Trait `HybridRelations`
+
+O model utiliza a trait `MongoDB\Laravel\Eloquent\HybridRelations`. Isso permite que o Eloquent entenda relacionamentos entre bancos de dados diferentes (SQL Parent -> MongoDB Child).
+
+```php
+use \MongoDB\Laravel\Eloquent\HybridRelations;
+```
+
+### Logs de Autenticação (MongoDB)
+
+O projeto utiliza `App\Models\AuthenticationLog` persistido em **MongoDB**. O relacionamento `authentications()` no `User` aponta explicitamente para esse model híbrido:
+
+```php
+public function authentications()
+{
+    return $this->morphMany(\App\Models\AuthenticationLog::class, 'authenticatable')->latest('login_at');
+}
+```
+
+Eventos `Login`, `Logout` e `Failed` são registrados via `LogAuthenticationActivity` em `AppServiceProvider`.
+
+## 4. Multi-Tenancy e Permissões
+
+O sistema utiliza **multi-teams** (FilaTeams + Filament tenant API) onde os papéis Spatie são atribuídos ao usuário _dentro do contexto de um team_ (`team_id`).
+
+### Estrutura de Dados
+
+-   **Users**: Tabela global.
+-   **Teams**: Tabela global (`teams`).
+-   **Memberships**: Pivot FilaTeams (`team_id`, `user_id`, `role`).
+-   **Roles**: Spatie Permissions (globais, atribuídas com `team_id`).
+-   **Pivot (`model_has_roles`)**: Contém a coluna extra `team_id`.
+
+### Métodos de Helper
+
+A seção **Team & Role Logic** abstrai a complexidade das queries:
+
+-   `isOwnerOfTeam(Team $team)`: Owner no contexto do team.
+-   `isUserOfTeam(Team $team)`: User no contexto do team.
+-   `getRolesForTeam(Team $team)`: Roles Spatie naquele team.
+-   `assignRoleInTeam(Role $role, Team $team)`: Atribui role com `team_id` correto.
+
+Toda a lógica cruza `user_id` + `role_id` + `team_id`.
+
+### Distribuição Natural de Carga (Load Distribution)
+
+Uma característica **arquitetural importante** desta estrutura é que ela promove **distribuição natural de carga** sem necessidade de particionamento da tabela `users`. Isso ocorre porque:
+
+#### 1. Separação de Responsabilidades em Tabelas Pivot
+
+Ao invés de armazenar todas as permissões diretamente na tabela `users`, o sistema utiliza **tabelas pivot normalizadas**:
+
+```mermaid
+graph TD
+    A[users] --> B[memberships / team_members]
+    A --> C[model_has_roles]
+    B --> D[teams]
+    C --> E[roles]
+```
+
+**Benefícios de Performance:**
+
+- **Índices Menores**: Cada pivot tem índices específicos (`user_id`, `tenant_id`, `role_id`, `team_id`), que são muito mais compactos que um índice composto gigante na tabela `users`.
+- **Queries Mais Eficientes**: PostgreSQL consegue otimizar JOINs em tabelas menores com maior eficiência do que escanear uma tabela monolítica com milhões de linhas.
+- **Cache Hit Rate Maior**: Tabelas pivot frequentemente acessadas (ex: verificação de permissões) cabem inteiramente na memória (Shared Buffers do PostgreSQL), acelerando leituras.
+
+#### 2. Exemplo Prático: Query de Autorização
+
+Quando o Filament verifica teams acessíveis ao usuário, a consulta envolve `teams` + pivot de membership (FilaTeams), filtrando por `is_active`:
+
+```sql
+SELECT teams.*
+FROM teams
+INNER JOIN team_members ON team_members.team_id = teams.id
+WHERE team_members.user_id = :user_id
+  AND teams.is_active = true;
+```
+
+**Por que isso é eficiente?**
+
+- Índices em `(user_id, team_id)` na pivot aceleram lookups por usuário.
+- PostgreSQL usa **Index-Only Scan** quando possível em pivots menores.
+
+#### 3. Comparação: Monolítico vs. Multi-Tenant Pivot
+
+| Abordagem | Estrutura | Performance em 1M usuários |
+|:----------|:----------|:---------------------------|
+| **Monolítica** | `users` com JSON de `tenant_ids` e `permissions` | ❌ Índices GIN/JSONB são lentos para queries complexas. Tabela única de 1M+ linhas. |
+| **Multi-Team Pivot** (labSIS-KIT) | `users` + memberships + `model_has_roles` | ✅ Tabelas especializadas; índices menores e JOINs otimizados. |
+| **Particionamento** | `users` particionada por `created_at` ou `hash(id)` | ⚠️ Não resolve o problema de RBAC. Complexidade alta sem ganho real para este caso de uso. |
+
+#### 4. Quando a Distribuição Atual NÃO é Suficiente?
+
+A arquitetura pivot atinge seus limites quando:
+
+- **Dezenas de milhões de usuários**: A tabela `model_has_roles` pode crescer desproporcionalmente (ex: 100M+ registros se cada usuário tem múltiplos papéis em múltiplos tenants).
+- **Queries analíticas pesadas**: Relatórios que precisam agregar dados de todos os tenants simultaneamente podem ser lentos.
+
+**Solução nesses casos:**
+- **Particionamento da pivot `model_has_roles`** por `team_id` (Range ou Hash).
+- **Read Replicas** para queries analíticas (separar carga de leitura e escrita).
+- **Caching de Permissões** com Redis (evitar consultas repetidas ao banco).
+
+
+
+## 5. Integração com Filament
+
+O método `canAccessPanel(Panel $panel)` centraliza a lógica de autorização:
+
+-   **Painel Admin**: Requer role `Admin` (`RoleType::ADMIN`).
+-   **Painel User**: Requer role `User` ou `Owner` em algum team, ou membership ativo em `teams()`.
+-   **Bloqueios Globais**: Usuários suspensos ou não aprovados são bloqueados nos painéis operacionais (exceto fluxos do painel `auth`).
+
+## Diagrama de Relacionamento Simplificado
+
+```mermaid
+classDiagram
+    class User {
+        +id
+        +String email
+        +authentications() [MongoDB]
+        +teams()
+    }
+    class Team {
+        +id
+        +String name
+        +String slug
+    }
+    class Membership {
+        +team_id
+        +user_id
+        +role
+    }
+    class AuthenticationLog {
+        <<MongoDB>>
+        +IP address
+        +UserAgent
+    }
+
+    User "1" --> "*" Membership
+    Team "1" --> "*" Membership
+    User "1" --> "*" AuthenticationLog : MorphMany (Hybrid)
+```
+
+## Referências
+
+- [Model: User](../../app/Models/User.php)
+- [Model: Team](../../app/Models/Team.php)
+- [Tenancy e Teams](../02-autenticacao-e-seguranca/tenancy-e-teams.md)
+
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

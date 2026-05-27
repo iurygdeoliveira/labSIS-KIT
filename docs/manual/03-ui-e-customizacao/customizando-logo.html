@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🎨 Customizando o Logotipo nos Painéis Filament — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao" open><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="customizando-logo.html" class="is-active">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">UI e Customização</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">🎨 Customizando o Logotipo nos Painéis Filament</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">03 — UI e Customização</p>
+<h1 class="doc-title">🎨 Customizando o Logotipo nos Painéis Filament</h1>
+</header>
+<div class="prose-content">
+<p>Este guia explica, de forma direta e completa, como alterar o logotipo exibido na barra superior (topbar) dos painéis do Filament neste projeto. A solução adotada separa o logotipo do painel de Autenticação do logotipo aplicado aos demais painéis (via <code>BasePanelProvider</code>).</p>
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#onde-ficam-as-views-de-logo">Onde ficam as views de logo</a></li>
+<li><a href="#como-o-filament-recebe-a-logo">Como o Filament recebe a logo</a></li>
+<li><a href="#views-de-exemplo">Views de exemplo</a></li>
+</ul>
+<ul>
+<li><a href="#passo-a-passo-para-alterar-a-logo">Passo a passo para alterar a logo</a></li>
+<li><a href="#dicas-úteis">Dicas úteis</a></li>
+</ul>
+<h2 id="onde-ficam-as-views-de-logo">Onde ficam as views de logo</h2>
+<p>As views usadas pelo Filament para renderizar a logo da topbar ficam em:</p>
+<ul>
+<li><code>resources/views/filament/auth/logo_auth.blade.php</code> — usada no painel de Autenticação (<code>AuthPanelProvider</code>), apontando para a imagem <code>public/images/LabSIS_login.png</code>.</li>
+<li><code>resources/views/filament/auth/logo_base.blade.php</code> — usada pelos painéis que herdam de <code>BasePanelProvider</code>, apontando para a imagem <code>public/images/LabSIS.png</code>.</li>
+</ul>
+<p>Para trocar a imagem, substitua o arquivo na pasta <code>public/images/</code> e mantenha o mesmo nome do arquivo referenciado na view, ou ajuste o caminho na própria view Blade.</p>
+<h2 id="como-o-filament-recebe-a-logo">Como o Filament recebe a logo</h2>
+<p>Nos providers, a logo é registrada com <code>brandLogo()</code> recebendo uma view. A altura é controlada por <code>brandLogoHeight()</code>.</p>
+<p>No painel de Autenticação, em <code>app/Providers/Filament/AuthPanelProvider.php</code>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>-&gt;brandLogo(fn () =&gt; view(&#x27;filament.auth.logo_auth&#x27;))
+-&gt;brandLogoHeight(&#x27;8rem&#x27;)</code></pre></div>
+<p>Nos demais painéis (via <code>BasePanelProvider</code>), em <code>app/Providers/Filament/BasePanelProvider.php</code>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>-&gt;brandLogo(fn () =&gt; view(&#x27;filament.auth.logo_base&#x27;))
+-&gt;brandLogoHeight(&#x27;2rem&#x27;)</code></pre></div>
+<p>Sinta-se à vontade para ajustar os valores de <code>brandLogoHeight()</code> conforme a proporção da sua imagem (por exemplo, <code>1.75rem</code>, <code>32px</code> etc.).</p>
+<h2 id="views-de-exemplo">Views de exemplo</h2>
+<p>View do painel de Autenticação (<code>resources/views/filament/auth/logo_auth.blade.php</code>):</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">blade</span></div><pre><code>&lt;img src=&quot;{{ asset(&#x27;images/LabSIS_login.png&#x27;) }}&quot; alt=&quot;LabSIS&quot; class=&quot;h-full&quot; /&gt;</code></pre></div>
+<p>View base para os demais painéis (<code>resources/views/filament/auth/logo_base.blade.php</code>):</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">blade</span></div><pre><code>&lt;img src=&quot;{{ asset(&#x27;images/LabSIS.png&#x27;) }}&quot; alt=&quot;LabSIS&quot; class=&quot;h-full&quot; /&gt;</code></pre></div>
+<p>Se preferir SVG, você pode colocar o conteúdo SVG diretamente na view para melhor controle de cor (incluindo suporte a <code>dark:</code>).</p>
+<p>---</p>
+<h2 id="passo-a-passo-para-alterar-a-logo">Passo a passo para alterar a logo</h2>
+<h3>1. <strong>Identificar qual logo deseja alterar</strong></h3>
+<p>Este projeto possui <strong>2 logos diferentes</strong>:</p>
+<table class="data"><thead><tr>
+<th>Logo</th>
+<th>Arquivo de Imagem</th>
+<th>View Blade</th>
+<th>Provider</th>
+<th>Onde aparece</th>
+</tr></thead><tbody>
+<tr>
+<td>Login/Auth</td>
+<td><code>public/images/LabSIS_login.png</code></td>
+<td><code>resources/views/filament/auth/logo_auth.blade.php</code></td>
+<td><code>AuthPanelProvider</code></td>
+<td>Página de login</td>
+</tr>
+<tr>
+<td>Topbar (Admin/User)</td>
+<td><code>public/images/LabSIS.png</code></td>
+<td><code>resources/views/filament/auth/logo_base.blade.php</code></td>
+<td><code>BasePanelProvider</code></td>
+<td>Topo dos painéis</td>
+</tr>
+</tbody></table>
+<h3>2. <strong>Alterar a imagem</strong></h3>
+<p>Substitua o arquivo na pasta <code>public/images/</code>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code># Substitua qualquer uma das imagens
+# Exemplo: substituindo a logo da topbar
+cp sua-logo.png public/images/LabSIS.png
+
+# Ou crie um novo arquivo com outro nome
+cp sua-logo.png public/images/MinhaLogo.png</code></pre></div>
+<h3>3. <strong>Atualizar a view (se mudou o nome do arquivo)</strong></h3>
+<p>Se você criou um novo arquivo com outro nome, edite a view:</p>
+<p><strong>Para logo de login:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>nano resources/views/filament/auth/logo_auth.blade.php</code></pre></div>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">blade</span></div><pre><code>&lt;img src=&quot;{{ asset(&#x27;images/SEU_NOVO_ARQUIVO.png&#x27;) }}&quot; alt=&quot;LabSIS&quot; class=&quot;h-full&quot; /&gt;</code></pre></div>
+<p><strong>Para logo da topbar:</strong></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>nano resources/views/filament/auth/logo_base.blade.php</code></pre></div>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">blade</span></div><pre><code>&lt;img src=&quot;{{ asset(&#x27;images/SEU_NOVO_ARQUIVO.png&#x27;) }}&quot; alt=&quot;LabSIS&quot; class=&quot;h-full&quot; /&gt;</code></pre></div>
+<h3>5. <strong>Ajustar altura (se necessário)</strong></h3>
+<p>Se a nova logo tiver proporções diferentes, ajuste a altura nos providers:</p>
+<p><strong>Logo de login</strong> (<code>AuthPanelProvider.php</code>):</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>-&gt;brandLogo(fn () =&gt; view(&#x27;filament.auth.logo_auth&#x27;))
+-&gt;brandLogoHeight(&#x27;10rem&#x27;) // ← Altere o valor aqui (ex: 8rem, 10rem, 12rem)</code></pre></div>
+<p><strong>Logo da topbar</strong> (<code>BasePanelProvider.php</code>):</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>-&gt;brandLogo(fn () =&gt; view(&#x27;filament.auth.logo_base&#x27;))
+-&gt;brandLogoHeight(&#x27;3rem&#x27;) // ← Altere o valor aqui (ex: 2rem, 3rem, 4rem)</code></pre></div>
+<h3>6. <strong>Limpar cache</strong></h3>
+<p>Após fazer as alterações, limpe o cache:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>./vendor/bin/sail artisan optimize:clear</code></pre></div>
+<p>Ou se não estiver usando Sail:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">bash</span></div><pre><code>php artisan optimize:clear</code></pre></div>
+<p>php artisan optimize:clear</p>
+<pre><code>
+## Referências
+
+- [View: Logo Auth](/resources/views/filament/auth/logo_auth.blade.php)
+- [Provider: AuthPanelProvider](/app/Providers/Filament/AuthPanelProvider.php)
+
+</code></pre>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="customizando-layout.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Customização da Aparência e Plugins no Filament</span></a><a class="doc-pagination-card doc-pagination-next" href="widgets-filament.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Widgets no Filament — Métricas e Componentização no Painel</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#onde-ficam-as-views-de-logo" data-toc-target="onde-ficam-as-views-de-logo">Onde ficam as views de logo</a></li>
+<li><a class="doc-toc-link" href="#como-o-filament-recebe-a-logo" data-toc-target="como-o-filament-recebe-a-logo">Como o Filament recebe a logo</a></li>
+<li><a class="doc-toc-link" href="#views-de-exemplo" data-toc-target="views-de-exemplo">Views de exemplo</a></li>
+<li><a class="doc-toc-link" href="#passo-a-passo-para-alterar-a-logo" data-toc-target="passo-a-passo-para-alterar-a-logo">Passo a passo para alterar a logo</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># 🎨 Customizando o Logotipo nos Painéis Filament
+
+Este guia explica, de forma direta e completa, como alterar o logotipo exibido na barra superior (topbar) dos painéis do Filament neste projeto. A solução adotada separa o logotipo do painel de Autenticação do logotipo aplicado aos demais painéis (via `BasePanelProvider`).
+
+## 📋 Índice
+
+- [Onde ficam as views de logo](#onde-ficam-as-views-de-logo)
+- [Como o Filament recebe a logo](#como-o-filament-recebe-a-logo)
+- [Views de exemplo](#views-de-exemplo)
+
+- [Passo a passo para alterar a logo](#passo-a-passo-para-alterar-a-logo)
+- [Dicas úteis](#dicas-úteis)
+
+## Onde ficam as views de logo
+
+As views usadas pelo Filament para renderizar a logo da topbar ficam em:
+
+- `resources/views/filament/auth/logo_auth.blade.php` — usada no painel de Autenticação (`AuthPanelProvider`), apontando para a imagem `public/images/LabSIS_login.png`.
+- `resources/views/filament/auth/logo_base.blade.php` — usada pelos painéis que herdam de `BasePanelProvider`, apontando para a imagem `public/images/LabSIS.png`.
+
+Para trocar a imagem, substitua o arquivo na pasta `public/images/` e mantenha o mesmo nome do arquivo referenciado na view, ou ajuste o caminho na própria view Blade.
+
+## Como o Filament recebe a logo
+
+Nos providers, a logo é registrada com `brandLogo()` recebendo uma view. A altura é controlada por `brandLogoHeight()`.
+
+No painel de Autenticação, em `app/Providers/Filament/AuthPanelProvider.php`:
+
+```php
+->brandLogo(fn () => view('filament.auth.logo_auth'))
+->brandLogoHeight('8rem')
+```
+
+Nos demais painéis (via `BasePanelProvider`), em `app/Providers/Filament/BasePanelProvider.php`:
+
+```php
+->brandLogo(fn () => view('filament.auth.logo_base'))
+->brandLogoHeight('2rem')
+```
+
+Sinta-se à vontade para ajustar os valores de `brandLogoHeight()` conforme a proporção da sua imagem (por exemplo, `1.75rem`, `32px` etc.).
+
+## Views de exemplo
+
+View do painel de Autenticação (`resources/views/filament/auth/logo_auth.blade.php`):
+
+```blade
+<img src="{{ asset('images/LabSIS_login.png') }}" alt="LabSIS" class="h-full" />
+```
+
+View base para os demais painéis (`resources/views/filament/auth/logo_base.blade.php`):
+
+```blade
+<img src="{{ asset('images/LabSIS.png') }}" alt="LabSIS" class="h-full" />
+```
+
+Se preferir SVG, você pode colocar o conteúdo SVG diretamente na view para melhor controle de cor (incluindo suporte a `dark:`).
+
+
+
+---
+
+## Passo a passo para alterar a logo
+
+### 1. **Identificar qual logo deseja alterar**
+
+Este projeto possui **2 logos diferentes**:
+
+| Logo | Arquivo de Imagem | View Blade | Provider | Onde aparece |
+|------|-------------------|------------|----------|--------------|
+| Login/Auth | `public/images/LabSIS_login.png` | `resources/views/filament/auth/logo_auth.blade.php` | `AuthPanelProvider` | Página de login |
+| Topbar (Admin/User) | `public/images/LabSIS.png` | `resources/views/filament/auth/logo_base.blade.php` | `BasePanelProvider` | Topo dos painéis |
+
+
+### 2. **Alterar a imagem**
+
+Substitua o arquivo na pasta `public/images/`:
+
+```bash
+# Substitua qualquer uma das imagens
+# Exemplo: substituindo a logo da topbar
+cp sua-logo.png public/images/LabSIS.png
+
+# Ou crie um novo arquivo com outro nome
+cp sua-logo.png public/images/MinhaLogo.png
+```
+
+### 3. **Atualizar a view (se mudou o nome do arquivo)**
+
+Se você criou um novo arquivo com outro nome, edite a view:
+
+**Para logo de login:**
+```bash
+nano resources/views/filament/auth/logo_auth.blade.php
+```
+
+```blade
+<img src="{{ asset('images/SEU_NOVO_ARQUIVO.png') }}" alt="LabSIS" class="h-full" />
+```
+
+**Para logo da topbar:**
+```bash
+nano resources/views/filament/auth/logo_base.blade.php
+```
+
+```blade
+<img src="{{ asset('images/SEU_NOVO_ARQUIVO.png') }}" alt="LabSIS" class="h-full" />
+```
+
+
+
+### 5. **Ajustar altura (se necessário)**
+
+Se a nova logo tiver proporções diferentes, ajuste a altura nos providers:
+
+**Logo de login** (`AuthPanelProvider.php`):
+
+```php
+->brandLogo(fn () => view('filament.auth.logo_auth'))
+->brandLogoHeight('10rem') // ← Altere o valor aqui (ex: 8rem, 10rem, 12rem)
+```
+
+**Logo da topbar** (`BasePanelProvider.php`):
+
+```php
+->brandLogo(fn () => view('filament.auth.logo_base'))
+->brandLogoHeight('3rem') // ← Altere o valor aqui (ex: 2rem, 3rem, 4rem)
+```
+
+### 6. **Limpar cache**
+
+Após fazer as alterações, limpe o cache:
+
+```bash
+./vendor/bin/sail artisan optimize:clear
+```
+
+Ou se não estiver usando Sail:
+
+```bash
+php artisan optimize:clear
+```bash
+php artisan optimize:clear
+```
+
+## Referências
+
+- [View: Logo Auth](/resources/views/filament/auth/logo_auth.blade.php)
+- [Provider: AuthPanelProvider](/app/Providers/Filament/AuthPanelProvider.php)
+
+
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

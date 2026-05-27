@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Otimização de Cache de Página com Cloudflare — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes" open><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="cloudflare-page-cache.html" class="is-active">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="filament-performance.html">Performance no Filament</a></li>
+<li><a href="laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Otimizações</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Otimização de Cache de Página com Cloudflare</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">05 — Otimizações</p>
+<h1 class="doc-title">Otimização de Cache de Página com Cloudflare</h1>
+</header>
+<div class="prose-content">
+<p>Esta documentação detalha a implementação da estratégia de &quot;Full Page Cache&quot; compatível com Cloudflare (e outros CDNs), permitindo servir páginas estáticas diretamente da borda (Edge) sem atingir o servidor Laravel para processamento.</p>
+<h2 id="objetivo">Objetivo</h2>
+<p>O comportamento padrão do middleware <code>web</code> do Laravel é &quot;stateful&quot; (com estado), o que significa que ele sempre inicia uma sessão e gera cookies (<code>csrf_token</code>, <code>laravel_session</code>).</p>
+<p>Quando o Cloudflare detecta o cabeçalho <code>Set-Cookie</code> na resposta, ele <strong>evita automaticamente fazer o cache da página</strong> por segurança, para não servir a sessão de um usuário para outro.</p>
+<p><strong>O objetivo desta implementação é:</strong></p>
+<ol>
+<li>Criar uma rota isolada que <strong>não</strong> inicie sessão.</li>
+<li>Adicionar cabeçalhos <code>Cache-Control</code> explícitos.</li>
+<li>Permitir que o Cloudflare armazene o HTML da Home Page e o sirva globalmente.</li>
+</ol>
+<h2 id="implementação">Implementação</h2>
+<h3>1. Middleware <code>SetCacheHeaders</code></h3>
+<p>Foi criado um middleware específico para controlar os cabeçalhos de cache.</p>
+<p>Arquivo: <code>app/Http/Middleware/SetCacheHeaders.php</code></p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>public function handle(Request $request, Closure $next): Response
+{
+    $response = $next($request);
+
+    // public: pode ser cacheado por qualquer um (CDN, Browser)
+    // max-age=3600: cache no navegador do usuário por 1 hora
+    // s-maxage=86400: cache no CDN (Cloudflare) por 24 horas
+    $response-&gt;headers-&gt;set(&#x27;Cache-Control&#x27;, &#x27;public, max-age=3600, s-maxage=86400&#x27;);
+
+    return $response;
+}</code></pre></div>
+<h3>2. Grupo de Middleware <code>static</code></h3>
+<p>No <code>bootstrap/app.php</code>, definimos um novo grupo de middleware chamado <code>static</code>. Diferente do grupo <code>web</code> padrão, este grupo é minimalista e <strong>stateless</strong> (sem estado).</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>$middleware-&gt;group(&#x27;static&#x27;, [
+    \Illuminate\Routing\Middleware\SubstituteBindings::class,
+    \App\Http\Middleware\SetCacheHeaders::class,
+]);</code></pre></div>
+<p>Observe que middlewares como <code>StartSession</code>, <code>EncryptCookies</code> e <code>VerifyCsrfToken</code> foram intencionalmente omitidos.</p>
+<h3>3. Aplicação na Rota</h3>
+<p>A rota da Home Page (<code>/</code>) foi alterada para utilizar este novo grupo <code>static</code> em vez do padrão.</p>
+<h2 id="resultado-esperado-de-otimização">Resultado Esperado de Otimização</h2>
+<ul>
+<li><strong>Menor Latência (TTFB):</strong> O tempo até o primeiro byte (TTFB) cairá drasticamente para visitantes, pois o HTML será entregue pelo servidor do Cloudflare mais próximo, e não pelo servidor de origem.</li>
+<li><strong>Redução de Carga no Servidor:</strong> O servidor Laravel deixará de processar requisições para a Home Page, economizando CPU e RAM para tarefas que realmente exigem processamento dinâmico (com login, dashboard, etc).</li>
+<li><strong>Escalabilidade:</strong> O site poderá suportar picos de tráfego massivos na Home Page sem degradar a performance da aplicação.</li>
+</ul>
+<h2 id="trechos-comentados-no-bootstrapappphp">Trechos Comentados no <code>bootstrap/app.php</code></h2>
+<p>Durante a configuração, alguns trechos foram comentados para fins de referência ou limpeza:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>// commands: __DIR__.&#x27;/../routes/console.php&#x27;,
+// health: &#x27;/up&#x27;,</code></pre></div>
+<ul>
+<li><code>commands</code>: Carrega as rotas de console (comandos <code>artisan</code> personalizados). Comentar isso desabilita o carregamento automático dessas rotas, o que pode ser uma micro-otimização se não forem usadas, mas geralmente são mantidas.</li>
+<li><code>health</code>: Define a rota <code>/up</code> para verificação de saúde da aplicação (Health Check). Comentar desabilita essa rota padrão do Laravel 11.</li>
+</ul>
+<h2 id="referência">Referência</h2>
+<p>Esta implementação foi baseada no artigo:</p>
+<div class="callout callout-info"><p><a href="https://laravel-news.com/separate-your-cloudflare-page-cache-with-a-middleware-group"><strong>Separate Your Cloudflare Page Cache with a Middleware Group</strong></a> - Laravel News</p></div>
+<h2 id="referências">Referências</h2>
+<ul>
+<li><a href="https://laravel-news.com/separate-your-cloudflare-page-cache-with-a-middleware-group">Article: Separate Your Cloudflare Page Cache with a Middleware Group</a></li>
+<li><a href="/labsis-kit/app/Http/Middleware/SetCacheHeaders.php">Middleware: SetCacheHeaders</a></li>
+<li><a href="/labsis-kit/bootstrap/app.php">Bootstrap: app.php</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="cache-e-redis.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Cache e Redis no Projeto</span></a><a class="doc-pagination-card doc-pagination-next" href="filament-performance.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Performance no Filament</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#objetivo" data-toc-target="objetivo">Objetivo</a></li>
+<li><a class="doc-toc-link" href="#implementação" data-toc-target="implementação">Implementação</a></li>
+<li><a class="doc-toc-link" href="#resultado-esperado-de-otimização" data-toc-target="resultado-esperado-de-otimização">Resultado Esperado de Otimização</a></li>
+<li><a class="doc-toc-link" href="#trechos-comentados-no-bootstrapappphp" data-toc-target="trechos-comentados-no-bootstrapappphp">Trechos Comentados no `bootstrap/app.php`</a></li>
+<li><a class="doc-toc-link" href="#referência" data-toc-target="referência">Referência</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Otimização de Cache de Página com Cloudflare
+
+Esta documentação detalha a implementação da estratégia de "Full Page Cache" compatível com Cloudflare (e outros CDNs), permitindo servir páginas estáticas diretamente da borda (Edge) sem atingir o servidor Laravel para processamento.
+
+## Objetivo
+
+O comportamento padrão do middleware `web` do Laravel é "stateful" (com estado), o que significa que ele sempre inicia uma sessão e gera cookies (`csrf_token`, `laravel_session`).
+
+Quando o Cloudflare detecta o cabeçalho `Set-Cookie` na resposta, ele **evita automaticamente fazer o cache da página** por segurança, para não servir a sessão de um usuário para outro.
+
+**O objetivo desta implementação é:**
+
+1.  Criar uma rota isolada que **não** inicie sessão.
+2.  Adicionar cabeçalhos `Cache-Control` explícitos.
+3.  Permitir que o Cloudflare armazene o HTML da Home Page e o sirva globalmente.
+
+## Implementação
+
+### 1. Middleware `SetCacheHeaders`
+
+Foi criado um middleware específico para controlar os cabeçalhos de cache.
+
+Arquivo: `app/Http/Middleware/SetCacheHeaders.php`
+
+```php
+public function handle(Request $request, Closure $next): Response
+{
+    $response = $next($request);
+
+    // public: pode ser cacheado por qualquer um (CDN, Browser)
+    // max-age=3600: cache no navegador do usuário por 1 hora
+    // s-maxage=86400: cache no CDN (Cloudflare) por 24 horas
+    $response->headers->set('Cache-Control', 'public, max-age=3600, s-maxage=86400');
+
+    return $response;
+}
+```
+
+### 2. Grupo de Middleware `static`
+
+No `bootstrap/app.php`, definimos um novo grupo de middleware chamado `static`. Diferente do grupo `web` padrão, este grupo é minimalista e **stateless** (sem estado).
+
+```php
+$middleware->group('static', [
+    \Illuminate\Routing\Middleware\SubstituteBindings::class,
+    \App\Http\Middleware\SetCacheHeaders::class,
+]);
+```
+
+Observe que middlewares como `StartSession`, `EncryptCookies` e `VerifyCsrfToken` foram intencionalmente omitidos.
+
+### 3. Aplicação na Rota
+
+A rota da Home Page (`/`) foi alterada para utilizar este novo grupo `static` em vez do padrão.
+
+## Resultado Esperado de Otimização
+
+-   **Menor Latência (TTFB):** O tempo até o primeiro byte (TTFB) cairá drasticamente para visitantes, pois o HTML será entregue pelo servidor do Cloudflare mais próximo, e não pelo servidor de origem.
+-   **Redução de Carga no Servidor:** O servidor Laravel deixará de processar requisições para a Home Page, economizando CPU e RAM para tarefas que realmente exigem processamento dinâmico (com login, dashboard, etc).
+-   **Escalabilidade:** O site poderá suportar picos de tráfego massivos na Home Page sem degradar a performance da aplicação.
+
+## Trechos Comentados no `bootstrap/app.php`
+
+Durante a configuração, alguns trechos foram comentados para fins de referência ou limpeza:
+
+```php
+// commands: __DIR__.'/../routes/console.php',
+// health: '/up',
+```
+
+-   `commands`: Carrega as rotas de console (comandos `artisan` personalizados). Comentar isso desabilita o carregamento automático dessas rotas, o que pode ser uma micro-otimização se não forem usadas, mas geralmente são mantidas.
+-   `health`: Define a rota `/up` para verificação de saúde da aplicação (Health Check). Comentar desabilita essa rota padrão do Laravel 11.
+
+## Referência
+
+Esta implementação foi baseada no artigo:
+
+> [**Separate Your Cloudflare Page Cache with a Middleware Group**](https://laravel-news.com/separate-your-cloudflare-page-cache-with-a-middleware-group) - Laravel News
+
+## Referências
+
+- [Article: Separate Your Cloudflare Page Cache with a Middleware Group](https://laravel-news.com/separate-your-cloudflare-page-cache-with-a-middleware-group)
+- [Middleware: SetCacheHeaders](/labsis-kit/app/Http/Middleware/SetCacheHeaders.php)
+- [Bootstrap: app.php](/labsis-kit/bootstrap/app.php)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

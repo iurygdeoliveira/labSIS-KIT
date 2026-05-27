@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-05-27">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Livewire Computed — Otimizando Renderizações com `#[Computed]` — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes" open><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="filament-performance.html">Performance no Filament</a></li>
+<li><a href="laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="livewire-computed.html" class="is-active">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="09-roadmap-futuro"><summary class="sidebar-section-label">09 — Roadmap futuro</summary><ul class="sidebar-pages">
+<li><a href="../09-roadmap-futuro/plano-laravel-passkeys-labsis.html">Plano de Integração — Laravel Passkeys no labSIS-KIT</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Otimizações</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Livewire Computed — Otimizando Renderizações com `#[Computed]`</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">05 — Otimizações</p>
+<h1 class="doc-title">Livewire Computed — Otimizando Renderizações com `#[Computed]`</h1>
+</header>
+<div class="prose-content">
+<h2 id="índice">📋 Índice</h2>
+<ul>
+<li><a href="#introdução">Introdução</a></li>
+<li>[O que é <code>#[Computed]</code> no Livewire v4](#o-que-é-computed-no-livewire-v4)</li>
+<li><a href="#quando-usar">Quando usar</a></li>
+<li><a href="#como-funciona-a-invalidação">Como funciona a invalidação</a></li>
+<li><a href="#implementação-no-projeto">Implementação no Projeto</a></li>
+<li><a href="#widget-de-estatísticas-de-usuários-usersstats">Widget de Estatísticas de Usuários (<code>UsersStats</code>)</a></li>
+<li><a href="#candelete-computado-em-edituser"><code>canDelete</code> computado em <code>EditUser</code></a></li>
+<li><a href="#boas-práticas">Boas práticas</a></li>
+<li><a href="#problemas-comuns">Problemas comuns</a></li>
+<li><a href="#referências">Referências</a></li>
+</ul>
+<h2 id="introdução">Introdução</h2>
+<p>O atributo <code>#[Computed]</code> do Livewire v4 permite declarar propriedades computadas que são memoizadas durante um ciclo de renderização do componente. Isso evita recomputações desnecessárias quando o mesmo valor é utilizado repetidamente, reduzindo consultas ao banco e operações de transformação.</p>
+<h2 id="o-que-é-computed-no-livewire-v4">O que é <code>#[Computed]</code> no Livewire v4</h2>
+<ul>
+<li><code>#[Computed]</code> transforma um método em uma propriedade computada.</li>
+<li>O valor é calculado uma única vez por ciclo de render do componente e reutilizado enquanto não houver mudanças de estado que exijam recomputação.</li>
+</ul>
+<p>Exemplo genérico:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use Livewire\Attributes\Computed;
+
+#[Computed]
+public function expensiveValue(): string
+{
+    // ... operação custosa que você não quer repetir no mesmo render
+    return &#x27;resultado&#x27;;
+}
+
+public function render()
+{
+    // $this-&gt;expensiveValue não executa o método novamente no mesmo render
+    return view(&#x27;...&#x27;, [
+        &#x27;value&#x27; =&gt; $this-&gt;expensiveValue,
+    ]);
+}</code></pre></div>
+<h2 id="quando-usar">Quando usar</h2>
+<p>Use <code>#[Computed]</code> quando o mesmo dado é acessado mais de uma vez no mesmo render ou quando a computação é cara. Exemplos do projeto:</p>
+<ul>
+<li>Resumos/contagens: no <code>UsersStats</code>, quatro cards leem o mesmo <code>summary()</code> e três leem <code>percentages()</code>. Com <code>#[Computed]</code>, cada resumo é calculado uma única vez por render.</li>
+<li>Regras derivadas simples: em <code>EditUser</code>, <code>canDelete</code> decide se o botão de excluir aparece. Se esse mesmo valor for lido em mais de um ponto da página, ele não é recalculado no mesmo render.</li>
+</ul>
+<div class="callout callout-info"><p><strong>Nota:</strong> Para agregações de banco (contagens, somas), combine <code>#[Computed]</code> com <a href="../../app/Support/FilamentStatsCache.php"><code>FilamentStatsCache</code></a> — o cache persiste entre requisições; o computed evita recomputação dentro do mesmo render.</p></div>
+<h2 id="como-funciona-a-invalidação">Como funciona a invalidação</h2>
+<ul>
+<li>Recalcula no próximo render se alguma propriedade pública lida dentro do método mudar.</li>
+<li>Em páginas/widgets do Filament, um novo render acontece após ações, validações, mudanças de estado, etc.</li>
+<li>Não persiste entre requisições; é memoização apenas no ciclo de render atual.</li>
+</ul>
+<h2 id="implementação-no-projeto">Implementação no Projeto</h2>
+<h3>Widget de Estatísticas de Usuários (<code>UsersStats</code>)</h3>
+<p>Arquivo: <code>app/Filament/Resources/Users/Widgets/UsersStats.php</code></p>
+<ul>
+<li>Objetivo: exibir métricas no cabeçalho da listagem de usuários.</li>
+<li>Otimização dupla:</li>
+</ul>
+<p>1. <code>FilamentStatsCache::users()</code> centraliza as queries com TTL de 60s (Redis em produção). 2. <code>summary()</code> e <code>percentages()</code> são <code>#[Computed]</code>, evitando recomputação no mesmo render.</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use App\Support\FilamentStatsCache;
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
+use Livewire\Attributes\Computed;
+
+class UsersStats extends BaseWidget
+{
+    #[Computed]
+    protected function summary(): array
+    {
+        $stats = FilamentStatsCache::users();
+
+        return [
+            &#x27;total&#x27; =&gt; $stats[&#x27;total&#x27;],
+            &#x27;suspended&#x27; =&gt; $stats[&#x27;suspended&#x27;],
+            &#x27;verified&#x27; =&gt; $stats[&#x27;verified&#x27;],
+            &#x27;unapproved&#x27; =&gt; $stats[&#x27;unapproved&#x27;],
+        ];
+    }
+
+    #[Computed]
+    protected function percentages(): array
+    {
+        $total = $this-&gt;summary[&#x27;total&#x27;];
+
+        return [
+            &#x27;verified&#x27; =&gt; $total &gt; 0 ? round(($this-&gt;summary[&#x27;verified&#x27;] / $total) * 100, 1) : 0,
+            &#x27;suspended&#x27; =&gt; $total &gt; 0 ? round(($this-&gt;summary[&#x27;suspended&#x27;] / $total) * 100, 1) : 0,
+            &#x27;unapproved&#x27; =&gt; $total &gt; 0 ? round(($this-&gt;summary[&#x27;unapproved&#x27;] / $total) * 100, 1) : 0,
+        ];
+    }
+
+    protected function getStats(): array
+    {
+        $summary = $this-&gt;summary;       // memoizado no mesmo render
+        $percentages = $this-&gt;percentages; // memoizado no mesmo render
+
+        return [
+            Stat::make(&#x27;Total de Usuários&#x27;, number_format($summary[&#x27;total&#x27;]))
+                -&gt;description(&#x27;Cadastrados no sistema&#x27;),
+            // ...
+        ];
+    }
+}</code></pre></div>
+<p>Registro no cabeçalho da listagem (<code>ListUsers</code>):</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use App\Filament\Resources\Users\Widgets\UsersStats;
+use Filament\Resources\Pages\ListRecords;
+
+class ListUsers extends ListRecords
+{
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            UsersStats::class,
+        ];
+    }
+}</code></pre></div>
+<h3><code>canDelete</code> computado em <code>EditUser</code></h3>
+<p>Arquivo: <code>app/Filament/Resources/Users/Pages/EditUser.php</code></p>
+<ul>
+<li>Objetivo: centralizar a regra &quot;pode deletar?&quot; e evitar repetição.</li>
+<li>Otimização: a checagem é computada uma vez por render e reutilizada na definição das ações.</li>
+</ul>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">php</span></div><pre><code>use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
+
+class EditUser extends EditRecord
+{
+    #[Computed]
+    public function canDelete(): bool
+    {
+        return $this-&gt;record?-&gt;getKey() !== Auth::id();
+    }
+
+    protected function getHeaderActions(): array
+    {
+        $actions = [
+            $this-&gt;getBackButtonAction(),
+            ViewAction::make(),
+        ];
+
+        if ($this-&gt;canDelete) {
+            $actions[] = DeleteAction::make()
+                -&gt;successNotification(Notification::make())
+                -&gt;after(fn () =&gt; $this-&gt;notifySuccess(&#x27;Usuário excluído com sucesso.&#x27;));
+        }
+
+        return $actions;
+    }
+}</code></pre></div>
+<h2 id="boas-práticas">Boas práticas</h2>
+<ul>
+<li>Use <code>#[Computed]</code> para transformações derivadas do estado do componente (percentuais, flags booleanas).</li>
+<li>Use <code>FilamentStatsCache</code> para agregações de banco compartilhadas entre widgets, badges e tabs.</li>
+<li>Não confunda os dois: computed não substitui cache entre requisições.</li>
+</ul>
+<h2 id="problemas-comuns">Problemas comuns</h2>
+<ul>
+<li><strong>Queries repetidas entre renders</strong>: <code>#[Computed]</code> não ajuda — use cache com observers.</li>
+<li><strong>Acesso como método vs propriedade</strong>: leia <code>$this-&gt;summary</code>, não <code>$this-&gt;summary()</code>.</li>
+</ul>
+<h2 id="referências">Referências</h2>
+<ul>
+<li>Laravel News — Livewire Computed: <code>https://laravel-news.com/livewire-computed</code></li>
+<li>Documentação Livewire (v4) — Computed: <code>https://livewire.laravel.com/docs/computed-properties</code></li>
+<li><a href="../../../manual/05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../../../manual/05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+</ul>
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="laravel-pulse.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Laravel Pulse</span></a></nav>
+<footer class="doc-footer">
+<button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
+</footer>
+</article>
+<aside class="doc-toc-rail" aria-label="Nesta página"><p class="doc-toc-title">Nesta página</p><ul class="doc-toc-list"><li><a class="doc-toc-link" href="#introdução" data-toc-target="introdução">Introdução</a></li>
+<li><a class="doc-toc-link" href="#o-que-é-computed-no-livewire-v4" data-toc-target="o-que-é-computed-no-livewire-v4">O que é `#[Computed]` no Livewire v4</a></li>
+<li><a class="doc-toc-link" href="#quando-usar" data-toc-target="quando-usar">Quando usar</a></li>
+<li><a class="doc-toc-link" href="#como-funciona-a-invalidação" data-toc-target="como-funciona-a-invalidação">Como funciona a invalidação</a></li>
+<li><a class="doc-toc-link" href="#implementação-no-projeto" data-toc-target="implementação-no-projeto">Implementação no Projeto</a></li>
+<li><a class="doc-toc-link" href="#boas-práticas" data-toc-target="boas-práticas">Boas práticas</a></li>
+<li><a class="doc-toc-link" href="#problemas-comuns" data-toc-target="problemas-comuns">Problemas comuns</a></li>
+<li><a class="doc-toc-link" href="#referências" data-toc-target="referências">Referências</a></li></ul></aside>
+</div>
+</div>
+
+<script type="text/plain" id="source-markdown"># Livewire Computed — Otimizando Renderizações com `#[Computed]`
+
+## 📋 Índice
+
+- [Introdução](#introdução)
+- [O que é `#[Computed]` no Livewire v4](#o-que-é-computed-no-livewire-v4)
+- [Quando usar](#quando-usar)
+- [Como funciona a invalidação](#como-funciona-a-invalidação)
+- [Implementação no Projeto](#implementação-no-projeto)
+  - [Widget de Estatísticas de Usuários (`UsersStats`)](#widget-de-estatísticas-de-usuários-usersstats)
+  - [`canDelete` computado em `EditUser`](#candelete-computado-em-edituser)
+- [Boas práticas](#boas-práticas)
+- [Problemas comuns](#problemas-comuns)
+- [Referências](#referências)
+
+## Introdução
+
+O atributo `#[Computed]` do Livewire v4 permite declarar propriedades computadas que são memoizadas durante um ciclo de renderização do componente. Isso evita recomputações desnecessárias quando o mesmo valor é utilizado repetidamente, reduzindo consultas ao banco e operações de transformação.
+
+## O que é `#[Computed]` no Livewire v4
+
+- `#[Computed]` transforma um método em uma propriedade computada.
+- O valor é calculado uma única vez por ciclo de render do componente e reutilizado enquanto não houver mudanças de estado que exijam recomputação.
+
+Exemplo genérico:
+
+```php
+use Livewire\Attributes\Computed;
+
+#[Computed]
+public function expensiveValue(): string
+{
+    // ... operação custosa que você não quer repetir no mesmo render
+    return 'resultado';
+}
+
+public function render()
+{
+    // $this->expensiveValue não executa o método novamente no mesmo render
+    return view('...', [
+        'value' => $this->expensiveValue,
+    ]);
+}
+```
+
+## Quando usar
+
+Use `#[Computed]` quando o mesmo dado é acessado mais de uma vez no mesmo render ou quando a computação é cara. Exemplos do projeto:
+
+- Resumos/contagens: no `UsersStats`, quatro cards leem o mesmo `summary()` e três leem `percentages()`. Com `#[Computed]`, cada resumo é calculado uma única vez por render.
+- Regras derivadas simples: em `EditUser`, `canDelete` decide se o botão de excluir aparece. Se esse mesmo valor for lido em mais de um ponto da página, ele não é recalculado no mesmo render.
+
+> **Nota:** Para agregações de banco (contagens, somas), combine `#[Computed]` com [`FilamentStatsCache`](../../app/Support/FilamentStatsCache.php) — o cache persiste entre requisições; o computed evita recomputação dentro do mesmo render.
+
+## Como funciona a invalidação
+
+- Recalcula no próximo render se alguma propriedade pública lida dentro do método mudar.
+- Em páginas/widgets do Filament, um novo render acontece após ações, validações, mudanças de estado, etc.
+- Não persiste entre requisições; é memoização apenas no ciclo de render atual.
+
+## Implementação no Projeto
+
+### Widget de Estatísticas de Usuários (`UsersStats`)
+
+Arquivo: `app/Filament/Resources/Users/Widgets/UsersStats.php`
+
+- Objetivo: exibir métricas no cabeçalho da listagem de usuários.
+- Otimização dupla:
+  1. `FilamentStatsCache::users()` centraliza as queries com TTL de 60s (Redis em produção).
+  2. `summary()` e `percentages()` são `#[Computed]`, evitando recomputação no mesmo render.
+
+```php
+use App\Support\FilamentStatsCache;
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
+use Livewire\Attributes\Computed;
+
+class UsersStats extends BaseWidget
+{
+    #[Computed]
+    protected function summary(): array
+    {
+        $stats = FilamentStatsCache::users();
+
+        return [
+            'total' => $stats['total'],
+            'suspended' => $stats['suspended'],
+            'verified' => $stats['verified'],
+            'unapproved' => $stats['unapproved'],
+        ];
+    }
+
+    #[Computed]
+    protected function percentages(): array
+    {
+        $total = $this->summary['total'];
+
+        return [
+            'verified' => $total > 0 ? round(($this->summary['verified'] / $total) * 100, 1) : 0,
+            'suspended' => $total > 0 ? round(($this->summary['suspended'] / $total) * 100, 1) : 0,
+            'unapproved' => $total > 0 ? round(($this->summary['unapproved'] / $total) * 100, 1) : 0,
+        ];
+    }
+
+    protected function getStats(): array
+    {
+        $summary = $this->summary;       // memoizado no mesmo render
+        $percentages = $this->percentages; // memoizado no mesmo render
+
+        return [
+            Stat::make('Total de Usuários', number_format($summary['total']))
+                ->description('Cadastrados no sistema'),
+            // ...
+        ];
+    }
+}
+```
+
+Registro no cabeçalho da listagem (`ListUsers`):
+
+```php
+use App\Filament\Resources\Users\Widgets\UsersStats;
+use Filament\Resources\Pages\ListRecords;
+
+class ListUsers extends ListRecords
+{
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            UsersStats::class,
+        ];
+    }
+}
+```
+
+### `canDelete` computado em `EditUser`
+
+Arquivo: `app/Filament/Resources/Users/Pages/EditUser.php`
+
+- Objetivo: centralizar a regra "pode deletar?" e evitar repetição.
+- Otimização: a checagem é computada uma vez por render e reutilizada na definição das ações.
+
+```php
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
+
+class EditUser extends EditRecord
+{
+    #[Computed]
+    public function canDelete(): bool
+    {
+        return $this->record?->getKey() !== Auth::id();
+    }
+
+    protected function getHeaderActions(): array
+    {
+        $actions = [
+            $this->getBackButtonAction(),
+            ViewAction::make(),
+        ];
+
+        if ($this->canDelete) {
+            $actions[] = DeleteAction::make()
+                ->successNotification(Notification::make())
+                ->after(fn () => $this->notifySuccess('Usuário excluído com sucesso.'));
+        }
+
+        return $actions;
+    }
+}
+```
+
+## Boas práticas
+
+- Use `#[Computed]` para transformações derivadas do estado do componente (percentuais, flags booleanas).
+- Use `FilamentStatsCache` para agregações de banco compartilhadas entre widgets, badges e tabs.
+- Não confunda os dois: computed não substitui cache entre requisições.
+
+## Problemas comuns
+
+- **Queries repetidas entre renders**: `#[Computed]` não ajuda — use cache com observers.
+- **Acesso como método vs propriedade**: leia `$this->summary`, não `$this->summary()`.
+
+## Referências
+
+- Laravel News — Livewire Computed: `https://laravel-news.com/livewire-computed`
+- Documentação Livewire (v4) — Computed: `https://livewire.laravel.com/docs/computed-properties`
+- [Cache e Redis no Projeto](./cache-e-redis.md)
+- [Performance no Filament](./filament-performance.md)
+</script>
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>
