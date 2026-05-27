@@ -1,0 +1,7 @@
+/*
+ * O FilaTeams implementa HasCurrentTenantLabel retornando o mesmo valor de `name`,
+ * duplicando o nome no switcher. Mantemos apenas a linha do Filament (getTenantName).
+ */
+.fi-tenant-menu-trigger-current-tenant-label {
+    display: none;
+}
