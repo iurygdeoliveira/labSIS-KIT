@@ -1,9 +1,13 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\Filament\AdminPanelProvider;
+use App\Providers\Filament\AuthPanelProvider;
+use App\Providers\Filament\UserPanelProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\Filament\AuthPanelProvider::class,
-    App\Providers\Filament\AdminPanelProvider::class,
-    App\Providers\Filament\UserPanelProvider::class,
-    MongoDB\Laravel\MongoDBServiceProvider::class,
+    AppServiceProvider::class,
+    AuthPanelProvider::class,
+    AdminPanelProvider::class,
+    UserPanelProvider::class,
 ];

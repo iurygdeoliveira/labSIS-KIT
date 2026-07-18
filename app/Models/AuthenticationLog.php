@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Connection;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
-use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * @property string $authenticatable_type
@@ -19,7 +18,6 @@ use MongoDB\Laravel\Eloquent\Model;
  * @property bool $cleared_by_user
  * @property array|null $location
  */
-#[Connection('mongodb')]
 #[Fillable([
     'authenticatable_type',
     'authenticatable_id',
@@ -33,7 +31,9 @@ use MongoDB\Laravel\Eloquent\Model;
 ])]
 class AuthenticationLog extends Model
 {
-    protected $collection = 'authentication_logs';
+    protected $table = 'authentication_log';
+
+    public $timestamps = false;
 
     protected $casts = [
         'login_at' => 'datetime',

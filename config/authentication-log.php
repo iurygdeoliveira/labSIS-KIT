@@ -7,14 +7,9 @@ use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\OtherDeviceLogout;
-use Rappasoft\LaravelAuthenticationLog\Listeners\FailedLoginListener;
-use Rappasoft\LaravelAuthenticationLog\Listeners\LoginListener;
-use Rappasoft\LaravelAuthenticationLog\Listeners\LogoutListener;
-use Rappasoft\LaravelAuthenticationLog\Listeners\OtherDeviceLogoutListener;
-use Rappasoft\LaravelAuthenticationLog\Notifications\FailedLogin;
 
 return [
-    // O Model customizado que usa MongoDB
+    // O Model customizado
     'model' => AuthenticationLog::class,
 
     // The database table name
@@ -22,7 +17,7 @@ return [
     'table_name' => 'authentication_log',
 
     // The database connection where the authentication_log table resides. Leave empty to use the default
-    'db_connection' => 'mongodb',
+    'db_connection' => null,
 
     // The events the package listens for to log
     'events' => [

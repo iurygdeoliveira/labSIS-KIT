@@ -26,7 +26,6 @@ services:
             - redis
             - minio
             - mailpit
-            - mongodb
     pgsql:
         image: "postgres:18-alpine"
         ports:
@@ -96,25 +95,6 @@ services:
             - "${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025"
         networks:
             - sail
-    mongodb:
-        image: "mongo:latest"
-        ports:
-            - "${FORWARD_MONGODB_PORT:-27017}:27017"
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: "${MONGODB_USERNAME:-sail}"
-            MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_PASSWORD:-password}"
-        volumes:
-            - "sail-mongodb:/data/db"
-        networks:
-            - sail
-        healthcheck:
-            test:
-                - CMD
-                - mongosh
-                - --eval
-                - "db.adminCommand('ping')"
-            retries: 3
-            timeout: 5s
 networks:
     sail:
         driver: bridge
@@ -124,6 +104,4 @@ volumes:
     sail-redis:
         driver: local
     sail-minio:
-        driver: local
-    sail-mongodb:
         driver: local

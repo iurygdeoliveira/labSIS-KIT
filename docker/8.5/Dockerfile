@@ -35,7 +35,6 @@ RUN apt-get update && apt-get upgrade -y \
         php8.5-sqlite3 \
         php8.5-gd \
         php8.5-curl \
-        php8.5-mongodb \
         php8.5-imap \
         php8.5-mysql \
         php8.5-mbstring \

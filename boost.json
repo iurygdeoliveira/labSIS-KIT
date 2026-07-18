@@ -1,16 +1,19 @@
 {
     "agents": [
-        "cursor"
+        "antigravity"
     ],
-    "cloud": false,
+    "cloud": true,
     "guidelines": true,
     "mcp": true,
-    "nightwatch": false,
+    "nightwatch": true,
     "packages": [
         "filament/filament",
         "filament/blueprint",
         "spatie/boost-spatie-guidelines",
-        "fruitcake/laravel-debugbar"
+        "fruitcake/laravel-debugbar",
+        "laraveldaily/filacheck-pro",
+        "spatie/laravel-backup",
+        "laramint/laravel-brain"
     ],
     "sail": true,
     "skills": [
@@ -20,7 +23,11 @@
         "fluxui-development",
         "pest-testing",
         "tailwindcss-development",
+        "laravel-backup",
+        "filament-security-audit",
         "debug-using-debugbar",
-        "spatie-laravel-php-standards"
+        "laravel-brain",
+        "spatie-laravel-php-standards",
+        "deploying-laravel-cloud"
     ]
 }

@@ -31,7 +31,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use LaravelDaily\FilaTeams\Concerns\HasTeams;
 use LaravelDaily\FilaTeams\Contracts\HasTeamMembership;
-use MongoDB\Laravel\Eloquent\HybridRelations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -131,7 +130,6 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     use HasFactory;
     use HasRoles;
     use HasTeams;
-    use HybridRelations;
     use InteractsWithMedia;
     use Notifiable;
     use UuidTrait;
