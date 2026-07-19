@@ -40,6 +40,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable([
     'uuid',
+    'organization_id',
     'media_item_id',
     'provider',
     'provider_video_id',

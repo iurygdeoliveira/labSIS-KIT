@@ -3,12 +3,12 @@
 namespace App\Filament\Widgets;
 
 use App\Filament\Resources\Media\MediaResource;
-use App\Filament\Resources\Teams\TeamResource;
 use App\Filament\Resources\Users\UserResource;
 use App\Support\FilamentStatsCache;
 use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Guidance\FilamentTenantMembers\Filament\AdminPanel\Resources\OrganizationResource;
 use Livewire\Attributes\Computed;
 
 /**
@@ -60,15 +60,15 @@ class SystemStats extends BaseWidget
         $s = $this->summary;
 
         return [
-            Stat::make('Teams', number_format($s['teams']['total']))
+            Stat::make('Organizações', number_format($s['teams']['total']))
                 ->description(
-                    'Aprovados: '.number_format($s['teams']['approved']).' | '.
-                    'Ativos: '.number_format($s['teams']['active']).' | '.
-                    'Inativos: '.number_format($s['teams']['inactive']).' | '.
-                    'Não Aprovados: '.number_format($s['teams']['unapproved'])
+                    'Aprovadas: '.number_format($s['teams']['approved']).' | '.
+                    'Ativas: '.number_format($s['teams']['active']).' | '.
+                    'Inativas: '.number_format($s['teams']['inactive']).' | '.
+                    'Não Aprovadas: '.number_format($s['teams']['unapproved'])
                 )
                 ->icon(Heroicon::BuildingOffice)
-                ->url(TeamResource::getUrl()),
+                ->url(OrganizationResource::getUrl()),
 
             Stat::make('Usuários', number_format($s['users']['total']))
                 ->description(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Pages\Mail;
 
+use App\Traits\Filament\HasConfigurableNavigationSort;
 use Filament\Actions\Action;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\File;
 
 class Templates extends Page implements HasTable
 {
+    use HasConfigurableNavigationSort;
     use InteractsWithTable;
 
     protected static string|\BackedEnum|null $navigationIcon = Heroicon::Envelope;

@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
 
-            $table->foreignId('team_id')->nullable()->after('id')->constrained('teams')->nullOnDelete();
+            $table->foreignId('organization_id')->nullable()->after('id')->constrained('organizations')->nullOnDelete();
 
             $table->foreignId('media_item_id')
                 ->constrained('media_items')

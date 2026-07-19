@@ -5,7 +5,7 @@ namespace App\Filament\Resources\Users\Tables;
 use App\Enums\RoleType;
 use App\Events\UserApproved;
 use App\Filament\Resources\Users\Actions\DeleteUserAction;
-use App\Models\Team;
+use App\Models\Organization;
 use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
@@ -32,13 +32,13 @@ class UsersTable
         $currentTeam = Filament::getTenant();
 
         if (! $isAdmin) {
-            if ($currentTeam instanceof Team) {
-                $query->whereHas('teams', function ($q) use ($currentTeam): void {
-                    $q->where('teams.id', $currentTeam->getKey());
+            if ($currentTeam instanceof Organization) {
+                $query->whereHas('organizations', function ($q) use ($currentTeam): void {
+                    $q->where('organizations.id', $currentTeam->getKey());
                 })->withRolesForTeam($currentTeam);
             }
         } else {
-            $query->with(['teams', 'rolesWithTeams']);
+            $query->with(['organizations', 'rolesWithTeams']);
         }
 
         return $table
@@ -104,8 +104,8 @@ class UsersTable
         }
 
         return [
-            TextColumn::make('teams.name')
-                ->label('Teams')
+            TextColumn::make('organizations.name')
+                ->label('Organizações')
                 ->listWithLineBreaks(fn (?User $record): bool => $record instanceof User && $record->isApproved())
                 ->bulleted(fn (?User $record): bool => $record instanceof User && $record->isApproved()),
         ];
@@ -182,7 +182,7 @@ class UsersTable
 
     private static function getAdminViewRoles(User $record): array|string
     {
-        $teams = $record->teams;
+        $teams = $record->organizations;
 
         if ($teams->isEmpty()) {
             return '—';
@@ -191,7 +191,7 @@ class UsersTable
         $lines = [];
 
         foreach ($teams as $team) {
-            if (! $team instanceof Team) {
+            if (! $team instanceof Organization) {
                 continue;
             }
 

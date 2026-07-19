@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Support;
 
 use App\Enums\RoleType;
-use App\Models\Membership;
-use App\Models\Team;
+use App\Models\Organization;
+use App\Models\OrganizationUser;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Contracts\Cache\Repository;
@@ -37,10 +37,10 @@ final class FilamentStatsCache
     public static function teams(): array
     {
         return self::store()->remember(self::KEY_TEAMS, self::TTL_SECONDS, function (): array {
-            $totalTeams = Team::query()->count('*');
+            $totalTeams = Organization::query()->count('*');
 
-            $approvedTeams = Team::query()
-                ->whereHas('members', function (Builder $query): void {
+            $approvedTeams = Organization::query()
+                ->whereHas('users', function (Builder $query): void {
                     $query->whereHas('roles', function (Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
@@ -48,9 +48,9 @@ final class FilamentStatsCache
                 })
                 ->count('*');
 
-            $activeTeams = Team::query()
+            $activeTeams = Organization::query()
                 ->where('is_active', true)
-                ->whereHas('members', function (Builder $query): void {
+                ->whereHas('users', function (Builder $query): void {
                     $query->whereHas('roles', function (Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
@@ -58,9 +58,9 @@ final class FilamentStatsCache
                 })
                 ->count('*');
 
-            $inactiveTeams = Team::query()
+            $inactiveTeams = Organization::query()
                 ->where('is_active', false)
-                ->whereHas('members', function (Builder $query): void {
+                ->whereHas('users', function (Builder $query): void {
                     $query->whereHas('roles', function (Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
@@ -68,8 +68,8 @@ final class FilamentStatsCache
                 })
                 ->count('*');
 
-            $unapprovedTeams = Team::query()
-                ->whereDoesntHave('members', function (Builder $query): void {
+            $unapprovedTeams = Organization::query()
+                ->whereDoesntHave('users', function (Builder $query): void {
                     $query->whereHas('roles', function (Builder $roleQuery): void {
                         $roleQuery->where('name', RoleType::OWNER->value);
                     })
@@ -77,8 +77,8 @@ final class FilamentStatsCache
                 })
                 ->count('*');
 
-            $activeFlagCount = Team::query()->where('is_active', true)->count('*');
-            $totalMembers = Membership::query()->count('*');
+            $activeFlagCount = Organization::query()->where('is_active', true)->count('*');
+            $totalMembers = OrganizationUser::query()->count('*');
 
             return [
                 'total' => $totalTeams,

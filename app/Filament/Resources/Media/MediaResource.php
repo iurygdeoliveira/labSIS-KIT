@@ -11,6 +11,7 @@ use App\Filament\Resources\Media\Schemas\MediaForm;
 use App\Filament\Resources\Media\Schemas\MediaInfolist;
 use App\Filament\Resources\Media\Tables\MediaTable;
 use App\Models\MediaItem;
+use App\Traits\Filament\HasConfigurableNavigationSort;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -24,10 +25,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MediaResource extends Resource
 {
+    use HasConfigurableNavigationSort;
+
     protected static ?string $model = MediaItem::class;
 
-    /** @see MediaItem::team() */
-    protected static ?string $tenantOwnershipRelationshipName = 'team';
+    /** @see MediaItem::organization() */
+    protected static ?string $tenantOwnershipRelationshipName = 'organization';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Photo;
 
@@ -50,7 +53,7 @@ class MediaResource extends Resource
     {
         return parent::getEloquentQuery()->with([
             'video',
-            'team',
+            'organization',
             'media' => fn ($mediaQuery) => $mediaQuery->where('collection_name', 'media'),
         ]);
     }
@@ -73,7 +76,7 @@ class MediaResource extends Resource
         return MediaTable::configure($table)
             ->modifyQueryUsing(fn ($query) => $query->with([
                 'video',
-                'team',
+                'organization',
                 'media' => fn ($mediaQuery) => $mediaQuery->where('collection_name', 'media'),
             ]));
     }

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Pages\Auth;
 
-use App\Enums\AppTeamRole;
 use App\Events\UserRegistered;
-use App\Models\Membership;
-use App\Models\Team;
+use App\Models\Organization;
 use App\Models\User;
 use App\Traits\Filament\NotificationsTrait;
 use Exception;
@@ -17,6 +15,7 @@ use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class Register extends BaseRegister
 {
@@ -55,7 +54,7 @@ class Register extends BaseRegister
                     ->label('Nome do Tenant')
                     ->required()
                     ->maxLength(255)
-                    ->unique(Team::class, 'name'),
+                    ->unique(Organization::class, 'name'),
             ])
             ->columns(1);
     }
@@ -75,12 +74,12 @@ class Register extends BaseRegister
     {
         try {
             $userData = $this->prepareUserData($data);
-            $teamData = $this->prepareTeamData($data);
+            $organizationData = $this->prepareOrganizationData($data);
 
             $user = $this->createUser($userData);
-            $team = $this->createTeam($teamData);
+            $organization = $this->createOrganization($organizationData);
 
-            $this->associateUserWithTeam($user, $team);
+            $this->associateUserWithOrganization($user, $organization);
 
             // Disparar evento de usuário registrado
             event(new UserRegistered($user));
@@ -114,13 +113,13 @@ class Register extends BaseRegister
     }
 
     /**
-     * Prepara os dados do team para criação
+     * Prepara os dados da organização para criação
      */
-    protected function prepareTeamData(array $data): array
+    protected function prepareOrganizationData(array $data): array
     {
         return [
             'name' => $data['tenant_name'],
-            'is_personal' => false,
+            'slug' => Str::slug($data['tenant_name']),
             'is_active' => true,
         ];
     }
@@ -134,26 +133,22 @@ class Register extends BaseRegister
     }
 
     /**
-     * Cria o team no banco de dados
+     * Cria a organização no banco de dados
      */
-    protected function createTeam(array $teamData): Team
+    protected function createOrganization(array $organizationData): Organization
     {
-        return Team::create($teamData);
+        return Organization::create($organizationData);
     }
 
     /**
-     * Associa o usuário ao team via Membership.
-     * O App\Observers\MembershipObserver sincroniza a role Spatie automaticamente.
+     * Associa o usuário à organização via relacionamento belongsToMany.
+     * O App\Observers\OrganizationUserObserver sincroniza a role Spatie automaticamente.
      */
-    protected function associateUserWithTeam(User $user, Team $team): void
+    protected function associateUserWithOrganization(User $user, Organization $organization): void
     {
-        Membership::create([
-            'team_id' => $team->id,
-            'user_id' => $user->id,
-            'role' => AppTeamRole::OWNER->value,
+        $organization->users()->attach($user->id, [
+            'role' => 'owner',
         ]);
-
-        $user->forceFill(['current_team_id' => $team->id])->save();
     }
 
     /**
@@ -177,7 +172,7 @@ class Register extends BaseRegister
                 'Email já cadastrado',
                 'O email informado já está sendo usado por outro usuário. Por favor, use um email diferente.'
             );
-        } elseif ($e->getCode() === '23505' && str_contains($e->getMessage(), 'teams_name')) {
+        } elseif ($e->getCode() === '23505' && str_contains($e->getMessage(), 'organizations_name')) {
             $this->notifyDanger(
                 'Nome do tenant já existe',
                 'O nome da organização informado já está sendo usado. Por favor, escolha um nome diferente.'

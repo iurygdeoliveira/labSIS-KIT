@@ -50,9 +50,9 @@ class MediaTable
                 TextColumn::make('created_at_display')
                     ->label('Criado em')
                     ->state(fn ($record): string => self::resolveCreatedAt($record)),
-                TextColumn::make('team.name')
-                    ->label('Team')
-                    ->state(fn ($record): string => self::resolveTeamName($record))
+                TextColumn::make('organization.name')
+                    ->label('Organização')
+                    ->state(fn ($record): string => self::resolveOrganizationName($record))
                     ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
@@ -101,14 +101,14 @@ class MediaTable
         return $media?->created_at?->format('d/m/Y H:i') ?? '—';
     }
 
-    private static function resolveTeamName($record): string
+    private static function resolveOrganizationName($record): string
     {
-        if (! ($record->team_id ?? null)) {
+        if (! ($record->organization_id ?? null)) {
             return Filament::hasTenancy() ? '—' : 'Global';
         }
 
-        $team = $record->team;
+        $organization = $record->organization;
 
-        return $team !== null ? $team->name : '—';
+        return $organization !== null ? $organization->name : '—';
     }
 }

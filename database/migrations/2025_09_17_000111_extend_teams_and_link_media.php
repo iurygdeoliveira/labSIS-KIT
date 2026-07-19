@@ -10,18 +10,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Estender a tabela `teams` (criada pelo pacote laraveldaily/filateams)
+        // Estender a tabela `organizations` (criada pelo pacote filament-tenant-members)
         // com `is_active` (controle administrativo do labSIS-KIT).
-        Schema::table('teams', function (Blueprint $table): void {
-            $table->boolean('is_active')->default(true)->after('is_personal');
+        Schema::table('organizations', function (Blueprint $table): void {
+            $table->boolean('is_active')->default(true)->after('slug');
         });
 
-        // Relação de domínio: media_items pertence a um team
+        // Relação de domínio: media_items pertence a uma organização
         Schema::table('media_items', function (Blueprint $table): void {
-            $table->foreignId('team_id')
+            $table->foreignId('organization_id')
                 ->nullable()
                 ->after('id')
-                ->constrained('teams')
+                ->constrained('organizations')
                 ->nullOnDelete();
         });
     }
@@ -29,10 +29,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('media_items', function (Blueprint $table): void {
-            $table->dropConstrainedForeignId('team_id');
+            $table->dropConstrainedForeignId('organization_id');
         });
 
-        Schema::table('teams', function (Blueprint $table): void {
+        Schema::table('organizations', function (Blueprint $table): void {
             $table->dropColumn('is_active');
         });
     }

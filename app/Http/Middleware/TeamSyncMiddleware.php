@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Models\Team;
+use App\Models\Organization;
 use App\Models\User;
 use App\Tenancy\SpatieTeamResolver;
 use Closure;
@@ -40,9 +40,9 @@ class TeamSyncMiddleware
         $routeTeamSlug = (string) ($request->route('tenant') ?? '');
 
         if ($routeTeamSlug !== '') {
-            $routeTeam = Team::query()->where('slug', $routeTeamSlug)->first();
+            $routeTeam = Organization::query()->where('slug', $routeTeamSlug)->first();
 
-            if ($routeTeam instanceof Team && $user->canAccessTenant($routeTeam)) {
+            if ($routeTeam instanceof Organization && $user->canAccessTenant($routeTeam)) {
                 $this->applyTeam($user, $routeTeam->getKey());
 
                 return $next($request);
@@ -52,8 +52,8 @@ class TeamSyncMiddleware
         $currentTeam = Filament::getTenant();
 
         if ($currentTeam === null) {
-            /** @var Team|null $fallback */
-            $fallback = $user->teams()
+            /** @var Organization|null $fallback */
+            $fallback = $user->organizations()
                 ->where('is_active', true)
                 ->orderBy('name', 'asc')
                 ->first();
@@ -65,7 +65,7 @@ class TeamSyncMiddleware
             }
         }
 
-        $teamId = $currentTeam instanceof Team ? $currentTeam->getKey() : 0;
+        $teamId = $currentTeam instanceof Organization ? $currentTeam->getKey() : 0;
         $this->applyTeam($user, $teamId);
 
         return $next($request);

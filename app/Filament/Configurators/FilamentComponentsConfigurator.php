@@ -50,6 +50,7 @@ class FilamentComponentsConfigurator
                 ->extremePaginationLinks()
                 ->defaultPaginationPageOption(20)
                 ->paginated([20, 40, 60, 80, 'all'])
+                ->stackedOnMobile()
                 ->emptyStateIcon(Heroicon::ExclamationTriangle);
         });
     }

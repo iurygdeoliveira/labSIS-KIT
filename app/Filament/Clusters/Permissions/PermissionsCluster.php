@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace App\Filament\Clusters\Permissions;
 
 use App\Enums\RoleType;
-use App\Models\Team;
+use App\Models\Organization;
 use App\Models\User;
+use App\Traits\Filament\HasConfigurableNavigationSort;
 use Filament\Clusters\Cluster;
 use Filament\Facades\Filament;
 use Filament\Support\Icons\Heroicon;
 
 class PermissionsCluster extends Cluster
 {
+    use HasConfigurableNavigationSort;
+
     protected static ?string $title = '';
 
     protected static string|\UnitEnum|null $navigationGroup = 'Administração';
@@ -38,6 +41,6 @@ class PermissionsCluster extends Cluster
 
         $currentTeam = Filament::getTenant();
 
-        return $currentTeam instanceof Team && $user->isOwnerOfTeam($currentTeam);
+        return $currentTeam instanceof Organization && $user->isOwnerOfTeam($currentTeam);
     }
 }

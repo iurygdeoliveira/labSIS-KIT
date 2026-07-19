@@ -6,7 +6,7 @@ namespace App\Http\Responses;
 
 use App\Enums\RoleType;
 use App\Filament\Pages\Auth\VerificationPending;
-use App\Models\Team;
+use App\Models\Organization;
 use App\Models\User;
 use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as FilamentRegistrationResponse;
 use Filament\Facades\Filament;
@@ -31,8 +31,8 @@ class RegistrationResponse implements FilamentRegistrationResponse
         }
 
         if ($user->canAccessPanel(Filament::getPanel('user'))) {
-            /** @var Team|null $firstTeam */
-            $firstTeam = $user->teams()->first();
+            /** @var Organization|null $firstTeam */
+            $firstTeam = $user->organizations()->first();
             if ($firstTeam) {
                 return redirect()->to('/user/'.$firstTeam->slug.'/dashboard');
             }

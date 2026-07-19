@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
  * @property bool $video
  * @property string|null $mime_type
  * @property int|null $size
- * @property int|null $team_id
+ * @property int|null $organization_id
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property-read string $file_type
@@ -57,7 +57,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
     'video',
     'mime_type',
     'size',
-    'team_id',
+    'organization_id',
 ])]
 #[Table(name: 'media_items')]
 #[WithoutTimestamps]
@@ -165,10 +165,10 @@ class MediaItem extends Model implements HasMedia
     }
 
     /**
-     * @return BelongsTo<Team, $this>
+     * @return BelongsTo<Organization, $this>
      */
-    public function team(): BelongsTo
+    public function organization(): BelongsTo
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsTo(Organization::class);
     }
 }

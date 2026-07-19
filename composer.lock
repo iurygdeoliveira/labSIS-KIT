@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9bd33685880e4f2af8581414e5c3047c",
+    "content-hash": "e857c763291b8a273e1bb87077376eef",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2006,6 +2006,56 @@
             "time": "2025-12-27T19:43:20+00:00"
         },
         {
+            "name": "guidance-studio/filament-tenant-members",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../filament-tenant-members",
+                "reference": "7c85af1070f9c98e5556e758b308f83daf5ceb8a"
+            },
+            "require": {
+                "filament/filament": "^5.0",
+                "illuminate/support": "^13.0",
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^11.1",
+                "pestphp/pest": "^4.7",
+                "pestphp/pest-plugin-laravel": "^4.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Guidance\\FilamentTenantMembers\\FilamentTenantMembersServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Guidance\\FilamentTenantMembers\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "pest"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Multi-tenant organization, member and invitation management for Laravel Filament",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "guzzlehttp/guzzle",
             "version": "7.15.1",
             "source": {
@@ -3205,68 +3255,6 @@
                 "source": "https://github.com/laravel/serializable-closure"
             },
             "time": "2026-04-16T14:03:50+00:00"
-        },
-        {
-            "name": "laraveldaily/filateams",
-            "version": "v0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/LaravelDaily/FilaTeams.git",
-                "reference": "143bcac1e4735aea751439afda8cd9cfca0d01e0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/LaravelDaily/FilaTeams/zipball/143bcac1e4735aea751439afda8cd9cfca0d01e0",
-                "reference": "143bcac1e4735aea751439afda8cd9cfca0d01e0",
-                "shasum": ""
-            },
-            "require": {
-                "filament/filament": "^5.0",
-                "illuminate/contracts": "^11.28|^12.0|^13.0",
-                "php": "^8.2"
-            },
-            "require-dev": {
-                "laravel/pint": "^1.29",
-                "orchestra/testbench": "^9.0|^10.0|^11.0",
-                "pestphp/pest": "^4.4",
-                "rector/rector": "^2.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "LaravelDaily\\FilaTeams\\FilaTeamsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "LaravelDaily\\FilaTeams\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Laravel Daily",
-                    "homepage": "https://laraveldaily.com"
-                }
-            ],
-            "description": "Team management plugin for Filament, compatible with Laravel starter kit teams.",
-            "homepage": "https://github.com/laraveldaily/filateams",
-            "keywords": [
-                "Teams",
-                "filament",
-                "laravel",
-                "multi-tenancy"
-            ],
-            "support": {
-                "issues": "https://github.com/LaravelDaily/FilaTeams/issues",
-                "source": "https://github.com/LaravelDaily/FilaTeams/tree/v0.2"
-            },
-            "time": "2026-04-03T12:51:26+00:00"
         },
         {
             "name": "league/commonmark",
@@ -16799,7 +16787,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,

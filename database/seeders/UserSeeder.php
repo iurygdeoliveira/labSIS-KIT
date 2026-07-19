@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Enums\AppTeamRole;
 use App\Enums\Permission as PermissionEnum;
 use App\Enums\RoleType;
-use App\Models\Membership;
+use App\Models\Organization;
 use App\Models\Role;
-use App\Models\Team;
 use App\Models\User;
 use App\Tenancy\SpatieTeamResolver;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission as PermissionModel;
@@ -78,20 +77,18 @@ class UserSeeder extends Seeder
             ],
         );
 
-        $teamA = Team::firstOrCreate(
+        $teamA = Organization::firstOrCreate(
             ['name' => 'Team A'],
             [
                 'slug' => Str::slug('Team A-'.Str::random(4)),
-                'is_personal' => false,
                 'is_active' => true,
             ],
         );
 
-        $teamB = Team::firstOrCreate(
+        $teamB = Organization::firstOrCreate(
             ['name' => 'Team B'],
             [
                 'slug' => Str::slug('Team B-'.Str::random(4)),
-                'is_personal' => false,
                 'is_active' => true,
             ],
         );
@@ -99,21 +96,36 @@ class UserSeeder extends Seeder
         $this->ensurePermissionsForTeam($teamA->id, $guard);
         $this->ensurePermissionsForTeam($teamB->id, $guard);
 
-        $this->ensureMembership($sicrano->id, $teamA->id, AppTeamRole::OWNER);
-        $this->ensureMembership($beltrano->id, $teamA->id, AppTeamRole::MEMBER);
+        $this->ensureMembership($sicrano->id, $teamA->id, 'owner');
+        $this->ensureMembership($beltrano->id, $teamA->id, 'user');
 
-        $this->ensureMembership($beltrano->id, $teamB->id, AppTeamRole::OWNER);
-        $this->ensureMembership($sicrano->id, $teamB->id, AppTeamRole::MEMBER);
+        $this->ensureMembership($beltrano->id, $teamB->id, 'owner');
+        $this->ensureMembership($sicrano->id, $teamB->id, 'user');
 
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
     }
 
-    private function ensureMembership(int $userId, int $teamId, AppTeamRole $role): void
+    private function ensureMembership(int $userId, int $teamId, string $role): void
     {
-        Membership::firstOrCreate(
-            ['team_id' => $teamId, 'user_id' => $userId],
-            ['role' => $role->value],
-        );
+        DB::table('organization_user')->insertOrIgnore([
+            'organization_id' => $teamId,
+            'user_id' => $userId,
+            'role' => $role,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Também precisamos acionar manualmente as funções do Spatie no banco de dados
+        // uma vez que o insertOrIgnore pula o ciclo de eventos do Eloquent e observers.
+        $user = User::find($userId);
+        $organization = Organization::find($teamId);
+        if ($user && $organization) {
+            $spatieRole = match ($role) {
+                'owner', 'admin' => RoleType::ensureOwnerRoleForTeam($organization->id, $guard = config('auth.defaults.guard', 'web')),
+                default => RoleType::ensureUserRoleForTeam($organization->id, $guard = config('auth.defaults.guard', 'web')),
+            };
+            $user->assignRoleInTeam($spatieRole, $organization);
+        }
     }
 
     /**

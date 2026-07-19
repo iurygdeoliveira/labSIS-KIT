@@ -9,11 +9,11 @@ use App\Filament\Resources\Media\MediaResource;
 use App\Filament\Resources\Users\UserResource;
 use App\Filament\Widgets\CustomStats;
 use App\Http\Middleware\TeamSyncMiddleware;
-use App\Models\Team;
+use App\Models\Organization;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
-use LaravelDaily\FilaTeams\Pages\CreateTeamPage;
-use LaravelDaily\FilaTeams\Pages\EditTeam;
+use Guidance\FilamentTenantMembers\Filament\OrganizationPanel\Pages\Tenancy\RegisterOrganization;
+use Guidance\FilamentTenantMembers\FilamentTenantMembersPlugin;
 
 class UserPanelProvider extends BasePanelProvider
 {
@@ -25,9 +25,9 @@ class UserPanelProvider extends BasePanelProvider
 
         // Particularidades do painel user
         $panel = $panel
-            ->tenant(Team::class, slugAttribute: 'slug', ownershipRelationship: 'teams')
-            ->tenantRegistration(CreateTeamPage::class)
-            ->tenantProfile(EditTeam::class)
+            ->tenant(Organization::class, slugAttribute: 'slug')
+            ->tenantRegistration(RegisterOrganization::class)
+            ->plugin(FilamentTenantMembersPlugin::make())
             ->tenantMenu(true)
             ->resources([
                 UserResource::class,

@@ -19,6 +19,7 @@ services:
             IGNITION_LOCAL_SITES_PATH: "${PWD}"
         volumes:
             - ".:/var/www/html"
+            - "../filament-tenant-members:/var/www/filament-tenant-members"
         networks:
             - sail
         depends_on:

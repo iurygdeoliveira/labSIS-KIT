@@ -9,6 +9,7 @@ use App\Filament\Resources\Authentication\Tables\AuthenticationLogTable;
 use App\Models\AuthenticationLog;
 use App\Models\Team;
 use App\Models\User;
+use App\Traits\Filament\HasConfigurableNavigationSort;
 use BackedEnum;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
@@ -19,6 +20,8 @@ use Override;
 
 class AuthenticationLogResource extends Resource
 {
+    use HasConfigurableNavigationSort;
+
     protected static ?string $model = AuthenticationLog::class;
 
     /**
@@ -75,7 +78,7 @@ class AuthenticationLogResource extends Resource
         if ($team && $user->isOwnerOfTeam($team)) {
             // Busca IDs de usuários pertencentes a este team
             // Nota: Esta é uma query híbrida (SQL -> Mongo). Buscamos os IDs SQL primeiro.
-            $teamUserIds = User::whereHas('teams', function (\Illuminate\Contracts\Database\Query\Builder $q) use ($team): void {
+            $teamUserIds = User::whereHas('teams', function (Builder $q) use ($team): void {
                 $q->whereKey($team->getKey());
             })->pluck('id')->toArray();
 

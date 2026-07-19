@@ -8,8 +8,8 @@ use App\Enums\Permission;
 use App\Enums\Permission as PermissionEnum;
 use App\Enums\RoleType;
 use App\Filament\Clusters\Permissions\PermissionsCluster;
+use App\Models\Organization;
 use App\Models\Role;
-use App\Models\Team;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -110,10 +110,10 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
             $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
         }
 
-        /** @var Team|null $currentTeam */
+        /** @var Organization|null $currentTeam */
         $currentTeam = Filament::getTenant();
 
-        $query = Team::query()
+        $query = Organization::query()
             ->where('is_active', true)
             ->select(['id', 'name']);
 
@@ -137,10 +137,10 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
                 ->onIcon(Heroicon::Check)
                 ->offIcon(Heroicon::XMark)
                 ->getStateUsing(
-                    fn (Team $record): bool => $this->rowAllEnabled($record->id, $slug)
+                    fn (Organization $record): bool => $this->rowAllEnabled($record->id, $slug)
                 )
                 ->updateStateUsing(
-                    fn (bool $state, Team $record) => tap($state, fn () => $this->setAllPermissionsForTeam($record->id, $slug, $state))
+                    fn (bool $state, Organization $record) => tap($state, fn () => $this->setAllPermissionsForTeam($record->id, $slug, $state))
                 );
         }
 
@@ -152,10 +152,10 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
                 ->onIcon(Heroicon::Check)
                 ->offIcon(Heroicon::XMark)
                 ->getStateUsing(
-                    fn (Team $record): bool => $this->hasPermission($record->id, $slug, $action)
+                    fn (Organization $record): bool => $this->hasPermission($record->id, $slug, $action)
                 )
                 ->updateStateUsing(
-                    fn (bool $state, Team $record) => $this->setPermission($record->id, $slug, $action, $state)
+                    fn (bool $state, Organization $record) => $this->setPermission($record->id, $slug, $action, $state)
                 );
         }
 
@@ -215,16 +215,16 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
             return true;
         }
 
-        $team = Team::find($teamId);
+        $team = Organization::find($teamId);
 
-        return $team instanceof Team && $user->isOwnerOfTeam($team);
+        return $team instanceof Organization && $user->isOwnerOfTeam($team);
     }
 
     protected function toggleAll(bool $state): void
     {
         $slug = static::$resourceSlug;
 
-        Team::query()
+        Organization::query()
             ->where('is_active', true)
             ->pluck('id')
             ->each(function ($teamId) use ($slug, $state): void {

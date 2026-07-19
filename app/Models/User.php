@@ -13,7 +13,9 @@ use Carbon\CarbonImmutable;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
+use Guidance\FilamentTenantMembers\Concerns\HasOrganizations;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -22,6 +24,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,8 +32,6 @@ use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
-use LaravelDaily\FilaTeams\Concerns\HasTeams;
-use LaravelDaily\FilaTeams\Contracts\HasTeamMembership;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -123,18 +124,29 @@ use Spatie\Permission\Traits\HasRoles;
     'app_authentication_recovery_codes',
     'remember_token',
 ])]
-class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasMedia, HasTeamMembership, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasMedia, HasTenants, MustVerifyEmail
 {
     use AppAuthenticationRecoveryCodes;
     use AppAuthenticationSecret;
     use HasFactory;
+    use HasOrganizations;
     use HasRoles;
-    use HasTeams;
     use InteractsWithMedia;
     use Notifiable;
     use UuidTrait;
 
     private ?Collection $cachedTenants = null;
+
+    /**
+     * @return BelongsToMany<Organization, $this>
+     */
+    public function organizations(): BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class)
+            ->using(OrganizationUser::class)
+            ->withPivot('role')
+            ->withTimestamps();
+    }
 
     // ==========================================
     // Setup & Configuration
@@ -206,10 +218,10 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     // ==========================================
 
     #[Scope]
-    protected function withRolesForTeam($query, Team $team): void
+    protected function withRolesForTeam($query, Organization $organization): void
     {
         $query->with([
-            'rolesWithTeams' => fn ($q) => $q->where('model_has_roles.team_id', $team->id),
+            'rolesWithTeams' => fn ($q) => $q->where('model_has_roles.team_id', $organization->id),
         ]);
     }
 
@@ -244,7 +256,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
                 return true;
             }
 
-            return $this->teams()->exists();
+            return $this->organizations()->exists();
         }
 
         return false;
@@ -252,7 +264,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function canAccessTenant(Model $tenant): bool
     {
-        if (! $tenant instanceof Team) {
+        if (! $tenant instanceof Organization) {
             return false;
         }
 
@@ -260,7 +272,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             return false;
         }
 
-        return $this->teams()->whereKey($tenant->getKey())->exists();
+        return $this->organizations()->whereKey($tenant->getKey())->exists();
     }
 
     public function getTenants(Panel $panel): array|Collection
@@ -269,7 +281,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             return $this->cachedTenants;
         }
 
-        return $this->cachedTenants = $this->teams()->where('is_active', true)->get();
+        return $this->cachedTenants = $this->organizations()->where('is_active', true)->get();
     }
 
     public function getFilamentAvatarUrl(): ?string
@@ -311,23 +323,23 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     // Team & Role Logic (Business Logic)
     // ==========================================
 
-    public function isOwnerOfTeam(Team $team): bool
+    public function isOwnerOfTeam(Organization $organization): bool
     {
-        return $this->getRoleQueryBuilder($team)
+        return $this->getRoleQueryBuilder($organization)
             ->where('roles.name', RoleType::OWNER->value)
             ->exists();
     }
 
-    public function isUserOfTeam(Team $team): bool
+    public function isUserOfTeam(Organization $organization): bool
     {
-        return $this->getRoleQueryBuilder($team)
+        return $this->getRoleQueryBuilder($organization)
             ->where('roles.name', RoleType::USER->value)
             ->exists();
     }
 
-    public function hasAnyRoleInTeam(Team $team): bool
+    public function hasAnyRoleInTeam(Organization $organization): bool
     {
-        return $this->getRoleQueryBuilder($team)->exists();
+        return $this->getRoleQueryBuilder($organization)->exists();
     }
 
     public function hasOwnerRoleInAnyTeam(): bool
@@ -337,25 +349,25 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             ->exists();
     }
 
-    public function getRolesForTeam(Team $team): Collection
+    public function getRolesForTeam(Organization $organization): Collection
     {
-        return $this->getRoleQueryBuilder($team)
+        return $this->getRoleQueryBuilder($organization)
             ->select('roles.*')
             ->get();
     }
 
-    public function assignRoleInTeam(Role $role, Team $team): void
+    public function assignRoleInTeam(Role $role, Organization $organization): void
     {
         $this->rolesWithTeams()->syncWithoutDetaching([
-            $role->getKey() => ['team_id' => $team->id],
+            $role->getKey() => ['team_id' => $organization->id],
         ]);
     }
 
-    public function removeRoleFromTeam(string $roleName, Team $team): void
+    public function removeRoleFromTeam(string $roleName, Organization $organization): void
     {
         $role = Role::query()
             ->where('name', $roleName)
-            ->where('team_id', $team->id)
+            ->where('team_id', $organization->id)
             ->first();
 
         if (! $role) {
@@ -363,15 +375,15 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         $this->rolesWithTeams()
-            ->wherePivot('team_id', $team->id)
+            ->wherePivot('team_id', $organization->id)
             ->detach($role->getKey());
     }
 
-    public function removeAllUserRolesFromTeam(Team $team): void
+    public function removeAllUserRolesFromTeam(Organization $organization): void
     {
         $roleIds = Role::query()
             ->where('name', RoleType::USER->value)
-            ->where('team_id', $team->id)
+            ->where('team_id', $organization->id)
             ->pluck('id');
 
         if ($roleIds->isEmpty()) {
@@ -379,15 +391,15 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         $this->rolesWithTeams()
-            ->wherePivot('team_id', $team->id)
+            ->wherePivot('team_id', $organization->id)
             ->detach($roleIds->toArray());
     }
 
-    public function removeAllOwnerRolesFromTeam(Team $team): void
+    public function removeAllOwnerRolesFromTeam(Organization $organization): void
     {
         $roleIds = Role::query()
             ->where('name', RoleType::OWNER->value)
-            ->where('team_id', $team->id)
+            ->where('team_id', $organization->id)
             ->pluck('id');
 
         if ($roleIds->isEmpty()) {
@@ -395,16 +407,16 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         $this->rolesWithTeams()
-            ->wherePivot('team_id', $team->id)
+            ->wherePivot('team_id', $organization->id)
             ->detach($roleIds->toArray());
     }
 
-    private function getRoleQueryBuilder(Team $team): Builder
+    private function getRoleQueryBuilder(Organization $organization): Builder
     {
         return Role::query()
             ->join('model_has_roles as mhr', 'mhr.role_id', '=', 'roles.id')
             ->where('mhr.model_type', self::class)
             ->where('mhr.model_id', $this->id)
-            ->where('mhr.team_id', $team->id);
+            ->where('mhr.team_id', $organization->id);
     }
 }

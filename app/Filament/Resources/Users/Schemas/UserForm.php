@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\RoleType;
-use App\Models\Team;
+use App\Models\Organization;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
@@ -21,8 +21,8 @@ class UserForm
     {
         return $schema
             ->components([
-                Section::make('Team')
-                    ->description('Selecione o team ao qual o usuário pertence')
+                Section::make('Organização')
+                    ->description('Selecione a organização à qual o usuário pertence')
                     ->columnSpanFull()
                     ->visible(fn (string $operation): bool => self::shouldShowTenantField($operation))
                     ->components(self::getTenantFields()),
@@ -43,8 +43,8 @@ class UserForm
     {
         return [
             Select::make('tenant_id')
-                ->label('Team')
-                ->options(fn (): array => Team::query()
+                ->label('Organização')
+                ->options(fn (): array => Organization::query()
                     ->where('is_active', true)
                     ->orderBy('name', 'asc')
                     ->pluck('name', 'id')

@@ -11,21 +11,22 @@ use App\Filament\Resources\Users\Schemas\UserForm;
 use App\Filament\Resources\Users\Schemas\UserInfolist;
 use App\Filament\Resources\Users\Tables\UsersTable;
 use App\Models\User;
+use App\Traits\Filament\HasConfigurableNavigationSort;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use LaravelDaily\FilaTeams\Concerns\HasTeams;
 use Override;
 
 class UserResource extends Resource
 {
+    use HasConfigurableNavigationSort;
+
     protected static ?string $model = User::class;
 
-    /** @see HasTeams::teams() */
-    protected static ?string $tenantOwnershipRelationshipName = 'teams';
+    protected static ?string $tenantOwnershipRelationshipName = 'organizations';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::UserGroup;
 
@@ -48,7 +49,7 @@ class UserResource extends Resource
     #[Override]
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->with(['teams', 'rolesWithTeams']);
+        return parent::getEloquentQuery()->with(['organizations', 'rolesWithTeams']);
     }
 
     #[Override]

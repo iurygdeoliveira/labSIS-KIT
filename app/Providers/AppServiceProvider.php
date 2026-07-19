@@ -14,13 +14,13 @@ use App\Listeners\NotifyAdminNewUser;
 use App\Listeners\SendUserApprovedEmail;
 use App\Models\AuthenticationLog;
 use App\Models\MediaItem;
-use App\Models\Membership;
-use App\Models\Team;
+use App\Models\Organization;
+use App\Models\OrganizationUser;
 use App\Models\User as AppUser;
 use App\Models\Video;
 use App\Observers\MediaItemObserver;
-use App\Observers\MembershipObserver;
-use App\Observers\TeamObserver;
+use App\Observers\OrganizationObserver;
+use App\Observers\OrganizationUserObserver;
 use App\Observers\UserObserver;
 use App\Observers\VideoObserver;
 use App\Policies\AuthenticationLogPolicy;
@@ -121,13 +121,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Video::observe(VideoObserver::class);
         AppUser::observe(UserObserver::class);
-        Team::observe(TeamObserver::class);
+        Organization::observe(OrganizationObserver::class);
         MediaItem::observe(MediaItemObserver::class);
-
-        // O pacote laraveldaily/filateams (controller AcceptInvitation, Action
-        // CreateTeam, Livewire MembersTable) usa o model BASE diretamente.
-        // Registramos o observer em ambos para garantir sincronização com Spatie.
-        Membership::observe(MembershipObserver::class);
-        \LaravelDaily\FilaTeams\Models\Membership::observe(MembershipObserver::class);
+        OrganizationUser::observe(OrganizationUserObserver::class);
     }
 }

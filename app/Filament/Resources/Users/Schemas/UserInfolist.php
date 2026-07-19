@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\RoleType;
-use App\Models\Team;
+use App\Models\Organization;
 use App\Models\User;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -86,7 +86,7 @@ class UserInfolist
             ->schema([
                 RepeatableEntry::make('teams_roles')
                     ->hiddenLabel()
-                    ->visible(fn (?User $record): bool => $record instanceof User && $record->teams->isNotEmpty())
+                    ->visible(fn (?User $record): bool => $record instanceof User && $record->organizations->isNotEmpty())
                     ->state(fn (?User $record): array => self::getTeamsRolesState($record))
                     ->schema([
                         TextEntry::make('team')
@@ -99,7 +99,7 @@ class UserInfolist
                 TextEntry::make('no_teams')
                     ->hiddenLabel()
                     ->state('Usuário não associado a nenhum team')
-                    ->visible(fn (?User $record): bool => $record instanceof User && $record->teams->isEmpty()),
+                    ->visible(fn (?User $record): bool => $record instanceof User && $record->organizations->isEmpty()),
             ]);
     }
 
@@ -111,8 +111,8 @@ class UserInfolist
 
         $items = [];
 
-        foreach ($record->teams as $team) {
-            if (! $team instanceof Team) {
+        foreach ($record->organizations as $team) {
+            if (! $team instanceof Organization) {
                 continue;
             }
 

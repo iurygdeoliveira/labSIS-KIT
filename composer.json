@@ -19,7 +19,7 @@
         "laravel/nightwatch": "^1.7",
         "laravel/pulse": "^1.4",
         "laravel/sanctum": "^4.0",
-        "laraveldaily/filateams": "^0.2",
+        "guidance-studio/filament-tenant-members": "*",
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/flux": "^2.2",
         "nesbot/carbon": "^3.10",
@@ -125,9 +125,15 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [{
+        "type": "path",
+        "url": "../filament-tenant-members",
+        "options": {
+            "symlink": true
+        }
+    },{
         "name": "filacheck",
         "type": "composer",
         "url": "https://satis.filamentexamples.com"

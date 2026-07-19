@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Responses;
 
-use App\Models\Team;
+use App\Models\Organization;
 use App\Models\User;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
 use Filament\Facades\Filament;
@@ -23,8 +23,8 @@ class LoginResponse implements FilamentLoginResponse
         }
 
         if ($user->canAccessPanel(Filament::getPanel('user'))) {
-            /** @var Team|null $firstTeam */
-            $firstTeam = $user->teams()->first();
+            /** @var Organization|null $firstTeam */
+            $firstTeam = $user->organizations()->first();
             if ($firstTeam) {
                 return redirect()->to('/user/'.$firstTeam->slug);
             }
