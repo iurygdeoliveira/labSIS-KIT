@@ -6,6 +6,7 @@ namespace App\Filament\Configurators;
 
 use App\Filament\Clusters\Permissions\PermissionsCluster;
 use App\Filament\Pages\Mail\Templates;
+use App\Filament\Pages\Organization\GeneralSettings;
 use App\Filament\Resources\Authentication\AuthenticationLogResource;
 use App\Filament\Resources\Media\MediaResource;
 use App\Filament\Resources\Organization\OrganizationResource;
@@ -18,8 +19,9 @@ class NavigationSortConfig
     {
         $order = [
             // Admin Panel / User Panel sorting config
-            UserResource::class => 2,
+            GeneralSettings::class => 1,
             MediaResource::class => 1,
+            UserResource::class => 2,
             AuthenticationLogResource::class => 3,
             SecurityEventResource::class => 4,
             OrganizationResource::class => 5,

@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Events\OrganizationInviteCreated;
 use App\Events\UserApproved;
 use App\Events\UserRegistered;
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\LogoutResponse;
 use App\Http\Responses\RegistrationResponse;
+use App\Listeners\AcceptPendingInvite;
 use App\Listeners\LogAuthenticationActivity;
 use App\Listeners\NotifyAdminNewUser;
+use App\Listeners\SendOrganizationInviteMail;
 use App\Listeners\SendUserApprovedEmail;
 use App\Models\AuthenticationLog;
 use App\Models\MediaItem;
@@ -115,6 +118,10 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(Login::class, LogAuthenticationActivity::class);
         Event::listen(Logout::class, LogAuthenticationActivity::class);
         Event::listen(Failed::class, LogAuthenticationActivity::class);
+
+        // Tenant Members (Fork local)
+        Event::listen(OrganizationInviteCreated::class, SendOrganizationInviteMail::class);
+        Event::listen(Login::class, AcceptPendingInvite::class);
     }
 
     private function configObservers(): void

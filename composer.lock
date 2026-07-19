@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e857c763291b8a273e1bb87077376eef",
+    "content-hash": "5e703918ef8dae9728c0f24eb4a0ceb2",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2004,56 +2004,6 @@
                 }
             ],
             "time": "2025-12-27T19:43:20+00:00"
-        },
-        {
-            "name": "guidance-studio/filament-tenant-members",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "../filament-tenant-members",
-                "reference": "7c85af1070f9c98e5556e758b308f83daf5ceb8a"
-            },
-            "require": {
-                "filament/filament": "^5.0",
-                "illuminate/support": "^13.0",
-                "php": "^8.3"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^11.1",
-                "pestphp/pest": "^4.7",
-                "pestphp/pest-plugin-laravel": "^4.1"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Guidance\\FilamentTenantMembers\\FilamentTenantMembersServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Guidance\\FilamentTenantMembers\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "pest"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Multi-tenant organization, member and invitation management for Laravel Filament",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
         },
         {
             "name": "guzzlehttp/guzzle",

@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Guidance\FilamentTenantMembers\Concerns\IsOrganization;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Organization extends Model
 {
-    use IsOrganization;
-
     protected $fillable = [
         'name',
         'slug',
     ];
+
+    public function invites(): HasMany
+    {
+        return $this->hasMany(OrganizationInvite::class);
+    }
 
     /**
      * @return BelongsToMany<User, $this>

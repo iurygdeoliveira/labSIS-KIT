@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AcceptInviteController;
 use App\Http\Controllers\WebsiteLandingController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,3 +10,10 @@ Route::middleware(['static'])->get('/', WebsiteLandingController::class)->name('
 
 // Rota de compatibilidade para middlewares que usam route('login')
 Route::get('/__compat-login', fn () => redirect()->to('/login'))->name('login');
+
+Route::get(
+    config('filament-tenant-members.routes.prefix', 'invite').'/{token}',
+    AcceptInviteController::class
+)
+    ->middleware(config('filament-tenant-members.routes.middleware', ['web', 'throttle:10,1']))
+    ->name('invite.accept');
