@@ -63,9 +63,12 @@ class AuthenticationLogResource extends Resource
     #[Override]
     public static function getEloquentQuery(): Builder
     {
-        /** @var User $user */
-        $user = Filament::auth()->user();
         $query = parent::getEloquentQuery();
+        $user = Filament::auth()->user();
+
+        if (! $user instanceof User) {
+            return $query;
+        }
 
         // 1. Admins veem todos os logs
         if ($user->hasRole(RoleType::ADMIN->value)) {
@@ -74,11 +77,11 @@ class AuthenticationLogResource extends Resource
 
         // 2. Proprietários veem logs dos usuários do seu team atual
         $team = Filament::getTenant();
-        /** @var Team|null $team */
-        if ($team && $user->isOwnerOfTeam($team)) {
+        /** @var Organization|null $team */
+        if ($team && $user->isOwnerOfOrganization($team)) {
             // Busca IDs de usuários pertencentes a este team
             // Nota: Esta é uma query híbrida (SQL -> Mongo). Buscamos os IDs SQL primeiro.
-            $teamUserIds = User::whereHas('teams', function (Builder $q) use ($team): void {
+            $teamUserIds = User::whereHas('organizations', function (Builder $q) use ($team): void {
                 $q->whereKey($team->getKey());
             })->pluck('id')->toArray();
 

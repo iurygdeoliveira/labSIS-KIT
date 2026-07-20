@@ -7,7 +7,7 @@ namespace App\Policies;
 use App\Enums\Permission;
 use App\Enums\RoleType;
 use App\Models\MediaItem;
-use App\Models\Team;
+use App\Models\Organization;
 use App\Models\User;
 use Filament\Facades\Filament;
 
@@ -27,7 +27,7 @@ class MediaItemPolicy
         }
 
         $currentTeam = Filament::getTenant();
-        if ($currentTeam instanceof Team && $user->isOwnerOfTeam($currentTeam)) {
+        if ($currentTeam instanceof Organization && $user->isOwnerOfOrganization($currentTeam)) {
             return true;
         }
 

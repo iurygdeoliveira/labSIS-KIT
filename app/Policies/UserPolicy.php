@@ -119,7 +119,7 @@ class UserPolicy
             return false;
         }
 
-        return $record->teams()->whereKey($currentTenant->getKey())->exists();
+        return $record->organizations()->whereKey($currentTenant->getKey())->exists();
     }
 
     /**

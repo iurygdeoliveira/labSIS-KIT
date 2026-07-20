@@ -2,7 +2,10 @@
 
 namespace App\Filament\Pages\Organization;
 
+use App\Enums\RoleType;
 use App\Filament\Clusters\TenantSettings;
+use App\Models\Organization;
+use App\Models\User;
 use App\Traits\Filament\HasConfigurableNavigationSort;
 use BackedEnum;
 use Filament\Actions\Action;
@@ -25,6 +28,23 @@ class GeneralSettings extends Page
     use HasConfigurableNavigationSort;
 
     protected static ?string $cluster = TenantSettings::class;
+
+    public static function canAccess(): bool
+    {
+        $user = Filament::auth()->user();
+
+        if (! $user instanceof User) {
+            return false;
+        }
+
+        if ($user->hasRole(RoleType::ADMIN->value)) {
+            return true;
+        }
+
+        $currentTeam = Filament::getTenant();
+
+        return $currentTeam instanceof Organization && $user->isOwnerOfOrganization($currentTeam);
+    }
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice2;
 

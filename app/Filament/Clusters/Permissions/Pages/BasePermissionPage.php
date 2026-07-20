@@ -217,7 +217,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
 
         $team = Organization::find($teamId);
 
-        return $team instanceof Organization && $user->isOwnerOfTeam($team);
+        return $team instanceof Organization && $user->isOwnerOfOrganization($team);
     }
 
     protected function toggleAll(bool $state): void

@@ -29964,6 +29964,33 @@ namespace Livewire\Features\SupportTesting {
             }
     }
 
+namespace App\Filament\Pages {
+    /**
+     */
+    class AcceptInvite extends \Filament\Pages\Page {
+            }
+    }
+
+namespace Filament\Pages {
+    /**
+     * @template TConfiguration of PageConfiguration = PageConfiguration
+     */
+    class Page extends \Filament\Pages\BasePage {
+            }
+    /**
+     */
+    class BasePage extends \Livewire\Component {
+            }
+    /**
+     */
+    class SimplePage extends \Filament\Pages\BasePage {
+            }
+    /**
+     */
+    class Dashboard extends \Filament\Pages\Page {
+            }
+    }
+
 namespace App\Filament\Pages\Auth {
     /**
      */
@@ -29988,26 +30015,6 @@ namespace App\Filament\Pages\Auth {
     /**
      */
     class VerificationPending extends \Filament\Pages\SimplePage {
-            }
-    }
-
-namespace Filament\Pages {
-    /**
-     */
-    class SimplePage extends \Filament\Pages\BasePage {
-            }
-    /**
-     */
-    class BasePage extends \Livewire\Component {
-            }
-    /**
-     * @template TConfiguration of PageConfiguration = PageConfiguration
-     */
-    class Page extends \Filament\Pages\BasePage {
-            }
-    /**
-     */
-    class Dashboard extends \Filament\Pages\Page {
             }
     }
 
@@ -30054,6 +30061,30 @@ namespace App\Filament\Pages\Mail {
     /**
      */
     class Templates extends \Filament\Pages\Page {
+            }
+    }
+
+namespace App\Filament\Pages\Organization {
+    /**
+     * @property Schema $form
+     */
+    class GeneralSettings extends \Filament\Pages\Page {
+            }
+    /**
+     */
+    class Members extends \Filament\Pages\Page {
+            }
+    /**
+     */
+    class RegisterOrganization extends \Filament\Pages\Tenancy\RegisterTenant {
+            }
+    }
+
+namespace Filament\Pages\Tenancy {
+    /**
+     * @property-read Schema $form
+     */
+    class RegisterTenant extends \Filament\Pages\SimplePage {
             }
     }
 
@@ -30143,6 +30174,17 @@ namespace Filament\Widgets {
             }
     }
 
+namespace App\Filament\Resources\Organization\Pages {
+    /**
+     */
+    class EditOrganization extends \Filament\Resources\Pages\EditRecord {
+            }
+    /**
+     */
+    class ListOrganizations extends \Filament\Resources\Pages\ListRecords {
+            }
+    }
+
 namespace App\Filament\Resources\Security\Pages {
     /**
      */
@@ -30154,47 +30196,6 @@ namespace WallaceMartinss\FilamentSecurity\Filament\Resources\SecurityEventResou
     /**
      */
     class ListSecurityEvents extends \Filament\Resources\Pages\ListRecords {
-            }
-    }
-
-namespace App\Filament\Resources\Teams\Pages {
-    /**
-     */
-    class CreateTeam extends \Filament\Resources\Pages\CreateRecord {
-            }
-    /**
-     */
-    class DeleteTeam extends \Filament\Resources\Pages\ViewRecord {
-            }
-    /**
-     * @property Team|null $record
-     * @property-read bool $canDelete
-     * @property-read bool $canEditUsers
-     * @property-read int $userCount
-     * @property-read array $teamStats
-     */
-    class EditTeam extends \Filament\Resources\Pages\EditRecord {
-            }
-    /**
-     */
-    class ListTeams extends \Filament\Resources\Pages\ListRecords {
-            }
-    /**
-     * @property Team|null $record
-     * @property-read array $teamStats
-     * @property-read bool $canDelete
-     * @property-read bool $canEdit
-     * @property-read array $teamPermissions
-     */
-    class ViewTeam extends \Filament\Resources\Pages\ViewRecord {
-            }
-    }
-
-namespace App\Filament\Resources\Teams\Widgets {
-    /**
-     * @property-read array $summary
-     */
-    class TeamStats extends \Filament\Widgets\StatsOverviewWidget {
             }
     }
 
@@ -30270,6 +30271,13 @@ namespace Filament\Clusters {
             }
     }
 
+namespace App\Filament\Clusters {
+    /**
+     */
+    class TenantSettings extends \Filament\Clusters\Cluster {
+            }
+    }
+
 namespace App\Filament\Widgets {
     /**
      */
@@ -30282,30 +30290,6 @@ namespace App\Filament\Widgets {
      * @property-read array $summary
      */
     class SystemStats extends \Filament\Widgets\StatsOverviewWidget {
-            }
-    }
-
-namespace LaravelDaily\FilaTeams\Pages {
-    /**
-     */
-    class CreateTeamPage extends \Filament\Pages\Tenancy\RegisterTenant {
-            }
-    /**
-     */
-    class EditTeam extends \Filament\Pages\Tenancy\EditTenantProfile {
-            }
-    }
-
-namespace Filament\Pages\Tenancy {
-    /**
-     * @property-read Schema $form
-     */
-    class RegisterTenant extends \Filament\Pages\SimplePage {
-            }
-    /**
-     * @property-read Schema $form
-     */
-    class EditTenantProfile extends \Filament\Pages\Page {
             }
     }
 

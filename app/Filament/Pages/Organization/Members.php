@@ -3,11 +3,14 @@
 namespace App\Filament\Pages\Organization;
 
 use App\Enums\OrganizationRole;
+use App\Enums\RoleType;
 use App\Events\OrganizationInviteCreated;
 use App\Filament\Clusters\TenantSettings;
 use App\Livewire\Organization\ListInvitations;
 use App\Livewire\Organization\ListMembers;
+use App\Models\Organization;
 use App\Models\OrganizationInvite;
+use App\Models\User;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
@@ -32,7 +35,7 @@ class Members extends Page
 {
     protected static ?string $cluster = TenantSettings::class;
 
-    public int $activeTab = 0;
+    public ?string $tab = '0';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
@@ -50,18 +53,19 @@ class Members extends Page
 
     public static function canAccess(): bool
     {
-        $tenant = Filament::getTenant();
-        if (! $tenant) {
+        $user = Filament::auth()->user();
+
+        if (! $user instanceof User) {
             return false;
         }
 
-        $pivotRole = $tenant->users()
-            ->where('users.id', Filament::auth()->id())
-            ->first()
-            ?->pivot
-            ?->role;
+        if ($user->hasRole(RoleType::ADMIN->value)) {
+            return true;
+        }
 
-        return $pivotRole !== null;
+        $currentTeam = Filament::getTenant();
+
+        return $currentTeam instanceof Organization && $user->isOwnerOfOrganization($currentTeam);
     }
 
     protected function getHeaderActions(): array
@@ -81,7 +85,7 @@ class Members extends Page
         return [
             Action::make('invite')
                 ->label(__('organization.actions.invite.label'))
-                ->icon('heroicon-o-user-plus')
+                ->icon(Heroicon::OutlinedUserPlus)
                 ->visible(fn (): bool => $currentRole?->canInviteMembers() ?? false)
                 ->schema([
                     Repeater::make('emailAddresses')
@@ -141,15 +145,18 @@ class Members extends Page
 
         return $schema->components([
             Tabs::make()
-                ->livewireProperty('activeTab')
+                ->livewireProperty('tab')
+                ->activeTab(1)
                 ->tabs([
                     Tab::make(__('organization.members.tabs.members'))
-                        ->icon('heroicon-m-users')
+                        ->id('members')
+                        ->icon(Heroicon::Users)
                         ->schema([
                             Livewire::make(ListMembers::class)->key('list-members'),
                         ]),
                     Tab::make(__('organization.members.tabs.pending_invitations'))
-                        ->icon('heroicon-m-envelope')
+                        ->id('pending_invitations')
+                        ->icon(Heroicon::Envelope)
                         ->badge(
                             OrganizationInvite::query()
                                 ->where('organization_id', $tenant?->id)

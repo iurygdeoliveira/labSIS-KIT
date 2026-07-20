@@ -92,7 +92,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
- * @method bool isOwnerOfTeam(Team $team)
+ * @method bool isOwnerOfOrganization(Team $team)
  * @method bool isUserOfTeam(Team $team)
  * @method \Illuminate\Support\Collection getRolesForTeam(Team $team)
  * @method bool hasAnyRoleInTeam(Team $team)
@@ -323,7 +323,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     // Team & Role Logic (Business Logic)
     // ==========================================
 
-    public function isOwnerOfTeam(Organization $organization): bool
+    public function isOwnerOfOrganization(Organization $organization): bool
     {
         return $this->getRoleQueryBuilder($organization)
             ->where('roles.name', RoleType::OWNER->value)

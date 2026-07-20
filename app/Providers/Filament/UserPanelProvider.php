@@ -11,7 +11,6 @@ use App\Filament\Pages\Organization\RegisterOrganization;
 use App\Filament\Resources\Authentication\AuthenticationLogResource;
 use App\Filament\Resources\Media\MediaResource;
 use App\Filament\Resources\Users\UserResource;
-use App\Filament\Widgets\CustomStats;
 use App\Http\Middleware\TeamSyncMiddleware;
 use App\Livewire\Organization\ListInvitations;
 use App\Livewire\Organization\ListMembers;
@@ -52,7 +51,6 @@ class UserPanelProvider extends BasePanelProvider
                 Dashboard::class,
             ])
             ->widgets([
-                CustomStats::class,
             ])
             ->tenantMiddleware([
                 TeamSyncMiddleware::class,

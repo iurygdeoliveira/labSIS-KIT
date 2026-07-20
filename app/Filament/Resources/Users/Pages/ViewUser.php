@@ -40,7 +40,7 @@ class ViewUser extends ViewRecord
         }
 
         return [
-            'tenant_count' => $record->teams()->count(),
+            'tenant_count' => $record->organizations()->count(),
             'role_count' => $record->rolesWithTeams()->count(),
             'is_owner_anywhere' => $record->hasOwnerRoleInAnyTeam(),
             'last_login' => $record->last_login_at?->diffForHumans(),

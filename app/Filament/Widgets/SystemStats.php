@@ -3,12 +3,12 @@
 namespace App\Filament\Widgets;
 
 use App\Filament\Resources\Media\MediaResource;
+use App\Filament\Resources\Organization\OrganizationResource;
 use App\Filament\Resources\Users\UserResource;
 use App\Support\FilamentStatsCache;
 use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use Guidance\FilamentTenantMembers\Filament\AdminPanel\Resources\OrganizationResource;
 use Livewire\Attributes\Computed;
 
 /**
