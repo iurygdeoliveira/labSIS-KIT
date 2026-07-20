@@ -49,6 +49,12 @@ class MediaResource extends Resource
     }
 
     #[Override]
+    public static function getRecordRouteKeyName(): string
+    {
+        return 'uuid';
+    }
+
+    #[Override]
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->with([

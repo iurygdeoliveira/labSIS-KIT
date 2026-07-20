@@ -70,6 +70,12 @@ class OrganizationResource extends Resource
     }
 
     #[\Override]
+    public static function getRecordRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    #[\Override]
     public static function getPages(): array
     {
         return [
