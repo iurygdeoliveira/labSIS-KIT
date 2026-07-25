@@ -31,6 +31,8 @@ use App\Support\AppDateTime;
 use App\Tenancy\SpatieTeamResolver as AppSpatieTeamResolver;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
 use Filament\Auth\Http\Responses\Contracts\LogoutResponse as LogoutResponseContract;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
@@ -70,7 +72,15 @@ class AppServiceProvider extends ServiceProvider
         $this->configEvents();
         $this->configObservers();
         $this->configGates();
+        $this->configFilament();
+    }
 
+    private function configFilament(): void
+    {
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::BODY_END,
+            fn (): string => view('filament.components.mobile-bottom-nav')->render(),
+        );
     }
 
     private function configGates(): void
