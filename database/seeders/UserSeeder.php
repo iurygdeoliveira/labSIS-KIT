@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Enums\OrganizationRole;
 use App\Enums\Permission as PermissionEnum;
-use App\Enums\RoleType;
 use App\Models\Organization;
 use App\Models\Role;
 use App\Models\User;
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             }
         }
 
-        RoleType::ensureGlobalRoles($guard);
+        OrganizationRole::ensureGlobalRoles($guard);
 
         $admin = User::query()->firstOrCreate(
             ['email' => 'admin@labsis.dev.br'],
@@ -47,10 +47,10 @@ class UserSeeder extends Seeder
         );
         $globalResolver = resolve(SpatieTeamResolver::class);
         $globalResolver->setPermissionsTeamId(0);
-        $admin->syncRoles([RoleType::ADMIN->value]);
+        $admin->syncRoles([OrganizationRole::Admin->value]);
         $globalResolver->setPermissionsTeamId(null);
 
-        $adminRole = Role::where('name', RoleType::ADMIN->value)->where('guard_name', $guard)->first();
+        $adminRole = Role::where('name', OrganizationRole::Admin->value)->where('guard_name', $guard)->first();
         if ($adminRole) {
             $adminRole->syncPermissions(PermissionModel::all());
         }
@@ -121,8 +121,8 @@ class UserSeeder extends Seeder
         $organization = Organization::find($teamId);
         if ($user && $organization) {
             $spatieRole = match ($role) {
-                'owner', 'admin' => RoleType::ensureOwnerRoleForTeam($organization->id, $guard = config('auth.defaults.guard', 'web')),
-                default => RoleType::ensureUserRoleForTeam($organization->id, $guard = config('auth.defaults.guard', 'web')),
+                'owner', 'admin' => OrganizationRole::ensureOwnerRoleForTeam($organization->id, $guard = config('auth.defaults.guard', 'web')),
+                default => OrganizationRole::ensureUserRoleForTeam($organization->id, $guard = config('auth.defaults.guard', 'web')),
             };
             $user->assignRoleInTeam($spatieRole, $organization);
         }
@@ -138,8 +138,8 @@ class UserSeeder extends Seeder
         $teamResolver = resolve(SpatieTeamResolver::class);
         $teamResolver->setPermissionsTeamId($teamId);
 
-        $ownerRole = RoleType::ensureOwnerRoleForTeam($teamId, $guard);
-        RoleType::ensureUserRoleForTeam($teamId, $guard);
+        $ownerRole = OrganizationRole::ensureOwnerRoleForTeam($teamId, $guard);
+        OrganizationRole::ensureUserRoleForTeam($teamId, $guard);
 
         foreach ($resources as $resource) {
             foreach (PermissionEnum::cases() as $permission) {

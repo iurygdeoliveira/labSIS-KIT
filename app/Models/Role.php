@@ -14,10 +14,10 @@ use Spatie\Permission\Models\Role as SpatieRole;
 class Role extends SpatieRole
 {
     /**
-     * @return BelongsTo<Team, $this>
+     * @return BelongsTo<Organization, $this>
      */
     public function team(): BelongsTo
     {
-        return $this->belongsTo(Team::class, 'team_id');
+        return $this->belongsTo(Organization::class, 'team_id');
     }
 }

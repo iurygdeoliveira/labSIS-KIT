@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Models\Organization;
 use App\Models\OrganizationUser;
 use App\Models\User;
@@ -62,8 +62,8 @@ class OrganizationUserObserver
         $user->removeAllUserRolesFromTeam($organization);
 
         $spatieRole = match ($pivot->role) {
-            'owner', 'admin' => RoleType::ensureOwnerRoleForTeam($organization->id, $this->guard()),
-            default => RoleType::ensureUserRoleForTeam($organization->id, $this->guard()),
+            'owner', 'admin' => OrganizationRole::ensureOwnerRoleForTeam($organization->id, $this->guard()),
+            default => OrganizationRole::ensureUserRoleForTeam($organization->id, $this->guard()),
         };
 
         $user->assignRoleInTeam($spatieRole, $organization);

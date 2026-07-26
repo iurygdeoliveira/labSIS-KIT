@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Filament\Pages\Auth\VerificationPending;
 use App\Models\User;
 use Closure;
@@ -75,7 +75,7 @@ class RedirectToProperPanelMiddleware
     private function handlePendingVerification(User $user, Request $request, Closure $next): ?Response
     {
         // Administradores ignoram verificação
-        if ($user->hasRole(RoleType::ADMIN->value)) {
+        if ($user->hasRole(OrganizationRole::Admin->value)) {
             return null;
         }
 

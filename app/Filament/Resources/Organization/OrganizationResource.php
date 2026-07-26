@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Organization;
 
+use App\Filament\Resources\Organization\Pages\CreateOrganization;
+use App\Filament\Resources\Organization\Pages\DeleteOrganization;
+use App\Filament\Resources\Organization\Pages\EditOrganization;
+use App\Filament\Resources\Organization\Pages\ListOrganizations;
+use App\Filament\Resources\Organization\Pages\ViewOrganization;
+use App\Filament\Resources\Organization\Schemas\OrganizationForm;
+use App\Filament\Resources\Organization\Schemas\OrganizationInfolist;
+use App\Filament\Resources\Organization\Tables\OrganizationTable;
 use App\Models\Organization;
 use App\Traits\Filament\HasConfigurableNavigationSort;
 use BackedEnum;
-use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class OrganizationResource extends Resource
 {
@@ -32,55 +39,47 @@ class OrganizationResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Organizações';
 
-    public static function form(Schema $schema): Schema
-    {
-        return $schema
-            ->components([
-                TextInput::make('name')
-                    ->label(__('organization.fields.name'))
-                    ->required(),
-                TextInput::make('slug')
-                    ->label(__('organization.fields.slug'))
-                    ->required()
-                    ->unique(),
-            ]);
-    }
+    protected static ?string $recordTitleAttribute = 'name';
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                TextColumn::make('name')
-                    ->label(__('organization.fields.name'))
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('slug')
-                    ->label(__('organization.fields.slug'))
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('users_count')
-                    ->label(__('organization.members.title'))
-                    ->counts('users')
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->label(__('organization.fields.created_at'))
-                    ->dateTime('d/m/Y H:i')
-                    ->sortable(),
-            ]);
-    }
-
-    #[\Override]
+    #[Override]
     public static function getRecordRouteKeyName(): string
     {
         return 'slug';
     }
 
-    #[\Override]
+    #[Override]
+    public static function form(Schema $schema): Schema
+    {
+        return OrganizationForm::configure($schema);
+    }
+
+    #[Override]
+    public static function infolist(Schema $schema): Schema
+    {
+        return OrganizationInfolist::configure($schema);
+    }
+
+    #[Override]
+    public static function table(Table $table): Table
+    {
+        return OrganizationTable::configure($table);
+    }
+
+    #[Override]
+    public static function getRelations(): array
+    {
+        return [];
+    }
+
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListOrganizations::route('/'),
-            'edit' => Pages\EditOrganization::route('/{record}/edit'),
+            'index' => ListOrganizations::route('/'),
+            'create' => CreateOrganization::route('/create'),
+            'view' => ViewOrganization::route('/{record}'),
+            'edit' => EditOrganization::route('/{record}/edit'),
+            'delete' => DeleteOrganization::route('/{record}/delete'),
         ];
     }
 }

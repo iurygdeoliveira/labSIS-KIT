@@ -3,7 +3,6 @@
 namespace App\Filament\Pages\Organization;
 
 use App\Enums\OrganizationRole;
-use App\Enums\RoleType;
 use App\Events\OrganizationInviteCreated;
 use App\Filament\Clusters\TenantSettings;
 use App\Livewire\Organization\ListInvitations;
@@ -59,8 +58,8 @@ class Members extends Page
             return false;
         }
 
-        if ($user->hasRole(RoleType::ADMIN->value)) {
-            return true;
+        if ($user->hasRole(OrganizationRole::Admin->value)) {
+            return false;
         }
 
         $currentTeam = Filament::getTenant();

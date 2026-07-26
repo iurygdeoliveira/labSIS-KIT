@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Models\Organization;
 use App\Models\OrganizationUser;
 use App\Models\User;
@@ -42,7 +42,7 @@ final class FilamentStatsCache
             $approvedTeams = Organization::query()
                 ->whereHas('users', function (Builder $query): void {
                     $query->whereHas('roles', function (Builder $roleQuery): void {
-                        $roleQuery->where('name', RoleType::OWNER->value);
+                        $roleQuery->where('name', OrganizationRole::Owner->value);
                     })
                         ->where('is_approved', true);
                 })
@@ -52,7 +52,7 @@ final class FilamentStatsCache
                 ->where('is_active', true)
                 ->whereHas('users', function (Builder $query): void {
                     $query->whereHas('roles', function (Builder $roleQuery): void {
-                        $roleQuery->where('name', RoleType::OWNER->value);
+                        $roleQuery->where('name', OrganizationRole::Owner->value);
                     })
                         ->where('is_approved', true);
                 })
@@ -62,7 +62,7 @@ final class FilamentStatsCache
                 ->where('is_active', false)
                 ->whereHas('users', function (Builder $query): void {
                     $query->whereHas('roles', function (Builder $roleQuery): void {
-                        $roleQuery->where('name', RoleType::OWNER->value);
+                        $roleQuery->where('name', OrganizationRole::Owner->value);
                     })
                         ->where('is_approved', true);
                 })
@@ -71,7 +71,7 @@ final class FilamentStatsCache
             $unapprovedTeams = Organization::query()
                 ->whereDoesntHave('users', function (Builder $query): void {
                     $query->whereHas('roles', function (Builder $roleQuery): void {
-                        $roleQuery->where('name', RoleType::OWNER->value);
+                        $roleQuery->where('name', OrganizationRole::Owner->value);
                     })
                         ->where('is_approved', true);
                 })
@@ -103,7 +103,7 @@ final class FilamentStatsCache
     {
         return self::store()->remember(self::KEY_USERS, self::TTL_SECONDS, function (): array {
             $baseQuery = User::query()
-                ->whereDoesntHave('roles', fn ($q) => $q->where('name', RoleType::ADMIN->value));
+                ->whereDoesntHave('roles', fn ($q) => $q->where('name', OrganizationRole::Admin->value));
 
             $totalUsers = $baseQuery->count('*');
 
@@ -141,7 +141,7 @@ final class FilamentStatsCache
     public static function usersTabBadges(): array
     {
         return self::store()->remember(self::KEY_USERS_TABS, self::TTL_SECONDS, function (): array {
-            $baseQuery = User::query()->withoutRole(RoleType::ADMIN->value);
+            $baseQuery = User::query()->withoutRole(OrganizationRole::Admin->value);
 
             return [
                 'approved' => (clone $baseQuery)->where('is_approved', true)->count('*'),

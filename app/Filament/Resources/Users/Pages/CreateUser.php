@@ -2,11 +2,9 @@
 
 namespace App\Filament\Resources\Users\Pages;
 
-use App\Enums\AppTeamRole;
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Filament\Resources\Users\UserResource;
-use App\Models\Membership;
-use App\Models\Team;
+use App\Models\Organization;
 use App\Models\User;
 use App\Traits\Filament\HasStandardCreateFooterActions;
 use App\Traits\Filament\HasStandardCreateHeaderActions;
@@ -40,26 +38,34 @@ class CreateUser extends CreateRecord
 
         $currentUser = Filament::auth()->user();
 
-        $isAdmin = $currentUser instanceof User && $currentUser->hasRole(RoleType::ADMIN->value);
+        $isAdmin = $currentUser instanceof User && $currentUser->hasRole(OrganizationRole::Admin->value);
 
         if ($isAdmin) {
             $teamId = (int) ($this->data['tenant_id'] ?? 0);
-            if ($teamId > 0 && ! Membership::query()->where('team_id', $teamId)->where('user_id', $record->id)->exists()) {
-                Membership::create([
-                    'team_id' => $teamId,
-                    'user_id' => $record->id,
-                    'role' => AppTeamRole::MEMBER->value,
-                ]);
+            $role = (string) ($this->data['organization_role'] ?? OrganizationRole::User->value);
+            if ($teamId > 0) {
+                $organization = Organization::find($teamId);
+                if ($organization instanceof Organization) {
+                    $record->organizations()->syncWithoutDetaching([
+                        $organization->id => ['role' => $role],
+                    ]);
+
+                    $spatieRole = match ($role) {
+                        OrganizationRole::Owner->value, OrganizationRole::Admin->value => OrganizationRole::ensureOwnerRoleForTeam($organization->id, config('auth.defaults.guard', 'web')),
+                        default => OrganizationRole::ensureUserRoleForTeam($organization->id, config('auth.defaults.guard', 'web')),
+                    };
+                    $record->assignRoleInTeam($spatieRole, $organization);
+                }
             }
         } else {
             $currentTeam = Filament::getTenant();
-            if ($currentTeam instanceof Team
-                && ! Membership::query()->where('team_id', $currentTeam->id)->where('user_id', $record->id)->exists()) {
-                Membership::create([
-                    'team_id' => $currentTeam->id,
-                    'user_id' => $record->id,
-                    'role' => AppTeamRole::MEMBER->value,
+            if ($currentTeam instanceof Organization) {
+                $record->organizations()->syncWithoutDetaching([
+                    $currentTeam->id => ['role' => OrganizationRole::User->value],
                 ]);
+
+                $spatieRole = OrganizationRole::ensureUserRoleForTeam($currentTeam->id, config('auth.defaults.guard', 'web'));
+                $record->assignRoleInTeam($spatieRole, $currentTeam);
             }
         }
 
@@ -74,7 +80,7 @@ class CreateUser extends CreateRecord
         $data['email_verified_at'] = now();
 
         $currentUser = Filament::auth()->user();
-        if ($currentUser instanceof User && $currentUser->hasRole(RoleType::ADMIN->value)) {
+        if ($currentUser instanceof User && $currentUser->hasRole(OrganizationRole::Admin->value)) {
             $data['is_approved'] = true;
             $data['approved_by'] = $currentUser->id;
         }

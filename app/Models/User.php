@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Notifications\Auth\ResetPasswordNotification;
 use App\Traits\Filament\AppAuthenticationRecoveryCodes;
 use App\Traits\Filament\AppAuthenticationSecret;
@@ -92,15 +92,15 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
- * @method bool isOwnerOfOrganization(Team $team)
- * @method bool isUserOfTeam(Team $team)
- * @method \Illuminate\Support\Collection getRolesForTeam(Team $team)
- * @method bool hasAnyRoleInTeam(Team $team)
+ * @method bool isOwnerOfOrganization(Organization $team)
+ * @method bool isUserOfTeam(Organization $team)
+ * @method \Illuminate\Support\Collection getRolesForTeam(Organization $team)
+ * @method bool hasAnyRoleInTeam(Organization $team)
  * @method bool hasOwnerRoleInAnyTeam()
- * @method void assignRoleInTeam(Role $role, Team $team)
- * @method void removeRoleFromTeam(string $roleName, Team $team)
- * @method void removeAllUserRolesFromTeam(Team $team)
- * @method void removeAllOwnerRolesFromTeam(Team $team)
+ * @method void assignRoleInTeam(Role $role, Organization $team)
+ * @method void removeRoleFromTeam(string $roleName, Organization $team)
+ * @method void removeAllUserRolesFromTeam(Organization $team)
+ * @method void removeAllOwnerRolesFromTeam(Organization $team)
  * @method \Illuminate\Database\Eloquent\Relations\MorphToMany<\Spatie\Permission\Models\Role, \App\Models\User> rolesWithTeams()
  *
  * @mixin \Eloquent
@@ -244,11 +244,11 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         }
 
         if ($panel->getId() === 'admin') {
-            return $this->hasRole(RoleType::ADMIN->value);
+            return $this->hasRole(OrganizationRole::Admin->value);
         }
 
         if ($panel->getId() === 'user') {
-            if ($this->hasRole(RoleType::USER->value)) {
+            if ($this->hasRole(OrganizationRole::User->value)) {
                 return true;
             }
 
@@ -326,14 +326,14 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     public function isOwnerOfOrganization(Organization $organization): bool
     {
         return $this->getRoleQueryBuilder($organization)
-            ->where('roles.name', RoleType::OWNER->value)
+            ->where('roles.name', OrganizationRole::Owner->value)
             ->exists();
     }
 
     public function isUserOfTeam(Organization $organization): bool
     {
         return $this->getRoleQueryBuilder($organization)
-            ->where('roles.name', RoleType::USER->value)
+            ->where('roles.name', OrganizationRole::User->value)
             ->exists();
     }
 
@@ -345,7 +345,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     public function hasOwnerRoleInAnyTeam(): bool
     {
         return $this->rolesWithTeams()
-            ->where('roles.name', RoleType::OWNER->value)
+            ->where('roles.name', OrganizationRole::Owner->value)
             ->exists();
     }
 
@@ -382,7 +382,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     public function removeAllUserRolesFromTeam(Organization $organization): void
     {
         $roleIds = Role::query()
-            ->where('name', RoleType::USER->value)
+            ->where('name', OrganizationRole::User->value)
             ->where('team_id', $organization->id)
             ->pluck('id');
 
@@ -398,7 +398,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     public function removeAllOwnerRolesFromTeam(Organization $organization): void
     {
         $roleIds = Role::query()
-            ->where('name', RoleType::OWNER->value)
+            ->where('name', OrganizationRole::Owner->value)
             ->where('team_id', $organization->id)
             ->pluck('id');
 

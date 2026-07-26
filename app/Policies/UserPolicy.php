@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\OrganizationRole;
 use App\Enums\Permission;
-use App\Enums\RoleType;
 use App\Models\User;
 use Filament\Facades\Filament;
 
@@ -19,7 +19,7 @@ class UserPolicy
      */
     public function before(User $user): ?bool
     {
-        if ($user->hasRole(RoleType::ADMIN->value)) {
+        if ($user->hasRole(OrganizationRole::Admin->value)) {
             return true;
         }
 
@@ -72,7 +72,7 @@ class UserPolicy
         }
 
         // Impede que usuários comuns editem administradores (Admins) ou proprietários (Owners)
-        if ($user->hasRole(RoleType::USER->value) && ($record->hasRole(RoleType::ADMIN->value) || $record->hasRole(RoleType::OWNER->value))) {
+        if ($user->hasRole(OrganizationRole::User->value) && ($record->hasRole(OrganizationRole::Admin->value) || $record->hasRole(OrganizationRole::Owner->value))) {
             return false;
         }
 
@@ -91,7 +91,7 @@ class UserPolicy
         }
 
         // Impede que usuários comuns excluam donos (Owners)
-        if ($user->hasRole(RoleType::USER->value) && $record->hasRole(RoleType::OWNER->value)) {
+        if ($user->hasRole(OrganizationRole::User->value) && $record->hasRole(OrganizationRole::Owner->value)) {
             return false;
         }
 

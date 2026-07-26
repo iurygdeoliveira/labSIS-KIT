@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Models\Organization;
 use App\Models\User;
 use Filament\Infolists\Components\RepeatableEntry;
@@ -127,11 +127,8 @@ class UserInfolist
 
             $labels = [];
             foreach ($roleNames as $name) {
-                try {
-                    $labels[] = RoleType::from($name)->getLabel();
-                } catch (\ValueError) {
-                    $labels[] = $name;
-                }
+                $roleEnum = OrganizationRole::tryFrom($name);
+                $labels[] = $roleEnum?->getLabel() ?? $name;
             }
 
             $items[] = [

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Clusters;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Models\Organization;
 use App\Models\User;
 use BackedEnum;
@@ -25,7 +25,7 @@ class TenantSettings extends Cluster
     {
         $user = Filament::auth()->user();
 
-        if ($user?->hasRole(RoleType::ADMIN->value)) {
+        if ($user?->hasRole(OrganizationRole::Admin->value)) {
             return 'Sistema';
         }
 
@@ -40,8 +40,8 @@ class TenantSettings extends Cluster
             return false;
         }
 
-        if ($user->hasRole(RoleType::ADMIN->value)) {
-            return true;
+        if ($user->hasRole(OrganizationRole::Admin->value)) {
+            return false;
         }
 
         $currentTeam = Filament::getTenant();

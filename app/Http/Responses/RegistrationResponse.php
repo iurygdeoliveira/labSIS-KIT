@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Responses;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Filament\Pages\Auth\VerificationPending;
 use App\Models\Organization;
 use App\Models\User;
@@ -21,7 +21,7 @@ class RegistrationResponse implements FilamentRegistrationResponse
         $user = Filament::auth()->user();
 
         // Se usuário não está aprovado (exceto administradores), redirecionar para verificação pendente
-        if (! $user->hasRole(RoleType::ADMIN->value) && ! $user->isApproved()) {
+        if (! $user->hasRole(OrganizationRole::Admin->value) && ! $user->isApproved()) {
             return redirect()->to(VerificationPending::getUrl());
         }
 

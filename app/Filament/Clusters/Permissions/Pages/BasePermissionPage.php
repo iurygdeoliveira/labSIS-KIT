@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Clusters\Permissions\Pages;
 
+use App\Enums\OrganizationRole;
 use App\Enums\Permission;
 use App\Enums\Permission as PermissionEnum;
-use App\Enums\RoleType;
 use App\Filament\Clusters\Permissions\PermissionsCluster;
 use App\Models\Organization;
 use App\Models\Role;
@@ -46,7 +46,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
     {
         $this->guard = config('auth.defaults.guard', 'web');
         // Apenas "Usuário Comum" no select.
-        $this->selectedRole = RoleType::USER->value;
+        $this->selectedRole = OrganizationRole::User->value;
     }
 
     public function form(Schema $schema): Schema
@@ -55,15 +55,15 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
         $isAdmin = false;
 
         if ($currentUser instanceof User) {
-            $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
+            $isAdmin = $currentUser->hasRole(OrganizationRole::Admin->value);
         }
 
         $sectionSchema = [
             Select::make('selectedRole')
                 ->label('Tipo de usuário')
                 ->options([
-                    RoleType::USER->value => RoleType::USER->getLabel(),
-                    RoleType::OWNER->value => RoleType::OWNER->getLabel(),
+                    OrganizationRole::User->value => OrganizationRole::User->getLabel(),
+                    OrganizationRole::Owner->value => OrganizationRole::Owner->getLabel(),
                 ])
                 ->native(false)
                 ->required()
@@ -107,7 +107,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
         $isAdmin = false;
 
         if ($currentUser instanceof User) {
-            $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
+            $isAdmin = $currentUser->hasRole(OrganizationRole::Admin->value);
         }
 
         /** @var Organization|null $currentTeam */
@@ -211,7 +211,7 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
             return false;
         }
 
-        if ($user->hasRole(RoleType::ADMIN->value)) {
+        if ($user->hasRole(OrganizationRole::Admin->value)) {
             return true;
         }
 
@@ -254,10 +254,10 @@ abstract class BasePermissionPage extends Page implements Tables\Contracts\HasTa
 
     protected function resolveRole(int $teamId): Role
     {
-        if ($this->selectedRole === RoleType::OWNER->value) {
-            return RoleType::ensureOwnerRoleForTeam($teamId, $this->guard);
+        if ($this->selectedRole === OrganizationRole::Owner->value) {
+            return OrganizationRole::ensureOwnerRoleForTeam($teamId, $this->guard);
         }
 
-        return RoleType::ensureUserRoleForTeam($teamId, $this->guard);
+        return OrganizationRole::ensureUserRoleForTeam($teamId, $this->guard);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages\Organization;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Filament\Clusters\TenantSettings;
 use App\Models\Organization;
 use App\Models\User;
@@ -37,8 +37,8 @@ class GeneralSettings extends Page
             return false;
         }
 
-        if ($user->hasRole(RoleType::ADMIN->value)) {
-            return true;
+        if ($user->hasRole(OrganizationRole::Admin->value)) {
+            return false;
         }
 
         $currentTeam = Filament::getTenant();

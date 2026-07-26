@@ -26743,6 +26743,203 @@ namespace Livewire {
             }
     }
 
+namespace Prodstarter\FilamentNotificationCenter\Facades {
+    /**
+     * @see \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter
+     */
+    class FilamentNotificationCenter {
+        /**
+         * @param array<NotificationCenterCategory | BackedEnum> $categories
+         * @static
+         */
+        public static function categories($categories)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->categories($categories);
+        }
+
+        /**
+         * @static
+         */
+        public static function hasCategories()
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->hasCategories();
+        }
+
+        /**
+         * The registered categories, merged with any config-enabled built-in
+         * categories (e.g. imports/exports) that weren't already registered
+         * explicitly, sorted by order.
+         *
+         * @return Collection<string, NotificationCenterCategory>
+         * @static
+         */
+        public static function getCategories()
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->getCategories();
+        }
+
+        /**
+         * @static
+         */
+        public static function getCategory($id)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->getCategory($id);
+        }
+
+        /**
+         * @static
+         */
+        public static function defaultCategory($id)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->defaultCategory($id);
+        }
+
+        /**
+         * @static
+         */
+        public static function getDefaultCategory()
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->getDefaultCategory();
+        }
+
+        /**
+         * Resolve the category a stored notification belongs to, falling back to the
+         * configured default category when the notification wasn't sent with one.
+         *
+         * @static
+         */
+        public static function resolveCategoryId($rawCategory)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->resolveCategoryId($rawCategory);
+        }
+
+        /**
+         * @param \Closure(string $categoryId):  array{heading: string, description: string}  $callback
+         * @static
+         */
+        public static function emptyStateUsing($callback)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->emptyStateUsing($callback);
+        }
+
+        /**
+         * @return \Prodstarter\FilamentNotificationCenter\array{heading: string, description: string}
+         * @static
+         */
+        public static function getEmptyState($categoryId)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->getEmptyState($categoryId);
+        }
+
+            }
+    /**
+     * @see \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter
+     */
+    class FilamentNotificationCenter {
+        /**
+         * @param array<NotificationCenterCategory | BackedEnum> $categories
+         * @static
+         */
+        public static function categories($categories)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->categories($categories);
+        }
+
+        /**
+         * @static
+         */
+        public static function hasCategories()
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->hasCategories();
+        }
+
+        /**
+         * The registered categories, merged with any config-enabled built-in
+         * categories (e.g. imports/exports) that weren't already registered
+         * explicitly, sorted by order.
+         *
+         * @return Collection<string, NotificationCenterCategory>
+         * @static
+         */
+        public static function getCategories()
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->getCategories();
+        }
+
+        /**
+         * @static
+         */
+        public static function getCategory($id)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->getCategory($id);
+        }
+
+        /**
+         * @static
+         */
+        public static function defaultCategory($id)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->defaultCategory($id);
+        }
+
+        /**
+         * @static
+         */
+        public static function getDefaultCategory()
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->getDefaultCategory();
+        }
+
+        /**
+         * Resolve the category a stored notification belongs to, falling back to the
+         * configured default category when the notification wasn't sent with one.
+         *
+         * @static
+         */
+        public static function resolveCategoryId($rawCategory)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->resolveCategoryId($rawCategory);
+        }
+
+        /**
+         * @param \Closure(string $categoryId):  array{heading: string, description: string}  $callback
+         * @static
+         */
+        public static function emptyStateUsing($callback)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->emptyStateUsing($callback);
+        }
+
+        /**
+         * @return \Prodstarter\FilamentNotificationCenter\array{heading: string, description: string}
+         * @static
+         */
+        public static function getEmptyState($categoryId)
+        {
+            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
+            return $instance->getEmptyState($categoryId);
+        }
+
+            }
+    }
+
 namespace Spatie\SignalAwareCommand\Facades {
     /**
      * @see \Spatie\SignalAwareCommand\Signal
@@ -29959,6 +30156,27 @@ namespace Livewire\Features\SupportTesting {
         public static function assertTableColumnSummarizerExists($columnName, $summarizerId)
         {
             return \Livewire\Features\SupportTesting\Testable::assertTableColumnSummarizerExists($columnName, $summarizerId);
+        }
+
+        /**
+         * @see \Prodstarter\FilamentNotificationCenter\Testing\TestsFilamentNotificationCenter::assertActiveNotificationCategory()
+         * @param string $categoryId
+         * @static
+         */
+        public static function assertActiveNotificationCategory($categoryId)
+        {
+            return \Livewire\Features\SupportTesting\Testable::assertActiveNotificationCategory($categoryId);
+        }
+
+        /**
+         * @see \Prodstarter\FilamentNotificationCenter\Testing\TestsFilamentNotificationCenter::assertNotificationCategoryTabCount()
+         * @param string $categoryId
+         * @param int $count
+         * @static
+         */
+        public static function assertNotificationCategoryTabCount($categoryId, $count)
+        {
+            return \Livewire\Features\SupportTesting\Testable::assertNotificationCategoryTabCount($categoryId, $count);
         }
 
             }
@@ -36048,6 +36266,8 @@ namespace  {
     class Pulse extends \Laravel\Pulse\Facades\Pulse {}
     class Flux extends \Flux\Flux {}
     class Livewire extends \Livewire\Livewire {}
+    class NotificationCenter extends \Prodstarter\FilamentNotificationCenter\Facades\FilamentNotificationCenter {}
+    class FilamentNotificationCenter extends \Prodstarter\FilamentNotificationCenter\Facades\FilamentNotificationCenter {}
     class Signal extends \Spatie\SignalAwareCommand\Facades\Signal {}
 }
 

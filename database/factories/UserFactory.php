@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
@@ -53,14 +53,14 @@ class UserFactory extends Factory
                 'email' => 'admin@labsis.dev.br',
             ])
             ->afterCreating(function (User $user): void {
-                $user->assignRole(RoleType::ADMIN->value);
+                $user->assignRole(OrganizationRole::Admin->value);
             });
     }
 
     public function user(): static
     {
         return $this->afterCreating(function (User $user): void {
-            $user->assignRole(RoleType::USER->value);
+            $user->assignRole(OrganizationRole::User->value);
         });
     }
 }

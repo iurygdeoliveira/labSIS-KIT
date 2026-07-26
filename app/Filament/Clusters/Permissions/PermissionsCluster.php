@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Clusters\Permissions;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Models\Organization;
 use App\Models\User;
 use App\Traits\Filament\HasConfigurableNavigationSort;
@@ -35,7 +35,7 @@ class PermissionsCluster extends Cluster
             return false;
         }
 
-        if ($user->hasRole(RoleType::ADMIN->value)) {
+        if ($user->hasRole(OrganizationRole::Admin->value)) {
             return true;
         }
 

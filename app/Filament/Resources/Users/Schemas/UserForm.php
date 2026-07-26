@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Models\Organization;
 use App\Models\User;
 use Filament\Facades\Filament;
@@ -123,6 +123,6 @@ class UserForm
             return false;
         }
 
-        return $user->hasRole(RoleType::ADMIN->value);
+        return $user->hasRole(OrganizationRole::Admin->value);
     }
 }

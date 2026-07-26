@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Models\AuthenticationLog;
 use App\Models\Organization;
 use App\Models\User;
@@ -21,7 +21,7 @@ class AuthenticationLogPolicy
      */
     public function before(User $user): ?bool
     {
-        if ($user->hasRole(RoleType::ADMIN->value)) {
+        if ($user->hasRole(OrganizationRole::Admin->value)) {
             return true;
         }
 

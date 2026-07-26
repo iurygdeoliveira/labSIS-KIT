@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Events\UserApproved;
 use App\Filament\Resources\Users\Actions\DeleteUserAction;
 use App\Models\Organization;
@@ -25,10 +25,10 @@ class UsersTable
         $isAdmin = false;
 
         if ($currentUser instanceof User) {
-            $isAdmin = $currentUser->hasRole(RoleType::ADMIN->value);
+            $isAdmin = $currentUser->hasRole(OrganizationRole::Admin->value);
         }
 
-        $query = User::query()->withoutRole(RoleType::ADMIN->value);
+        $query = User::query()->withoutRole(OrganizationRole::Admin->value);
         $currentTeam = Filament::getTenant();
 
         if (! $isAdmin) {
@@ -169,7 +169,7 @@ class UsersTable
 
     private static function getTenantRolesForUser(User $record, bool $isAdmin): array|string
     {
-        if ($record->hasRole(RoleType::ADMIN->value)) {
+        if ($record->hasRole(OrganizationRole::Admin->value)) {
             return '—';
         }
 
@@ -227,10 +227,6 @@ class UsersTable
 
     private static function getRoleLabel(string $name): string
     {
-        try {
-            return RoleType::from($name)->getLabel();
-        } catch (\ValueError) {
-            return $name;
-        }
+        return OrganizationRole::tryFrom($name)?->getLabel() ?? $name;
     }
 }

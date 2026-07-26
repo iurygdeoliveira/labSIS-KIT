@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Authentication;
 
-use App\Enums\RoleType;
+use App\Enums\OrganizationRole;
 use App\Filament\Resources\Authentication\Pages\ListAuthenticationLogs;
 use App\Filament\Resources\Authentication\Schemas\AuthenticationLogForm;
 use App\Filament\Resources\Authentication\Tables\AuthenticationLogTable;
@@ -71,7 +71,7 @@ class AuthenticationLogResource extends Resource
         }
 
         // 1. Admins veem todos os logs
-        if ($user->hasRole(RoleType::ADMIN->value)) {
+        if ($user->hasRole(OrganizationRole::Admin->value)) {
             return $query;
         }
 
