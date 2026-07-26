@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Media\Schemas;
 
 use App\Support\AppDateTime;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Hugomyb\FilamentMediaAction\Actions\MediaAction;
@@ -15,62 +18,84 @@ class MediaInfolist
     {
         return $schema
             ->components([
-                Section::make('Informações do Arquivo')
-                    ->components([
-                        TextEntry::make('name')
-                            ->label('Nome do Arquivo')
-                            ->visible(fn ($record): bool => ! (bool) $record->video),
-
-                        // Evita colisão entre atributo booleano 'video' e relacionamento 'video()'
-                        TextEntry::make('video_title')
-                            ->label('Titulo do Video')
-                            ->state(fn ($record): ?string => $record->linkedVideo()?->title)
-                            ->visible(fn ($record): bool => (bool) $record->video),
-
-                        TextEntry::make('human_size')
-                            ->label('Tamanho')
-                            ->visible(fn ($record): bool => ! (bool) $record->video),
-
-                        TextEntry::make('video_duration')
-                            ->label('Duração do Vídeo')
-                            ->state(fn ($record): ?int => $record->linkedVideo()?->duration_seconds)
-                            ->formatStateUsing(fn ($state): string => self::formatVideoDuration($state))
-                            ->visible(fn ($record): bool => (bool) $record->video),
-
-                        MediaAction::make('open')
-                            ->label(fn ($record) => self::resolveMediaActionConfig($record)['label'])
-                            ->icon(fn ($record) => self::resolveMediaActionConfig($record)['icon'])
-                            ->media(fn ($record) => self::resolveMediaActionConfig($record)['media'] ?? '#')
-                            ->visible(fn ($record): bool => self::resolveMediaActionConfig($record)['media'] !== null),
+                Tabs::make('Detalhes da Mídia')
+                    ->columnSpanFull()
+                    ->tabs([
+                        self::getGeneralInfoTab(),
+                        self::getTechnicalDetailsTab(),
                     ])
-                    ->columns(3),
-
-                Section::make('Detalhes')
-                    ->components([
-                        TextEntry::make('file_type')
-                            ->label('Tipo de Arquivo')
-                            ->badge()
-                            ->color(fn (string $state): string => match ($state) {
-                                'Imagem' => 'primary',
-                                'Vídeo' => 'warning',
-                                'Documento' => 'success',
-                                'Áudio' => 'danger',
-                                default => 'secondary',
-                            })
-                            ->icon(fn (string $state): Heroicon => match ($state) {
-                                'Imagem' => Heroicon::Photo,
-                                'Vídeo' => Heroicon::VideoCamera,
-                                'Documento' => Heroicon::Document,
-                                'Áudio' => Heroicon::MusicalNote,
-                                default => Heroicon::QuestionMarkCircle,
-                            }),
-
-                        TextEntry::make('created_at_display')
-                            ->label('Data de Criação')
-                            ->state(fn ($record): ?string => self::resolveCreatedAt($record)),
-                    ])
-                    ->columns(2),
+                    ->persistTabInQueryString(),
             ]);
+    }
+
+    private static function getGeneralInfoTab(): Tab
+    {
+        return Tab::make('Informações Gerais')
+            ->icon(Heroicon::InformationCircle)
+            ->schema([
+                TextEntry::make('name')
+                    ->label('Nome do Arquivo')
+                    ->visible(fn ($record): bool => ! (bool) $record->video)
+                    ->columnSpan(1),
+
+                TextEntry::make('video_title')
+                    ->label('Título do Vídeo')
+                    ->state(fn ($record): ?string => $record->linkedVideo()?->title)
+                    ->visible(fn ($record): bool => (bool) $record->video)
+                    ->columnSpan(1),
+
+                TextEntry::make('human_size')
+                    ->label('Tamanho')
+                    ->visible(fn ($record): bool => ! (bool) $record->video)
+                    ->columnSpan(1),
+
+                TextEntry::make('video_duration')
+                    ->label('Duração do Vídeo')
+                    ->state(fn ($record): ?int => $record->linkedVideo()?->duration_seconds)
+                    ->formatStateUsing(fn ($state): string => self::formatVideoDuration($state))
+                    ->visible(fn ($record): bool => (bool) $record->video)
+                    ->columnSpan(1),
+
+                MediaAction::make('open')
+                    ->label(fn ($record) => self::resolveMediaActionConfig($record)['label'])
+                    ->icon(fn ($record) => self::resolveMediaActionConfig($record)['icon'])
+                    ->media(fn ($record) => self::resolveMediaActionConfig($record)['media'] ?? '#')
+                    ->visible(fn ($record): bool => self::resolveMediaActionConfig($record)['media'] !== null)
+                    ->columnSpan(1),
+            ])
+            ->columns(3);
+    }
+
+    private static function getTechnicalDetailsTab(): Tab
+    {
+        return Tab::make('Detalhes Técnicos')
+            ->icon(Heroicon::Cog6Tooth)
+            ->schema([
+                TextEntry::make('file_type')
+                    ->label('Tipo de Arquivo')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Imagem' => 'primary',
+                        'Vídeo' => 'warning',
+                        'Documento' => 'success',
+                        'Áudio' => 'danger',
+                        default => 'secondary',
+                    })
+                    ->icon(fn (string $state): Heroicon => match ($state) {
+                        'Imagem' => Heroicon::Photo,
+                        'Vídeo' => Heroicon::VideoCamera,
+                        'Documento' => Heroicon::Document,
+                        'Áudio' => Heroicon::MusicalNote,
+                        default => Heroicon::QuestionMarkCircle,
+                    })
+                    ->columnSpan(1),
+
+                TextEntry::make('created_at_display')
+                    ->label('Data de Criação')
+                    ->state(fn ($record): ?string => self::resolveCreatedAt($record))
+                    ->columnSpan(1),
+            ])
+            ->columns(2);
     }
 
     private static function resolveMediaActionConfig($record): array

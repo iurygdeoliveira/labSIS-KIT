@@ -27,77 +27,75 @@ Confira também o nosso [**Roadmap de Desenvolvimento**](ROADMAP.md) para ver o 
 
 Esta documentação foi criada para facilitar o entendimento de como as funcionalidades do kit foram implementadas, descrevendo os padrões adotados, decisões técnicas e exemplos práticos.
 
-Toda a documentação sobre como utilizar os recursos, padrões e arquitetura deste kit está disponível na pasta [`/docs`](/docs). Recomendamos a leitura para todos os desenvolvedores que pretendem utilizar este projeto.
-
-**Manual HTML (navegável no browser):** versão estática com visual LabSIS em [`docs/manual/index.html`](/docs/manual/index.html). Para regenerar após editar os `.md`: `python3 scripts/build-docs-manual.py` (veja [`docs/manual/README.md`](/docs/manual/README.md)).
+Toda a documentação sobre como utilizar os recursos, padrões e arquitetura deste kit está estruturada em HTML navegável na pasta [`/docs`](/docs/index.html).
 
 Além disso, este repositório foi indexado nas plataformas de IA [DeepWiki](https://deepwiki.com/iurygdeoliveira/labSIS-SaaS-KIT-V4) e [Context7](https://context7.com/iurygdeoliveira/labsis-saas-kit-v4), que auxiliam o leitor a explorar o código e compreender as implementações por meio de buscas contextuais e respostas explicativas.
 
 ### Autenticação e Segurança
 
-- [**Autenticação de Dois Fatores (2FA) no Filament**](/docs/02-autenticacao-e-seguranca/autenticacao-2fa.md)
-- [**Checklist de Segurança**](/docs/02-autenticacao-e-seguranca/checklist-de-seguranca.md)
-- [**Content Security Policy (CSP)**](/docs/02-autenticacao-e-seguranca/content-security-policy.md)
-- [**Fluxo de Registro de Novos Usuários**](/docs/02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.md)
-- [**Fortalecimento de Senha**](/docs/02-autenticacao-e-seguranca/fortalecimento-de-senha.md)
-- [**Login Unificado**](/docs/02-autenticacao-e-seguranca/login-unificado.md)
-- [**Prevenção Contra IDOR**](/docs/02-autenticacao-e-seguranca/prevencao-idor.md)
-- [**Roles/Permissions**](/docs/02-autenticacao-e-seguranca/roles-e-permissions.md)
-- [**Suspensão de Usuários**](/docs/02-autenticacao-e-seguranca/suspensao-usuarios.md)
-- [**Gestão de Tenants**](/docs/02-autenticacao-e-seguranca/tenancy-e-teams.md)
-- [**Customização de E-mails e Reset de Senha**](/docs/02-autenticacao-e-seguranca/customizacao-emails.md)
+- [**Autenticação de Dois Fatores (2FA) no Filament**](/docs/02-autenticacao-e-seguranca/autenticacao-2fa.html)
+- [**Checklist de Segurança**](/docs/02-autenticacao-e-seguranca/checklist-de-seguranca.html)
+- [**Content Security Policy (CSP)**](/docs/02-autenticacao-e-seguranca/content-security-policy.html)
+- [**Fluxo de Registro de Novos Usuários**](/docs/02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html)
+- [**Fortalecimento de Senha**](/docs/02-autenticacao-e-seguranca/fortalecimento-de-senha.html)
+- [**Login Unificado**](/docs/02-autenticacao-e-seguranca/login-unificado.html)
+- [**Prevenção Contra IDOR**](/docs/02-autenticacao-e-seguranca/prevencao-idor.html)
+- [**Roles/Permissions**](/docs/02-autenticacao-e-seguranca/roles-e-permissions.html)
+- [**Suspensão de Usuários**](/docs/02-autenticacao-e-seguranca/suspensao-usuarios.html)
+- [**Gestão de Organizações (Multi-tenancy)**](/docs/02-autenticacao-e-seguranca/tenancy-e-teams.html)
+- [**Customização de E-mails e Reset de Senha**](/docs/02-autenticacao-e-seguranca/customizacao-emails.html)
 
 ### UI e Customização
 
-- [**Customização de Cores e CSS Modular**](/docs/03-ui-e-customizacao/customizacao-de-cores.md)
-- [**Customização da Aparência do Painel**](/docs/03-ui-e-customizacao/customizando-layout.md)
-- [**Customização de Logotipo**](/docs/03-ui-e-customizacao/customizando-logo.md)
-- [**Widgets no Filament**](/docs/03-ui-e-customizacao/widgets-filament.md)
+- [**Customização de Cores e CSS Modular**](/docs/03-ui-e-customizacao/customizacao-de-cores.html)
+- [**Customização da Aparência do Painel**](/docs/03-ui-e-customizacao/customizando-layout.html)
+- [**Customização de Logotipo**](/docs/03-ui-e-customizacao/customizando-logo.html)
+- [**Widgets no Filament**](/docs/03-ui-e-customizacao/widgets-filament.html)
 
 ### Backend e Arquitetura
 
-- [**Entendendo o AppServiceProvider**](/docs/04-backend-e-arquitetura/app-service-provider.md)
-- [**Arquitetura do Model User**](/docs/04-backend-e-arquitetura/user-model.md)
-- [**Integração MongoDB - Auditoria e Logs**](/docs/04-backend-e-arquitetura/mongodb-integration.md)
-- [**Estratégia de Backup**](/docs/04-backend-e-arquitetura/estrategia-backup.md)
-- [**Scripts do Composer e Inicialização**](/docs/04-backend-e-arquitetura/scripts-composer.md)
-- [**Regras de Negócio**](/docs/04-backend-e-arquitetura/regras-de-negocio.md)
-- [**Gestão de mídias**](/docs/04-backend-e-arquitetura/gestao-de-midia.md)
-- [**Notificações**](/docs/04-backend-e-arquitetura/notifications-trait.md)
-- [**Utilizando Enumerações (Enums) com Filament**](/docs/04-backend-e-arquitetura/enums.md)
-- [**Padronização de Data e Hora**](/docs/04-backend-e-arquitetura/padrao-datetime.md)
+- [**Entendendo o AppServiceProvider**](/docs/04-backend-e-arquitetura/app-service-provider.html)
+- [**Arquitetura do Model User**](/docs/04-backend-e-arquitetura/user-model.html)
+- [**Integração MongoDB - Auditoria e Logs**](/docs/04-backend-e-arquitetura/mongodb-integration.html)
+- [**Estratégia de Backup**](/docs/04-backend-e-arquitetura/estrategia-backup.html)
+- [**Scripts do Composer e Inicialização**](/docs/04-backend-e-arquitetura/scripts-composer.html)
+- [**Regras de Negócio**](/docs/04-backend-e-arquitetura/regras-de-negocio.html)
+- [**Gestão de mídias**](/docs/04-backend-e-arquitetura/gestao-de-midia.html)
+- [**Notificações**](/docs/04-backend-e-arquitetura/notifications-trait.html)
+- [**Utilizando Enumerações (Enums) com Filament**](/docs/04-backend-e-arquitetura/enums.html)
+- [**Padronização de Data e Hora**](/docs/04-backend-e-arquitetura/padrao-datetime.html)
 
 ### Stack Tecnológica
 
-- [**Stack Tecnológica (Versões)**](/docs/04-backend-e-arquitetura/stack-tecnologica.md)
+- [**Stack Tecnológica (Versões)**](/docs/04-backend-e-arquitetura/stack-tecnologica.html)
 
 ### Otimizações
 
-- [**Otimização com #[Computed]**](/docs/05-otimizacoes/livewire-computed.md)
-- [**Performance no Filament**](/docs/05-otimizacoes/filament-performance.md)
-- [**Cache e Redis**](/docs/05-otimizacoes/cache-e-redis.md)
-- [**Otimização de Cache de Página com Cloudflare**](/docs/05-otimizacoes/cloudflare-page-cache.md)
-- [**Laravel Pulse**](/docs/05-otimizacoes/laravel-pulse.md)
+- [**Otimização com #[Computed]**](/docs/05-otimizacoes/livewire-computed.html)
+- [**Performance no Filament**](/docs/05-otimizacoes/filament-performance.html)
+- [**Cache e Redis**](/docs/05-otimizacoes/cache-e-redis.html)
+- [**Otimização de Cache de Página com Cloudflare**](/docs/05-otimizacoes/cloudflare-page-cache.html)
+- [**Laravel Pulse**](/docs/05-otimizacoes/laravel-pulse.html)
 
 ### Qualidade de Código
 
-- [**Larastan**](/docs/07-qualidade-de-codigo/01-larastan.md)
-- [**Rector**](/docs/07-qualidade-de-codigo/02-rector.md)
-- [**Filacheck Pro**](/docs/07-qualidade-de-codigo/04-filacheck.md)
-- [**IDE Helper**](/docs/07-qualidade-de-codigo/03-ide-helper.md)
+- [**Larastan**](/docs/07-qualidade-de-codigo/01-larastan.html)
+- [**Rector**](/docs/07-qualidade-de-codigo/02-rector.html)
+- [**Filacheck Pro**](/docs/07-qualidade-de-codigo/04-filacheck.html)
+- [**IDE Helper**](/docs/07-qualidade-de-codigo/03-ide-helper.html)
 
 ### Testes Automatizados
 
-- [**Introdução aos Testes Automatizados**](/docs/06-testes/01-introducao.md)
-- [**Testes de Autenticação**](/docs/06-testes/02-autenticacao.md)
-- [**Testes de Acesso aos Painéis**](/docs/06-testes/03-acesso-paineis.md)
+- [**Introdução aos Testes Automatizados**](/docs/06-testes/01-introducao.html)
+- [**Testes de Autenticação**](/docs/06-testes/02-autenticacao.html)
+- [**Testes de Acesso aos Painéis**](/docs/06-testes/03-acesso-paineis.html)
 
 ### Inteligência Artificial
 
-- [**Laravel Boost - MCP para Laravel**](/docs/08-ai-agents/laravel-boost.md)
-- [**Protocolo de Execução de Skills**](/docs/08-ai-agents/protocolo-operacional.md)
-- [**Padrão de Nomenclatura de Skills**](/docs/08-ai-agents/padrao-de-skills.md)
-- [**Guia de Workflows do Agente**](/docs/08-ai-agents/guia-workflows.md)
+- [**Laravel Boost - MCP para Laravel**](/docs/08-ai-agents/laravel-boost.html)
+- [**Protocolo de Execução de Skills**](/docs/08-ai-agents/protocolo-operacional.html)
+- [**Padrão de Nomenclatura de Skills**](/docs/08-ai-agents/padrao-de-skills.html)
+- [**Guia de Workflows do Agente**](/docs/08-ai-agents/guia-workflows.html)
 
 ## Pré-requisitos
 
@@ -111,8 +109,8 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 
 ## Como realizar a instalação
 
-- [Instalação via Laravel Installer](/docs/01-instalacao-e-setup/instalacao-via-laravel-installer.md)
-- [Instalação manual (clonando o repositório)](/docs/01-instalacao-e-setup/instalacao-manual.md)
+- [Instalação via Laravel Installer](/docs/01-instalacao-e-setup/instalacao-via-laravel-installer.html)
+- [Instalação manual (clonando o repositório)](/docs/01-instalacao-e-setup/instalacao-manual.html)
 
 ## Primeiro acesso
 
@@ -124,16 +122,16 @@ Após rodar as migrations e seeders, os seguintes usuários são criados pelo `U
     - Acesso ao painel: `/admin`
     - Observação: Possui a role Admin em escopo global.
 
-- Usuários de exemplo (escopo por tenant):
+- Usuários de exemplo (escopo por organização):
     - Sicrano
         - Email: `sicrano@labsis.dev.br`
         - Senha: `mudar123`
-        - Tenants: Tenant A (Owner), Tenant B (User)
+        - Organizações: Team A (Owner), Team B (User)
         - Acesso ao painel: `/user`
     - Beltrano
         - Email: `beltrano@labsis.dev.br`
         - Senha: `mudar123`
-        - Tenants: Tenant A (User), Tenant B (Owner)
+        - Organizações: Team A (User), Team B (Owner)
         - Acesso ao painel: `/user`
 
 ## Agradecimentos
@@ -148,7 +146,6 @@ Em especial, agradecemos a:
 - **Comunidade Beer and Code** ([beerandcode.com.br](https://beerandcode.com.br/)): Pela excelente metodologia de ensino em Laravel, que tem colaborador com a formação de desenvolvedores PHP, fornecendo conhecimento prático e focado em soluções reais.
 - **Leandro Costa** ([@leandrocfe](https://github.com/leandrocfe)): Por suas valiosas contribuições e por compartilhar conhecimento de alta qualidade sobre Filament em seu canal [Filament Brasil no YouTube](https://www.youtube.com/@filamentbr), que foi fundamental para a implementação de diversas features neste projeto.
 - **Nanderson Castro** ([@NandoKstroNet](https://github.com/NandoKstroNet)): Pelo excelente trabalho no canal [Code Experts](https://www.youtube.com/@codeexperts), que tem sido uma fonte valiosa de conhecimento técnico e boas práticas de desenvolvimento.
-- **João Paulo Leite Nascimento** ([@joaopaulolndev](https://github.com/joaopaulolndev)): Pelo desenvolvimento do pacote [filament-edit-profile](https://github.com/joaopaulolndev/filament-edit-profile), que revolucionou a experiência de edição de perfil de usuários no Filament. Este pacote oferece uma solução completa e elegante para gerenciamento de perfis de usuário.
 - **Jeferson Gonçalves** ([@jeffersongoncalves](https://github.com/jeffersongoncalves)): Pelo desenvolvimento de diversos pacotes, que agregam grande valor a comunidade filament + laravel.
 
 O trabalho de vocês contribui significativamente para o avanço e a qualidade deste projeto.
@@ -157,9 +154,9 @@ O trabalho de vocês contribui significativamente para o avanço e a qualidade d
 
 O Kit oferece uma base sólida com os seguintes recursos já implementados:
 
-- **Gestão de Tenants:** Sistema multi-tenant completo com isolamento de dados por organização. Inclui criação e gerenciamento de tenants, controle de acesso baseado em roles (Admin, Owner, User), e interface administrativa para configuração de permissões por tenant.
+- **Gestão de Organizações:** Sistema multi-tenant completo com isolamento de dados por organização (`Organization`). Inclui criação e gerenciamento de organizações, membros e convites, além de controle de acesso baseado em roles (`OrganizationRole`).
 
-- **Gestão de Roles e Permissões:** Sistema hierárquico de autorização com três níveis (Admin global, Owner por tenant, User por tenant). CRUD completo para roles e permissões com isolamento por tenant, policies centralizadas e interface de gerenciamento intuitiva.
+- **Gestão de Roles e Permissões:** Sistema de autorização em escopo (Admin global, Owner por organização, User/Admin por organização). Gerenciamento de roles e permissões com isolamento por organização, policies centralizadas e interface intuitiva.
 
 - **Gestão de Mídias:** CRUD completo para mídias, com Preview de Conteúdo, Organização por Tipo e Tamanho Humanizado.
 
@@ -197,7 +194,7 @@ Este projeto utiliza um conjunto de ferramentas para garantir a qualidade, padro
 - **[fakerphp/faker](https://github.com/fakerphp/faker):** Gera dados falsos para popular o banco de dados em testes e seeders.
 - **[larastan/larastan](https://github.com/larastan/larastan):** Realiza análise estática de código para encontrar bugs sem executar o código.
 - **[laravel-shift/blueprint](https://blueprint.laravelshift.com/):** Gera código Laravel rapidamente a partir de um arquivo de definição.
-- **[laravel/boost](https://packagist.org/packages/laravel/boost):** Servidor MCP oficial do Laravel que fornece contexto inteligente sobre a aplicação (versões, schema DB, rotas, Artisan) para agentes de IA. [Ver documentação](/docs/08-ai-agents/laravel-boost.md).
+- **[laravel/boost](https://packagist.org/packages/laravel/boost):** Servidor MCP oficial do Laravel que fornece contexto inteligente sobre a aplicação (versões, schema DB, rotas, Artisan) para agentes de IA. [Ver documentação](/docs/08-ai-agents/laravel-boost.html).
 - **[laravel/pint](https://github.com/laravel/pint):** Formata o código PHP para seguir um padrão de estilo consistente (PSR-12).
 - **[laravel/sail](https://github.com/laravel/sail):** Ambiente de desenvolvimento local completo baseado em Docker.
 - **[laravel/tinker](https://github.com/laravel/tinker):** Console interativo (REPL) para executar código no contexto da aplicação.

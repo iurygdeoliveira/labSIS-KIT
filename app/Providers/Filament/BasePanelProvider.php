@@ -79,7 +79,6 @@ abstract class BasePanelProvider extends PanelProvider
                 EasyFooterPlugin::make()
                     ->footerEnabled()
                     ->withFooterPosition('footer')
-                    ->withGithub(showLogo: true, showUrl: true)
                     ->withLogo(
                         asset('images/labsis_logo_bg.png'),
                         'https://www.labsis.dev.br'

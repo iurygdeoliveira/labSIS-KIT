@@ -4,6 +4,9 @@
 /* Definições de cores base */
 @import "./components/colors.css";
 
+/* Componentes - Base Layout */
+@import "./components/badges.css";
+
 /* Componentes - PRIMARY (Verde Floresta) */
 @import "./components/primary/buttons.css";
 @import "./components/primary/links.css";

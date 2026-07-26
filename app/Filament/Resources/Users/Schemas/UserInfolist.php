@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\OrganizationRole;
@@ -32,12 +34,14 @@ class UserInfolist
     private static function getPersonalInfoTab(): Tab
     {
         return Tab::make('Informações Pessoais')
-            ->icon('icon-userpersonal')
+            ->icon(Heroicon::User)
             ->schema([
                 TextEntry::make('name')
-                    ->label('Nome'),
+                    ->label('Nome')
+                    ->columnSpan(1),
                 TextEntry::make('email')
-                    ->label('E-mail'),
+                    ->label('E-mail')
+                    ->columnSpan(1),
             ])->columns(2);
     }
 

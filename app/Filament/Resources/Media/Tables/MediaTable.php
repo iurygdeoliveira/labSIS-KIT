@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Media\Tables;
 
 use App\Filament\Resources\Media\Actions\DeleteMediaAction;
 use App\Models\MediaItem as MediaItemModel;
 use App\Support\AppDateTime;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -59,9 +62,22 @@ class MediaTable
                 //
             ])
             ->recordActions([
-                ViewAction::make()->iconButton()->icon(Heroicon::Eye)->tooltip('Visualizar'),
-                EditAction::make()->iconButton()->icon(Heroicon::Pencil)->tooltip('Editar'),
-                DeleteMediaAction::make()->iconButton()->icon(Heroicon::Trash)->tooltip('Excluir'),
+                ActionGroup::make([
+                    ViewAction::make()
+                        ->tooltip('Visualizar')
+                        ->color('gray')
+                        ->icon(Heroicon::Eye)
+                        ->hiddenLabel(),
+                    EditAction::make()
+                        ->tooltip('Editar')
+                        ->color('success')
+                        ->icon(Heroicon::PencilSquare)
+                        ->hiddenLabel(),
+                    DeleteMediaAction::make()
+                        ->tooltip('Excluir')
+                        ->hiddenLabel(),
+                ])
+                    ->buttonGroup(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

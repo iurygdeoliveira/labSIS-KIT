@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Users\Tables;
 
 use App\Enums\OrganizationRole;
@@ -7,6 +9,7 @@ use App\Events\UserApproved;
 use App\Filament\Resources\Users\Actions\DeleteUserAction;
 use App\Models\Organization;
 use App\Models\User;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -55,17 +58,23 @@ class UsersTable
                 //
             ])
             ->recordActions([
-                ViewAction::make()
-                    ->iconButton()
-                    ->icon(Heroicon::Eye)
-                    ->tooltip('Visualizar')
-                    ->color('secondary'),
-                EditAction::make()
-                    ->iconButton()
-                    ->icon(Heroicon::Pencil)
-                    ->tooltip('Editar')
-                    ->visible(fn (User $record): bool => Filament::auth()->user()->can('update', $record) && $record->isApproved()),
-                DeleteUserAction::make()->iconButton()->icon(Heroicon::Trash)->tooltip('Excluir'),
+                ActionGroup::make([
+                    ViewAction::make()
+                        ->tooltip('Visualizar')
+                        ->color('gray')
+                        ->icon(Heroicon::Eye)
+                        ->hiddenLabel(),
+                    EditAction::make()
+                        ->tooltip('Editar')
+                        ->color('success')
+                        ->icon(Heroicon::PencilSquare)
+                        ->hiddenLabel()
+                        ->visible(fn (User $record): bool => Filament::auth()->user()->can('update', $record) && $record->isApproved()),
+                    DeleteUserAction::make()
+                        ->tooltip('Excluir')
+                        ->hiddenLabel(),
+                ])
+                    ->buttonGroup(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

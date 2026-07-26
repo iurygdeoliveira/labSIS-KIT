@@ -1,0 +1,16 @@
+/*
+ * Badges - Estilos base de layout
+ * Garante que badges ocupem apenas a largura necessária para conter o seu conteúdo interno.
+ */
+
+.fi-badge {
+    width: fit-content !important;
+    max-width: max-content !important;
+    display: inline-flex !important;
+}
+
+/* Em infolistas (Infolists) e entradas de texto com badge, assegura alinhamento e dimensões compactas */
+.fi-in-text-item:has(> .fi-badge),
+.fi-in-text:has(.fi-badge) {
+    width: fit-content;
+}
