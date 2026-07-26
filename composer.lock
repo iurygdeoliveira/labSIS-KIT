@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e703918ef8dae9728c0f24eb4a0ceb2",
+    "content-hash": "d0a56324e4e586a9b6599a56ecf7ef0e",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -5164,6 +5164,86 @@
                 "source": "https://github.com/antonioribeiro/google2fa-qrcode/tree/v4.0.0"
             },
             "time": "2026-05-08T19:24:44+00:00"
+        },
+        {
+            "name": "prodstarter/filament-notification-center",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/prodstarter/filament-notification-center.git",
+                "reference": "023368fe67ef0747d427de28c092c35a743882e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/prodstarter/filament-notification-center/zipball/023368fe67ef0747d427de28c092c35a743882e2",
+                "reference": "023368fe67ef0747d427de28c092c35a743882e2",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^5.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.0",
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^8.0",
+                "orchestra/testbench": "^9.0|^10.0|^11.0",
+                "pestphp/pest": "^3.7|^4.0",
+                "pestphp/pest-plugin-arch": "^3.0|^4.0",
+                "pestphp/pest-plugin-laravel": "^3.0|^4.0",
+                "pestphp/pest-plugin-livewire": "^3.0|^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "NotificationCenter": "Prodstarter\\FilamentNotificationCenter\\Facades\\FilamentNotificationCenter",
+                        "FilamentNotificationCenter": "Prodstarter\\FilamentNotificationCenter\\Facades\\FilamentNotificationCenter"
+                    },
+                    "providers": [
+                        "Prodstarter\\FilamentNotificationCenter\\FilamentNotificationCenterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Prodstarter\\FilamentNotificationCenter\\": "src/",
+                    "Prodstarter\\FilamentNotificationCenter\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stanley Ojadovwa",
+                    "email": "stanwafi@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Extend Filament's notification drawer with customizable tabs and notification categories for a cleaner, more organized user experience",
+            "homepage": "https://github.com/prodstarter/filament-notification-center",
+            "keywords": [
+                "filament",
+                "filament-notification-center",
+                "filament-plugin",
+                "filamentphp",
+                "laravel",
+                "prodstarter"
+            ],
+            "support": {
+                "issues": "https://github.com/prodstarter/filament-notification-center/issues",
+                "source": "https://github.com/prodstarter/filament-notification-center"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/prodstarter",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-07-10T14:58:50+00:00"
         },
         {
             "name": "psr/clock",

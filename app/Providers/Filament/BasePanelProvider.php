@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
+use App\Filament\Configurators\FilamentComponentsConfigurator;
 use App\Http\Middleware\EnsureSecurityHeaders;
 use App\Http\Middleware\RedirectToProperPanelMiddleware;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
+use Filament\Enums\DatabaseNotificationsPosition;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -34,6 +36,10 @@ abstract class BasePanelProvider extends PanelProvider
                 ->path($this->getPanelPath())
                 ->spa()
                 ->globalSearch(false)
+                ->bootUsing(function (): void {
+                    FilamentComponentsConfigurator::configure();
+                })
+                ->databaseNotifications(position: DatabaseNotificationsPosition::Topbar)
                 ->databaseTransactions()
                 ->profile()
                 ->topbar(false)
