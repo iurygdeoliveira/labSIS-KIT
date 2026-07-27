@@ -10,7 +10,6 @@ use App\Filament\Pages\Organization\GeneralSettings;
 use App\Filament\Resources\Authentication\AuthenticationLogResource;
 use App\Filament\Resources\Media\MediaResource;
 use App\Filament\Resources\Organization\OrganizationResource;
-use App\Filament\Resources\Security\SecurityEventResource;
 use App\Filament\Resources\Users\UserResource;
 
 class NavigationSortConfig
@@ -23,7 +22,6 @@ class NavigationSortConfig
             MediaResource::class => 1,
             UserResource::class => 2,
             AuthenticationLogResource::class => 3,
-            SecurityEventResource::class => 4,
             OrganizationResource::class => 5,
             Templates::class => 6,
             PermissionsCluster::class => 7,

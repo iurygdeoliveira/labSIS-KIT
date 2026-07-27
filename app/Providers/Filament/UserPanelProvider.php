@@ -15,12 +15,12 @@ use App\Http\Middleware\TeamSyncMiddleware;
 use App\Livewire\Organization\ListInvitations;
 use App\Livewire\Organization\ListMembers;
 use App\Models\Organization;
+use App\Support\NotificationCenter\NotificationCategory;
+use App\Support\NotificationCenter\NotificationCenterManager;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\Support\Colors\Color;
 use Filament\Support\Icons\Heroicon;
-use Prodstarter\FilamentNotificationCenter\FilamentNotificationCenterPlugin;
-use Prodstarter\FilamentNotificationCenter\NotificationCenterCategory;
 
 class UserPanelProvider extends BasePanelProvider
 {
@@ -30,27 +30,25 @@ class UserPanelProvider extends BasePanelProvider
         // Configurações compartilhadas (Base define id/path via getPanelId/getPanelPath)
         $panel = parent::panel($panel);
 
+        NotificationCenterManager::registerCategories('user', [
+            NotificationCategory::make('tenant')
+                ->label('Organização')
+                ->icon(Heroicon::Users)
+                ->color(Color::Blue)
+                ->order(1),
+            NotificationCategory::make('media')
+                ->label('Mídias')
+                ->icon(Heroicon::Photo)
+                ->color(Color::Emerald)
+                ->order(2),
+            NotificationCategory::make('billing')
+                ->label('Faturamento')
+                ->icon(Heroicon::CreditCard)
+                ->order(3),
+        ]);
+
         // Particularidades do painel user
         $panel = $panel
-            ->plugins([
-                FilamentNotificationCenterPlugin::make()->categories([
-                    NotificationCenterCategory::make('tenant')
-                        ->label('Organização')
-                        ->icon(Heroicon::Users)
-                        ->color(Color::Blue)
-                        ->order(1),
-                    NotificationCenterCategory::make('media')
-                        ->label('Mídias')
-                        ->icon(Heroicon::Photo)
-                        ->color(Color::Emerald)
-                        ->order(2),
-                    NotificationCenterCategory::make('billing')
-                        ->label('Faturamento')
-                        ->icon(Heroicon::CreditCard)
-                        ->color(Color::Amber)
-                        ->order(3),
-                ]),
-            ])
             ->tenant(Organization::class, slugAttribute: 'slug')
             ->tenantRegistration(RegisterOrganization::class)
             ->tenantMenu(true)

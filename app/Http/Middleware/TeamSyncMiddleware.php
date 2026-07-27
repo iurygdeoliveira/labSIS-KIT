@@ -37,6 +37,14 @@ class TeamSyncMiddleware
             return $next($request);
         }
 
+        $currentTeam = Filament::getTenant();
+
+        if ($currentTeam instanceof Organization) {
+            $this->applyTeam($user, $currentTeam->getKey());
+
+            return $next($request);
+        }
+
         $routeTeamSlug = (string) ($request->route('tenant') ?? '');
 
         if ($routeTeamSlug !== '') {
@@ -48,8 +56,6 @@ class TeamSyncMiddleware
                 return $next($request);
             }
         }
-
-        $currentTeam = Filament::getTenant();
 
         if ($currentTeam === null) {
             /** @var Organization|null $fallback */

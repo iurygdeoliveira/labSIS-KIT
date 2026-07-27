@@ -62,9 +62,13 @@ class GeneralSettings extends Page
 
     public function mount(): void
     {
-        $this->form->fill(
-            Filament::getTenant()->only(['name', 'slug']),
-        );
+        $tenant = Filament::getTenant();
+
+        if ($tenant instanceof Organization) {
+            $this->form->fill(
+                $tenant->only(['name', 'slug']),
+            );
+        }
     }
 
     public function content(Schema $schema): Schema
@@ -79,6 +83,11 @@ class GeneralSettings extends Page
     public function form(Schema $schema): Schema
     {
         $tenant = Filament::getTenant();
+        $rules = [];
+
+        if ($tenant instanceof Organization) {
+            $rules[] = Rule::unique($tenant->getTable(), 'slug')->ignore($tenant->getKey());
+        }
 
         return $schema
             ->statePath('data')
@@ -90,7 +99,7 @@ class GeneralSettings extends Page
                     ->label(__('organization.fields.slug'))
                     ->required()
                     ->regex('/^[a-z0-9]+(?:-[a-z0-9]+)*$/')
-                    ->rules([Rule::unique($tenant->getTable(), 'slug')->ignore($tenant->getKey())])
+                    ->rules($rules)
                     ->validationMessages(['regex' => __('organization.validation.slug_regex')]),
             ]);
     }
@@ -106,9 +115,15 @@ class GeneralSettings extends Page
 
     public function save(): void
     {
+        $tenant = Filament::getTenant();
+
+        if (! $tenant instanceof Organization) {
+            return;
+        }
+
         $data = $this->form->getState();
 
-        Filament::getTenant()->update($data);
+        $tenant->update($data);
 
         Notification::make()
             ->title(__('organization.notifications.saved'))

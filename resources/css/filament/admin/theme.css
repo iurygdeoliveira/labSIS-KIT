@@ -72,10 +72,9 @@
 @import "./components/notifications/primary.css";
 @import "./components/notifications/danger.css";
 @import "./components/notifications/warning.css";
+@import "./components/notifications/notification-center.css";
 
 @source '../../../../app/Filament/';
 @source '../../../../resources/views/';
 
 @source '../../../../vendor/devonab/filament-easy-footer/resources/views/**/*';
-@source '../../../../vendor/wallacemartinss/filament-security/resources/views/**/*';
-@source '../../../../vendor/wallacemartinss/filament-security/src/**/*';

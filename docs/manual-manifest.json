@@ -236,6 +236,15 @@
           "section_label": "04 — Backend e Arquitetura"
         },
         {
+          "slug": "notification-center",
+          "title": "Notification Center - Notificações Categorizadas",
+          "filename": "notification-center.html",
+          "md_source": "docs/04-backend-e-arquitetura/notification-center.md",
+          "html_output": "docs/manual/04-backend-e-arquitetura/notification-center.html",
+          "section_id": "04-backend-e-arquitetura",
+          "section_label": "04 — Backend e Arquitetura"
+        },
+        {
           "slug": "padrao-datetime",
           "title": "Padronização de Data e Hora",
           "filename": "padrao-datetime.html",

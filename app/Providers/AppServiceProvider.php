@@ -28,6 +28,7 @@ use App\Observers\UserObserver;
 use App\Observers\VideoObserver;
 use App\Policies\AuthenticationLogPolicy;
 use App\Support\AppDateTime;
+use App\Support\NotificationCenter\NotificationCenterManager;
 use App\Tenancy\SpatieTeamResolver as AppSpatieTeamResolver;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as FilamentLoginResponse;
 use Filament\Auth\Http\Responses\Contracts\LogoutResponse as LogoutResponseContract;
@@ -70,6 +71,12 @@ class AppServiceProvider extends ServiceProvider
         $this->configEvents();
         $this->configObservers();
         $this->configGates();
+        $this->configNotificationCenter();
+    }
+
+    private function configNotificationCenter(): void
+    {
+        NotificationCenterManager::boot();
     }
 
     private function configGates(): void

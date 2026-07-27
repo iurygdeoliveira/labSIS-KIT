@@ -7,6 +7,7 @@ namespace App\Providers\Filament;
 use App\Filament\Configurators\FilamentComponentsConfigurator;
 use App\Http\Middleware\EnsureSecurityHeaders;
 use App\Http\Middleware\RedirectToProperPanelMiddleware;
+use App\Livewire\NotificationCenter;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Enums\DatabaseNotificationsPosition;
@@ -40,6 +41,7 @@ abstract class BasePanelProvider extends PanelProvider
                     FilamentComponentsConfigurator::configure();
                 })
                 ->databaseNotifications(position: DatabaseNotificationsPosition::Topbar)
+                ->databaseNotificationsLivewireComponent(NotificationCenter::class)
                 ->databaseTransactions()
                 ->profile()
                 ->topbar(false)

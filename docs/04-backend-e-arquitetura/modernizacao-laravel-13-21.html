@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual" data-generated-at="2026-07-26">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Modernização Laravel 13.21+ (Guia Prático) — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao"><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="../03-ui-e-customizacao/customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="../03-ui-e-customizacao/customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="../03-ui-e-customizacao/widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura" open><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="enums.html">Utilizando Enumerações (Enums) no Laravel com Integra…</a></li>
+<li><a href="estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="gestao-de-midia.html">Gestao De Midia</a></li>
+<li><a href="mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="modernizacao-laravel-13-21.html" class="is-active">Modernização Laravel 13.21+ (Guia Prático)</a></li>
+<li><a href="notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="notification-center.html">Notification Center - Notificações Categorizadas</a></li>
+<li><a href="padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações com `#[C…</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="08-ai-agents"><summary class="sidebar-section-label">08 — AI Agents</summary><ul class="sidebar-pages">
+<li><a href="../08-ai-agents/guia-workflows.html">Guia de Workflows do Agente (Gemini)</a></li>
+<li><a href="../08-ai-agents/laravel-boost.html">Laravel Boost - MCP para Laravel</a></li>
+<li><a href="../08-ai-agents/padrao-de-skills.html">Padrão de Nomenclatura de Skills: Action-Object</a></li>
+<li><a href="../08-ai-agents/protocolo-operacional.html">PROTOCOLO DE EXECUÇÃO: INTEGRAÇÃO CONTEXTUAL DE SKILLS</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">Backend e Arquitetura</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Modernização Laravel 13.21+</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">04 — Backend e Arquitetura</p>
+<h1 class="doc-title">Modernização Laravel 13.21+ (Guia Prático)</h1>
+<p class="doc-lead">Como aplicar as quatro melhorias arquiteturais e de performance introduzidas no Laravel 13.21.0 em sistemas legados e no labSIS-KIT.</p>
+</header>
+<div class="prose-content">
+<div class="callout callout-info"><p><strong>Objetivo</strong>: Este documento demonstra a implementação prática das melhorias analisadas a partir do release Laravel 13.21.0, servindo como referência de modernização para transformar código legado verbal em padrões limpos baseados em atributos do PHP 8.5+ e novas APIs do framework.</p></div>
+
+<h2 id="overview-das-melhorias">Visão Geral das Quatro Melhorias</h2>
+<p>O Laravel 13.21.0 introduz recursos que reduzem significativamente o código boilerplate em Models, Controllers, Form Requests e manipulação de mídias. No projeto <strong>labSIS-KIT</strong>, aplicamos essas diretrizes para estabelecer um padrão ouro que pode ser facilmente replicado em projetos legados.</p>
+
+<table class="data"><thead><tr>
+<th>Recurso / Melhoria</th>
+<th>Padrão Legado (Antigo)</th>
+<th>Novo Padrão Laravel 13.21+</th>
+<th>Benefício Principal</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>A. RouteKey Attribute</strong></td>
+<td>Sobrescrever método <code>getRouteKeyName()</code> em cada model ou trait</td>
+<td><code>#[RouteKey('uuid')]</code> no topo da classe do Model</td>
+<td>Código declarativo, limpo e sem poluição de métodos</td>
+</tr>
+<tr>
+<td><strong>B. Suporte a AVIF & Image Facade</strong></td>
+<td>Bibliotecas externas pesadas ou conversão manual em lote sem fallback</td>
+<td><code>Image::fromUpload($file)->toAvif()->quality(80)</code></td>
+<td>Compressão superior de imagens (até 50% menor que WebP) com API fluente nativa</td>
+</tr>
+<tr>
+<td><strong>C. RequestAttribute Injection</strong></td>
+<td><code>$request->attributes->get('key')</code> dentro do corpo do controller</td>
+<td><code>#[RequestAttribute('key')] ?string $key</code> direto nos parâmetros do método</td>
+<td>Desacoplamento, injeção de dependência limpa e testabilidade melhorada</td>
+</tr>
+<tr>
+<td><strong>D. Validação Base64 Nativa</strong></td>
+<td>Regex customizadas ou closures complexas nos Form Requests</td>
+<td><code>'payload' => ['required', 'string', 'base64']</code></td>
+<td>Segurança e consistência na validação de payloads binários via API</td>
+</tr>
+</tbody></table>
+
+<hr/>
+
+<h2 id="melhoria-a-routekey">1. Melhoria A: Modernização de Models com <code>#[RouteKey]</code></h2>
+<p>Em projetos legados, a customização de chaves de roteamento do Eloquent exigia a implementação do método <code>getRouteKeyName()</code> no Model ou a criação de Traits complexas. Com o atributo <code>#[RouteKey]</code>, declaramos essa intenção diretamente na definição da classe.</p>
+
+<h3 id="comparacao-codigo">Como era no Legado vs. Como ficou no labSIS-KIT</h3>
+<div class="code-compare">
+<div>
+<h4>❌ Padrão Legado (Boilerplate)</h4>
+<pre><code class="language-php">// app/Traits/UuidTrait.php
+trait UuidTrait
+{
+    public function getRouteKeyName(): string
+    {
+        return 'uuid'; // Redundante e acoplado
+    }
+}</code></pre>
+</div>
+<div>
+<h4>✅ Padrão Moderno (Laravel 13.21+)</h4>
+<pre><code class="language-php">// app/Models/MediaItem.php
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
+
+#[RouteKey('uuid')]
+class MediaItem extends Model
+{
+    use InteractsWithMedia, UuidTrait;
+    // Sem necessidade de redefinir getRouteKeyName!
+}</code></pre>
+</div>
+</div>
+
+<p>No <code>labSIS-KIT</code>, essa alteração foi aplicada de forma padronizada aos modelos <code>MediaItem</code>, <code>Video</code>, <code>User</code> (com chave <code>uuid</code>) e <code>Organization</code> (com chave <code>slug</code>). O método <code>getRouteKeyName()</code> foi completamente removido do <code>UuidTrait</code>, simplificando a manutenção.</p>
+
+<hr/>
+
+<h2 id="melhoria-b-avif">2. Melhoria B: Suporte a AVIF via <code>Image</code> Facade e <code>MediaService</code></h2>
+<p>O formato AVIF oferece uma taxa de compressão substancialmente melhor que JPEG, PNG ou WebP, mantendo a fidelidade visual. O Laravel 13.21 introduziu integração aprimorada no facade <code>Image</code> para conversão fluente no momento do upload.</p>
+
+<h3 id="implementacao-mediaservice">Implementação em Serviço de Mídia (<code>MediaService.php</code>)</h3>
+<p>Em sistemas de gestão de arquivos (como o integrado ao Spatie Media Library no nosso starter kit), implementamos a conversão automática de qualquer upload de imagem para <code>.avif</code>, com tratamento de resiliência e fallback caso o driver de imagem do servidor apresente limitações:</p>
+
+<pre><code class="language-php">// app/Services/MediaService.php
+use Illuminate\Support\Facades\Image;
+use Illuminate\Http\UploadedFile;
+
+protected function attachUploadedFile(MediaItem $item, UploadedFile $file, string $collection): void
+{
+    $mime = $file->getMimeType();
+
+    // Se for imagem e não for SVG, GIF animado ou já AVIF, converte automaticamente
+    if (str_starts_with($mime, 'image/') && ! in_array($mime, ['image/svg+xml', 'image/gif', 'image/avif'], true)) {
+        try {
+            $avifImage = Image::fromUpload($file)->toAvif()->quality(80);
+            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.avif';
+
+            $item->addMediaFromString($avifImage->toBytes())
+                ->usingFileName($filename)
+                ->toMediaCollection($collection);
+
+            return;
+        } catch (\Throwable $e) {
+            // Fallback resiliente para o arquivo original em caso de falha no driver
+        }
+    }
+
+    $item->addMedia($file)->toMediaCollection($collection);
+}</code></pre>
+
+<div class="callout callout-tip"><p><strong>Dica de Performance</strong>: Definir a qualidade como <code>80</code> na chamada <code>->quality(80)</code> representa o ponto ótimo para a maioria das aplicações web, gerando arquivos de proporção ínfima com zero perda perceptível de nitidez em telas Retina/4K.</p></div>
+
+<hr/>
+
+<h2 id="melhoria-c-request-attribute">3. Melhoria C: Injeção de Contexto com <code>#[RequestAttribute]</code></h2>
+<p>Aplicações modernas em arquiteturas Multi-Tenant ou com APIs móveis utilizam Middlewares para interceptar tokens, headers (como <code>X-Tenant-ID</code> ou <code>X-Client-ID</code>) e injetá-los na requisição via <code>$request->attributes->set('key', $value)</code>.</p>
+
+<p>No padrão legado, o Controller precisava extrair manualmente esses atributos. No Laravel 13.21+, utilizamos o atributo do container <code>#[RequestAttribute]</code> diretamente na assinatura do método do Controller.</p>
+
+<h3 id="exemplo-injetor-middleware">Fluxo de Arquitetura Limpa</h3>
+<ol>
+<li><strong>Middleware de Contexto (<code>InjectRequestContext.php</code>)</strong>: Intercepta a requisição e popula os atributos.</li>
+<li><strong>Controller (<code>MediaUploadController.php</code>)</strong>: Recebe os valores injetados como parâmetros tipados.</li>
+</ol>
+
+<pre><code class="language-php">// 1. Middleware populando atributos
+class InjectRequestContext
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        if ($tenantId = $request->header('X-Tenant-ID') ?: $request->query('tenant_id')) {
+            $request->attributes->set('tenant_id', (string) $tenantId);
+        }
+        return $next($request);
+    }
+}
+
+// 2. Controller consumindo de forma limpa e tipada
+use Illuminate\Container\Attributes\RequestAttribute;
+
+class MediaUploadController
+{
+    public function store(
+        StoreMediaBase64Request $request,
+        #[RequestAttribute('tenant_id')] ?string $tenantId = null,
+        #[RequestAttribute('client_id')] ?string $clientId = null
+    ): JsonResponse {
+        // O Laravel resolve e injeta automaticamente $tenantId sem acoplamento a $request->attributes!
+        // ... lógica de upload ...
+    }
+}</code></pre>
+
+<hr/>
+
+<h2 id="melhoria-d-base64">4. Melhoria D: Validação Nativa <code>base64</code> em Form Requests</h2>
+<p>A recepção de mídias ou documentos codificados em Base64 via APIs JSON é comum em integrações mobile e webhooks. O Laravel 13.21+ elimina a necessidade de validações customizadas, oferecendo a regra nativa <code>base64</code> no motor de validação.</p>
+
+<h3 id="form-request-exemplo">Aplicação no <code>StoreMediaBase64Request.php</code></h3>
+<pre><code class="language-php">namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreMediaBase64Request extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'payload' => ['required', 'string', 'base64'], // Regra nativa do Laravel 13.21+
+            'mime_type' => ['nullable', 'string', 'in:image/png,image/jpeg,image/webp,image/avif'],
+        ];
+    }
+}</code></pre>
+
+<hr/>
+
+<h2 id="guia-migracao-legados">5. Guia Passo a Passo para Aplicação em Projetos Legados</h2>
+<p>Para aplicar este pacote de modernizações em um sistema Laravel legado sem causar interrupções, siga esta ordem de execução recomendada:</p>
+
+<ol class="step-list">
+<li>
+<strong>Auditoria e Atualização de Dependências</strong>
+<p>Verifique o arquivo <code>composer.json</code> e garanta que o framework esteja na versão mínimo <code>13.21.0</code> (ou superior). Instale também o driver de processamento de imagens: <code>composer require intervention/image</code>.</p>
+</li>
+<li>
+<strong>Substituição Gradual de <code>getRouteKeyName()</code></strong>
+<p>Faça uma busca no projeto por <code>function getRouteKeyName</code>. Para cada Model localizado, importe <code>use Illuminate\Database\Eloquent\Attributes\RouteKey;</code>, adicione a anotação no topo da classe e remova o método interno. Execute a suíte de testes de integração para validar o roteamento.</p>
+</li>
+<li>
+<strong>Otimização de Storage e Imagens</strong>
+<p>Identifique os pontos onde <code>UploadedFile::store()</code> ou manipulações manuais ocorrem. Substitua por chamadas ao facade <code>Image::fromUpload()</code>, garantindo um bloco <code>try/catch</code> ao redor para que servidores de homologação ou locais sem bibliotecas gráficas avançadas não quebrem o fluxo.</p>
+</li>
+<li>
+<strong>Refatoração de Middlewares e Controllers de API</strong>
+<p>Em pontos onde sua aplicação lê headers customizados ou dados de sessão temporários via <code>$request->attributes->get()</code>, refatore a assinatura dos métodos dos controllers para adotar <code>#[RequestAttribute('nome_do_atributo')]</code>.</p>
+</li>
+<li>
+<strong>Limpeza de Form Requests</strong>
+<p>Substitua regras legadas como <code>regex:/^[a-zA-Z0-9\/\r\n+]*={0,2}$/</code> pelo simples e direto <code>'base64'</code>.</p>
+</li>
+</ol>
+
+</div>
+</article>
+</div>
+</div>
+
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

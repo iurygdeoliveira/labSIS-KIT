@@ -8,6 +8,7 @@ use App\Traits\UuidTrait;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 /**
@@ -59,6 +60,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
     'size',
     'organization_id',
 ])]
+#[RouteKey('uuid')]
 #[Table(name: 'media_items')]
 #[WithoutTimestamps]
 class MediaItem extends Model implements HasMedia

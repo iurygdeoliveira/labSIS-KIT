@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 13.20.0.
+ * Generated for Laravel 13.22.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -10528,7 +10528,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Http\Client\PendingRequest withResponseMiddleware(callable $middleware)
      * @method static \Illuminate\Http\Client\PendingRequest withAttributes(array $attributes)
      * @method static \Illuminate\Http\Client\PendingRequest beforeSending(callable $callback)
-     * @method static \Illuminate\Http\Client\PendingRequest afterResponse(callable|null $callback)
+     * @method static \Illuminate\Http\Client\PendingRequest afterResponse(callable $callback)
      * @method static \Illuminate\Http\Client\PendingRequest throw(callable|null $callback = null)
      * @method static \Illuminate\Http\Client\PendingRequest throwIf(callable|bool $condition)
      * @method static \Illuminate\Http\Client\PendingRequest throwUnless(callable|bool $condition)
@@ -10622,7 +10622,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Create a new response instance for use during stubbing.
          *
-         * @param array|string|null $body
+         * @param \Psr\Http\Message\StreamInterface|array|string|resource|null $body
          * @param int $status
          * @param array $headers
          * @return \GuzzleHttp\Promise\PromiseInterface
@@ -10636,7 +10636,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Create a new PSR-7 response instance for use during stubbing.
          *
-         * @param array|string|null $body
+         * @param \Psr\Http\Message\StreamInterface|array|string|resource|null $body
          * @param int $status
          * @param array<string, mixed> $headers
          * @return \GuzzleHttp\Psr7\Response
@@ -10651,7 +10651,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Create a new RequestException instance for use during stubbing.
          *
-         * @param array|string|null $body
+         * @param \Psr\Http\Message\StreamInterface|array|string|resource|null $body
          * @param int $status
          * @param array<string, mixed> $headers
          * @return \Illuminate\Http\Client\RequestException
@@ -10981,6 +10981,183 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Http\Client\Factory $instance */
             return $instance->macroCall($method, $parameters);
+        }
+
+            }
+    /**
+     * @see \Illuminate\Image\ImageManager
+     */
+    class Image {
+        /**
+         * Create an image instance from raw bytes.
+         *
+         * @static
+         */
+        public static function fromBytes($contents)
+        {
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromBytes($contents);
+        }
+
+        /**
+         * Create an image instance from a base64 encoded string.
+         *
+         * @static
+         */
+        public static function fromBase64($base64)
+        {
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromBase64($base64);
+        }
+
+        /**
+         * Create an image instance from a file path.
+         *
+         * @static
+         */
+        public static function fromPath($path)
+        {
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromPath($path);
+        }
+
+        /**
+         * Create an image instance from a storage disk path.
+         *
+         * @static
+         */
+        public static function fromStorage($path, $disk = null)
+        {
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromStorage($path, $disk);
+        }
+
+        /**
+         * Create an image instance from an uploaded file.
+         *
+         * @static
+         */
+        public static function fromUpload($file)
+        {
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromUpload($file);
+        }
+
+        /**
+         * Create an image instance from a URL.
+         *
+         * @static
+         */
+        public static function fromUrl($url)
+        {
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromUrl($url);
+        }
+
+        /**
+         * Register a transformation handler for the given driver.
+         *
+         * @param class-string<\Illuminate\Contracts\Image\Transformation> $transformation
+         * @static
+         */
+        public static function transformUsing($driver, $transformation, $callback)
+        {
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->transformUsing($driver, $transformation, $callback);
+        }
+
+        /**
+         * Get the default image driver name.
+         *
+         * @static
+         */
+        public static function getDefaultDriver()
+        {
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->getDefaultDriver();
+        }
+
+        /**
+         * Get a driver instance.
+         *
+         * @param \UnitEnum|string|null $driver
+         * @return mixed
+         * @throws \InvalidArgumentException
+         * @static
+         */
+        public static function driver($driver = null)
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->driver($driver);
+        }
+
+        /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param-closure-this $this  $callback
+         * @return \Illuminate\Image\ImageManager
+         * @static
+         */
+        public static function extend($driver, $callback)
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->extend($driver, $callback);
+        }
+
+        /**
+         * Get all of the created "drivers".
+         *
+         * @return array<string, mixed>
+         * @static
+         */
+        public static function getDrivers()
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->getDrivers();
+        }
+
+        /**
+         * Get the container instance used by the manager.
+         *
+         * @return \Illuminate\Contracts\Container\Container
+         * @static
+         */
+        public static function getContainer()
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->getContainer();
+        }
+
+        /**
+         * Set the container instance used by the manager.
+         *
+         * @param \Illuminate\Contracts\Container\Container $container
+         * @return \Illuminate\Image\ImageManager
+         * @static
+         */
+        public static function setContainer($container)
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->setContainer($container);
+        }
+
+        /**
+         * Forget all of the resolved driver instances.
+         *
+         * @return \Illuminate\Image\ImageManager
+         * @static
+         */
+        public static function forgetDrivers()
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->forgetDrivers();
         }
 
             }
@@ -11548,7 +11725,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Unset the given channel instance.
          *
-         * @param string|null $driver
+         * @param \UnitEnum|string|null $driver
          * @return void
          * @static
          */
@@ -14379,6 +14556,57 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Cache\RateLimiter $instance */
             return $instance->cleanRateLimiterKey($key);
+        }
+
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @param-closure-this static  $macro
+         * @return void
+         * @static
+         */
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Cache\RateLimiter::macro($name, $macro);
+        }
+
+        /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @param bool $replace
+         * @return void
+         * @throws \ReflectionException
+         * @static
+         */
+        public static function mixin($mixin, $replace = true)
+        {
+            \Illuminate\Cache\RateLimiter::mixin($mixin, $replace);
+        }
+
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool
+         * @static
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Cache\RateLimiter::hasMacro($name);
+        }
+
+        /**
+         * Flush the existing macros.
+         *
+         * @return void
+         * @static
+         */
+        public static function flushMacros()
+        {
+            \Illuminate\Cache\RateLimiter::flushMacros();
         }
 
             }
@@ -22565,6 +22793,19 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Fake the DNS lookups performed by validation rules so they always succeed.
+         *
+         * @param bool $value
+         * @return void
+         * @static
+         */
+        public static function fakeDnsLookups($value = true)
+        {
+            /** @var \Illuminate\Validation\Factory $instance */
+            $instance->fakeDnsLookups($value);
+        }
+
+        /**
          * Set the Validator instance resolver.
          *
          * @param \Closure $resolver
@@ -24879,6 +25120,137 @@ namespace Hugomyb\FilamentMediaAction\Facades {
             }
     }
 
+namespace Jaydeep\LaravelTimeMachine\Facades {
+    /**
+     * @see \Jaydeep\LaravelTimeMachine\Recorder
+     */
+    class TimeMachine {
+        /**
+         * @static
+         */
+        public static function enable($enabled = true)
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->enable($enabled);
+        }
+
+        /**
+         * @static
+         */
+        public static function isEnabled()
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->isEnabled();
+        }
+
+        /**
+         * @static
+         */
+        public static function bootStart()
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->bootStart();
+        }
+
+        /**
+         * Record a lifecycle phase boundary (bootstrap, booted, route_matched…).
+         *
+         * @static
+         */
+        public static function phase($name, $at = null)
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->phase($name, $at);
+        }
+
+        /**
+         * Drop an instantaneous marker onto the timeline.
+         *
+         * @static
+         */
+        public static function mark($label, $meta = [])
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->mark($label, $meta);
+        }
+
+        /**
+         * Open a named span. Pair with endSpan().
+         *
+         * @static
+         */
+        public static function startSpan($name, $group = 'custom', $meta = [])
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->startSpan($name, $group, $meta);
+        }
+
+        /**
+         * Close a previously opened span.
+         *
+         * @static
+         */
+        public static function endSpan($name)
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->endSpan($name);
+        }
+
+        /**
+         * Time a callback as a span and return its result.
+         *
+         * @return mixed
+         * @static
+         */
+        public static function measure($name, $callback, $group = 'custom', $meta = [])
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->measure($name, $callback, $group, $meta);
+        }
+
+        /**
+         * Record an executed query. $timeMs is the DB-reported duration (ms).
+         *
+         * @static
+         */
+        public static function recordQuery($sql, $bindings, $timeMs, $connection = null)
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->recordQuery($sql, $bindings, $timeMs, $connection);
+        }
+
+        /**
+         * @static
+         */
+        public static function setMeta($meta)
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->setMeta($meta);
+        }
+
+        /**
+         * @static
+         */
+        public static function getMeta()
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->getMeta();
+        }
+
+        /**
+         * Flatten everything into a serializable profile array.
+         *
+         * @static
+         */
+        public static function toArray()
+        {
+            /** @var \Jaydeep\LaravelTimeMachine\Recorder $instance */
+            return $instance->toArray();
+        }
+
+            }
+    }
+
 namespace Laravel\Mcp\Facades {
     /**
      * @see Registrar
@@ -26738,203 +27110,6 @@ namespace Livewire {
         public static function modal($name)
         {
             return \Livewire\Component::modal($name);
-        }
-
-            }
-    }
-
-namespace Prodstarter\FilamentNotificationCenter\Facades {
-    /**
-     * @see \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter
-     */
-    class FilamentNotificationCenter {
-        /**
-         * @param array<NotificationCenterCategory | BackedEnum> $categories
-         * @static
-         */
-        public static function categories($categories)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->categories($categories);
-        }
-
-        /**
-         * @static
-         */
-        public static function hasCategories()
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->hasCategories();
-        }
-
-        /**
-         * The registered categories, merged with any config-enabled built-in
-         * categories (e.g. imports/exports) that weren't already registered
-         * explicitly, sorted by order.
-         *
-         * @return Collection<string, NotificationCenterCategory>
-         * @static
-         */
-        public static function getCategories()
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->getCategories();
-        }
-
-        /**
-         * @static
-         */
-        public static function getCategory($id)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->getCategory($id);
-        }
-
-        /**
-         * @static
-         */
-        public static function defaultCategory($id)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->defaultCategory($id);
-        }
-
-        /**
-         * @static
-         */
-        public static function getDefaultCategory()
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->getDefaultCategory();
-        }
-
-        /**
-         * Resolve the category a stored notification belongs to, falling back to the
-         * configured default category when the notification wasn't sent with one.
-         *
-         * @static
-         */
-        public static function resolveCategoryId($rawCategory)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->resolveCategoryId($rawCategory);
-        }
-
-        /**
-         * @param \Closure(string $categoryId):  array{heading: string, description: string}  $callback
-         * @static
-         */
-        public static function emptyStateUsing($callback)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->emptyStateUsing($callback);
-        }
-
-        /**
-         * @return \Prodstarter\FilamentNotificationCenter\array{heading: string, description: string}
-         * @static
-         */
-        public static function getEmptyState($categoryId)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->getEmptyState($categoryId);
-        }
-
-            }
-    /**
-     * @see \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter
-     */
-    class FilamentNotificationCenter {
-        /**
-         * @param array<NotificationCenterCategory | BackedEnum> $categories
-         * @static
-         */
-        public static function categories($categories)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->categories($categories);
-        }
-
-        /**
-         * @static
-         */
-        public static function hasCategories()
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->hasCategories();
-        }
-
-        /**
-         * The registered categories, merged with any config-enabled built-in
-         * categories (e.g. imports/exports) that weren't already registered
-         * explicitly, sorted by order.
-         *
-         * @return Collection<string, NotificationCenterCategory>
-         * @static
-         */
-        public static function getCategories()
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->getCategories();
-        }
-
-        /**
-         * @static
-         */
-        public static function getCategory($id)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->getCategory($id);
-        }
-
-        /**
-         * @static
-         */
-        public static function defaultCategory($id)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->defaultCategory($id);
-        }
-
-        /**
-         * @static
-         */
-        public static function getDefaultCategory()
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->getDefaultCategory();
-        }
-
-        /**
-         * Resolve the category a stored notification belongs to, falling back to the
-         * configured default category when the notification wasn't sent with one.
-         *
-         * @static
-         */
-        public static function resolveCategoryId($rawCategory)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->resolveCategoryId($rawCategory);
-        }
-
-        /**
-         * @param \Closure(string $categoryId):  array{heading: string, description: string}  $callback
-         * @static
-         */
-        public static function emptyStateUsing($callback)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->emptyStateUsing($callback);
-        }
-
-        /**
-         * @return \Prodstarter\FilamentNotificationCenter\array{heading: string, description: string}
-         * @static
-         */
-        public static function getEmptyState($categoryId)
-        {
-            /** @var \Prodstarter\FilamentNotificationCenter\FilamentNotificationCenter $instance */
-            return $instance->getEmptyState($categoryId);
         }
 
             }
@@ -30158,27 +30333,6 @@ namespace Livewire\Features\SupportTesting {
             return \Livewire\Features\SupportTesting\Testable::assertTableColumnSummarizerExists($columnName, $summarizerId);
         }
 
-        /**
-         * @see \Prodstarter\FilamentNotificationCenter\Testing\TestsFilamentNotificationCenter::assertActiveNotificationCategory()
-         * @param string $categoryId
-         * @static
-         */
-        public static function assertActiveNotificationCategory($categoryId)
-        {
-            return \Livewire\Features\SupportTesting\Testable::assertActiveNotificationCategory($categoryId);
-        }
-
-        /**
-         * @see \Prodstarter\FilamentNotificationCenter\Testing\TestsFilamentNotificationCenter::assertNotificationCategoryTabCount()
-         * @param string $categoryId
-         * @param int $count
-         * @static
-         */
-        public static function assertNotificationCategoryTabCount($categoryId, $count)
-        {
-            return \Livewire\Features\SupportTesting\Testable::assertNotificationCategoryTabCount($categoryId, $count);
-        }
-
             }
     }
 
@@ -30395,25 +30549,25 @@ namespace Filament\Widgets {
 namespace App\Filament\Resources\Organization\Pages {
     /**
      */
+    class CreateOrganization extends \Filament\Resources\Pages\CreateRecord {
+            }
+    /**
+     */
+    class DeleteOrganization extends \Filament\Resources\Pages\ViewRecord {
+            }
+    /**
+     */
     class EditOrganization extends \Filament\Resources\Pages\EditRecord {
             }
     /**
      */
     class ListOrganizations extends \Filament\Resources\Pages\ListRecords {
             }
-    }
-
-namespace App\Filament\Resources\Security\Pages {
     /**
+     * @property-read Organization|null $record
+     * @property-read array $organizationStats
      */
-    class ListSecurityEvents extends \WallaceMartinss\FilamentSecurity\Filament\Resources\SecurityEventResource\Pages\ListSecurityEvents {
-            }
-    }
-
-namespace WallaceMartinss\FilamentSecurity\Filament\Resources\SecurityEventResource\Pages {
-    /**
-     */
-    class ListSecurityEvents extends \Filament\Resources\Pages\ListRecords {
+    class ViewOrganization extends \Filament\Resources\Pages\ViewRecord {
             }
     }
 
@@ -36233,6 +36387,7 @@ namespace  {
     class Gate extends \Illuminate\Support\Facades\Gate {}
     class Hash extends \Illuminate\Support\Facades\Hash {}
     class Http extends \Illuminate\Support\Facades\Http {}
+    class Image extends \Illuminate\Support\Facades\Image {}
     class Js extends \Illuminate\Support\Js {}
     class Lang extends \Illuminate\Support\Facades\Lang {}
     class Log extends \Illuminate\Support\Facades\Log {}
@@ -36261,13 +36416,12 @@ namespace  {
     class FilamentEasyFooter extends \Devonab\FilamentEasyFooter\Facades\EasyFooter {}
     class Debugbar extends \Fruitcake\LaravelDebugbar\Facades\Debugbar {}
     class FilamentMediaAction extends \Hugomyb\FilamentMediaAction\Facades\FilamentMediaAction {}
+    class TimeMachine extends \Jaydeep\LaravelTimeMachine\Facades\TimeMachine {}
     class Mcp extends \Laravel\Mcp\Facades\Mcp {}
     class Nightwatch extends \Laravel\Nightwatch\Facades\Nightwatch {}
     class Pulse extends \Laravel\Pulse\Facades\Pulse {}
     class Flux extends \Flux\Flux {}
     class Livewire extends \Livewire\Livewire {}
-    class NotificationCenter extends \Prodstarter\FilamentNotificationCenter\Facades\FilamentNotificationCenter {}
-    class FilamentNotificationCenter extends \Prodstarter\FilamentNotificationCenter\Facades\FilamentNotificationCenter {}
     class Signal extends \Spatie\SignalAwareCommand\Facades\Signal {}
 }
 

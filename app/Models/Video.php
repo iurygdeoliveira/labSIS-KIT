@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Traits\UuidTrait;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 /**
  * @property int $id
  * @property int $media_item_id
@@ -48,6 +49,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'title',
     'duration_seconds',
 ])]
+#[RouteKey('uuid')]
 class Video extends Model
 {
     use HasFactory, UuidTrait;

@@ -19,6 +19,7 @@ use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -75,12 +76,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User role($roles, $guard = null, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAppAuthenticationRecoveryCodes($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAppAuthenticationSecret($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereApprovedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCustomFields($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereIsApproved($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereIsSuspended($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastLoginAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastLoginIp($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLocale($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
@@ -124,6 +129,7 @@ use Spatie\Permission\Traits\HasRoles;
     'app_authentication_recovery_codes',
     'remember_token',
 ])]
+#[RouteKey('uuid')]
 class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasMedia, HasTenants, MustVerifyEmail
 {
     use AppAuthenticationRecoveryCodes;
@@ -136,6 +142,20 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     use UuidTrait;
 
     private ?Collection $cachedTenants = null;
+
+    /** @var array<int|string, bool> */
+    protected array $cachedIsOwnerOfOrganization = [];
+
+    /** @var array<int|string, bool> */
+    protected array $cachedIsUserOfOrganization = [];
+
+    /** @var array<int|string, bool> */
+    protected array $cachedHasAnyRoleInOrganization = [];
+
+    protected ?bool $cachedHasOwnerRoleInAnyOrganization = null;
+
+    /** @var array<int|string, bool> */
+    protected array $cachedCanAccessTenant = [];
 
     /**
      * @return BelongsToMany<Organization, $this>
@@ -272,7 +292,17 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             return false;
         }
 
-        return $this->organizations()->whereKey($tenant->getKey())->exists();
+        $key = $tenant->getKey();
+
+        if (isset($this->cachedCanAccessTenant[$key])) {
+            return $this->cachedCanAccessTenant[$key];
+        }
+
+        if ($this->cachedTenants instanceof Collection) {
+            return $this->cachedCanAccessTenant[$key] = $this->cachedTenants->contains('id', $key);
+        }
+
+        return $this->cachedCanAccessTenant[$key] = $this->organizations()->whereKey($key)->exists();
     }
 
     public function getTenants(Panel $panel): array|Collection
@@ -325,26 +355,48 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function isOwnerOfOrganization(Organization $organization): bool
     {
-        return $this->getRoleQueryBuilder($organization)
+        $key = $organization->getKey();
+
+        if (isset($this->cachedIsOwnerOfOrganization[$key])) {
+            return $this->cachedIsOwnerOfOrganization[$key];
+        }
+
+        return $this->cachedIsOwnerOfOrganization[$key] = $this->getRoleQueryBuilder($organization)
             ->where('roles.name', OrganizationRole::Owner->value)
             ->exists();
     }
 
     public function isUserOfTeam(Organization $organization): bool
     {
-        return $this->getRoleQueryBuilder($organization)
+        $key = $organization->getKey();
+
+        if (isset($this->cachedIsUserOfOrganization[$key])) {
+            return $this->cachedIsUserOfOrganization[$key];
+        }
+
+        return $this->cachedIsUserOfOrganization[$key] = $this->getRoleQueryBuilder($organization)
             ->where('roles.name', OrganizationRole::User->value)
             ->exists();
     }
 
     public function hasAnyRoleInTeam(Organization $organization): bool
     {
-        return $this->getRoleQueryBuilder($organization)->exists();
+        $key = $organization->getKey();
+
+        if (isset($this->cachedHasAnyRoleInOrganization[$key])) {
+            return $this->cachedHasAnyRoleInOrganization[$key];
+        }
+
+        return $this->cachedHasAnyRoleInOrganization[$key] = $this->getRoleQueryBuilder($organization)->exists();
     }
 
     public function hasOwnerRoleInAnyTeam(): bool
     {
-        return $this->rolesWithTeams()
+        if ($this->cachedHasOwnerRoleInAnyOrganization !== null) {
+            return $this->cachedHasOwnerRoleInAnyOrganization;
+        }
+
+        return $this->cachedHasOwnerRoleInAnyOrganization = $this->rolesWithTeams()
             ->where('roles.name', OrganizationRole::Owner->value)
             ->exists();
     }
@@ -361,6 +413,8 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         $this->rolesWithTeams()->syncWithoutDetaching([
             $role->getKey() => ['team_id' => $organization->id],
         ]);
+
+        $this->clearRoleCaches($organization);
     }
 
     public function removeRoleFromTeam(string $roleName, Organization $organization): void
@@ -377,6 +431,8 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         $this->rolesWithTeams()
             ->wherePivot('team_id', $organization->id)
             ->detach($role->getKey());
+
+        $this->clearRoleCaches($organization);
     }
 
     public function removeAllUserRolesFromTeam(Organization $organization): void
@@ -393,6 +449,8 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         $this->rolesWithTeams()
             ->wherePivot('team_id', $organization->id)
             ->detach($roleIds->toArray());
+
+        $this->clearRoleCaches($organization);
     }
 
     public function removeAllOwnerRolesFromTeam(Organization $organization): void
@@ -409,6 +467,24 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         $this->rolesWithTeams()
             ->wherePivot('team_id', $organization->id)
             ->detach($roleIds->toArray());
+
+        $this->clearRoleCaches($organization);
+    }
+
+    public function clearRoleCaches(?Organization $organization = null): void
+    {
+        if ($organization) {
+            unset($this->cachedIsOwnerOfOrganization[$organization->id]);
+            unset($this->cachedIsUserOfOrganization[$organization->id]);
+            unset($this->cachedHasAnyRoleInOrganization[$organization->id]);
+            unset($this->cachedCanAccessTenant[$organization->id]);
+        } else {
+            $this->cachedIsOwnerOfOrganization = [];
+            $this->cachedIsUserOfOrganization = [];
+            $this->cachedHasAnyRoleInOrganization = [];
+            $this->cachedCanAccessTenant = [];
+        }
+        $this->cachedHasOwnerRoleInAnyOrganization = null;
     }
 
     private function getRoleQueryBuilder(Organization $organization): Builder
