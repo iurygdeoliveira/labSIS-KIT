@@ -4,16 +4,23 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Filament\Pages\ChangelogPage;
+use App\Models\Changelog;
 use App\Support\NotificationCenter\NotificationCategory;
 use App\Support\NotificationCenter\NotificationCenterManager;
 use App\Support\NotificationCenter\NotificationTab;
 use Filament\Livewire\DatabaseNotifications;
+use Filament\Actions\Action as NotificationAction;
+use Filament\Facades\Filament;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Blade;
 use Livewire\Attributes\Computed;
 use Override;
 
@@ -30,6 +37,8 @@ class NotificationCenter extends DatabaseNotifications
 
     protected DatabaseNotificationCollection|Paginator|null $notificationsCache = null;
 
+    protected bool $changelogSyncedThisRequest = false;
+
     public function setActiveCategory(string $categoryId): void
     {
         $this->activeCategory = $categoryId;
@@ -41,6 +50,8 @@ class NotificationCenter extends DatabaseNotifications
     #[Override]
     public function getNotifications(): DatabaseNotificationCollection|Paginator
     {
+        $this->syncUnreadChangelogNotifications();
+
         return $this->notificationsCache ??= parent::getNotifications();
     }
 
@@ -49,6 +60,11 @@ class NotificationCenter extends DatabaseNotifications
     {
         $this->clearNotificationCaches();
         parent::markAllNotificationsAsRead();
+
+        $user = filament()->auth()->user() ?? Filament::auth()->user();
+        if ($user && method_exists($user, 'markChangelogAsRead')) {
+            $user->markChangelogAsRead();
+        }
     }
 
     #[Override]
@@ -68,6 +84,8 @@ class NotificationCenter extends DatabaseNotifications
     #[Override]
     public function getUnreadNotificationsCount(): int
     {
+        $this->syncUnreadChangelogNotifications();
+
         return $this->unreadCountCache ??= $this->getBaseNotificationsQuery()->whereNull('read_at')->count();
     }
 
@@ -135,6 +153,63 @@ class NotificationCenter extends DatabaseNotifications
         return parent::getNotificationsQuery();
     }
 
+    #[Override]
+    public function markAllNotificationsAsReadAction(): NotificationAction
+    {
+        return NotificationAction::make('markAllNotificationsAsRead')
+            ->button()
+            ->color('success')
+            ->size('sm')
+            ->label(__('filament-notifications::database.modal.actions.mark_all_as_read.label'))
+            ->action('markAllNotificationsAsRead');
+    }
+
+    #[Override]
+    public function clearNotificationsAction(): NotificationAction
+    {
+        return NotificationAction::make('clearNotifications')
+            ->button()
+            ->color('danger')
+            ->size('sm')
+            ->label(__('filament-notifications::database.modal.actions.clear.label'))
+            ->action('clearNotifications')
+            ->close();
+    }
+
+    #[Override]
+    public function getNotification(DatabaseNotification $notification): Notification
+    {
+        $notif = parent::getNotification($notification);
+
+        $category = $notification->data['viewData']['category'] ?? $notification->data['category'] ?? null;
+        if ($category === 'system' || isset($notification->data['viewData']['changelog_version'])) {
+            $notif->color('info');
+            $notif->iconColor('info');
+
+            foreach ($notif->getActions() as $action) {
+                if ($action instanceof NotificationAction) {
+                    $action->color('info');
+                }
+            }
+        }
+
+        return $notif;
+    }
+
+    public function getNotificationCategory(DatabaseNotification $notification): ?NotificationCategory
+    {
+        $rawCategory = $notification->data['viewData']['category'] ?? $notification->data['category'] ?? null;
+        $catId = NotificationCenterManager::resolveCategoryId($rawCategory);
+        $panelId = Filament::getId();
+        $cat = NotificationCenterManager::getCategory($panelId, $catId);
+
+        if (! $cat && $catId === NotificationCenterManager::getDefaultCategory()) {
+            $cat = NotificationCategory::make($catId)->label('Geral');
+        }
+
+        return $cat;
+    }
+
     protected function scopeQueryToCategory(Builder|Relation $query, string $categoryId): Builder|Relation
     {
         if ($categoryId === NotificationCenterManager::getDefaultCategory()) {
@@ -149,6 +224,8 @@ class NotificationCenter extends DatabaseNotifications
 
     public function hasAnyNotifications(): bool
     {
+        $this->syncUnreadChangelogNotifications();
+
         if ($this->notificationsCache !== null && $this->notificationsCache->isNotEmpty() && $this->activeCategory === 'all') {
             return true;
         }
@@ -171,5 +248,80 @@ class NotificationCenter extends DatabaseNotifications
     public function render(): View
     {
         return view('livewire.notification-center');
+    }
+
+    protected function syncUnreadChangelogNotifications(): void
+    {
+        if ($this->changelogSyncedThisRequest) {
+            return;
+        }
+        $this->changelogSyncedThisRequest = true;
+
+        $user = filament()->auth()->user() ?? Filament::auth()->user();
+        if (! $user || ! method_exists($user, 'hasUnreadChangelog') || ! $user->hasUnreadChangelog()) {
+            return;
+        }
+
+        $latestEntry = Changelog::query()
+            ->where('is_released', true)
+            ->whereNotNull('released_at')
+            ->latest('released_at')
+            ->first()
+            ?? Changelog::query()->latest('created_at')->first()
+            ?? Changelog::query()->latest('id')->first();
+
+        if (! $latestEntry && file_exists(base_path('CHANGELOG.md'))) {
+            try {
+                \Illuminate\Support\Facades\Artisan::call('changelog:sync-github');
+                $latestEntry = Changelog::query()
+                    ->where('is_released', true)
+                    ->whereNotNull('released_at')
+                    ->latest('released_at')
+                    ->first()
+                    ?? Changelog::query()->latest('created_at')->first()
+                    ?? Changelog::query()->latest('id')->first();
+            } catch (\Throwable $e) {
+                // Ignora erros de sincronização se estiver sem internet
+            }
+        }
+
+        if (! $latestEntry) {
+            return;
+        }
+
+        $alreadyNotified = $user->notifications()
+            ->where(function (Builder|Relation $query) use ($latestEntry): void {
+                $query->where('data->viewData->changelog_version', $latestEntry->version)
+                    ->orWhere('data->title', 'like', '%' . $latestEntry->version . '%');
+            })
+            ->exists();
+
+        if (! $alreadyNotified) {
+            $url = '/';
+            try {
+                $url = ChangelogPage::getUrl();
+            } catch (\Throwable $e) {
+                // Fallback se não houver painel do filament no contexto
+            }
+
+            $notification = Notification::make()
+                ->title('Nova atualização disponível: v' . $latestEntry->version)
+                ->body('Uma nova versão do labSIS-KIT foi publicada no dia ' . $latestEntry->released_at->format('d/m/Y') . '. Confira as melhorias e novidades!')
+                ->icon('heroicon-o-document-text')
+                ->color('info')
+                ->category('system')
+                ->actions([
+                    NotificationAction::make('view')
+                        ->label('Ver Atualizações')
+                        ->url($url)
+                        ->color('info')
+                        ->markAsRead(),
+                ])
+                ->viewData(['changelog_version' => $latestEntry->version, 'category' => 'system']);
+
+            $user->notifyNow($notification->toDatabase());
+
+            $this->clearNotificationCaches();
+        }
     }
 }

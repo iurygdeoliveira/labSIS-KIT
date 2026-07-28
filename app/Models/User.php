@@ -38,6 +38,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Changelog;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @property int $id
@@ -122,6 +124,7 @@ use Spatie\Permission\Traits\HasRoles;
     'is_approved',
     'approved_by',
     'remember_token',
+    'last_read_changelog_at',
 ])]
 #[Hidden([
     'password',
@@ -185,6 +188,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             'suspended_at' => 'datetime:d/m/Y H:i',
             'app_authentication_secret' => 'encrypted',
             'app_authentication_recovery_codes' => 'encrypted:array',
+            'last_read_changelog_at' => 'datetime',
         ];
     }
 
@@ -494,5 +498,32 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             ->where('mhr.model_type', self::class)
             ->where('mhr.model_id', $this->id)
             ->where('mhr.team_id', $organization->id);
+    }
+
+    public function hasUnreadChangelog(): bool
+    {
+        $latestReleaseDate = Cache::remember('changelog:latest_date', 300, function () {
+            return Changelog::where('is_released', true)->max('released_at')
+                ?? Changelog::max('created_at');
+        });
+
+        if (! $latestReleaseDate) {
+            return false;
+        }
+
+        $lastRead = array_key_exists('last_read_changelog_at', $this->attributes)
+            ? $this->last_read_changelog_at
+            : ($this->attributes['last_read_changelog_at'] ?? null);
+
+        if (! $lastRead) {
+            return true;
+        }
+
+        return \Carbon\Carbon::parse($latestReleaseDate)->isAfter($lastRead);
+    }
+
+    public function markChangelogAsRead(): void
+    {
+        $this->forceFill(['last_read_changelog_at' => now()])->saveQuietly();
     }
 }

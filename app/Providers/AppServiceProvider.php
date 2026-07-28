@@ -82,6 +82,7 @@ class AppServiceProvider extends ServiceProvider
     private function configGates(): void
     {
         Gate::policy(AuthenticationLog::class, AuthenticationLogPolicy::class);
+        Gate::policy(Changelog::class, ChangelogPolicy::class);
         Gate::define('viewPulse', fn (AppUser $user): bool => $user->hasRole('admin'));
     }
 

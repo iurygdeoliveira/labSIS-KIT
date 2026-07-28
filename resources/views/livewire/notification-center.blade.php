@@ -3,7 +3,6 @@
     use Filament\Support\View\Components\BadgeComponent;
     use Illuminate\View\ComponentAttributeBag;
 
-    $tabs = $this->categoryTabs;
     $notifications = $this->getNotifications();
     $unreadNotificationsCount = $this->getUnreadNotificationsCount();
     $hasNotifications = $notifications->count();
@@ -15,20 +14,20 @@
 
 <div class="fi-no-database">
     <x-filament::modal
-        :alignment="$hasAnyNotifications ? null : Alignment::Center"
+        :alignment="$hasNotifications ? null : Alignment::Center"
         close-button
-        :description="$hasAnyNotifications ? null : __('filament-notifications::database.modal.empty.description')"
-        :heading="$hasAnyNotifications ? null : __('filament-notifications::database.modal.empty.heading')"
-        :icon="$hasAnyNotifications ? null : \Filament\Support\Icons\Heroicon::OutlinedBellSlash"
+        :description="$hasNotifications ? null : __('filament-notifications::database.modal.empty.description')"
+        :heading="$hasNotifications ? null : __('filament-notifications::database.modal.empty.heading')"
+        :icon="$hasNotifications ? null : \Filament\Support\Icons\Heroicon::OutlinedBellSlash"
         :icon-alias="
-            $hasAnyNotifications
+            $hasNotifications
             ? null
             : \Filament\Notifications\View\NotificationsIconAlias::DATABASE_MODAL_EMPTY_STATE
         "
-        :icon-color="$hasAnyNotifications ? null : 'gray'"
+        :icon-color="$hasNotifications ? null : 'gray'"
         id="database-notifications"
         slide-over
-        :sticky-header="$hasAnyNotifications"
+        :sticky-header="$hasNotifications"
         teleport="body"
         width="md"
         class="fi-no-database"
@@ -44,83 +43,60 @@
             </x-slot>
         @endif
 
-        @if ($hasAnyNotifications)
+        @if ($hasNotifications)
+            {{-- Header: Título e Ações no Topo com Estilo de Botão --}}
             <x-slot name="header">
-                <div class="fi-notification-center-header">
-                    <div>
-                        <h2 class="fi-modal-heading">
+                <div class="flex flex-col gap-3 w-full">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-base font-semibold leading-6 text-gray-950 dark:text-white flex items-center gap-2">
                             {{ __('filament-notifications::database.modal.heading') }}
 
                             @if ($unreadNotificationsCount)
-                                <span
-                                    {{
-                                        (new ComponentAttributeBag)->color(BadgeComponent::class, 'primary')->class([
-                                            'fi-badge fi-size-xs',
-                                        ])
-                                    }}
-                                >
+                                <span class="inline-flex items-center rounded-full bg-info-500/10 px-2 py-0.5 text-xs font-medium text-info-600 dark:text-info-400 dark:bg-info-400/10">
                                     {{ $unreadNotificationsCount }}
                                 </span>
                             @endif
                         </h2>
-
-                        <div class="fi-ac">
-                            @if ($unreadNotificationsCount && $this->markAllNotificationsAsReadAction?->isVisible())
-                                {{ $this->markAllNotificationsAsReadAction }}
-                            @endif
-
-                            @if ($hasNotifications && $this->clearNotificationsAction?->isVisible())
-                                {{ $this->clearNotificationsAction }}
-                            @endif
-                        </div>
                     </div>
 
-                    {{-- See notification-center.css for why the border/shadow, clipping,
-                         and width containment are split across two wrappers here. --}}
-                    <div class="fi-notification-center-tabs-outer">
-                        <div class="fi-notification-center-tabs-inner">
-                            <x-filament::tabs
-                                label="Categorias de notificação"
-                                style="box-shadow: none;"
-                            >
-                                @foreach ($tabs as $tab)
-                                    <x-filament::tabs.item
-                                        :active="$activeCategory === $tab->id"
-                                        :icon="$tab->icon"
-                                        :badge="$tab->count > 0 ? $tab->count : null"
-                                        :badge-color="$tab->color ?? 'gray'"
-                                        wire:click="setActiveCategory('{{ $tab->id }}')"
-                                        wire:key="notification-center-tab-{{ $tab->id }}"
-                                    >
-                                        {{ $tab->label }}
-                                    </x-filament::tabs.item>
-                                @endforeach
-                            </x-filament::tabs>
-                        </div>
+                    {{-- Botões de Ação no Topo (Estilo de Botão Maior e Centralizado) --}}
+                    <div class="flex items-center justify-center gap-3 w-full pt-1">
+                        @if ($unreadNotificationsCount && $this->markAllNotificationsAsReadAction?->isVisible())
+                            {{ $this->markAllNotificationsAsReadAction }}
+                        @endif
+
+                        @if ($hasNotifications && $this->clearNotificationsAction?->isVisible())
+                            {{ $this->clearNotificationsAction }}
+                        @endif
                     </div>
                 </div>
             </x-slot>
 
-            @if ($hasNotifications)
+            {{-- Corpo: Layout Nativo de Notificações (Imagem 1) --}}
+            <div
+                aria-label="{{ __('filament-notifications::database.modal.heading') }}"
+                role="list"
+                class="fi-no-notifications divide-y divide-gray-200 dark:divide-white/10 w-full overflow-x-hidden"
+            >
                 @foreach ($notifications as $notification)
                     <div
+                        role="listitem"
+                        wire:key="{{ $notification->getKey() }}.database-notifications.ctn"
                         @class([
                             'fi-no-notification-read-ctn' => ! $notification->unread(),
                             'fi-no-notification-unread-ctn' => $notification->unread(),
                         ])
                     >
+                        @if ($notification->unread())
+                            <span class="fi-sr-only">
+                                {{ __('filament-notifications::database.modal.unread_label') }}
+                            </span>
+                        @endif
+
                         {{ $this->getNotification($notification)->inline() }}
                     </div>
                 @endforeach
-            @else
-                <x-filament::empty-state
-                    :heading="$emptyState['heading']"
-                    :description="$emptyState['description']"
-                    :icon="\Filament\Support\Icons\Heroicon::OutlinedBellSlash"
-                    icon-color="gray"
-                    :contained="false"
-                />
-            @endif
+            </div>
 
             @if ($broadcastChannel = $this->getBroadcastChannel())
                 @script

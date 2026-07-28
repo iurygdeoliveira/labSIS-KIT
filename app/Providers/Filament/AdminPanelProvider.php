@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
+use App\Support\Changelog\ChangelogPlugin;
 use App\Support\NotificationCenter\NotificationCategory;
 use App\Support\NotificationCenter\NotificationCenterManager;
 use Filament\Pages\Dashboard;
@@ -45,6 +46,9 @@ class AdminPanelProvider extends BasePanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->pages([
                 Dashboard::class,
+            ])
+            ->plugins([
+                ChangelogPlugin::make(),
             ])
             ->tenant(null);
 

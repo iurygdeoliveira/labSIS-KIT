@@ -32,6 +32,7 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'is_suspended' => false,
+            'last_read_changelog_at' => null,
         ];
     }
 

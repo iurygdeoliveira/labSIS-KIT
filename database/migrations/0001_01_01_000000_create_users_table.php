@@ -24,6 +24,8 @@ return new class extends Migration
             $table->text('suspension_reason')->nullable();
             $table->text('app_authentication_secret')->nullable();
             $table->text('app_authentication_recovery_codes')->nullable();
+            $table->string('role')->default(config('filament-tenant-members.default_role', 'user'));
+            $table->timestamp('last_read_changelog_at')->nullable();
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();

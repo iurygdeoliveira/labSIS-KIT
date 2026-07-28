@@ -75,7 +75,17 @@ class NotificationCenterManager
 
     public static function getCategory(?string $panelId, string $id): ?NotificationCategory
     {
-        return self::getCategoriesForPanel($panelId)->get($id);
+        $category = self::getCategoriesForPanel($panelId)->get($id);
+
+        if (! $category) {
+            foreach (self::$panelCategories as $categories) {
+                if ($category = $categories->get($id)) {
+                    return $category;
+                }
+            }
+        }
+
+        return $category;
     }
 
     public static function setDefaultCategory(string $id): void

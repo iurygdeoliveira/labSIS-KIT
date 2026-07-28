@@ -15,6 +15,7 @@ use App\Http\Middleware\TeamSyncMiddleware;
 use App\Livewire\Organization\ListInvitations;
 use App\Livewire\Organization\ListMembers;
 use App\Models\Organization;
+use App\Support\Changelog\ChangelogPlugin;
 use App\Support\NotificationCenter\NotificationCategory;
 use App\Support\NotificationCenter\NotificationCenterManager;
 use Filament\Pages\Dashboard;
@@ -31,20 +32,16 @@ class UserPanelProvider extends BasePanelProvider
         $panel = parent::panel($panel);
 
         NotificationCenterManager::registerCategories('user', [
-            NotificationCategory::make('tenant')
-                ->label('Organização')
-                ->icon(Heroicon::Users)
-                ->color(Color::Blue)
+            NotificationCategory::make('system')
+                ->label('Sistema')
+                ->icon(Heroicon::Cog6Tooth)
+                ->color(Color::Gray)
                 ->order(1),
-            NotificationCategory::make('media')
-                ->label('Mídias')
-                ->icon(Heroicon::Photo)
-                ->color(Color::Emerald)
+            NotificationCategory::make('security')
+                ->label('Segurança')
+                ->icon(Heroicon::ShieldCheck)
+                ->color(Color::Red)
                 ->order(2),
-            NotificationCategory::make('billing')
-                ->label('Faturamento')
-                ->icon(Heroicon::CreditCard)
-                ->order(3),
         ]);
 
         // Particularidades do painel user
@@ -70,6 +67,9 @@ class UserPanelProvider extends BasePanelProvider
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->pages([
                 Dashboard::class,
+            ])
+            ->plugins([
+                ChangelogPlugin::make(),
             ])
             ->widgets([
             ])
