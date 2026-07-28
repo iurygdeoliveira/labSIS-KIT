@@ -503,7 +503,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     public function hasUnreadChangelog(): bool
     {
         $latestReleaseDate = Cache::remember('changelog:latest_date', 300, function () {
-            return Changelog::where('is_released', true)->max('released_at')
+            return Changelog::max('released_at')
                 ?? Changelog::max('created_at');
         });
 

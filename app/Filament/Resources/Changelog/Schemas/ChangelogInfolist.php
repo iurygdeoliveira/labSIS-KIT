@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Changelog\Schemas;
 
-use Filament\Infolists\Components\IconEntry;
+
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -38,15 +38,6 @@ class ChangelogInfolist
                     ->color('gray')
                     ->columnSpan(1),
 
-                TextEntry::make('type')
-                    ->label('Tipo de Alteração')
-                    ->badge()
-                    ->columnSpan(1),
-
-                IconEntry::make('is_released')
-                    ->label('Versão Lançada?')
-                    ->boolean()
-                    ->columnSpan(1),
 
                 TextEntry::make('released_at')
                     ->label('Data de Lançamento')

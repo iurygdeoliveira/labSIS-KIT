@@ -14,13 +14,11 @@ return new class extends Migration
             $table->string('project')->nullable()->index();
             $table->string('version')->index();
             $table->date('released_at')->nullable();
-            $table->boolean('is_released')->default(false);
-            $table->string('type'); // added, changed, deprecated, removed, fixed, security
             $table->text('description');
             $table->unsignedInteger('sort')->default(0);
             $table->timestamps();
 
-            $table->index(['project', 'version', 'type']);
+            $table->index(['project', 'version']);
         });
     }
 

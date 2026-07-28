@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Changelog\Tables;
 
-use App\Enums\Changelog\ChangeType;
 use App\Filament\Resources\Changelog\Actions\DeleteChangelogAction;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
@@ -12,7 +11,6 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
@@ -23,45 +21,25 @@ class ChangelogTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->defaultGroup('version')
             ->defaultSort('sort')
             ->columns([
                 TextColumn::make('version')
                     ->label('Versão')
                     ->badge()
                     ->color('gray')
-                    ->sortable()
-                    ->searchable(),
-
-                TextColumn::make('type')
-                    ->label('Tipo')
-                    ->badge()
                     ->sortable(),
 
                 TextColumn::make('description')
                     ->label('Descrição')
                     ->wrap()
-                    ->searchable()
-                    ->limit(120),
-
-                IconColumn::make('is_released')
-                    ->label('Lançado')
-                    ->boolean()
-                    ->sortable(),
+                    ->limit(255),
 
                 TextColumn::make('released_at')
                     ->label('Data')
                     ->date('d/m/Y')
-                    ->sortable()
-                    ->toggleable(),
+                    ->sortable(),
             ])
             ->filters([
-                SelectFilter::make('type')
-                    ->label('Tipo de Alteração')
-                    ->options(ChangeType::class),
-
-                TernaryFilter::make('is_released')
-                    ->label('Lançado?'),
             ])
             ->recordActions([
                 ActionGroup::make([

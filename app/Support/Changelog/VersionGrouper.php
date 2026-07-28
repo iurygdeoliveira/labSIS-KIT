@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support\Changelog;
 
-use App\Enums\Changelog\ChangeType;
+
 use App\Models\Changelog;
 use Illuminate\Support\Collection;
 
@@ -30,21 +30,4 @@ class VersionGrouper
             ->reverse();
     }
 
-    /**
-     * @param  Collection<int, Changelog>  $group
-     * @return Collection<int, array{type: ChangeType, entries: Collection<int, Changelog>}>
-     */
-    public function byType(Collection $group): Collection
-    {
-        return collect(ChangeType::cases())
-            ->map(fn (ChangeType $type): array => [
-                'type' => $type,
-                'entries' => $group
-                    ->filter(fn (Changelog $e): bool => $e->type === $type)
-                    ->sortBy('sort')
-                    ->values(),
-            ])
-            ->filter(fn (array $bucket): bool => $bucket['entries']->isNotEmpty())
-            ->values();
-    }
 }

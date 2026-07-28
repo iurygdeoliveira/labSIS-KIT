@@ -17,6 +17,12 @@ class ViewChangelog extends ViewRecord
     protected static string $resource = ChangelogResource::class;
 
     #[Override]
+    public function getTitle(): string
+    {
+        return 'Visualizar commit: ' . $this->getRecord()->version;
+    }
+
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use App\Filament\Pages\ChangelogPage;
+use App\Filament\Resources\Changelog\ChangelogResource;
 use App\Models\Changelog;
 use App\Support\NotificationCenter\NotificationCategory;
 use App\Support\NotificationCenter\NotificationCenterManager;
@@ -257,24 +257,23 @@ class NotificationCenter extends DatabaseNotifications
         }
         $this->changelogSyncedThisRequest = true;
 
+        /** @var \App\Models\User|null $user */
         $user = filament()->auth()->user() ?? Filament::auth()->user();
         if (! $user || ! method_exists($user, 'hasUnreadChangelog') || ! $user->hasUnreadChangelog()) {
             return;
         }
 
         $latestEntry = Changelog::query()
-            ->where('is_released', true)
             ->whereNotNull('released_at')
             ->latest('released_at')
             ->first()
             ?? Changelog::query()->latest('created_at')->first()
             ?? Changelog::query()->latest('id')->first();
 
-        if (! $latestEntry && file_exists(base_path('CHANGELOG.md'))) {
+        if (! $latestEntry) {
             try {
-                \Illuminate\Support\Facades\Artisan::call('changelog:sync-github');
+                \Illuminate\Support\Facades\Artisan::call('changelog:sync-git');
                 $latestEntry = Changelog::query()
-                    ->where('is_released', true)
                     ->whereNotNull('released_at')
                     ->latest('released_at')
                     ->first()
@@ -299,7 +298,7 @@ class NotificationCenter extends DatabaseNotifications
         if (! $alreadyNotified) {
             $url = '/';
             try {
-                $url = ChangelogPage::getUrl();
+                $url = ChangelogResource::getUrl();
             } catch (\Throwable $e) {
                 // Fallback se não houver painel do filament no contexto
             }

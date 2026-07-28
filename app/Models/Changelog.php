@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\Changelog\ChangeType;
+
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,8 +16,6 @@ use Illuminate\Support\Str;
  * @property string|null $project
  * @property string $version
  * @property Carbon|null $released_at
- * @property bool $is_released
- * @property ChangeType $type
  * @property string $description
  * @property int $sort
  * @property string $uuid
@@ -35,8 +33,6 @@ class Changelog extends Model
         'project',
         'version',
         'released_at',
-        'is_released',
-        'type',
         'description',
         'sort',
     ];
@@ -59,8 +55,6 @@ class Changelog extends Model
     {
         return [
             'released_at' => 'date',
-            'is_released' => 'boolean',
-            'type' => ChangeType::class,
             'sort' => 'integer',
         ];
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Support\Changelog;
 
-use App\Filament\Pages\ChangelogPage;
 use App\Filament\Resources\Changelog\ChangelogResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
@@ -26,9 +25,6 @@ class ChangelogPlugin implements Plugin
         $panel
             ->resources([
                 ChangelogResource::class,
-            ])
-            ->pages([
-                ChangelogPage::class,
             ]);
     }
 

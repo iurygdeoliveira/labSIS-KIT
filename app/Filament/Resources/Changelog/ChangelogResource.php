@@ -34,9 +34,9 @@ class ChangelogResource extends Resource
 
     protected static ?int $navigationSort = 90;
 
-    protected static ?string $modelLabel = 'Registro do Changelog';
+    protected static ?string $modelLabel = 'Atualizações';
 
-    protected static ?string $pluralModelLabel = 'Registros do Changelog';
+    protected static ?string $pluralModelLabel = 'Atualizações';
 
     #[Override]
     public static function getRecordRouteKeyName(): string
@@ -46,7 +46,7 @@ class ChangelogResource extends Resource
 
     public static function shouldRegisterNavigation(): bool
     {
-        return false;
+        return true;
     }
 
     #[Override]
