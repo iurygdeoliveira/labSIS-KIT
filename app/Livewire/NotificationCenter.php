@@ -48,6 +48,12 @@ class NotificationCenter extends DatabaseNotifications
     }
 
     #[Override]
+    public function getTrigger(): ?View
+    {
+        return view('livewire.notification-trigger');
+    }
+
+    #[Override]
     public function getNotifications(): DatabaseNotificationCollection|Paginator
     {
         $this->syncUnreadChangelogNotifications();
