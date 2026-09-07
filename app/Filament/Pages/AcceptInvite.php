@@ -10,6 +10,7 @@ use Filament\Pages\Page;
 use Filament\Panel;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
+use Livewire\Attributes\Locked;
 
 class AcceptInvite extends Page
 {
@@ -17,10 +18,13 @@ class AcceptInvite extends Page
 
     const ERROR_EMAIL_MISMATCH = 'email_mismatch';
 
+    #[Locked]
     public ?string $token = null;
 
+    #[Locked]
     public ?OrganizationInvite $invite = null;
 
+    #[Locked]
     public ?string $error = null;
 
     protected static bool $shouldRegisterNavigation = false;
@@ -144,7 +148,7 @@ class AcceptInvite extends Page
                 }
 
                 $organizationName = $this->invite->organization->name;
-                $this->invite->delete();
+                $this->invite->decline(Filament::auth()->user());
 
                 Notification::make()
                     ->title(__('organization.notifications.invitation_declined_title'))
@@ -157,7 +161,28 @@ class AcceptInvite extends Page
 
     protected function canRespondToInvite(): bool
     {
-        return $this->invite instanceof OrganizationInvite && $this->error === null;
+        $user = Filament::auth()->user();
+
+        $this->invite = OrganizationInvite::byToken($this->token ?? '')
+            ->with(['organization', 'user'])
+            ->pending()
+            ->first();
+
+        if (! $user || ! $this->invite instanceof OrganizationInvite) {
+            $this->error = self::ERROR_INVALID;
+
+            return false;
+        }
+
+        if (! $this->invite->matchesUser($user)) {
+            $this->error = self::ERROR_EMAIL_MISMATCH;
+
+            return false;
+        }
+
+        $this->error = null;
+
+        return true;
     }
 
     protected function notifyCannotRespond(): void

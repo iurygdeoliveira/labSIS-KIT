@@ -157,6 +157,7 @@ class UsersTable
             ->onIcon(Heroicon::Check)
             ->offIcon(Heroicon::XMark)
             ->label('Aprovar')
+            ->disabled(fn (User $record): bool => ! (Filament::auth()->user()?->can('approve', $record) ?? false))
             ->afterStateUpdated(function (User $record, $state): void {
                 // Se o usuário foi aprovado
                 if ($state) {

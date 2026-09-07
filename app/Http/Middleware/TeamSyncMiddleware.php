@@ -10,7 +10,6 @@ use App\Tenancy\SpatieTeamResolver;
 use Closure;
 use Filament\Facades\Filament;
 use Illuminate\Http\Request;
-use Spatie\Permission\PermissionRegistrar;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -80,10 +79,7 @@ class TeamSyncMiddleware
     {
         resolve(SpatieTeamResolver::class)->setPermissionsTeamId($teamId);
 
-        if ($teamId !== 0) {
-            $user->unsetRelation('roles');
-            $user->unsetRelation('permissions');
-            resolve(PermissionRegistrar::class)->forgetCachedPermissions();
-        }
+        $user->unsetRelation('roles');
+        $user->unsetRelation('permissions');
     }
 }

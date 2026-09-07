@@ -6,6 +6,7 @@ namespace App\Policies;
 
 use App\Enums\OrganizationRole;
 use App\Enums\Permission;
+use App\Models\Organization;
 use App\Models\User;
 use Filament\Facades\Filament;
 
@@ -58,6 +59,15 @@ class UserPolicy
     public function create(User $user): bool
     {
         return $this->hasPermission($user, Permission::CREATE);
+    }
+
+    public function approve(User $user, User $record): bool
+    {
+        $tenant = Filament::getTenant();
+
+        return $tenant instanceof Organization
+            && $user->isOwnerOfOrganization($tenant)
+            && $this->belongsToCurrentTenant($record);
     }
 
     /**

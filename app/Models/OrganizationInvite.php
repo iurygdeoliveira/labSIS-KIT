@@ -51,13 +51,37 @@ class OrganizationInvite extends Model
 
     public function accept(Authenticatable $user): void
     {
-        $this->update(['accepted_at' => now()]);
+        $this->getConnection()->transaction(function () use ($user): void {
+            $invite = $this->lockPendingForUser($user);
 
-        $this->organization->users()->syncWithoutDetaching([
-            $user->getAuthIdentifier() => [
-                'role' => $this->role->value,
-            ],
-        ]);
+            $invite->organization->users()->syncWithoutDetaching([
+                $user->getAuthIdentifier() => [
+                    'role' => $invite->role->value,
+                ],
+            ]);
+
+            $invite->update(['accepted_at' => now()]);
+        });
+    }
+
+    public function decline(Authenticatable $user): void
+    {
+        $this->getConnection()->transaction(function () use ($user): void {
+            $this->lockPendingForUser($user)->delete();
+        });
+    }
+
+    private function lockPendingForUser(Authenticatable $user): self
+    {
+        $invite = $this->newQuery()
+            ->whereKey($this->getKey())
+            ->pending()
+            ->lockForUpdate()
+            ->firstOrFail();
+
+        abort_unless($invite->matchesUser($user), 403);
+
+        return $invite;
     }
 
     public static function mintForUser(
