@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,20 +25,19 @@ use Illuminate\Support\Str;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
+#[Fillable([
+    'uuid',
+    'project',
+    'version',
+    'released_at',
+    'description',
+    'sort',
+])]
+#[RouteKey('uuid')]
+#[Table(name: 'changelogs')]
 class Changelog extends Model
 {
     use HasFactory;
-
-    protected $table = 'changelogs';
-
-    protected $fillable = [
-        'uuid',
-        'project',
-        'version',
-        'released_at',
-        'description',
-        'sort',
-    ];
 
     protected static function booted(): void
     {
@@ -46,11 +48,6 @@ class Changelog extends Model
         });
     }
 
-    public function getRouteKeyName(): string
-    {
-        return 'uuid';
-    }
-
     protected function casts(): array
     {
         return [
@@ -59,7 +56,12 @@ class Changelog extends Model
         ];
     }
 
-    public function scopeProject(Builder $query, ?string $project): Builder
+    /**
+     * @param  Builder<static>  $query
+     * @return Builder<static>
+     */
+    #[Scope]
+    protected function project(Builder $query, ?string $project): Builder
     {
         if ($project === null) {
             return $query;

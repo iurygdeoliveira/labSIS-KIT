@@ -247,7 +247,7 @@ class MediaForm
                             ->columnSpanFull(),
 
                         ViewField::make('video_preview')
-                            ->view('filament.forms.components.video-preview')
+                            ->view('panels.forms.components.video-preview')
                             ->dehydrated(false)
                             ->columnSpanFull(),
                     ]),

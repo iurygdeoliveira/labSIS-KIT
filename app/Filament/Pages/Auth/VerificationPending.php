@@ -13,7 +13,7 @@ class VerificationPending extends SimplePage
     use HasRoutes;
     use ResolvesFilamentPageConfiguration;
 
-    protected string $view = 'filament.pages.auth.verification-pending';
+    protected string $view = 'panels.pages.auth.verification-pending';
 
     protected static bool $shouldRegisterNavigation = false;
 

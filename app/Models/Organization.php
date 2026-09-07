@@ -4,26 +4,29 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[RouteKey('slug')]
+#[Fillable([
+    'name',
+    'slug',
+])]
 class Organization extends Model
 {
-    protected $fillable = [
-        'name',
-        'slug',
-    ];
-
+    /**
+     * @return HasMany<OrganizationInvite, $this>
+     */
     public function invites(): HasMany
     {
         return $this->hasMany(OrganizationInvite::class);
     }
 
     /**
-     * @return BelongsToMany<User, $this>
+     * @return BelongsToMany<User, $this, OrganizationUser>
      */
     public function users(): BelongsToMany
     {

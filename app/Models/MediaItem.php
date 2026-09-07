@@ -11,6 +11,16 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 /**
  * @property int $id
  * @property string $uuid
@@ -39,15 +49,6 @@ use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
  *
  * @mixin \Eloquent
  */
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-
 #[Appends([
     'file_type',
     'human_size',
@@ -74,68 +75,67 @@ class MediaItem extends Model implements HasMedia
             ->singleFile();
     }
 
-    protected function getHumanSizeAttribute(): string
+    protected function humanSize(): Attribute
     {
-        $size = (int) ($this->getFirstMedia('media')->size ?? 0);
+        return Attribute::make(get: function (): string {
+            $size = (int) ($this->getFirstMedia('media')->size ?? 0);
 
-        return formatBytes($size);
+            return formatBytes($size);
+        });
     }
 
-    protected function getFileTypeAttribute(): string
+    protected function fileType(): Attribute
     {
-        if ($this->video) {
-            return 'Vídeo';
-        }
+        return Attribute::make(get: function (): string {
+            if ($this->video) {
+                return 'Vídeo';
+            }
+            $mime = (string) ($this->getFirstMedia('media')->mime_type ?? '');
+            if ($mime === '') {
+                return 'Desconhecido';
+            }
+            $main = explode('/', $mime)[0];
 
-        $mime = (string) ($this->getFirstMedia('media')->mime_type ?? '');
-
-        if ($mime === '') {
-            return 'Desconhecido';
-        }
-
-        $main = explode('/', $mime)[0];
-
-        return match ($main) {
-            'image' => 'Imagem',
-            'video' => 'Vídeo',
-            'audio' => 'Áudio',
-            'application' => 'Documento',
-            'text' => 'Documento',
-            'font' => 'Fonte',
-            default => ucfirst($main ?: 'Desconhecido'),
-        };
+            return match ($main) {
+                'image' => 'Imagem',
+                'video' => 'Vídeo',
+                'audio' => 'Áudio',
+                'application' => 'Documento',
+                'text' => 'Documento',
+                'font' => 'Fonte',
+                default => ucfirst($main ?: 'Desconhecido'),
+            };
+        });
     }
 
-    // Removido accessor de name: passamos a usar a coluna em banco
-
-    protected function getImageUrlAttribute(): ?string
+    protected function imageUrl(): Attribute
     {
-        $media = $this->getFirstMedia('media');
-
-        if (! $media instanceof Media) {
-            return null;
-        }
-
-        try {
-            return $media->getUrl();
-        } catch (\Throwable) {
-            return null;
-        }
+        return Attribute::make(get: function (): ?string {
+            $media = $this->getFirstMedia('media');
+            if (! $media instanceof Media) {
+                return null;
+            }
+            try {
+                return $media->getUrl();
+            } catch (\Throwable) {
+                return null;
+            }
+        });
     }
 
-    protected function getMimeTypeAttribute(): ?string
+    protected function mimeType(): Attribute
     {
-        return $this->getFirstMedia('media')?->mime_type;
+        return Attribute::make(get: fn () => $this->getFirstMedia('media')?->mime_type);
     }
 
-    protected function getSizeAttribute(): ?int
+    protected function size(): Attribute
     {
-        return $this->getFirstMedia('media')?->size;
+        return Attribute::make(get: fn () => $this->getFirstMedia('media')?->size);
     }
 
-    protected function getCollectionNameAttribute(): ?string
+    protected function collectionName(): Attribute
     {
-        return $this->getFirstMedia('media')?->collection_name;
+        return Attribute::make(get: fn () => $this->getFirstMedia('media')?->collection_name);
     }
 
     /**

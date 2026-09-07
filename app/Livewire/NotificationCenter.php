@@ -6,12 +6,13 @@ namespace App\Livewire;
 
 use App\Filament\Resources\Changelog\ChangelogResource;
 use App\Models\Changelog;
+use App\Models\User;
 use App\Support\NotificationCenter\NotificationCategory;
 use App\Support\NotificationCenter\NotificationCenterManager;
 use App\Support\NotificationCenter\NotificationTab;
-use Filament\Livewire\DatabaseNotifications;
 use Filament\Actions\Action as NotificationAction;
 use Filament\Facades\Filament;
+use Filament\Livewire\DatabaseNotifications;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\View\View;
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Artisan;
 use Livewire\Attributes\Computed;
 use Override;
 
@@ -50,7 +51,7 @@ class NotificationCenter extends DatabaseNotifications
     #[Override]
     public function getTrigger(): ?View
     {
-        return view('livewire.notification-trigger');
+        return view('panels.livewire.notification-trigger');
     }
 
     #[Override]
@@ -68,7 +69,7 @@ class NotificationCenter extends DatabaseNotifications
         parent::markAllNotificationsAsRead();
 
         $user = filament()->auth()->user() ?? Filament::auth()->user();
-        if ($user && method_exists($user, 'markChangelogAsRead')) {
+        if ($user instanceof User) {
             $user->markChangelogAsRead();
         }
     }
@@ -210,7 +211,7 @@ class NotificationCenter extends DatabaseNotifications
         $cat = NotificationCenterManager::getCategory($panelId, $catId);
 
         if (! $cat && $catId === NotificationCenterManager::getDefaultCategory()) {
-            $cat = NotificationCategory::make($catId)->label('Geral');
+            return NotificationCategory::make($catId)->label('Geral');
         }
 
         return $cat;
@@ -219,7 +220,7 @@ class NotificationCenter extends DatabaseNotifications
     protected function scopeQueryToCategory(Builder|Relation $query, string $categoryId): Builder|Relation
     {
         if ($categoryId === NotificationCenterManager::getDefaultCategory()) {
-            return $query->where(function (Builder|Relation $query) use ($categoryId): void {
+            return $query->where(function (\Illuminate\Contracts\Database\Query\Builder $query) use ($categoryId): void {
                 $query->whereNull('data->viewData->category')
                     ->orWhere('data->viewData->category', $categoryId);
             });
@@ -253,7 +254,7 @@ class NotificationCenter extends DatabaseNotifications
 
     public function render(): View
     {
-        return view('livewire.notification-center');
+        return view('panels.livewire.notification-center');
     }
 
     protected function syncUnreadChangelogNotifications(): void
@@ -263,41 +264,30 @@ class NotificationCenter extends DatabaseNotifications
         }
         $this->changelogSyncedThisRequest = true;
 
-        /** @var \App\Models\User|null $user */
         $user = filament()->auth()->user() ?? Filament::auth()->user();
-        if (! $user || ! method_exists($user, 'hasUnreadChangelog') || ! $user->hasUnreadChangelog()) {
+        if (! $user instanceof User || ! $user->hasUnreadChangelog()) {
             return;
         }
 
-        $latestEntry = Changelog::query()
-            ->whereNotNull('released_at')
-            ->latest('released_at')
-            ->first()
-            ?? Changelog::query()->latest('created_at')->first()
-            ?? Changelog::query()->latest('id')->first();
+        $latestEntry = $this->latestChangelogEntry();
 
-        if (! $latestEntry) {
+        if (! $latestEntry instanceof Changelog) {
             try {
-                \Illuminate\Support\Facades\Artisan::call('changelog:sync-git');
-                $latestEntry = Changelog::query()
-                    ->whereNotNull('released_at')
-                    ->latest('released_at')
-                    ->first()
-                    ?? Changelog::query()->latest('created_at')->first()
-                    ?? Changelog::query()->latest('id')->first();
-            } catch (\Throwable $e) {
+                Artisan::call('changelog:sync-git');
+                $latestEntry = $this->latestChangelogEntry();
+            } catch (\Throwable) {
                 // Ignora erros de sincronização se estiver sem internet
             }
         }
 
-        if (! $latestEntry) {
+        if (! $latestEntry instanceof Changelog) {
             return;
         }
 
         $alreadyNotified = $user->notifications()
-            ->where(function (Builder|Relation $query) use ($latestEntry): void {
+            ->where(function (\Illuminate\Contracts\Database\Query\Builder $query) use ($latestEntry): void {
                 $query->where('data->viewData->changelog_version', $latestEntry->version)
-                    ->orWhere('data->title', 'like', '%' . $latestEntry->version . '%');
+                    ->orWhere('data->title', 'like', '%'.$latestEntry->version.'%');
             })
             ->exists();
 
@@ -305,13 +295,13 @@ class NotificationCenter extends DatabaseNotifications
             $url = '/';
             try {
                 $url = ChangelogResource::getUrl();
-            } catch (\Throwable $e) {
+            } catch (\Throwable) {
                 // Fallback se não houver painel do filament no contexto
             }
 
             $notification = Notification::make()
-                ->title('Nova atualização disponível: v' . $latestEntry->version)
-                ->body('Uma nova versão do labSIS-KIT foi publicada no dia ' . $latestEntry->released_at->format('d/m/Y') . '. Confira as melhorias e novidades!')
+                ->title('Nova atualização disponível: v'.$latestEntry->version)
+                ->body('Uma nova versão do labSIS-KIT foi publicada no dia '.$latestEntry->released_at->format('d/m/Y').'. Confira as melhorias e novidades!')
                 ->icon('heroicon-o-document-text')
                 ->color('info')
                 ->category('system')
@@ -328,5 +318,15 @@ class NotificationCenter extends DatabaseNotifications
 
             $this->clearNotificationCaches();
         }
+    }
+
+    protected function latestChangelogEntry(): ?Changelog
+    {
+        return Changelog::query()
+            ->whereNotNull('released_at')
+            ->latest('released_at')
+            ->first()
+            ?? Changelog::query()->latest('created_at')->first()
+            ?? Changelog::query()->latest('id')->first();
     }
 }

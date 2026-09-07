@@ -60,8 +60,7 @@ class MediaInfolist
                     ->label(fn ($record) => self::resolveMediaActionConfig($record)['label'])
                     ->icon(fn ($record) => self::resolveMediaActionConfig($record)['icon'])
                     ->media(fn ($record) => self::resolveMediaActionConfig($record)['media'] ?? '#')
-                    ->visible(fn ($record): bool => self::resolveMediaActionConfig($record)['media'] !== null)
-                    ->columnSpan(1),
+                    ->visible(fn ($record): bool => self::resolveMediaActionConfig($record)['media'] !== null),
             ])
             ->columns(3);
     }

@@ -48,6 +48,7 @@
 <li><a href="customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
 <li><a href="customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
 <li><a href="customizando-logo.html" class="is-active">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="organizacao-das-views.html">📂 Arquitetura e Organização das Views (Público vs. Painéis)</a></li>
 <li><a href="widgets-filament.html">Widgets no Filament — Métricas e Componentização no P…</a></li>
 </ul></details>
 <details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
@@ -196,7 +197,7 @@ cp sua-logo.png public/images/MinhaLogo.png</code></pre></div>
 
 </code></pre>
 </div>
-<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="customizando-layout.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Customização da Aparência e Plugins no Filament</span></a><a class="doc-pagination-card doc-pagination-next" href="widgets-filament.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Widgets no Filament — Métricas e Componentização no Painel</span></a></nav>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="customizando-layout.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">Customização da Aparência e Plugins no Filament</span></a><a class="doc-pagination-card doc-pagination-next" href="organizacao-das-views.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">📂 Arquitetura e Organização das Views (Público vs. Painéis)</span></a></nav>
 <footer class="doc-footer">
 <button type="button" class="btn btn-secondary btn-sm" id="copyMdBtn" aria-label="Copiar Markdown original">Copiar Markdown original</button>
 </footer>
@@ -237,14 +238,16 @@ Nos providers, a logo é registrada com `brandLogo()` recebendo uma view. A altu
 No painel de Autenticação, em `app/Providers/Filament/AuthPanelProvider.php`:
 
 ```php
-->brandLogo(fn () => view('filament.auth.logo_auth'))
+->brandLogo(fn () => view('panels.auth.logo_auth'))
+// ou
+->brandLogo(fn () => view('panels.auth.logo_base'))
 ->brandLogoHeight('8rem')
 ```
 
 Nos demais painéis (via `BasePanelProvider`), em `app/Providers/Filament/BasePanelProvider.php`:
 
 ```php
-->brandLogo(fn () => view('filament.auth.logo_base'))
+->brandLogo(fn () => view('panels.auth.logo_base'))
 ->brandLogoHeight('2rem')
 ```
 
@@ -326,14 +329,14 @@ Se a nova logo tiver proporções diferentes, ajuste a altura nos providers:
 **Logo de login** (`AuthPanelProvider.php`):
 
 ```php
-->brandLogo(fn () => view('filament.auth.logo_auth'))
+->brandLogo(fn () => view('panels.auth.logo_auth'))
 ->brandLogoHeight('10rem') // ← Altere o valor aqui (ex: 8rem, 10rem, 12rem)
 ```
 
 **Logo da topbar** (`BasePanelProvider.php`):
 
 ```php
-->brandLogo(fn () => view('filament.auth.logo_base'))
+->brandLogo(fn () => view('panels.auth.logo_base'))
 ->brandLogoHeight('3rem') // ← Altere o valor aqui (ex: 2rem, 3rem, 4rem)
 ```
 

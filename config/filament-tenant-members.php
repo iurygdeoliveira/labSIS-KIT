@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Enums\OrganizationLandlordRole;
 use App\Enums\OrganizationRole;
 use App\Models\Organization;

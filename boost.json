@@ -1,6 +1,9 @@
 {
     "agents": [
-        "antigravity"
+        "antigravity",
+        "claude_code",
+        "codex",
+        "grok_build"
     ],
     "cloud": true,
     "guidelines": true,
@@ -17,11 +20,12 @@
     ],
     "sail": true,
     "skills": [
+        "infer-conventions",
         "laravel-best-practices",
+        "testing-best-practices",
         "configure-nightwatch",
         "pulse-development",
         "fluxui-development",
-        "pest-testing",
         "tailwindcss-development",
         "laravel-backup",
         "filament-security-audit",

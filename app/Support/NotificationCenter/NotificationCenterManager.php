@@ -116,7 +116,7 @@ class NotificationCenterManager
      */
     public static function getEmptyState(string $categoryId): array
     {
-        if (self::$emptyStateUsing) {
+        if (self::$emptyStateUsing instanceof Closure) {
             return (self::$emptyStateUsing)($categoryId);
         }
 

@@ -38,9 +38,7 @@ class NotificationCenterTest extends TestCase
 
         // Check query log for duplicate count queries
         $queries = collect(DB::getQueryLog())->pluck('query');
-        $unreadCountQueries = $queries->filter(function (string $query): bool {
-            return str_contains($query, 'count(*)') && str_contains($query, 'read_at');
-        });
+        $unreadCountQueries = $queries->filter(fn (string $query): bool => str_contains($query, 'count(*)') && str_contains($query, 'read_at'));
 
         // getUnreadNotificationsCount should be cached and not execute multiple times for 'all' tab and count property
         $this->assertLessThanOrEqual(5, $unreadCountQueries->count());
@@ -67,9 +65,7 @@ class NotificationCenterTest extends TestCase
         $component->instance()->hasAnyNotifications();
 
         $queries = collect(DB::getQueryLog())->pluck('query');
-        $selectNotificationsQueries = $queries->filter(function (string $query): bool {
-            return ! str_contains($query, 'count(') && ! str_contains($query, 'exists') && str_contains($query, 'notifications');
-        });
+        $selectNotificationsQueries = $queries->filter(fn (string $query): bool => ! str_contains($query, 'count(') && ! str_contains($query, 'exists') && str_contains($query, 'notifications'));
 
         // Because of memoization, getNotifications() should only hit the database once across initial render and subsequent calls!
         $this->assertEquals(1, $selectNotificationsQueries->count());

@@ -22,7 +22,7 @@ class DeleteMedia extends ViewRecord
     #[\Override]
     public function getView(): string
     {
-        return 'filament.resources.media.pages.delete-media';
+        return 'panels.resources.media.pages.delete-media';
     }
 
     #[\Override]

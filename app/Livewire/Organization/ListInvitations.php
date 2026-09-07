@@ -54,7 +54,7 @@ class ListInvitations extends TableComponent
                     ->label(__('organization.actions.resend.label'))
                     ->requiresConfirmation()
                     ->modalHeading(__('organization.actions.resend.modal_heading'))
-                    ->modalDescription(fn ($record) => __('organization.actions.resend.modal_description', ['email' => $record->email]))
+                    ->modalDescription(fn ($record): string => (string) __('organization.actions.resend.modal_description', ['email' => $record->email]))
                     ->visible(fn ($record) => $record->isResendable())
                     ->action(function ($record) use ($expiresDays): void {
                         if (! $record->isResendable()) {
@@ -70,7 +70,7 @@ class ListInvitations extends TableComponent
                             'expires_at' => now()->addDays($expiresDays),
                         ]);
 
-                        OrganizationInviteCreated::dispatch($record);
+                        event(new OrganizationInviteCreated($record));
 
                         Notification::make()
                             ->title(__('organization.notifications.resend_success_title'))

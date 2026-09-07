@@ -1,3 +1,9 @@
+@props([
+    'totalProjects' => 0,
+    'totalAllProjects' => 0,
+    'totalAllDevelopers' => 0,
+])
+
 {{-- Stats / Números --}}
 <section id="sobre" class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
     <div class="relative rounded-2xl border border-white/10 bg-white/3 backdrop-blur-xl p-12 lg:p-20 overflow-hidden"

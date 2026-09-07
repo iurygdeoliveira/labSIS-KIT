@@ -71,8 +71,7 @@ class TeamSyncMiddleware
             }
         }
 
-        $teamId = $currentTeam instanceof Organization ? $currentTeam->getKey() : 0;
-        $this->applyTeam($user, $teamId);
+        $this->applyTeam($user, 0);
 
         return $next($request);
     }

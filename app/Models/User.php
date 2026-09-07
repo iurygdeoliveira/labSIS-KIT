@@ -33,13 +33,13 @@ use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Date;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
-use App\Models\Changelog;
-use Illuminate\Support\Facades\Cache;
 
 /**
  * @property int $id
@@ -161,7 +161,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     protected array $cachedCanAccessTenant = [];
 
     /**
-     * @return BelongsToMany<Organization, $this>
+     * @return BelongsToMany<Organization, $this, OrganizationUser>
      */
     public function organizations(): BelongsToMany
     {
@@ -240,7 +240,9 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     // ==========================================
     // Scopes
     // ==========================================
-
+    /**
+     * @param  Builder<static>  $query
+     */
     #[Scope]
     protected function withRolesForTeam($query, Organization $organization): void
     {
@@ -477,7 +479,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function clearRoleCaches(?Organization $organization = null): void
     {
-        if ($organization) {
+        if ($organization instanceof Organization) {
             unset($this->cachedIsOwnerOfOrganization[$organization->id]);
             unset($this->cachedIsUserOfOrganization[$organization->id]);
             unset($this->cachedHasAnyRoleInOrganization[$organization->id]);
@@ -502,10 +504,8 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function hasUnreadChangelog(): bool
     {
-        $latestReleaseDate = Cache::remember('changelog:latest_date', 300, function () {
-            return Changelog::max('released_at')
-                ?? Changelog::max('created_at');
-        });
+        $latestReleaseDate = Cache::remember('changelog:latest_date', 300, fn () => Changelog::max('released_at')
+            ?? Changelog::max('created_at'));
 
         if (! $latestReleaseDate) {
             return false;
@@ -519,7 +519,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             return true;
         }
 
-        return \Carbon\Carbon::parse($latestReleaseDate)->isAfter($lastRead);
+        return Date::parse($latestReleaseDate)->isAfter($lastRead);
     }
 
     public function markChangelogAsRead(): void

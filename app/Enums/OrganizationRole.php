@@ -72,7 +72,7 @@ enum OrganizationRole: string implements HasColor, HasLabel
     public static function orderBySql(string $column): string
     {
         $cases = collect(self::cases())
-            ->map(fn (self $role, int $index) => "WHEN '{$role->value}' THEN {$index}")
+            ->map(fn (self $role, int $index): string => "WHEN '{$role->value}' THEN {$index}")
             ->implode(' ');
 
         return "CASE {$column} {$cases} ELSE ".count(self::cases()).' END';
@@ -89,8 +89,8 @@ enum OrganizationRole: string implements HasColor, HasLabel
     public static function assignableOptions(): array
     {
         return collect(self::cases())
-            ->reject(fn (self $role) => $role->isProtected())
-            ->mapWithKeys(fn (self $role) => [$role->value => $role->getLabel()])
+            ->reject(fn (self $role): bool => $role->isProtected())
+            ->mapWithKeys(fn (self $role): array => [$role->value => $role->getLabel()])
             ->all();
     }
 

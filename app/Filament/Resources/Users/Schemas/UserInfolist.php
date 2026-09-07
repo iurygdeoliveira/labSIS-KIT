@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\OrganizationRole;
-use App\Models\Organization;
 use App\Models\User;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -116,10 +115,6 @@ class UserInfolist
         $items = [];
 
         foreach ($record->organizations as $team) {
-            if (! $team instanceof Organization) {
-                continue;
-            }
-
             $roleNames = $record->rolesWithTeams
                 ->filter(function ($role) use ($team): bool {
                     $pivotTeamId = data_get($role, 'pivot.team_id');

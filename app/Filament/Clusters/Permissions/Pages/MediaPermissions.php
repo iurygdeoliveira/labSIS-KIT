@@ -8,7 +8,7 @@ use Filament\Support\Icons\Heroicon;
 
 class MediaPermissions extends BasePermissionPage
 {
-    protected string $view = 'filament.clusters.permissions.pages.media-permissions';
+    protected string $view = 'panels.clusters.permissions.pages.media-permissions';
 
     protected static ?string $navigationLabel = 'Mídias';
 

@@ -41,6 +41,7 @@
         "larastan/larastan": "^3.0",
         "laravel-shift/blueprint": "^2.13",
         "laravel/boost": "^2.4",
+        "laravel/doctor": "^0.1.0",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",

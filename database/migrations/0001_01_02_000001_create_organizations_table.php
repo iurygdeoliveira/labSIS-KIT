@@ -10,14 +10,14 @@ return new class extends Migration
     {
         $uuid = config('filament-tenant-members.key_type', 'id') === 'uuid';
 
-        Schema::create('organizations', function (Blueprint $table) use ($uuid) {
+        Schema::create('organizations', function (Blueprint $table) use ($uuid): void {
             $uuid ? $table->uuid('id')->primary() : $table->id();
             $table->string('name');
             $table->string('slug')->unique();
             $table->timestamps();
         });
 
-        Schema::create('organization_user', function (Blueprint $table) use ($uuid) {
+        Schema::create('organization_user', function (Blueprint $table) use ($uuid): void {
             if ($uuid) {
                 $table->foreignUuid('organization_id')->constrained()->cascadeOnDelete();
                 $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();

@@ -13,7 +13,7 @@ class AccountSuspended extends SimplePage
     use HasRoutes;
     use ResolvesFilamentPageConfiguration;
 
-    protected string $view = 'filament.pages.auth.account-suspended';
+    protected string $view = 'panels.pages.auth.account-suspended';
 
     protected static bool $shouldRegisterNavigation = false;
 

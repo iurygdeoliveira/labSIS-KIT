@@ -16,6 +16,7 @@ use App\Listeners\NotifyAdminNewUser;
 use App\Listeners\SendOrganizationInviteMail;
 use App\Listeners\SendUserApprovedEmail;
 use App\Models\AuthenticationLog;
+use App\Models\Changelog;
 use App\Models\MediaItem;
 use App\Models\Organization;
 use App\Models\OrganizationUser;
@@ -27,6 +28,7 @@ use App\Observers\OrganizationUserObserver;
 use App\Observers\UserObserver;
 use App\Observers\VideoObserver;
 use App\Policies\AuthenticationLogPolicy;
+use App\Policies\ChangelogPolicy;
 use App\Support\AppDateTime;
 use App\Support\NotificationCenter\NotificationCenterManager;
 use App\Tenancy\SpatieTeamResolver as AppSpatieTeamResolver;
@@ -36,6 +38,7 @@ use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -64,6 +67,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Blade::anonymousComponentPath(resource_path('views/public/components'), 'public');
+
         $this->configModels();
         $this->configCommands();
         $this->configUrls();

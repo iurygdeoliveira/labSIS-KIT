@@ -29,7 +29,7 @@ class RegisterOrganization extends RegisterTenant
                     ->label(__('organization.fields.name'))
                     ->required()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                    ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state): void {
                         if (($get('slug') ?? '') !== Str::slug($old)) {
                             return;
                         }

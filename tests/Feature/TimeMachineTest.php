@@ -1,6 +1,6 @@
 <?php
 
-test('time machine dashboard is accessible when enabled', function () {
+test('time machine dashboard is accessible when enabled', function (): void {
     config(['time-machine.enabled' => true]);
 
     $response = $this->get('/time-machine');

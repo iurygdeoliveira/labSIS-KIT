@@ -68,7 +68,7 @@ class ListMembers extends TableComponent
                     Action::make('changeRole')
                         ->label(__('organization.actions.change_role.label'))
                         ->icon('heroicon-o-user-circle')
-                        ->modalHeading(fn ($record) => __('organization.actions.change_role.modal_heading', ['name' => $record->name]))
+                        ->modalHeading(fn ($record): string => (string) __('organization.actions.change_role.modal_heading', ['name' => $record->name]))
                         ->modalSubmitActionLabel(__('organization.actions.change_role.modal_submit_label'))
                         ->schema([
                             Select::make('role')
@@ -141,7 +141,7 @@ class ListMembers extends TableComponent
                         ->color('danger')
                         ->requiresConfirmation()
                         ->modalHeading(__('organization.actions.remove.modal_heading'))
-                        ->modalDescription(fn ($record) => __('organization.actions.remove.modal_description', ['name' => $record->name]))
+                        ->modalDescription(fn ($record): string => (string) __('organization.actions.remove.modal_description', ['name' => $record->name]))
                         ->action(function ($record): void {
                             $tenant = Filament::getTenant();
                             if ($tenant instanceof Organization) {
@@ -190,10 +190,8 @@ class ListMembers extends TableComponent
 
                         $this->redirect(Filament::getUrl());
                     })
-                    ->visible(function ($record) use ($currentUserId, $currentRole): bool {
-                        return $record->id === $currentUserId
-                            && ! ($currentRole?->isProtected() ?? false);
-                    }),
+                    ->visible(fn ($record): bool => $record->id === $currentUserId
+                        && ! ($currentRole?->isProtected() ?? false)),
             ]);
     }
 

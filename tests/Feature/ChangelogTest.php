@@ -83,7 +83,7 @@ MD;
         $this->assertCount(2, $grouped);
         $this->assertTrue($grouped->has('1.1.0'));
         $this->assertTrue($grouped->has('1.0.0'));
-        $this->assertEquals(['1.1.0', '1.0.0'], $grouped->keys()->toArray());
+        $this->assertEquals(['1.1.0', '1.0.0'], $grouped->keys()->all());
     }
 
     public function test_changelog_sync_command_populates_database(): void

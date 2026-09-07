@@ -1,0 +1,13 @@
+<?php
+
+namespace Filament\Notifications;
+
+use BackedEnum;
+
+/**
+ * @method $this category(string|BackedEnum|null $category)
+ * @method string|null getCategory()
+ */
+class Notification
+{
+}

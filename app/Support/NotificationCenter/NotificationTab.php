@@ -7,16 +7,16 @@ namespace App\Support\NotificationCenter;
 use BackedEnum;
 use Illuminate\Contracts\Support\Htmlable;
 
-final class NotificationTab
+final readonly class NotificationTab
 {
     /**
      * @param  string | array<string, string> | null  $color
      */
     public function __construct(
-        public readonly string $id,
-        public readonly string|Htmlable $label,
-        public readonly string|BackedEnum|Htmlable|null $icon,
-        public readonly string|array|null $color,
-        public readonly int $count,
+        public string $id,
+        public string|Htmlable $label,
+        public string|BackedEnum|Htmlable|null $icon,
+        public string|array|null $color,
+        public int $count,
     ) {}
 }

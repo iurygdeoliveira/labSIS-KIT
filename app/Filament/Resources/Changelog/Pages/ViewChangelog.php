@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Changelog\Pages;
 
 use App\Filament\Resources\Changelog\ChangelogResource;
+use App\Models\Changelog;
 use App\Traits\Filament\HasBackButtonAction;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
@@ -19,7 +20,10 @@ class ViewChangelog extends ViewRecord
     #[Override]
     public function getTitle(): string
     {
-        return 'Visualizar commit: ' . $this->getRecord()->version;
+        $record = $this->getRecord();
+        assert($record instanceof Changelog);
+
+        return 'Visualizar commit: '.$record->version;
     }
 
     #[Override]

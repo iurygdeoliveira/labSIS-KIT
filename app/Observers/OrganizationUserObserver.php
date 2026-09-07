@@ -33,7 +33,7 @@ class OrganizationUserObserver
     {
         [$user, $organization] = $this->resolveActors($pivot);
 
-        if ($user === null || $organization === null) {
+        if (! $user instanceof User || ! $organization instanceof Organization) {
             return;
         }
 
@@ -54,7 +54,7 @@ class OrganizationUserObserver
     {
         [$user, $organization] = $this->resolveActors($pivot);
 
-        if ($user === null || $organization === null) {
+        if (! $user instanceof User || ! $organization instanceof Organization) {
             return;
         }
 

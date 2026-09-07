@@ -12,8 +12,6 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
 class ChangelogTable
@@ -27,12 +25,14 @@ class ChangelogTable
                     ->label('Versão')
                     ->badge()
                     ->color('gray')
+                    ->searchable()
                     ->sortable(),
 
                 TextColumn::make('description')
                     ->label('Descrição')
                     ->wrap()
-                    ->limit(255),
+                    ->limit(255)
+                    ->searchable(),
 
                 TextColumn::make('released_at')
                     ->label('Data')

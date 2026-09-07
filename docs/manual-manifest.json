@@ -1,6 +1,6 @@
 {
   "generated_at": "2026-05-27",
-  "total_pages": 44,
+  "total_pages": 45,
   "sections": [
     {
       "id": "01-instalacao-e-setup",
@@ -136,7 +136,7 @@
     {
       "id": "03-ui-e-customizacao",
       "label": "03 — UI e Customização",
-      "count": 4,
+      "count": 5,
       "pages": [
         {
           "slug": "customizacao-de-cores",
@@ -162,6 +162,15 @@
           "filename": "customizando-logo.html",
           "md_source": "docs/03-ui-e-customizacao/customizando-logo.md",
           "html_output": "docs/manual/03-ui-e-customizacao/customizando-logo.html",
+          "section_id": "03-ui-e-customizacao",
+          "section_label": "03 — UI e Customização"
+        },
+        {
+          "slug": "organizacao-das-views",
+          "title": "📂 Arquitetura e Organização das Views (Público vs. Painéis)",
+          "filename": "organizacao-das-views.html",
+          "md_source": "docs/03-ui-e-customizacao/organizacao-das-views.md",
+          "html_output": "docs/manual/03-ui-e-customizacao/organizacao-das-views.html",
           "section_id": "03-ui-e-customizacao",
           "section_label": "03 — UI e Customização"
         },

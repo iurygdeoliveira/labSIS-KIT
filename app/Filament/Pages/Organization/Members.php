@@ -70,6 +70,11 @@ class Members extends Page
     protected function getHeaderActions(): array
     {
         $tenant = Filament::getTenant();
+
+        if (! $tenant instanceof Organization) {
+            return [];
+        }
+
         $roleEnum = config('filament-tenant-members.role_enum', OrganizationRole::class);
 
         $pivotRole = $tenant->users()
@@ -109,7 +114,7 @@ class Members extends Page
                                         ->distinct()
                                         ->rule(
                                             Rule::unique(OrganizationInvite::class, 'email')
-                                                ->where('organization_id', $tenant?->id)
+                                                ->where('organization_id', $tenant->id)
                                                 ->whereNull('accepted_at')
                                                 ->where(fn ($query) => $query->where('expires_at', '>', now()))
                                         )
@@ -117,8 +122,8 @@ class Members extends Page
                                             'unique' => __('organization.validation.unique'),
                                         ])
                                         ->rules([
-                                            fn () => function (string $attribute, mixed $value, \Closure $fail) use ($tenant) {
-                                                if ($tenant && $tenant->users()->where('email', $value)->exists()) {
+                                            fn (): \Closure => function (string $attribute, mixed $value, \Closure $fail) use ($tenant): void {
+                                                if ($tenant->users()->where('email', $value)->exists()) {
                                                     $fail(__('organization.validation.exists'));
                                                 }
                                             },
@@ -142,6 +147,10 @@ class Members extends Page
     {
         $tenant = Filament::getTenant();
 
+        if (! $tenant instanceof Organization) {
+            return $schema->components([]);
+        }
+
         return $schema->components([
             Tabs::make()
                 ->livewireProperty('tab')
@@ -158,7 +167,7 @@ class Members extends Page
                         ->icon(Heroicon::Envelope)
                         ->badge(
                             OrganizationInvite::query()
-                                ->where('organization_id', $tenant?->id)
+                                ->where('organization_id', $tenant->id)
                                 ->pending()
                                 ->count() ?: null
                         )
@@ -176,7 +185,7 @@ class Members extends Page
         $tenant = Filament::getTenant();
         $expiresDays = config('filament-tenant-members.invite_expires_days', 7);
 
-        if (! $tenant) {
+        if (! $tenant instanceof Organization) {
             return;
         }
 
@@ -216,7 +225,7 @@ class Members extends Page
         });
 
         foreach ($invites as $invite) {
-            OrganizationInviteCreated::dispatch($invite);
+            event(new OrganizationInviteCreated($invite));
         }
 
         $count = count($invites);

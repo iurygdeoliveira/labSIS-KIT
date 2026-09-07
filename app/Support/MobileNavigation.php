@@ -53,7 +53,7 @@ class MobileNavigation
                     isActive: $navItem->isActive(),
                     badge: $navItem->getBadge(),
                     badgeColor: $navItem->getBadgeColor(),
-                    sort: $navItem->getSort() ?? 0
+                    sort: $navItem->getSort()
                 );
             }
         }

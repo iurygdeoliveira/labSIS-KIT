@@ -1,34 +1,46 @@
 <?php
 
-declare(strict_types=1);
-
-namespace App\Http\Controllers;
-
-use Illuminate\Contracts\View\View;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Computed;
+use Livewire\Component;
 
-final class WebsiteLandingController
+new class extends Component implements HasActions, HasSchemas
 {
-    public function __invoke(): View
+    use InteractsWithActions;
+    use InteractsWithSchemas;
+
+    #[Computed]
+    public function totalProjects(): int
     {
-        $totalProjects = count(config('landing-projects', []));
+        return count(config('landing-projects', []));
+    }
 
+    #[Computed]
+    public function totalAllProjects(): int
+    {
         $projectModel = $this->resolveEloquentModelKey('project');
-        $developerModel = $this->resolveEloquentModelKey('developer');
 
-        $totalAllProjects = match (true) {
+        return match (true) {
             ($n = $this->countEloquentIfExists($projectModel)) !== null => $n,
             is_numeric(config('landing.stats.projects_in_evaluation')) => (int) config('landing.stats.projects_in_evaluation'),
-            default => max($totalProjects, 0),
+            default => max($this->totalProjects(), 0),
         };
+    }
 
-        $totalAllDevelopers = match (true) {
+    #[Computed]
+    public function totalAllDevelopers(): int
+    {
+        $developerModel = $this->resolveEloquentModelKey('developer');
+
+        return match (true) {
             ($n = $this->countEloquentIfExists($developerModel)) !== null => $n,
             is_numeric(config('landing.stats.developers_involved')) => (int) config('landing.stats.developers_involved'),
             default => 0,
         };
-
-        return view('website.pages.home', ['totalProjects' => $totalProjects, 'totalAllProjects' => $totalAllProjects, 'totalAllDevelopers' => $totalAllDevelopers]);
     }
 
     private function resolveEloquentModelKey(string $key): string
@@ -46,4 +58,4 @@ final class WebsiteLandingController
 
         return $class::query()->count();
     }
-}
+};

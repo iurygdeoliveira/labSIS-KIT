@@ -10,7 +10,7 @@ return new class extends Migration
     {
         $uuid = config('filament-tenant-members.key_type', 'id') === 'uuid';
 
-        Schema::create('organization_invites', function (Blueprint $table) use ($uuid) {
+        Schema::create('organization_invites', function (Blueprint $table) use ($uuid): void {
             $uuid ? $table->uuid('id')->primary() : $table->id();
             $table->uuid('token')->unique();
             if ($uuid) {

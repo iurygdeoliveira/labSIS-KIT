@@ -14,7 +14,7 @@ class PreviewTemplate extends Page
 {
     protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
-    protected string $view = 'filament.pages.mail.preview-template';
+    protected string $view = 'panels.pages.mail.preview-template';
 
     protected static bool $shouldRegisterNavigation = false;
 

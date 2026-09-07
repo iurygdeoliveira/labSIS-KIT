@@ -54,11 +54,7 @@
 
 /* Item ativo da sidebar (Dark Theme - via classe .dark) */
 :root.dark .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
-    background-color: color-mix(
-        in srgb,
-        var(--color-primary-500),
-        transparent 85%
-    ) !important;
+    background-color: color-mix(in srgb, var(--color-primary-500), transparent 85%) !important;
     box-shadow: inset 4px 0 0 0 var(--color-primary-400) !important;
     color: var(--color-primary-400) !important;
 }
@@ -71,14 +67,8 @@
 }
 
 /* Ícone e Texto do item ativo (Dark) */
-:root.dark
-    .fi-sidebar-item.fi-active
-    .fi-sidebar-item-btn
-    .fi-sidebar-item-icon,
-:root.dark
-    .fi-sidebar-item.fi-active
-    .fi-sidebar-item-btn
-    .fi-sidebar-item-label {
+:root.dark .fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-icon,
+:root.dark .fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-label {
     color: var(--color-primary-400) !important;
 }
 
@@ -89,35 +79,21 @@
 }
 
 /* Item hover (Light) - Texto e Ícone */
-.fi-sidebar-item:not(.fi-active)
-    .fi-sidebar-item-btn:hover
-    .fi-sidebar-item-icon,
-.fi-sidebar-item:not(.fi-active)
-    .fi-sidebar-item-btn:hover
-    .fi-sidebar-item-label {
+.fi-sidebar-item:not(.fi-active) .fi-sidebar-item-btn:hover .fi-sidebar-item-icon,
+.fi-sidebar-item:not(.fi-active) .fi-sidebar-item-btn:hover .fi-sidebar-item-label {
     color: var(--color-primary-400) !important;
     transition: color 0.2s ease-in-out;
 }
 
 /* Item hover (Dark) - Container */
 :root.dark .fi-sidebar-item:not(.fi-active) .fi-sidebar-item-btn:hover {
-    background-color: color-mix(
-        in srgb,
-        var(--color-primary-500),
-        transparent 90%
-    ) !important;
+    background-color: color-mix(in srgb, var(--color-primary-500), transparent 90%) !important;
     box-shadow: inset 4px 0 0 0 var(--color-primary-500) !important;
 }
 
 /* Item hover (Dark) - Texto e Ícone */
-:root.dark
-    .fi-sidebar-item:not(.fi-active)
-    .fi-sidebar-item-btn:hover
-    .fi-sidebar-item-icon,
-:root.dark
-    .fi-sidebar-item:not(.fi-active)
-    .fi-sidebar-item-btn:hover
-    .fi-sidebar-item-label {
+:root.dark .fi-sidebar-item:not(.fi-active) .fi-sidebar-item-btn:hover .fi-sidebar-item-icon,
+:root.dark .fi-sidebar-item:not(.fi-active) .fi-sidebar-item-btn:hover .fi-sidebar-item-label {
     color: var(--color-primary-400) !important;
     transition: color 0.2s ease-in-out;
 }

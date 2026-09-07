@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Clusters\Permissions\Pages;
 
+use App\Enums\Permission;
+
 class AuthenticationPermissions extends BasePermissionPage
 {
-    protected string $view = 'filament.clusters.permissions.pages.authentication-permissions';
+    protected string $view = 'panels.clusters.permissions.pages.authentication-permissions';
 
     protected static ?string $navigationLabel = 'Autenticações';
 
@@ -19,6 +21,6 @@ class AuthenticationPermissions extends BasePermissionPage
     #[\Override]
     protected function getAvailableActions(): array
     {
-        return [\App\Enums\Permission::VIEW];
+        return [Permission::VIEW];
     }
 }

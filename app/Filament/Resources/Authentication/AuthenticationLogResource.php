@@ -7,7 +7,7 @@ use App\Filament\Resources\Authentication\Pages\ListAuthenticationLogs;
 use App\Filament\Resources\Authentication\Schemas\AuthenticationLogForm;
 use App\Filament\Resources\Authentication\Tables\AuthenticationLogTable;
 use App\Models\AuthenticationLog;
-use App\Models\Team;
+use App\Models\Organization;
 use App\Models\User;
 use App\Traits\Filament\HasConfigurableNavigationSort;
 use BackedEnum;
@@ -77,8 +77,7 @@ class AuthenticationLogResource extends Resource
 
         // 2. Proprietários veem logs dos usuários do seu team atual
         $team = Filament::getTenant();
-        /** @var Organization|null $team */
-        if ($team && $user->isOwnerOfOrganization($team)) {
+        if ($team instanceof Organization && $user->isOwnerOfOrganization($team)) {
             // Busca IDs de usuários pertencentes a este team
             // Nota: Esta é uma query híbrida (SQL -> Mongo). Buscamos os IDs SQL primeiro.
             $teamUserIds = User::whereHas('organizations', function (Builder $q) use ($team): void {

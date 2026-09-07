@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR" data-artifact-type="labsis-manual">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Arquitetura e Organização das Views (Público vs. Painéis) — Manual labSIS-KIT</title>
+<link rel="stylesheet" href="../assets/labsis-manual.css"/>
+</head>
+<body class="has-sidebar docs-page">
+<div class="color-orb orb-1"></div>
+<div class="color-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<button type="button" class="sidebar-toggle" data-sidebar-open aria-label="Abrir menu de navegação" aria-controls="manual-sidebar" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<span>Menu</span>
+</button>
+<div class="sidebar-backdrop" data-sidebar-close hidden></div>
+
+<aside class="manual-sidebar" id="manual-sidebar" aria-label="Menu lateral">
+<div class="sidebar-header">
+<button type="button" class="sidebar-close" data-sidebar-close aria-label="Fechar menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<nav class="sidebar-nav" aria-label="Documentação">
+<ul class="sidebar-pages">
+<li><a href="../index.html">Início do manual</a></li>
+</ul>
+<details class="sidebar-section" data-section="01-instalacao-e-setup"><summary class="sidebar-section-label">01 — Instalação e Setup</summary><ul class="sidebar-pages">
+<li><a href="../01-instalacao-e-setup/instalacao-manual.html">Instalação manual (clonando o repositório)</a></li>
+<li><a href="../01-instalacao-e-setup/instalacao-via-laravel-installer.html">Instalação via Laravel Installer</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="02-autenticacao-e-seguranca"><summary class="sidebar-section-label">02 — Autenticação e Segurança</summary><ul class="sidebar-pages">
+<li><a href="../02-autenticacao-e-seguranca/autenticacao-2fa.html">Autenticação de Dois Fatores (2FA) no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/checklist-de-seguranca.html">Checklist de Segurança e Diretrizes de Mitigação</a></li>
+<li><a href="../02-autenticacao-e-seguranca/content-security-policy.html">Content Security Policy (CSP) - Proteção Contra XSS</a></li>
+<li><a href="../02-autenticacao-e-seguranca/customizacao-emails.html">Customização de E-mails e Fluxo de Reset de Senha</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fluxo-de-registro-de-novos-usuarios.html">Fluxo de Registro de Novos Usuários</a></li>
+<li><a href="../02-autenticacao-e-seguranca/fortalecimento-de-senha.html">Fortalecimento de Senha (Password Hardening)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/login-unificado.html">Sistema de Login Unificado (Filament + Laravel)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/prevencao-idor.html">Prevenção Contra IDOR (Insecure Direct Object Reference)</a></li>
+<li><a href="../02-autenticacao-e-seguranca/roles-e-permissions.html">Sistema de Roles e Permissions</a></li>
+<li><a href="../02-autenticacao-e-seguranca/suspensao-usuarios.html">Sistema de Suspensão de Usuários no Filament</a></li>
+<li><a href="../02-autenticacao-e-seguranca/tenancy-e-teams.html">Tenancy E Teams</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="03-ui-e-customizacao" open><summary class="sidebar-section-label">03 — UI e Customização</summary><ul class="sidebar-pages">
+<li><a href="customizacao-de-cores.html">Customização de Cores e CSS Modular do Filament</a></li>
+<li><a href="customizando-layout.html">Customização da Aparência e Plugins no Filament</a></li>
+<li><a href="customizando-logo.html">🎨 Customizando o Logotipo nos Painéis Filament</a></li>
+<li><a href="organizacao-das-views.html" class="is-active">📂 Arquitetura e Organização das Views (Público vs. Painéis)</a></li>
+<li><a href="widgets-filament.html">Widgets no Filament — Métricas e Componentização no Painel</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="04-backend-e-arquitetura"><summary class="sidebar-section-label">04 — Backend e Arquitetura</summary><ul class="sidebar-pages">
+<li><a href="../04-backend-e-arquitetura/app-service-provider.html">Entendendo o AppServiceProvider</a></li>
+<li><a href="../04-backend-e-arquitetura/enums.html">Utilizando Enumerações (Enums) no Laravel com Integração ao Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/estrategia-backup.html">Estratégia de Backup</a></li>
+<li><a href="../04-backend-e-arquitetura/gestao-de-midia.html">Gestão de Mídia com Spatie Media Library</a></li>
+<li><a href="../04-backend-e-arquitetura/mongodb-integration.html">Integração MongoDB - Auditoria e Logs</a></li>
+<li><a href="../04-backend-e-arquitetura/notifications-trait.html">NotificationsTrait - Sistema de Notificações no Filament</a></li>
+<li><a href="../04-backend-e-arquitetura/padrao-datetime.html">Padronização de Data e Hora</a></li>
+<li><a href="../04-backend-e-arquitetura/regras-de-negocio.html">Regras de Negócio: labSIS-KIT</a></li>
+<li><a href="../04-backend-e-arquitetura/scripts-composer.html">Scripts do Composer e Inicialização de Storage</a></li>
+<li><a href="../04-backend-e-arquitetura/stack-tecnologica.html">Stack Tecnológica e Versões</a></li>
+<li><a href="../04-backend-e-arquitetura/user-model.html">Arquitetura do Model User</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="05-otimizacoes"><summary class="sidebar-section-label">05 — Otimizações</summary><ul class="sidebar-pages">
+<li><a href="../05-otimizacoes/cache-e-redis.html">Cache e Redis no Projeto</a></li>
+<li><a href="../05-otimizacoes/cloudflare-page-cache.html">Otimização de Cache de Página com Cloudflare</a></li>
+<li><a href="../05-otimizacoes/filament-performance.html">Performance no Filament</a></li>
+<li><a href="../05-otimizacoes/laravel-pulse.html">Laravel Pulse</a></li>
+<li><a href="../05-otimizacoes/livewire-computed.html">Livewire Computed — Otimizando Renderizações</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="06-testes"><summary class="sidebar-section-label">06 — Testes</summary><ul class="sidebar-pages">
+<li><a href="../06-testes/01-introducao.html">🧪 Testes Automatizados</a></li>
+<li><a href="../06-testes/02-autenticacao.html">🔐 Testes de Autenticação</a></li>
+<li><a href="../06-testes/03-acesso-paineis.html">🛡️ Testes de Controle de Acesso e Redirecionamento</a></li>
+</ul></details>
+<details class="sidebar-section" data-section="07-qualidade-de-codigo"><summary class="sidebar-section-label">07 — Qualidade de Código</summary><ul class="sidebar-pages">
+<li><a href="../07-qualidade-de-codigo/01-larastan.html">Larastan: Garantindo a Integridade Técnica 🛡️</a></li>
+<li><a href="../07-qualidade-de-codigo/02-rector.html">Rector: Automação e Evolução do Código 🚀</a></li>
+<li><a href="../07-qualidade-de-codigo/03-ide-helper.html">Laravel IDE Helper: Autocompletar e Inteligência 🧠</a></li>
+<li><a href="../07-qualidade-de-codigo/04-filacheck.html">Filacheck Pro: Validação de Convenções Filament 🧩</a></li>
+</ul></details>
+</nav>
+</aside>
+
+<div class="manual-content">
+<div class="docs-layout">
+<article class="docs-main">
+<nav class="doc-breadcrumb" aria-label="Trilha"><a href="../index.html">Manual</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><a href="index.html">UI e Customização</a><span class="doc-breadcrumb-sep" aria-hidden="true">/</span><span class="doc-breadcrumb-current">Organização das Views</span></nav>
+<header class="doc-header">
+<p class="doc-eyebrow">03 — UI e Customização</p>
+<h1 class="doc-title">Arquitetura e Organização das Views (Público vs. Painéis)</h1>
+</header>
+<div class="prose-content">
+
+<p>Este documento estabelece a convenção arquitetural da pasta <code>resources/views</code> no <strong>labSIS-KIT</strong>. A organização segue uma separação estrita de escopo entre a <strong>área pública do visitante</strong> e os <strong>painéis administrativos de controle</strong>, adotando a filosofia de co-localização de componentes e uso do <strong>Filament v5 standalone na área pública</strong>.</p>
+
+<hr/>
+
+<h2 id="1-principio-da-segregacao-de-responsabilidade">1. Princípio da Segregação de Responsabilidade</h2>
+
+<p>Para eliminar qualquer ambiguidade entre interfaces abertas ao público e telas internas do back-office, a raiz de <code>resources/views/</code> é segregada em dois pilares fundamentais:</p>
+
+<ol>
+<li><strong><code>resources/views/public/</code></strong>: Tudo o que pertence à experiência do visitante e usuário externo (landing page, componentes visuais da vitrine, páginas informativas abertas).</li>
+<li><strong><code>resources/views/panels/</code></strong>: Tudo o que pertence à customização, extensão e estrutura dos painéis de controle Filament (Admin, Usuário, Autenticação).</li>
+</ol>
+
+<p>Arquivos de e-mails transacionais residem em <code>resources/views/mail/</code> e templates publicados de pacotes terceiros em <code>resources/views/vendor/</code>.</p>
+
+<hr/>
+
+<h2 id="2-area-publica-e-a-filosofia-filament-v5">2. Área Pública e a Filosofia Filament v5 (<code>resources/views/public/</code>)</h2>
+
+<p>A área pública não é um site estático desconectado. Ela integra o ecossistema <strong>Livewire 4 + Filament v5</strong>, aproveitando toda a robustez de ações, formulários com validação e notificações do Filament diretamente na vitrine.</p>
+
+<h3>A Tríade de Páginas Livewire</h3>
+<p>Cada página pública reside em um subdiretório dentro de <code>resources/views/public/pages/</code> utilizando o padrão de co-localização de arquivos (Tríade):</p>
+
+<ul>
+<li><strong><code>home.php</code></strong>: Classe anônima Livewire (<code>new class extends Component implements HasActions, HasSchemas</code>). Contém a lógica da página, consultas de dados (<code>#[Computed]</code>) e as <strong>Filament Actions</strong> (botões de ação com modais, formulários de contato, etc.).</li>
+<li><strong><code>home.blade.php</code></strong>: Template integrador da página. Renderiza a composição dos componentes Blade e inclui <code>&lt;x-filament-actions::modals /&gt;</code> para exibir os modais de ações.</li>
+<li><strong><code>home.js</code></strong>: Scripts dedicados àquela página (mantendo scripts locais isolados sem poluir o bundle global).</li>
+</ul>
+
+<h3>Roteamento Declarativo</h3>
+<p>No arquivo <code>routes/web.php</code>, as rotas públicas utilizam o roteamento direto do Livewire através do namespace configurado em <code>config/livewire.php</code>:</p>
+
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">routes/web.php</span></div><pre><code>Route::livewire(&#x27;/&#x27;, &#x27;pages::home&#x27;)-&gt;name(&#x27;home&#x27;);</code></pre></div>
+
+<p>Em <code>config/livewire.php</code>, os namespaces apontam diretamente para a pasta pública:</p>
+
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">config/livewire.php</span></div><pre><code>&#x27;component_namespaces&#x27; =&gt; [
+    &#x27;layouts&#x27; =&gt; resource_path(&#x27;views/public/layouts&#x27;),
+    &#x27;pages&#x27; =&gt; resource_path(&#x27;views/public/pages&#x27;),
+],
+&#x27;component_layout&#x27; =&gt; &#x27;layouts::app&#x27;,</code></pre></div>
+
+<h3>Componentes Blade Semânticos</h3>
+<p>Os blocos visuais da área pública estão organizados por domínio em <code>resources/views/public/components/landing/</code>:</p>
+<ul>
+<li><code>header.blade.php</code></li>
+<li><code>hero.blade.php</code></li>
+<li><code>diferenciais.blade.php</code></li>
+<li><code>projetos.blade.php</code></li>
+<li><code>ecossistema.blade.php</code></li>
+<li><code>stats.blade.php</code></li>
+<li><code>cta.blade.php</code></li>
+<li><code>footer.blade.php</code></li>
+</ul>
+
+<p>Registrados via <code>AppServiceProvider</code> com o prefixo <code>public</code>, eles podem ser invocados com clareza semântica:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">blade</span></div><pre><code>&lt;x-public::landing.hero /&gt;
+&lt;x-public::landing.stats :totalProjects=&quot;$this-&gt;totalProjects&quot; /&gt;
+&lt;x-public::landing.cta /&gt;</code></pre></div>
+
+<h3>CSS Standalone do Filament v5</h3>
+<p>No arquivo <code>resources/css/app.css</code>, os estilos públicos importam os componentes standalone do Filament v5 para permitir modais, repeaters, campos de formulário e notificações estilizados pelo Tailwind:</p>
+
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">resources/css/app.css</span></div><pre><code>@import &quot;tailwindcss&quot;;
+
+/* Standalone Filament v5 Styles */
+@import &#x27;../../vendor/filament/support/resources/css/index.css&#x27;;
+@import &#x27;../../vendor/filament/actions/resources/css/index.css&#x27;;
+@import &#x27;../../vendor/filament/forms/resources/css/index.css&#x27;;
+@import &#x27;../../vendor/filament/infolists/resources/css/index.css&#x27;;
+@import &#x27;../../vendor/filament/notifications/resources/css/index.css&#x27;;
+@import &#x27;../../vendor/filament/schemas/resources/css/index.css&#x27;;</code></pre></div>
+
+<hr/>
+
+<h2 id="3-area-dos-paineis-resourcesviews-panels">3. Área dos Painéis (<code>resources/views/panels/</code>)</h2>
+
+<p>Tudo o que estende, sobrescreve ou implementa interfaces nos painéis Filament (Admin, User, Auth) reside centralizado nesta pasta.</p>
+
+<div class="table-responsive">
+<table class="docs-table">
+<thead>
+<tr>
+<th>Subdiretório</th>
+<th>Finalidade</th>
+<th>Exemplo no Código PHP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>panels/auth/</code></td>
+<td>Logos e telas de autenticação dos painéis</td>
+<td><code>view(&#x27;panels.auth.logo_auth&#x27;)</code></td>
+</tr>
+<tr>
+<td><code>panels/clusters/</code></td>
+<td>Páginas de clusters e permissões</td>
+<td><code>$view = &#x27;panels.clusters.permissions.pages.users-permissions&#x27;;</code></td>
+</tr>
+<tr>
+<td><code>panels/components/</code></td>
+<td>Componentes de navegação e layout dos painéis</td>
+<td><code>view(&#x27;panels.components.mobile-bottom-nav&#x27;)</code></td>
+</tr>
+<tr>
+<td><code>panels/forms/</code></td>
+<td>Campos e previews customizados para Schemas de formulário</td>
+<td><code>-&gt;view(&#x27;panels.forms.components.video-preview&#x27;)</code></td>
+</tr>
+<tr>
+<td><code>panels/livewire/</code></td>
+<td>Componentes Livewire internos dos painéis (Central de Notificações)</td>
+<td><code>return view(&#x27;panels.livewire.notification-center&#x27;);</code></td>
+</tr>
+<tr>
+<td><code>panels/pages/</code></td>
+<td>Páginas personalizadas do painel (ex: aceite de convite, verificação)</td>
+<td><code>$view = &#x27;panels.pages.accept-invite&#x27;;</code></td>
+</tr>
+<tr>
+<td><code>panels/resources/</code></td>
+<td>Telas dedicadas de Resources (ex: confirmações de exclusão)</td>
+<td><code>return &#x27;panels.resources.users.pages.delete-user&#x27;;</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<hr/>
+
+<h2 id="4-arvore-completa-de-diretorios">4. Árvore Completa de Diretórios</h2>
+
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">Estrutura de resources/views/</span></div><pre><code>resources/views/
+├── public/                          # 🌐 PARTE PÚBLICA (VISITANTES)
+│   ├── layouts/
+│   │   └── app.blade.php            # Layout base público com Vite e @filamentStyles
+│   ├── pages/                       # Tríade de páginas Livewire
+│   │   └── home/
+│   │       ├── home.php             # Lógica e Filament Actions da landing
+│   │       ├── home.blade.php       # Template da landing com &lt;x-filament-actions::modals /&gt;
+│   │       └── home.js              # Scripts locais da landing
+│   └── components/
+│       └── landing/                 # Componentes semânticos da landing page
+│           ├── header.blade.php
+│           ├── hero.blade.php
+│           ├── diferenciais.blade.php
+│           ├── projetos.blade.php
+│           ├── ecossistema.blade.php
+│           ├── stats.blade.php
+│           ├── cta.blade.php
+│           └── footer.blade.php
+│
+├── panels/                          # ⚡ PAINÉIS FILAMENT (BACK-OFFICE)
+│   ├── auth/                        # Logos dos painéis (logo_auth, logo_base)
+│   ├── clusters/                    # Páginas de clusters e permissões
+│   ├── components/                  # Componentes de painel (mobile-bottom-nav, etc.)
+│   ├── forms/                       # Componentes de formulário customizados
+│   ├── livewire/                    # Central de Notificações do painel
+│   ├── pages/                       # Páginas internas (accept-invite, mail, etc.)
+│   └── resources/                   # Views customizadas de recursos (delete-changelog, etc.)
+│
+├── mail/                            # ✉️ TEMPLATES DE E-MAIL
+│   └── organization-invite.blade.php
+│
+└── vendor/                          # 📦 VIEWS PUBLICADAS DE PACOTES
+    ├── filament-easy-footer/
+    └── pulse/</code></pre></div>
+
+<hr/>
+
+<h2 id="5-guia-rapido-para-desenvolvedores">5. Guia Rápido para Desenvolvedores</h2>
+
+<h3>Onde crio uma nova página pública?</h3>
+<p>Crie um diretório sob <code>resources/views/public/pages/&lt;nome-da-pagina&gt;/</code> contendo a tríade <code>&lt;nome&gt;.php</code> e <code>&lt;nome&gt;.blade.php</code>. Em seguida, registre no <code>routes/web.php</code>:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">routes/web.php</span></div><pre><code>Route::livewire(&#x27;/sobre&#x27;, &#x27;pages::sobre&#x27;)-&gt;name(&#x27;sobre&#x27;);</code></pre></div>
+
+<h3>Onde crio um componente reutilizável para a área pública?</h3>
+<p>Adicione o arquivo Blade em <code>resources/views/public/components/landing/&lt;componente&gt;.blade.php</code> e utilize a tag:</p>
+<div class="terminal-block"><div class="term-bar"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-label">blade</span></div><pre><code>&lt;x-public::landing.&lt;componente&gt; /&gt;</code></pre></div>
+
+<h3>Onde crio uma view para um Resource ou Page do Filament?</h3>
+<p>Adicione sempre dentro de <code>resources/views/panels/</code> na respectiva subpasta (<code>pages/</code>, <code>resources/</code> ou <code>forms/</code>). No PHP, referencie usando a notação <code>panels.&lt;caminho&gt;</code> (ex: <code>panels.resources.produtos.pages.detalhes</code>).</p>
+
+</div>
+<nav class="doc-pagination" aria-label="Navegação entre documentos"><a class="doc-pagination-card doc-pagination-prev" href="customizando-logo.html"><span class="doc-pagination-label">Anterior</span><span class="doc-pagination-title">🎨 Customizando o Logotipo nos Painéis Filament</span></a><a class="doc-pagination-card doc-pagination-next" href="widgets-filament.html"><span class="doc-pagination-label">Próximo</span><span class="doc-pagination-title">Widgets no Filament — Métricas e Componentização no Painel</span></a></nav>
+</article>
+</div>
+</div>
+
+<script src="../assets/labsis-manual.js"></script>
+</body>
+</html>

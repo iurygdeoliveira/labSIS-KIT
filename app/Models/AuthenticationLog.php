@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
@@ -29,22 +31,23 @@ use Illuminate\Support\Carbon;
     'cleared_by_user',
     'location',
 ])]
+#[Table(name: 'authentication_log')]
+#[WithoutTimestamps]
 class AuthenticationLog extends Model
 {
-    protected $table = 'authentication_log';
-
-    public $timestamps = false;
-
-    protected $casts = [
-        'login_at' => 'datetime',
-        'logout_at' => 'datetime',
-        'login_successful' => 'boolean',
-        'cleared_by_user' => 'boolean',
-        'location' => 'array',
-    ];
-
     public function authenticatable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'login_at' => 'datetime',
+            'logout_at' => 'datetime',
+            'login_successful' => 'boolean',
+            'cleared_by_user' => 'boolean',
+            'location' => 'array',
+        ];
     }
 }

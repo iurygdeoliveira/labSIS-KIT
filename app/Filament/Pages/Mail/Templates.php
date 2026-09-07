@@ -32,7 +32,7 @@ class Templates extends Page implements HasTable
 
     protected static ?string $slug = 'mail-templates';
 
-    protected string $view = 'filament.pages.mail.templates';
+    protected string $view = 'panels.pages.mail.templates';
 
     public string $codeModalContent = '';
 

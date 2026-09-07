@@ -29,7 +29,7 @@ class DeleteChangelog extends ViewRecord
     #[Override]
     public function getView(): string
     {
-        return 'filament.resources.changelog-resource.pages.delete-changelog';
+        return 'panels.resources.changelog-resource.pages.delete-changelog';
     }
 
     #[Override]

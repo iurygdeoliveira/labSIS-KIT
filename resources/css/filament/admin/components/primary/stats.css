@@ -4,34 +4,26 @@
  */
 
 /* Card do stat quando a descrição tem a classe primary */
-.fi-wi-stats-overview-stat:has(
-        .fi-wi-stats-overview-stat-description.fi-color-primary
-    ) {
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-primary) {
     background-color: var(--color-primary-50) !important;
     border-color: var(--color-primary-200) !important;
 }
 
 /* Ícone do stat (SVG dentro do label container) */
-.fi-wi-stats-overview-stat:has(
-        .fi-wi-stats-overview-stat-description.fi-color-primary
-    )
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-primary)
     .fi-wi-stats-overview-stat-label-ctn
     svg {
     color: var(--color-primary-600) !important;
 }
 
 /* Valor (número) quando descrição é primary */
-.fi-wi-stats-overview-stat:has(
-        .fi-wi-stats-overview-stat-description.fi-color-primary
-    )
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-primary)
     .fi-wi-stats-overview-stat-value {
     color: var(--color-primary-900) !important;
 }
 
 /* Label quando descrição é primary */
-.fi-wi-stats-overview-stat:has(
-        .fi-wi-stats-overview-stat-description.fi-color-primary
-    )
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-primary)
     .fi-wi-stats-overview-stat-label {
     color: var(--color-primary-700) !important;
 }
@@ -43,23 +35,17 @@
 }
 
 /* Chart/gráfico se houver */
-.fi-wi-stats-overview-stat:has(
-        .fi-wi-stats-overview-stat-description.fi-color-primary
-    )
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-primary)
     .fi-wi-stats-overview-stat-chart {
     color: var(--color-primary-500) !important;
 }
 
 /* Hover Effect: Neon */
-.fi-wi-stats-overview-stat:has(
-        .fi-wi-stats-overview-stat-description.fi-color-primary
-    ) {
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-primary) {
     transition: all 0.3s ease;
 }
 
-.fi-wi-stats-overview-stat:has(
-        .fi-wi-stats-overview-stat-description.fi-color-primary
-    ):hover {
+.fi-wi-stats-overview-stat:has(.fi-wi-stats-overview-stat-description.fi-color-primary):hover {
     transform: scale(1.05);
     box-shadow: 0 4px 20px 0 var(--color-primary-500);
     z-index: 10;

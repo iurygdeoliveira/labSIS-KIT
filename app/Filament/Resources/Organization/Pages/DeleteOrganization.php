@@ -30,7 +30,7 @@ class DeleteOrganization extends ViewRecord
     #[\Override]
     public function getView(): string
     {
-        return 'filament.resources.organization.pages.delete-organization';
+        return 'panels.resources.organization.pages.delete-organization';
     }
 
     #[\Override]

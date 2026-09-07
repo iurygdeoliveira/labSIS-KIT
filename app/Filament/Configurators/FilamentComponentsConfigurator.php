@@ -23,7 +23,7 @@ class FilamentComponentsConfigurator
     {
         FilamentView::registerRenderHook(
             PanelsRenderHook::BODY_END,
-            fn (): string => view('filament.components.mobile-bottom-nav')->render(),
+            fn (): string => view('panels.components.mobile-bottom-nav')->render(),
         );
 
         FilamentView::registerRenderHook(

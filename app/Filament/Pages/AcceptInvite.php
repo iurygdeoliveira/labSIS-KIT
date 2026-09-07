@@ -27,7 +27,7 @@ class AcceptInvite extends Page
 
     protected static string $layout = 'filament-panels::components.layout.simple';
 
-    protected string $view = 'pages.accept-invite';
+    protected string $view = 'panels.pages.accept-invite';
 
     public static function getRoutePath(Panel $panel): string
     {
@@ -56,7 +56,7 @@ class AcceptInvite extends Page
             ->pending()
             ->first();
 
-        if (! $this->invite) {
+        if (! $this->invite instanceof OrganizationInvite) {
             $this->error = self::ERROR_INVALID;
 
             return;
@@ -157,7 +157,7 @@ class AcceptInvite extends Page
 
     protected function canRespondToInvite(): bool
     {
-        return $this->invite !== null && $this->error === null;
+        return $this->invite instanceof OrganizationInvite && $this->error === null;
     }
 
     protected function notifyCannotRespond(): void

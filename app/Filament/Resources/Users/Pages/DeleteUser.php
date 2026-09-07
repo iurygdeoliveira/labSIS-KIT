@@ -28,7 +28,7 @@ class DeleteUser extends ViewRecord
     #[\Override]
     public function getView(): string
     {
-        return 'filament.resources.users.pages.delete-user';
+        return 'panels.resources.users.pages.delete-user';
     }
 
     #[\Override]

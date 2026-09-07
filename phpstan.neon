@@ -10,5 +10,10 @@ parameters:
     # Level 10 is the highest level
     level: 5
 
+    stubFiles:
+        - stubs/filament-notification.stub
+
     excludePaths:
         - app/Traits/Filament/HasBackButtonAction.php
+        - app/Support/NotificationCenter/Concerns/CategorizesExportNotifications.php
+        - app/Support/NotificationCenter/Concerns/CategorizesImportNotifications.php

@@ -29,9 +29,7 @@
 .fi-toggle.fi-color-danger:hover svg,
 .fi-toggle.fi-color-danger:hover .fi-icon,
 .fi-toggle.fi-color-danger button:hover svg {
-    color: var(
-        --color-danger-800
-    ) !important; /* Escurece um pouco no hover para feedback */
+    color: var(--color-danger-800) !important; /* Escurece um pouco no hover para feedback */
 }
 
 /* Toggle Column (Tabela) - Fallback para inputs checkbox escondidos */

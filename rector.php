@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use RectorLaravel\Set\LaravelSetList;
-use RectorLaravel\Set\LaravelSetProvider;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -16,7 +16,6 @@ return RectorConfig::configure()
         __DIR__.'/tests',
     ])
     // Detecção automática baseada no composer.json (Laravel 12+)
-    ->withSetProviders(LaravelSetProvider::class)
     ->withComposerBased(
         laravel: true,
     )
@@ -43,4 +42,7 @@ return RectorConfig::configure()
         __DIR__.'/_ide_helper.php',
         __DIR__.'/_ide_helper_models.php',
         __DIR__.'/.phpstorm.meta.php',
+        ClosureToArrowFunctionRector::class => [
+            __DIR__.'/app/Support/NotificationCenter/NotificationCenterManager.php',
+        ],
     ]);

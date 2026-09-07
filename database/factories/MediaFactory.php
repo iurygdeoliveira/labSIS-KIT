@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\Media;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Media>
+ * @extends Factory<Media>
  */
 class MediaFactory extends Factory
 {
@@ -32,7 +34,7 @@ class MediaFactory extends Factory
             'audio/mpeg',
         ];
 
-        $mimeType = $this->faker->randomElement($mimeTypes);
+        $mimeType = fake()->randomElement($mimeTypes);
         $isImage = str_starts_with((string) $mimeType, 'image/');
 
         $extensions = [
@@ -49,27 +51,27 @@ class MediaFactory extends Factory
         ];
 
         $extension = $extensions[$mimeType] ?? 'bin';
-        $fileName = $this->faker->slug().'.'.$extension;
+        $fileName = fake()->slug().'.'.$extension;
 
         return [
             'uuid' => Str::uuid(),
-            'collection_name' => $this->faker->randomElement(['images', 'documents', 'videos', 'avatars', 'gallery']),
-            'name' => $this->faker->sentence(3),
+            'collection_name' => fake()->randomElement(['images', 'documents', 'videos', 'avatars', 'gallery']),
+            'name' => fake()->sentence(3),
             'file_name' => $fileName,
             'mime_type' => $mimeType,
-            'disk' => $this->faker->randomElement(['public', 'local', 's3']),
-            'conversions_disk' => $this->faker->optional()->randomElement(['public', 'local', 's3']),
-            'size' => $this->faker->numberBetween(1024, 50 * 1024 * 1024), // 1KB a 50MB
+            'disk' => fake()->randomElement(['public', 'local', 's3']),
+            'conversions_disk' => fake()->optional()->randomElement(['public', 'local', 's3']),
+            'size' => fake()->numberBetween(1024, 50 * 1024 * 1024), // 1KB a 50MB
             'manipulations' => $isImage ? [
                 'thumb' => ['width' => 150, 'height' => 150, 'crop' => 'center'],
                 'medium' => ['width' => 800, 'height' => 600, 'crop' => 'center'],
                 'large' => ['width' => 1920, 'height' => 1080, 'crop' => 'center'],
             ] : [],
             'custom_properties' => [
-                'alt_text' => $this->faker->sentence(),
-                'description' => $this->faker->paragraph(),
-                'tags' => $this->faker->words(3),
-                'author' => $this->faker->name(),
+                'alt_text' => fake()->sentence(),
+                'description' => fake()->paragraph(),
+                'tags' => fake()->words(3),
+                'author' => fake()->name(),
             ],
             'generated_conversions' => $isImage ? [
                 'thumb' => true,
@@ -81,9 +83,9 @@ class MediaFactory extends Factory
                 'medium' => true,
                 'large' => true,
             ] : [],
-            'order_column' => $this->faker->numberBetween(1, 100),
-            'model_type' => $this->faker->randomElement([\App\Models\User::class, 'App\Models\Post', 'App\Models\Product']),
-            'model_id' => $this->faker->numberBetween(1, 100),
+            'order_column' => fake()->numberBetween(1, 100),
+            'model_type' => fake()->randomElement([User::class, 'App\Models\Post', 'App\Models\Product']),
+            'model_id' => fake()->numberBetween(1, 100),
         ];
     }
 
@@ -93,7 +95,7 @@ class MediaFactory extends Factory
     public function image(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'mime_type' => $this->faker->randomElement(['image/jpeg', 'image/png', 'image/gif', 'image/webp']),
+            'mime_type' => fake()->randomElement(['image/jpeg', 'image/png', 'image/gif', 'image/webp']),
             'collection_name' => 'images',
             'manipulations' => [
                 'thumb' => ['width' => 150, 'height' => 150, 'crop' => 'center'],
@@ -119,7 +121,7 @@ class MediaFactory extends Factory
     public function document(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'mime_type' => $this->faker->randomElement(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']),
+            'mime_type' => fake()->randomElement(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']),
             'collection_name' => 'documents',
             'manipulations' => [],
             'generated_conversions' => [],
@@ -133,7 +135,7 @@ class MediaFactory extends Factory
     public function video(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'mime_type' => $this->faker->randomElement(['video/mp4', 'video/avi']),
+            'mime_type' => fake()->randomElement(['video/mp4', 'video/avi']),
             'collection_name' => 'videos',
             'manipulations' => [],
             'generated_conversions' => [],
@@ -147,9 +149,9 @@ class MediaFactory extends Factory
     public function avatar(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'mime_type' => $this->faker->randomElement(['image/jpeg', 'image/png']),
+            'mime_type' => fake()->randomElement(['image/jpeg', 'image/png']),
             'collection_name' => 'avatars',
-            'size' => $this->faker->numberBetween(1024, 5 * 1024 * 1024), // 1KB a 5MB
+            'size' => fake()->numberBetween(1024, 5 * 1024 * 1024), // 1KB a 5MB
             'manipulations' => [
                 'thumb' => ['width' => 100, 'height' => 100, 'crop' => 'center'],
                 'medium' => ['width' => 300, 'height' => 300, 'crop' => 'center'],
@@ -171,7 +173,7 @@ class MediaFactory extends Factory
     public function small(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'size' => $this->faker->numberBetween(1024, 100 * 1024), // 1KB a 100KB
+            'size' => fake()->numberBetween(1024, 100 * 1024), // 1KB a 100KB
         ]);
     }
 
@@ -181,7 +183,7 @@ class MediaFactory extends Factory
     public function large(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'size' => $this->faker->numberBetween(10 * 1024 * 1024, 100 * 1024 * 1024), // 10MB a 100MB
+            'size' => fake()->numberBetween(10 * 1024 * 1024, 100 * 1024 * 1024), // 10MB a 100MB
         ]);
     }
 }

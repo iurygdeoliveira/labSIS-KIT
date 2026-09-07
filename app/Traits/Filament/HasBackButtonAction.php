@@ -47,7 +47,7 @@ trait HasBackButtonAction
         }
 
         return new HtmlString(
-            view('filament.components.back-button-heading', [
+            view('panels.components.back-button-heading', [
                 'title' => $title,
                 'url' => $backUrl,
             ])->render()

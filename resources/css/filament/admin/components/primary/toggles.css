@@ -34,12 +34,8 @@
 
 /* Dark Mode Hover */
 :is(.dark) .fi-toggle.fi-color-primary:hover input:checked + span,
-:is(.dark)
-    .fi-toggle.fi-color-primary:hover
-    button[role="switch"][aria-checked="true"] {
-    background-color: var(
-        --color-primary-200
-    ) !important; /* Ligeiramente mais claro no hover */
+:is(.dark) .fi-toggle.fi-color-primary:hover button[role="switch"][aria-checked="true"] {
+    background-color: var(--color-primary-200) !important; /* Ligeiramente mais claro no hover */
 }
 
 /* Ícones dentro do Toggle (Check) */
